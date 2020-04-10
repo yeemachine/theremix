@@ -1,0 +1,18 @@
+{
+  "install": {
+    "include": [
+      "^package\\.json$",
+      "^\\.env$"
+    ]
+  },
+  "restart": {
+    "exclude": [
+      "^docs/build"
+    ],
+    "include": [
+      "\\.js$",
+      "\\.svelte"
+    ]
+  },
+  "throttle": 500
+}

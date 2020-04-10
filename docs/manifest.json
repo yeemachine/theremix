@@ -1,0 +1,9 @@
+{
+    "name": "Theremin-100",
+    "short_name" : "Theremin100",
+    "start_url": "index.html?utm_source=homescreen",
+    "scope" : "./",
+    "theme_color": "#ffee00",
+    "background_color": "#ffee00",
+    "display": "standalone"
+}

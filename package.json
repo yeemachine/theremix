@@ -1,0 +1,24 @@
+{
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rollup -c",
+    "start": "rollup -c && sirv docs"
+  },
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.0",
+    "rollup": "^2.0.4",
+    "rollup-plugin-livereload": "^1.0.4",
+    "rollup-plugin-svelte": "^5.1.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "svelte": "^3.19.2",
+    "sirv-cli": "^0.4.5",
+    "tone": "^14.5.41",
+    "ml5": "^0.4.3",
+    "pixi.js": "^4.8.8",
+    "pixi-lights": "^2.0.3",
+    "pixi-layers": "^0.2.3",
+    "rollup-plugin-node-builtins": "^2.1.2"
+  }
+}
