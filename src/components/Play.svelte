@@ -141,6 +141,7 @@ style="top:{playPos.top}px;left:{playPos.left}px"
         /* transform: translate(8%, 13%) scale(0.9125); */
     }
  
+ 
     @keyframes drawforward {
         to {
             stroke-dashoffset: 1;
