@@ -7,7 +7,7 @@
   },
   "restart": {
     "exclude": [
-      "^dist/build"
+      "^docs/build"
     ],
     "include": [
       "\\.js$",
