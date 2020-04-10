@@ -19,7 +19,6 @@ nullObj.on('pointermove', (e) => {
         y:e.data.global.y
     })
   }
-  
 });
 
 nullObj.on('pointerdown', (e) => {
