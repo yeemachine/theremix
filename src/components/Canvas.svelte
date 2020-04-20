@@ -1,26 +1,30 @@
 <script>
 import { onMount } from 'svelte';
-import {WIDTH,HEIGHT,ScaleInc,canvasPos} from './stores.js'
+import { tweened,spring } from 'svelte/motion';
+import { backOut } from 'svelte/easing';
+import {loaded,WIDTH,HEIGHT,mousePos,expandSettings} from './stores.js'
 import {App,Stage,Resources} from './pixiApp.js'
-import NullObject from './NullObject.svelte'
-import BG from './BG.svelte'
-import Table from './Table.svelte'
-import Theremin from './Theremin.svelte'
-import AmbientLights from './AmbientLights.svelte'
-import CursorLight from './CursorLight.svelte'
-import Play from './Play.svelte'
-import Settings from './Settings.svelte'
+import BG from './PIXI.Sprite.bg.svelte'
+import Table from './PIXI.Sprite.table.svelte'
+import Theremin from './PIXI.Sprite.theremin.svelte'
+import AmbientLights from './PIXI.Light.ambient.svelte'
+import CursorLight from './PIXI.Light.cursor.svelte'
+import PIXIGraphics from './PIXI.graphics.svelte';
 
 let containerWidth,
 canvasContainer, containerHeight;
-let noiseFilter = new PIXI.filters.NoiseFilter(.15,.19294618)
+let noiseFilter = new PIXI.filters.NoiseFilter(.2,.19294618)
 let blurFilter = new PIXI.filters.BlurFilter()
 blurFilter.blur = 0
 blurFilter.quality = 1
 blurFilter.enabled = false
-console.log(blurFilter)
 Stage.filterArea = App.screen;
 Stage.filters = [blurFilter,noiseFilter];
+
+const tween0_1 = tweened(0, {
+    duration: 700,
+    easing: backOut
+});
 
 $: {
     WIDTH.set(containerWidth)
@@ -28,7 +32,23 @@ $: {
     App.view.width = $WIDTH;
     App.view.height = $HEIGHT;
     App.renderer.resize($WIDTH,$HEIGHT)  
+    App.render()
+    if($expandSettings && $tween0_1 === 0){
+        tween0_1.set(1)
+    }
+    if(!$expandSettings && $tween0_1 === 1){
+        tween0_1.set(0)
+    }
+    blurFilter.blur = 0 + $tween0_1*5
+    blurFilter.enabled = ($tween0_1 > 0) ? true : false
 };
+
+let handleClick = e => {
+    mousePos.set({
+        x:e.clientX,
+        y:e.clientY
+    })
+}
 
 onMount(async () => {
     canvasContainer.appendChild(App.view);
@@ -36,7 +56,12 @@ onMount(async () => {
 
 </script>
 
-<div bind:this={canvasContainer} bind:clientWidth = {containerWidth} bind:clientHeight = {containerHeight} class="canvasContainer">
+<div 
+on:pointerdown={handleClick}
+bind:this={canvasContainer} 
+bind:clientWidth = {containerWidth} 
+bind:clientHeight = {containerHeight} 
+class="canvasContainer">
     {#await Resources}
 
         <!-- Loading -->
@@ -44,18 +69,17 @@ onMount(async () => {
     {:then value}
 
         <!-- Null Obj for global interactions -->
-        <NullObject stage={Stage}/>
+        <!-- <NullObject stage={Stage}/> -->
 
         <!-- Sprites -->
         <BG stage={Stage} textures={value}/>
         <Table stage={Stage} textures={value}/>
         <Theremin stage={Stage} textures={value}/> 
-
+        <PIXIGraphics stage={Stage}/>
         <!-- Lights -->
         <AmbientLights stage={Stage}/>
         <CursorLight app={App} stage={Stage}/>
 
-        <Play/>
 
     {:catch err}
 

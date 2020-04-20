@@ -19,6 +19,8 @@
     "pixi.js": "^4.8.8",
     "pixi-lights": "^2.0.3",
     "pixi-layers": "^0.2.3",
-    "rollup-plugin-node-builtins": "^2.1.2"
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "@tensorflow-models/posenet": "^2.2.1"
   }
 }

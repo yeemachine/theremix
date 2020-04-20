@@ -7,12 +7,13 @@ let playHeight = 0
 let playPos = {top:0,left:0}
 $: {
     playPos = {
-        top: ($WIDTH > 600) ? $thereminPos.y+$thereminPos.height*.5-playHeight*.5 : $thereminPos.y+$thereminPos.height*.2 -playHeight*.5,
+        top: ($WIDTH > 600) ? $thereminPos.y+$thereminPos.height*.6-playHeight : $thereminPos.y+$thereminPos.height*.6 -playHeight,
         left: $thereminPos.x+$thereminPos.width*.525-playWidth*.5
     }
 }
 const handleClick = () => {
       active.set(true)
+    // Tone.context.resume()
 }
 
 </script>
@@ -27,7 +28,7 @@ class={
 bind:this={playContainer} 
 bind:clientWidth={playWidth} 
 bind:clientHeight={playHeight} 
-on:pointerdown={handleClick}
+on:pointerup={handleClick}
 style="top:{playPos.top}px;left:{playPos.left}px"
 >
     <svg width="313" height="266" viewBox="0 0 313 266" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,29 +36,92 @@ style="top:{playPos.top}px;left:{playPos.left}px"
         <path class='outer' d="M38.7005 4.67073L301.955 123.55C313.067 128.568 312.9 144.406 301.684 149.188L38.198 261.538C21.0468 268.851 2 256.267 2 237.622V28.3667C2 9.48487 21.492 -3.10026 38.7005 4.67073Z"/>
     </svg>
     <section>
-        <p>Play Theremin <span>9</span></p>
+        <p>Celebrating 100 Years <span>O</span></p>
     </section>
     
 </div> 
 
 <style>
     p{
-        font-family: 'Nicholson Beta';
-        font-size:18px;
-        color:white;
-        padding-top: 24px;
+        font-size:calc(12px + 1vw);
+        color:#FFF5D0;
         margin: 0;
         text-align: center; 
         transform: translateY(20px);
-        transition: transform .7s cubic-bezier(0.31, 0.7, 0.26, 1.5);
+        transition: transform .6s cubic-bezier(0.31, 0.7, 0.26, 1.5), opacity .4s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+        white-space: nowrap;
+    }
+    div:hover{
+        cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587345471366) 21 20, pointer;
     }
     span{
         font-family:'Whirlybats';
-        font-size:18px;
+        font-size: calc(18px + 2vw);
+        color:transparent;
+        /* padding-left: .125em; */
+        position:relative;
+        overflow: hidden;
+        width:calc(18px + 2vw)
     }
+    div:hover span:before{
+        color:rgba(229,70,70,1)
+    }
+    span:before{
+        position:absolute;
+        content: 'O';
+        display:block;
+        width:inherit;
+        color:#FFF5D0;
+        top:10%;
+        left:0;
+    }
+    /* span:before{
+        position:absolute;
+        content: '2';
+        display:block;
+        width:inherit;
+        color:#FFF5D0;
+        top:0;
+        left:0;
+        transition: transform .25s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+    }
+    div:hover span:before{
+        color: rgba(255,197,47,1);
+        transform: translate(0%,-100%)
+    }
+    div.active span:before{
+        transition: transform .25s cubic-bezier(0.46, 0.03, 0.52, 0.96) .4s;
+    }
+    span:after{
+        position:absolute;
+        content: '9';
+        display:block;
+        width:inherit;
+        color:#FFF5D0;
+        top:0;
+        left:0;
+        transform: translate(0%,100%);
+        transition: transform .25s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+    }
+    div.active span:after{
+        transition: transform .25s cubic-bezier(0.46, 0.03, 0.52, 0.96) .4s;
+    }
+    div:hover span:after{
+        color: rgba(255,197,47,1);
+        transform: translate(0%,0%)
+    } */
+    
     section{
         overflow: hidden;
         margin-top: 5%;
+        /* margin-left: 5%; */
+        width:max-content;
+        transition:opacity .4s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+    }
+    .loaded.active p{
+        opacity:0;
+        transform: translateY(20px);
+        transition: transform 0s linear .4s, opacity .4s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     }
     .loaded p{
         transform: translateY(0px)
@@ -66,7 +130,7 @@ style="top:{playPos.top}px;left:{playPos.left}px"
         animation: animateGlyph 1s linear infinite;
         animation-play-state: start;
     }
-    .active span{
+    .loaded.active span{
         animation-play-state: paused;
     }
     div{
@@ -82,12 +146,9 @@ style="top:{playPos.top}px;left:{playPos.left}px"
     div.loaded{
         opacity:1;
     }
-    div.active{
+    div.loaded.active{
         pointer-events: none;
-        opacity:0;
-    }
-    div:hover{
-        cursor:pointer;
+        /* opacity:0; */
     }
     svg{
         width:20vw;
@@ -99,26 +160,28 @@ style="top:{playPos.top}px;left:{playPos.left}px"
         transform-origin: center;
         transform:translate(2%,12%);
         overflow:visible;
+        transition:.25s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     }
     .loaded.active svg{
         opacity:0;
         transform:scale3d(1.5,1.5,1.5) translate(2%,12%);
-        transition:.4s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     }
     .outer{
         opacity:0;
-        fill:rgba(255,197,47,0);
+        fill:rgba(229,70,70,.4);
         transform-origin: 35% 50%;
+        transform: translate(6%, 10%) scale(0.95);
         /* transform: translate(6%, 10%) scale(0.95); */
     }
     .inner{
         /* opacity:0; */
-        stroke:rgba(255,197,47,1);
+        stroke:rgba(229,70,70,1);
         stroke-width: 4px;
         stroke-dasharray: 1000;
         stroke-dashoffset: 1000;
         stroke-linecap: round;
         transform-origin: 35% 50%;
+        transform: translate(-2%, -4%);
     }
     .loaded .inner{
         animation: drawforward 1s cubic-bezier(0.46, 0.03, 0.52, 0.96);
@@ -132,12 +195,12 @@ style="top:{playPos.top}px;left:{playPos.left}px"
         transition-delay:fill .2s;
     }
     .loaded:hover .inner{
-        transform: translate(-2%, -4%);
+        transform: translate(0, 0);
         /* transform: translate(8%, 13%) scale(0.9125); */
     }
     .loaded:hover .outer{
-        fill:rgba(255,197,47,0.4);
-        transform: translate(6%, 10%) scale(0.95);
+        fill:rgba(229,70,70,.2);
+        transform: translate(0, 0) scale(1);
         /* transform: translate(8%, 13%) scale(0.9125); */
     }
  
@@ -163,8 +226,9 @@ style="top:{playPos.top}px;left:{playPos.left}px"
         }
     }
 
-    @keyframes animateGlyph {
-    0%   { font-variation-settings: "anim" 100; }
-    100% { font-variation-settings: "anim" 200; }
+    @media screen and (max-width: 600px) {
+      
     }
+
+
 </style>
