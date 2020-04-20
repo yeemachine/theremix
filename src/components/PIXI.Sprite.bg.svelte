@@ -2,7 +2,7 @@
 import {createSprite} from './pixiApp.js'
 import { tweened } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
-import {WIDTH,HEIGHT} from './stores.js'
+import {WIDTH,HEIGHT,thereminPos} from './stores.js'
 export let textures = null;
 export let stage = null;
 
@@ -13,11 +13,12 @@ const tween0_1 = tweened(0, {
 
 const bgContainer = new PIXI.Container();
 const bg = createSprite(textures.static_bg.texture,textures.bg_normal.texture)
-bg.children[0].tint = 0x401874;
+bg.children[0].tint = 0xE54646;
 const bgRatio = textures.static_bg.texture.width/textures.static_bg.texture.height
-const directionalLight = new PIXI.lights.DirectionalLight(null, 1,bg)
+
 const machineLeft = createSprite(textures.machine_left.texture,textures.machine_left_normal.texture)
 const machineRight = createSprite(textures.machine_right.texture,textures.machine_right_normal.texture)
+
 
 $: {
     if($WIDTH/$HEIGHT > bgRatio){
@@ -49,13 +50,23 @@ $: {
         : $WIDTH*.9 - machineRight.width*.45
     machineRight.position.y = machineLeft.position.y * 1.3
 
-    if($WIDTH>=600){
+    if($WIDTH>=900){
         machineRight.visible = true
+    }
+    if($WIDTH >= 600 && $WIDTH < 900){
+        machineLeft.width = $WIDTH - 160
+        machineLeft.scale.y = machineLeft.scale.x
+        machineLeft.position.x = 80
+        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.85 - machineLeft.height
+        machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
+        machineRight.visible = false
     }
     if($WIDTH < 600){ //Media Query
         machineLeft.width = $WIDTH - 30
         machineLeft.scale.y = machineLeft.scale.x
         machineLeft.position.x = 15
+        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.85 - machineLeft.height
+        machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
         machineRight.visible = false
     }
 

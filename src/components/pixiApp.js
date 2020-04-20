@@ -169,3 +169,12 @@ export const lerpColor = function(a, b, amount) {
     return (rr << 16) + (rg << 8) + (rb | 0);
 };
 
+export const detectCollision = (position,pixiElement) => {
+    const element_bounds = pixiElement.getBounds()
+    let collide = (position.x > element_bounds.x
+            && position.x < element_bounds.x + element_bounds.width
+            && position.y > element_bounds.y
+            && position.y < element_bounds.y + element_bounds.height
+        ) ? true : false
+    return collide
+}
