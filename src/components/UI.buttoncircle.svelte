@@ -9,7 +9,7 @@ const handleClick = () => {
 }
 </script>
 
-<container class="{hide ? 'hide':''} {selected?'selected':''}" style={styles} on:pointerup={handleClick}>
+<container class="{hide ? 'hide':''} {selected?'selected':''}" style={styles} on:click={handleClick}>
         {#if icon}
             <svelte:component this={icon} />
         {/if}
@@ -36,6 +36,6 @@ const handleClick = () => {
     }
     container:hover{
         background:rgba(255,248,228,1);
-       cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587345471366) 21 20, pointer;
+       cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
     }
 </style>

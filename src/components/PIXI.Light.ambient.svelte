@@ -1,24 +1,60 @@
 <script>
-import {active,thereminPos,WIDTH,HEIGHT} from './stores.js'
+import {active,thereminPos,CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE} from './stores.js'
+import {constrain} from './helpers.js';
 import { tweened } from 'svelte/motion';
-import { backOut } from 'svelte/easing';
+import { sineInOut } from 'svelte/easing';
 export let stage = null
 
-const tween0_1 = tweened(0, {
+const sineInOut0_1 = tweened(0, {
     duration: 700,
-    easing: backOut
+    easing: sineInOut
 });
 
-const ambientLight = new PIXI.lights.AmbientLight(null, .3)
+const ambientLight = new PIXI.lights.AmbientLight(0xFFffff, .1)
 const warmLightContainer = new PIXI.Container();
 const warmLightCoords = [
     {
       x: 0,
+      y: 0,
+      color: 0xff7f00,
+      falloff:[0.75, 13, 40],
+      brightness: 1.1,
+      start:.5
+    },
+    {
+      x: -.25,
+      y: -0.25,
+      color: 0xE54646,
+      falloff:[0.75, 13, 40],
+      brightness: 1.3,
+      start:.5
+    },
+    {
+      x: -.5,
       y: 0.2,
-      color: 0xff7f00
-    }
+      color: 0xFFFE7E,
+      falloff:[0, 13, 40],
+      brightness: .8,
+      start:.5
+    },
+    {
+      x:.39,
+      y: 0.1,
+      color: 0xff7f00,
+      falloff:[0.75, 3, 8],
+      brightness: 2.5,
+      start:1
+    },
+    {
+      x:-.29,
+      y: .22,
+      color: 0xff7f00,
+      falloff:[0.75, 3, 8],
+      brightness: 2.5,
+      start:1
+    },
 ];
-
+let lightHeight = 90
 
 warmLightCoords.forEach(e => {
   let warmpointLight = new PIXI.lights.PointLight(e.color, 0);
@@ -27,20 +63,23 @@ warmLightCoords.forEach(e => {
 
 $: {
   if($active === true){
-    if($tween0_1 === 0){
-      tween0_1.set(1)
+    if($sineInOut0_1 === 0){
+      sineInOut0_1.set(1)
     }
   }else{
-    if($tween0_1 === 1){
-      tween0_1.set(0)
+    if($sineInOut0_1 === 1){
+      sineInOut0_1.set(0)
     }
   }
   warmLightContainer.children.forEach((e,i)=>{
     e.position.x = $thereminPos.x + $thereminPos.width/2 + warmLightCoords[i].x * $thereminPos.width;
     e.position.y = $thereminPos.y + $thereminPos.height/2 + warmLightCoords[i].y * $thereminPos.height;
-    e.brightness = (.4+Math.min(Math.max($WIDTH, 0), 400)/400)*$tween0_1
+    e.brightness = 
+      warmLightCoords[i].brightness*(warmLightCoords[i].start+(1-warmLightCoords[i].start)*$sineInOut0_1)
+      * constrain(2-$SCALE,{max:1,min:0.2})
+    e.falloff = warmLightCoords[i].falloff
   })
-  
+  ambientLight.brightness = ($WIDTH > 600) ? .3*$sineInOut0_1 : .05 + .1*$sineInOut0_1
 }
 
 stage.addChild(ambientLight,warmLightContainer)

@@ -1,5 +1,5 @@
 <script>
-import {WIDTH,HEIGHT,canvasPos,active,loaded} from './stores.js'
+import {CANVASWIDTH,CANVASHEIGHT,canvasMousePos,SCALE,active,loaded} from './stores.js'
 
 export let stage = null
 
@@ -8,22 +8,13 @@ let nullObj = new PIXI.Sprite();
 nullObj.interactive = true;
 
 $: {
-  nullObj.width = $WIDTH;
-  nullObj.height = $HEIGHT;
+  nullObj.width = $CANVASWIDTH;
+  nullObj.height = $CANVASHEIGHT;
 }
-
-nullObj.on('pointermove', (e) => {
-  if($loaded){
-   canvasPos.set({
-        x:e.data.global.x,
-        y:e.data.global.y
-    })
-  }
-});
 
 nullObj.on('pointerdown', (e) => {
   if($loaded){
-   canvasPos.set({
+   canvasMousePos.set({
         x:e.data.global.x,
         y:e.data.global.y
     })

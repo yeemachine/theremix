@@ -1,7 +1,6 @@
 <script>
 import Toggle from './UI.toggle.svelte'
 import ButtonCircle from './UI.buttoncircle.svelte'
-import Play from './UI.play.svelte'
 import videoIcon from './icons/video.svelte'
 import pauseIcon from './icons/pause.svelte'
 import settingsIcon from './icons/settings.svelte'
@@ -9,7 +8,7 @@ import closeIcon from './icons/close.svelte'
 import {expandSettings,active,camera} from './stores.js'
 </script>
 
-<Play/>
+
 <nav>
     <ButtonCircle 
     icon={pauseIcon} 

@@ -15,7 +15,7 @@ $: {
 const handleClick = () => {
     setting.set(!$setting)
     if(toggleDom){
-        toggleDom.querySelector('animate').beginElement()
+        // toggleDom.querySelector('animate').beginElement()
     }
 }
 
@@ -23,7 +23,7 @@ const handleClick = () => {
 
 <container 
 bind:this={toggleDom} 
-on:pointerup={handleClick} 
+on:click={handleClick} 
 class='{
     ($setting) ? 'toggled' : ''} 
     {hide ?'hide':''} 
@@ -38,13 +38,13 @@ class='{
             {/if}
             <svg class="liquidCircle" width="69" height="46" viewBox="0 0 69 46" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill="#FFC52F" d="M11 23C11 29.8746 12.8755 34.4024 17.7365 39.2635C22.5976 44.1245 27.1254 46 34 46C40.8746 46 45.4024 44.1245 50.2635 39.2635C55.1245 34.4024 57 29.8746 57 23C57 16.1254 55.1245 11.5976 50.2635 6.73654C45.4024 1.87549 40.8746 2.85048e-07 34 0C27.1254 -2.85048e-07 22.5976 1.87549 17.7365 6.73654C12.8755 11.5976 11 16.1254 11 23Z">
-                <animate 
+                <!-- <animate 
                     attributeName="d" 
                     begin="0s"
                     dur="400ms" 
                     fill="freeze"
                     keyTimes="0;0.25;1"
-                    values={circlePathValues}/>
+                    values={circlePathValues}/> -->
             </path>
             </svg>
         </div>
@@ -58,7 +58,7 @@ container.hide{
     pointer-events:none;
 }
 container:hover{
-        cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587345471366) 21 20, pointer;
+        cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
     }
     
 container{

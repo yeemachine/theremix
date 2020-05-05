@@ -1,20 +1,40 @@
 <script>
 import { onMount } from 'svelte';
-import {createSprite, lerpColor, detectCollision} from './pixiApp.js';
-import { tweened } from 'svelte/motion';
-import { backOut } from 'svelte/easing';
-import {loaded,active,WIDTH,HEIGHT,mousePos,thereminPos} from './stores.js';
+import {createSprite, lerpColor, detectCollision, calcRotation} from './pixiApp.js';
+import { tweened,spring } from 'svelte/motion';
+import {constrain} from './helpers.js';
+import { backOut, sineInOut, quadInOut } from 'svelte/easing';
+import { oscillators } from './config.js';
+import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,TIME,SCALE} from './stores.js';
 export let textures = null;
 export let stage = null;
 
-const tween0_1 = tweened(0, {
+const backOut0_1 = tweened(0, {
+    duration: 700,
+    easing: backOut
+});
+
+const sineInOut0_1 = tweened(0, {
+    duration: 600,
+    easing: sineInOut
+});
+
+const pulse0_1 = tweened(1, {
+    duration: 2400,
+    easing: sineInOut
+});
+
+const tweenKnobLeft = tweened(0, {
+    duration: 700,
+    easing: backOut
+});
+
+const tweenKnobRight = tweened(0, {
     duration: 700,
     easing: backOut
 });
 
 const theremin = new PIXI.Container();
-
-const directionalLight = new PIXI.lights.DirectionalLight(0xff7f00, 2,theremin)
 
 const theremin_null = createSprite(textures.theremin_null.texture)
 theremin_null.alpha = 0
@@ -28,13 +48,88 @@ const theremin_body_top = createSprite(
     textures.theremin_body_top.texture,
     textures.theremin_body_top_normal.texture
 )
+// theremin_body_top.children[0].tint = 0x5B0909
+
+const knob_left = createSprite(
+    textures.knob.texture,
+    textures.knob_normal.texture
+)
+knob_left.children[0].anchor.set(0.5, 0.5);
+knob_left.children[1].anchor.set(0.5, 0.5);
+knob_left.children[0].tint = 0x999999;
+knob_left.on('mouseover',()=>{
+    hovered.set(knob_left)
+    knob_left.children[0].tint = 0xffffff
+})
+knob_left.on('mouseout',()=>{
+    hovered.set(null)
+    knob_left.children[0].tint = 0x999999
+})
+knob_left.on('pointerdown',()=>{
+    dragged.set({
+        element:knob_left,
+        id:'vol'
+    })
+    globalPointerUp.set(false)
+})
+const knob_left_light = new PIXI.lights.PointLight(0xff7f00, 0);
+
+
+const knob_right = createSprite(
+    textures.knob.texture,
+    textures.knob_normal.texture
+)
+knob_right.children[0].anchor.set(0.5, 0.5);
+knob_right.children[1].anchor.set(0.5, 0.5);
+knob_right.children[0].tint = 0x999999;
+knob_right.on('mouseover',()=>{
+    hovered.set(knob_right)
+    knob_right.children[0].tint = 0xffffff
+})
+knob_right.on('mouseout',()=>{
+    hovered.set(null)
+    knob_right.children[0].tint = 0x999999
+})
+knob_right.on('pointerdown',()=>{
+    hovered.set(null)
+    dragged.set({
+        element:knob_right,
+        id:'osc'
+    })
+    globalPointerUp.set(false)
+})
+const knob_right_light = new PIXI.lights.PointLight(0xff0000, 0);
+
+const switchRight = createSprite(
+    textures.switch_off.texture,
+    textures.switch_off_normal.texture
+)
+switchRight.children[0].anchor.set(0.5, 0.5);
+switchRight.children[1].anchor.set(0.5, 0.5);
+$: switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
+$: switchRight.children[0].texture = ($glide && $active) ? textures.switch_on.texture : textures.switch_off.texture
+$: switchRight.children[1].texture = ($glide && $active) ? textures.switch_on_normal.texture : textures.switch_off_normal.texture
+
+switchRight.on('pointerup',()=>{
+    glide.set(!$glide)
+})
+switchRight.on('mouseover',()=>{
+    hovered.set(switchRight)
+    switchRight.children[0].tint = 0xffffff
+})
+switchRight.on('mouseout',()=>{
+    hovered.set(null)
+    switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
+})
+const switchRight_light = new PIXI.lights.PointLight(0xff7f00, 0);
 
 const right_antenna = createSprite(
     textures.right_antenna.texture,
     textures.right_antenna_normal.texture
 )
-right_antenna.children[0].tint = 0x663366
+// right_antenna.children[0].tint = 0xE54646
 const right_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
+right_antenna_light.falloff = [0.75, 4, 10]
 
 const left_antenna1 = createSprite(
     textures.left_antenna1.texture,
@@ -46,65 +141,121 @@ const left_antenna2 = createSprite(
     textures.left_antenna2.texture,
     textures.left_antenna2_normal.texture
 )
-left_antenna2.children[0].tint = 0x663366
+// left_antenna2.children[0].tint = 0xE54646
 const left_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
+left_antenna_light.falloff = [0.75, 4, 10]
+
+const symbols = createSprite(
+    textures.symbols.texture,
+    textures.symbols_normal.texture
+)
+symbols.children[0].anchor.set(0.5, 0.5);
+symbols.children[1].anchor.set(0.5, 0.5);
+symbols.children[0].tint = 0xE54646;
+
+
+var dirLight = new PIXI.lights.DirectionalLight(0xffffff, .3, theremin_body_top)
+dirLight.falloff = [0.75, 13, 20]
+dirLight.lightHeight = 1.8
 
 theremin.addChild(
     theremin_null,
-    theremin_body_bottom,
-    left_antenna1,
     left_antenna2,
     right_antenna,
     theremin_body_top,
+    symbols,
+    knob_left,
+    knob_right,
+    switchRight,
     left_antenna_light,
-    right_antenna_light
+    right_antenna_light,
+    switchRight_light,
     )
 
-stage.addChild(theremin)
+stage.addChild(theremin,dirLight)
 
 $: {
 
     theremin_body_bottom.y = theremin_null.height-theremin_body_bottom.height
-    theremin_body_bottom.x = theremin_null.width*.17
-    theremin_body_top.y = theremin_null.height*.913-theremin_body_top.height
-    theremin_body_top.x = theremin_null.width*.17
+    theremin_body_bottom.x = theremin_null.width*.45
 
-    left_antenna1.scale = new PIXI.Point(1.5, 1.5);
-    left_antenna1.x = theremin_null.width*(.14 + .05 - .05*$tween0_1);
-    left_antenna1.y = theremin_null.height*.911-left_antenna1.height;
+    theremin_body_top.scale = {x:.5,y:.5}
+    theremin_body_top.y = theremin_null.height*.68
+    theremin_body_top.x = theremin_null.width*.22
 
-    left_antenna2.scale = new PIXI.Point(1.8, 1.8);
-    left_antenna2.x = theremin_null.width*(.005 + .05 - .05*$tween0_1)
-    left_antenna2.y = theremin_null.height*.925-left_antenna2.height
+    left_antenna2.scale = new PIXI.Point(.5, .5);
+    left_antenna2.x = theremin_null.width*(.005 + .05 - .05*$backOut0_1)
+    left_antenna2.y = theremin_null.height*.85-left_antenna2.height
 
-    left_antenna_light.x = theremin_null.width*(.1-.05*$tween0_1)
-    left_antenna_light.y = theremin_null.height*.85
-    left_antenna_light.brightness = .5+.7*Math.min(Math.max($WIDTH/1200, 0), 1)
+    left_antenna_light.x = left_antenna2.x
+    left_antenna_light.y = left_antenna2.y
+    left_antenna_light.brightness = constrain(2-$SCALE,{max:2.6,min:1})*(.2+.8*($backOut0_1))
 
-    right_antenna.scale.y = .61+.28*$tween0_1;
-    right_antenna.x = theremin_null.width*.9145
-    right_antenna.y = theremin_null.height*.81-right_antenna.height
+    right_antenna.scale.x = .5;
+    right_antenna.scale.y = .4+.1*$backOut0_1;
+    right_antenna.x = theremin_body_top.x+theremin_body_top.width*.897
+    right_antenna.y = theremin_body_top.y+theremin_body_top.height*.38-right_antenna.height
 
-    right_antenna_light.x = theremin_null.width*.9145
-    right_antenna_light.y = theremin_null.height*(.3-.1*$tween0_1)
-    right_antenna_light.brightness = .5+.7*Math.min(Math.max($WIDTH/1200, 0), 1)
+    right_antenna_light.x = right_antenna.x
+    right_antenna_light.y = right_antenna.y
+    right_antenna_light.brightness = constrain(2-$SCALE,{max:2.6,min:1})*(.2+.8*($backOut0_1))
+
+    knob_left.scale = {
+        x:.5+.2*$tweenKnobLeft,
+        y:.5+.2*$tweenKnobLeft
+    }
+    knob_left.x = theremin_null.width*.33035
+    knob_left.y = theremin_null.height*.8476
+    knob_left.interactive = ($active) ? true : false
+    knob_left.visible = ($WIDTH > 600) ? true : false
+
+    knob_right.scale = {
+        x:.5+.2*$tweenKnobRight,
+        y:.5+.2*$tweenKnobRight
+    }
+    knob_right.x = theremin_null.width*.679
+    knob_right.y = theremin_null.height*.8476
+    knob_right.interactive = ($active) ? true : false
+    knob_right.visible = ($WIDTH > 600) ? true : false
+    symbols.scale = {
+        x:.2+.35*$tweenKnobRight,
+        y:.2+.35*$tweenKnobRight
+    }
+    symbols.alpha = $tweenKnobRight
+    symbols.position = {
+        x:knob_right.x,
+        y:knob_right.y
+    }
+    symbols.visible = ($WIDTH > 600) ? true : false
+
+    switchRight.scale = {x:.5,y:.5}
+    switchRight.x = theremin_null.width*.7415
+    switchRight.y = theremin_null.height*.8476
+    switchRight.interactive = ($active) ? true : false
+    switchRight.visible = ($WIDTH > 600) ? true : false
+    // switchRight_light.x = switchRight.x
+    // switchRight_light.y = switchRight.y
+    // switchRight_light.brightness = .1+.8*constrain($CANVASWIDTH/1200,{min:0,max:1})
     
-    if(textures.theremin_null.texture.width/textures.theremin_null.texture.height > $WIDTH/$HEIGHT){
-        theremin.width = $WIDTH*.88
+    if(textures.theremin_null.texture.width/textures.theremin_null.texture.height > $CANVASWIDTH/$CANVASHEIGHT){
+        theremin.width = $CANVASWIDTH*.9
         theremin.scale.y = theremin.scale.x
     }else{
-        theremin.height = $HEIGHT*.88
+        theremin.height = $CANVASHEIGHT*.9
         theremin.scale.x = theremin.scale.y
     }
 
+    theremin.x = ($CANVASWIDTH - theremin.width)*.48
+    theremin.y = ($CANVASHEIGHT - theremin.height)*.5
+
     if($WIDTH<600){
-        theremin.width = $WIDTH-30
-        theremin.x = ($WIDTH - theremin.width)*.48
+        theremin.width = $CANVASWIDTH-32
+        theremin.x = ($CANVASWIDTH - theremin.width)*.48
         theremin.scale.y = theremin.scale.x
+        theremin.y = ($CANVASHEIGHT - theremin.width*.635*(.2+.8*$sineInOut0_1) - theremin.height)*.8
     }
 
-    theremin.x = ($WIDTH - theremin.width)*.48
-    theremin.y = ($HEIGHT - theremin.height)*.4
+    theremin_body_top.children[0].texture = ($WIDTH>600) ? textures.theremin_body_top.texture : textures.theremin_body_top_mobile.texture
 
     thereminPos.set({
         x:theremin.x,
@@ -112,43 +263,84 @@ $: {
         width:theremin.width,
         height:theremin.height
     })
+
+    dirLight.target = theremin_body_top
+    dirLight.brightness = constrain(2-$SCALE,{max:.3,min:.15})
     
-    // let blurFilter = stage.filters[0]
-    // blurFilter.blur = 0 + $tween0_1 * 4
-    // blurFilter.enabled = (blurFilter.blur > 0) ? true : false
 }
 
-
-// Values depending on when the scene is active
+// Reset Dragged Value when Pointer is Up
 $: {
-    if($active === true){
-
-        if($tween0_1 === 0){
-            tween0_1.set(1)
-        }
-
-        if(detectCollision($mousePos,left_antenna2) && left_antenna2.children[0].tint !== 0xffffff){
-            left_antenna2.children[0].tint = 0xffffff
-        }
-        if(!detectCollision($mousePos,left_antenna2) && left_antenna2.children[0].tint !== 0x663366){
-            left_antenna2.children[0].tint = 0x663366
-        }
-
-        if(detectCollision($mousePos,right_antenna) && right_antenna.children[0].tint !== 0xffffff){
-            right_antenna.children[0].tint = 0xffffff
-        }
-        if(!detectCollision($mousePos,right_antenna) && right_antenna.children[0].tint !== 0x663366){
-            right_antenna.children[0].tint = 0x663366
-        }
-
-    }else{
-
-        if($tween0_1 === 1){
-            tween0_1.set(0)
-        }
-
+    if($globalPointerUp){
+        dragged.set(null)
     }
+}
+
+// Active/Inactive Tweens
+$: {
+    if($active){
+        if($backOut0_1 === 0){
+             backOut0_1.set(1)
+        }
+        if($sineInOut0_1 === 0){
+             sineInOut0_1.set(1)
+        }
+        // if($pulse0_1 === 0){
+        //     pulse0_1.set(1)
+        // }
+    }
+    if(!$active){
+        if($backOut0_1 === 1){
+             backOut0_1.set(0)
+        }
+        if($sineInOut0_1 === 1){
+             sineInOut0_1.set(0)
+        }
+        // if($pulse0_1 === 0){
+        //     pulse0_1.set(1)
+        // }
+        // if($pulse0_1 === 1){
+        //     pulse0_1.set(0)
+        // }
+    } 
+}
+
+// Rotation Controls
+$:{
+    knob_left.rotation = (-0.9 + 1.8*(1-Math.abs($volumeVal/-48)) * $backOut0_1) * Math.PI
+    knob_right.rotation = (-0.9 + 1.8*((oscillators.indexOf($oscillatorType))/(oscillators.length-1)) * $backOut0_1) * Math.PI
     
+    if($dragged){
+        let percent = calcRotation($dragged.element,$canvasMousePos).percent
+        if($dragged.id === 'vol'){
+            volumeVal.set(-48+48*percent)
+            knob_left.children[0].tint = 0xffffff
+            if($tweenKnobLeft === 0){
+                tweenKnobLeft.set(1)
+            }
+        }
+        if($dragged.id === 'osc'){
+            let inc = 1/oscillators.length
+            let steppedPercent = constrain(Math.floor(percent/inc),{min:0,max:18})
+            oscillatorType.set(oscillators[steppedPercent])
+            knob_right.children[0].tint = 0xffffff
+            if($tweenKnobRight === 0){
+                tweenKnobRight.set(1)
+            }
+        }
+    }else if(!$hovered){
+        knob_left.children[0].tint = 0x999999
+        knob_right.children[0].tint = 0x999999
+    }
+
+    if(!$dragged){
+        if($tweenKnobLeft === 1){
+            tweenKnobLeft.set(0)
+        }
+        if($tweenKnobRight === 1){
+            tweenKnobRight.set(0)
+        }
+    }
 }
 
 loaded.set(true)
