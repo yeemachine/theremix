@@ -32,7 +32,7 @@ const masterCompressor = new Tone.Compressor({
     attack : 0.003 ,
     knee : 30
 });
-const masterAnalyser = new Tone.Analyser('waveform', 128);
+const masterAnalyser = new Tone.Analyser('waveform', 64);
 analyser.set(masterAnalyser)
 
 const gain1 = new Tone.Gain(0.1);

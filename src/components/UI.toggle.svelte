@@ -14,6 +14,7 @@ $: {
 
 const handleClick = () => {
     setting.set(!$setting)
+    console.log($setting)
     if(toggleDom){
         // toggleDom.querySelector('animate').beginElement()
     }
@@ -21,15 +22,17 @@ const handleClick = () => {
 
 </script>
 
-<container 
+<label 
 bind:this={toggleDom} 
-on:click={handleClick} 
 class='{
     ($setting) ? 'toggled' : ''} 
     {hide ?'hide':''} 
     {styles}'>
+    <input type="checkbox" checked={$setting ? true : false} on:change={handleClick} 
+>
+    <container>
     <div class="track">
-        <label>On</label>
+        <p>On</p>
         <div class="toggleButton">
             {#if icon}
                 <div class="icon">
@@ -48,18 +51,31 @@ class='{
             </path>
             </svg>
         </div>
-        <label>Off</label>
+        <p>Off</p>
     </div>
-</container>
+    </container>
+</label>
 
 <style>
-container.hide{
+input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin:0;
+    position: absolute;
+}
+input:focus + container{
+    outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
+	outline: 5px auto -webkit-focus-ring-color !important;
+}
+label.hide{
     opacity:0;
     pointer-events:none;
 }
-container:hover{
+label:hover{
         cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
-    }
+}
     
 container{
     display:flex;
@@ -73,14 +89,18 @@ container{
     transition:background-color .25s, opacity .25s;
     pointer-events: all;
 }
-container.toggled{
+:global(body.user-is-tabbing container:focus) {
+	outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
+	outline: 5px auto -webkit-focus-ring-color !important;
+}
+.toggled container{
     background:#E54646;
 }
 .liquidCircle path{
     fill:rgba(255,248,228,1);
     opacity:0.3;
 }
-container.toggled .liquidCircle path{
+.toggled container .liquidCircle path{
     opacity:1;
 }
 container:hover .liquidCircle path{
@@ -94,7 +114,7 @@ container:hover .liquidCircle path{
     transform: translate(-33px,0px);
     transition: transform .25s;
 }
-container.toggled .track{
+.toggled container .track{
     transform: translate(21px,0px)
 }
 .toggleButton{
@@ -103,15 +123,15 @@ container.toggled .track{
     width:46px;
     height:46px;
 }
-label{
+p{
     display:inline-block;
     color:#FFF8E4;
     font-size:12px;
 }
-label:first-child{
+p:first-child{
     margin-right: 16px;
 }
-label:last-child{
+p:last-child{
     margin-left: 10px;
     opacity:0.5;
 }

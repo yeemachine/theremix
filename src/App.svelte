@@ -9,21 +9,8 @@
 	let containerHeight,containerWidth
 </script>
 
-<svelte:window 
-bind:innerWidth = {containerWidth} 
-bind:innerHeight = {containerHeight} 
-/> 
-
-<main>
-	<Canvas/>
-	<Settings/>
-	<UI/>
-	<Tone/>
-	<Webcam/>
-	<PoseNet/>
-</main>
-
 <style>
+
 	@font-face {
 	font-family: "Whirly Birdie";
 	src: url("https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdieGX.ttf?v=1588569607311")
@@ -48,10 +35,13 @@ bind:innerHeight = {containerHeight}
 		format("woff2");
 	}
 
-	@font-face {
-	font-family: "Nicholson Gothic";
-	src: url("http://hootalex.github.io/type/nicholson/NicholsonGothic-Regular.otf")
-		format("otf");
+	@keyframes -global-animateGlyph {
+	0%   { font-variation-settings: "anim" 100; }
+	100% { font-variation-settings: "anim" 200; }
+	}
+
+	@keyframes -global-appear {
+	to   { opacity: 1; }
 	}
 
 	/* Master colors */
@@ -68,13 +58,14 @@ bind:innerHeight = {containerHeight}
 	--wood: #AD6C2F;
 	--navy: #1D3767;
 	--offwhite: #FFF8E4;
-	--crimson: #990000;
+	--crimson: #E54646;
+	--charcoal: #3C3C3C;
 	--radius: 45px;
 	}
 
 	:global(html), :global(body) {
 	font-family: "Whirly Birdie";
-	background-color: black;
+	background-color: var(--crimson);
 	font-variation-settings: "wght" 90, "wdth" 120, "ital" 0;
 	margin:0;
 	padding:0;
@@ -83,6 +74,13 @@ bind:innerHeight = {containerHeight}
 	overflow:hidden;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	}
+	:global(body){
+	background-color: var(--black);
+	}
+	:global(button){
+		background: transparent;
+    	border: none;
 	}
 		
 	main {
@@ -97,4 +95,40 @@ bind:innerHeight = {containerHeight}
 		background:black;
 		cursor:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor1.svg?v=1587279853708), auto;
 	}
+
+	:global(button){
+		padding:0;
+	}
+
+	/* a subtle focus style for keyboard-input elements */
+	:global(.text-input:focus) {
+	outline: 1px solid #aaa; /* Adjust to suit your tastes */
+	}
+
+	/* no outline for non-keyboard-inputs elements */
+	:global(button:focus),
+	:global(label:focus),
+	:global(select:focus) {
+	outline: none;
+	}
+
+	:global(body.user-is-tabbing *:focus) {
+	outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
+	outline: 5px auto -webkit-focus-ring-color !important;
+	}
 </style>
+
+<svelte:window 
+bind:innerWidth = {containerWidth} 
+bind:innerHeight = {containerHeight} 
+/> 
+
+<main>
+	<Canvas/>
+	<Settings/>
+	<UI/>
+	<Tone/>
+	<Webcam/>
+	<PoseNet/>
+</main>
+

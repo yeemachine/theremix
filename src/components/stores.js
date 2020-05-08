@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store';
 export const active = writable(false);
 export const loaded = writable(false);
+export const coverLoaded = writable(false);
+export const manual = writable(false);
 export const camera = writable(false);
 export const videoReady = writable(null);
 export const WIDTH = writable(2400/2);

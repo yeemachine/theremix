@@ -1,5 +1,5 @@
 <script>
-import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride,TIME} from './stores.js'
+import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride} from './stores.js'
 import {getDistance,getMidpoint} from './helpers.js'
 import { tweened } from 'svelte/motion';
 import {constrain} from './helpers.js';
@@ -172,24 +172,35 @@ let bgLights = {
 }
 
 const fps = 14
+let audioArr = [0,0]
 let frameCount = 0
+let TIME = 0
 let frameInterval = 4 //how much to slow fps
 
 const draw = () => {
-    TIME.update(n => n + .01)
+    TIME+=.01
     frameCount += 1
 
-        if(analyser && frameCount % frameInterval === 0){
-            const audioArr = createAudioPoints($analyser.getValue())
+        if(analyser){
+            if(frameCount % frameInterval === 0){
+                audioArr = createAudioPoints($analyser.getValue())
+            }
             graphics.clear();
             graphics.lineStyle(2,0xE54646);
-            graphics.lineAlpha = (!$active && $WIDTH > 600) ? Math.abs(Math.sin($TIME*5)) : $sineInOut0_1
-            audioArr.forEach((e,i)=>{
+            // let opacity = (!$active && $WIDTH > 600) ? constrain((Math.sin(TIME*5)),{min:0,max:1})
+            //         : 1
+            // let opacityStepped = (opacity>.4) ? .7 : .3
+            // graphics.lineAlpha = opacityStepped
+            graphics.lineAlpha = (!$active && $WIDTH > 600) ? Math.abs(Math.sin(TIME*5)) : 1
+            if(audioArr){
+                audioArr.forEach((e,i)=>{
                 if(i===0){
                     graphics.moveTo(e.x,e.y)
                 }
                 graphics.lineTo(e.x,e.y);
-            })
+                })
+            }
+            
         }
 
         if($poseNetRes && $videoReady){
@@ -232,8 +243,8 @@ const draw = () => {
             bgGraphics.clear()
             bgLights.left.forEach((e,i)=>{
 
-                let opacity = (e.pause) ? constrain((Math.sin($TIME*e.speed)),{min:0,max:1})
-                    : Math.abs(Math.sin($TIME*e.speed))
+                let opacity = (e.pause) ? constrain((Math.sin(TIME*e.speed)),{min:0,max:1})
+                    : Math.abs(Math.sin(TIME*e.speed))
                 let opacityStepped = (opacity>e.step) ? .7 : 0
                     
                 bgGraphics.beginFill(e.color,opacityStepped)

@@ -16,7 +16,7 @@ import PIXIGraphics from './PIXI.graphics.svelte';
 import Play from './UI.play.svelte'
 import Text from './PIXI.text.svelte'
 import Title from './UI.title.svelte'
-
+import Manual from './UI.manual.svelte'
 
 let containerWidth,
 canvasContainer, containerHeight;
@@ -28,7 +28,7 @@ blurFilter.enabled = false
 Stage.filterArea = App.screen;
 Stage.filters = [blurFilter];
 let scale
-let maxWidth = 1600
+let maxWidth = 1440
 const tween0_1 = tweened(0, {
     duration: 700,
     easing: backOut
@@ -123,7 +123,8 @@ class="canvasContainer"
 style="width:{containerWidth}px;height:{containerHeight}px"
 >
     <Title/>
-    <!-- <Play/> -->
+    <Manual/>
+    
     {#await Resources}
 
         <!-- Loading -->

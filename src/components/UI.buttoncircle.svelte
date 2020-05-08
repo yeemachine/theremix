@@ -1,22 +1,23 @@
 <script>
 export let icon
 export let setting
-export let hide = true
+export let hide = false
 export let styles = ''
 export let selected = false
+export let tabindex = 0
 const handleClick = () => {
     setting.set(!$setting)
 }
 </script>
 
-<container class="{hide ? 'hide':''} {selected?'selected':''}" style={styles} on:click={handleClick}>
+<button tabindex={tabindex} class="{hide ? 'hide':''} {selected?'selected':''}" style={styles} on:click={handleClick}>
         {#if icon}
             <svelte:component this={icon} />
         {/if}
-</container>
+</button>
 
 <style>
-    container{
+    button{
         width:56px;
         height:56px;
         background:rgba(255,248,228,.3);
@@ -27,14 +28,14 @@ const handleClick = () => {
         justify-content: center;
         pointer-events: all;
     }
-    container.selected{
+    button.selected{
         background:rgba(255,248,228,1);
     }
-    container.hide{
+    button.hide{
         opacity:0;
         pointer-events:none;
     }
-    container:hover{
+    button:hover{
         background:rgba(255,248,228,1);
        cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
     }
