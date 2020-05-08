@@ -14,22 +14,25 @@ $: {
 
 const handleClick = () => {
     setting.set(!$setting)
+    console.log($setting)
     if(toggleDom){
-        toggleDom.querySelector('animate').beginElement()
+        // toggleDom.querySelector('animate').beginElement()
     }
 }
 
 </script>
 
-<container 
+<label 
 bind:this={toggleDom} 
-on:pointerup={handleClick} 
 class='{
     ($setting) ? 'toggled' : ''} 
     {hide ?'hide':''} 
     {styles}'>
+    <input type="checkbox" checked={$setting ? true : false} on:change={handleClick} 
+>
+    <container>
     <div class="track">
-        <label>On</label>
+        <p>On</p>
         <div class="toggleButton">
             {#if icon}
                 <div class="icon">
@@ -38,28 +41,41 @@ class='{
             {/if}
             <svg class="liquidCircle" width="69" height="46" viewBox="0 0 69 46" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill="#FFC52F" d="M11 23C11 29.8746 12.8755 34.4024 17.7365 39.2635C22.5976 44.1245 27.1254 46 34 46C40.8746 46 45.4024 44.1245 50.2635 39.2635C55.1245 34.4024 57 29.8746 57 23C57 16.1254 55.1245 11.5976 50.2635 6.73654C45.4024 1.87549 40.8746 2.85048e-07 34 0C27.1254 -2.85048e-07 22.5976 1.87549 17.7365 6.73654C12.8755 11.5976 11 16.1254 11 23Z">
-                <animate 
+                <!-- <animate 
                     attributeName="d" 
                     begin="0s"
                     dur="400ms" 
                     fill="freeze"
                     keyTimes="0;0.25;1"
-                    values={circlePathValues}/>
+                    values={circlePathValues}/> -->
             </path>
             </svg>
         </div>
-        <label>Off</label>
+        <p>Off</p>
     </div>
-</container>
+    </container>
+</label>
 
 <style>
-container.hide{
+input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin:0;
+    position: absolute;
+}
+input:focus + container{
+    outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
+	outline: 5px auto -webkit-focus-ring-color !important;
+}
+label.hide{
     opacity:0;
     pointer-events:none;
 }
-container:hover{
-        cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587345471366) 21 20, pointer;
-    }
+label:hover{
+        cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+}
     
 container{
     display:flex;
@@ -73,14 +89,18 @@ container{
     transition:background-color .25s, opacity .25s;
     pointer-events: all;
 }
-container.toggled{
+:global(body.user-is-tabbing container:focus) {
+	outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
+	outline: 5px auto -webkit-focus-ring-color !important;
+}
+.toggled container{
     background:#E54646;
 }
 .liquidCircle path{
     fill:rgba(255,248,228,1);
     opacity:0.3;
 }
-container.toggled .liquidCircle path{
+.toggled container .liquidCircle path{
     opacity:1;
 }
 container:hover .liquidCircle path{
@@ -94,7 +114,7 @@ container:hover .liquidCircle path{
     transform: translate(-33px,0px);
     transition: transform .25s;
 }
-container.toggled .track{
+.toggled container .track{
     transform: translate(21px,0px)
 }
 .toggleButton{
@@ -103,15 +123,15 @@ container.toggled .track{
     width:46px;
     height:46px;
 }
-label{
+p{
     display:inline-block;
     color:#FFF8E4;
     font-size:12px;
 }
-label:first-child{
+p:first-child{
     margin-right: 16px;
 }
-label:last-child{
+p:last-child{
     margin-left: 10px;
     opacity:0.5;
 }

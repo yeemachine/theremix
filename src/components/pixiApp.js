@@ -1,18 +1,40 @@
+import {constrain} from './helpers.js';
+
 //PIXI Global Variables & Helper Functions
-export const App = new PIXI.Application(2400/3,1350/3)
+export const App = new PIXI.Application()
 export const Stage = (App.stage = new PIXI.display.Stage());
-Stage.addChild(new PIXI.display.Layer(PIXI.lights.diffuseGroup));
-Stage.addChild(new PIXI.display.Layer(PIXI.lights.normalGroup));
-Stage.addChild(new PIXI.display.Layer(PIXI.lights.lightGroup));
+
+export const diffuseLayer = new PIXI.display.Layer(PIXI.lights.diffuseGroup)
+export const normalLayer = new PIXI.display.Layer(PIXI.lights.normalGroup)
+export const lightLayer = new PIXI.display.Layer(PIXI.lights.lightGroup)
+export const graphicsGroup = new PIXI.display.Group(1,true)
+export const graphicsLayer = new PIXI.display.Layer(graphicsGroup)
+export const cursorGroup = new PIXI.display.Group(2,true)
+export const cursorLayer = new PIXI.display.Layer(cursorGroup)
+
+Stage.addChild(
+    diffuseLayer,
+    normalLayer,
+    lightLayer,
+    graphicsLayer,
+    cursorLayer);
 
 export const Loader = PIXI.loader
     .add(
-        "static_bg",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FStatic_BG.png?v=1584933516627"
+        "table",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstatic_light.png?v=1588712825397"
+    )
+    .add(
+        "static_dark",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbg_flat.png?v=1588451420532"
     )
     .add(
         "bg_normal",
-        "https://cdn.glitch.com/e352d3ca-2e03-47f1-acfd-675dff041f5f%2FNormalMap.png?v=1573974228592"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstatic_light_normal.png?v=1588480563148"
+    )
+    .add(
+        "table_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstatic_light_normal.png?v=1588486193784"
     )
     .add(
         "machine_right",
@@ -24,19 +46,11 @@ export const Loader = PIXI.loader
     )
     .add(
         "machine_left",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMachine_Left.png?v=1584933517080"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMachine_Left.png?v=1588391938150"
     )
     .add(
         "machine_left_normal",
         "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMachine_Left_Normal.jpg?v=1584933516036"
-    )
-    .add(
-        "table",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTable_normal.jpg?v=1584933515769"
-    )
-    .add(
-        "table_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTable_normal.jpg?v=1584933515769"
     )
     .add(
         "theremin_null",
@@ -48,47 +62,67 @@ export const Loader = PIXI.loader
     )
     .add(
         "theremin_body_bottom_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin_Body_Bottom_Normal.jpg?v=1585100297564"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin_Body_Bottom_Normal.png?v=1587842945032"
     )
     .add(
         "theremin_body_top",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin_Body_Top.png?v=1585101187057"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin%20Body.png?v=1588528060866"
+    )
+    .add(
+        "theremin_body_top_mobile",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin%20Body%20Mobile.png?v=1588526544079"
     )
     .add(
         "theremin_body_top_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin_Body_Top_Normal.jpg?v=1585100297463"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin%20Body%20Normal.png?v=1588526540068"
     )
     .add(
         "right_antenna",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Right.png?v=1585236174151"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FRight%20Antenna.png?v=1588409335861"
     )
     .add(
         "right_antenna_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Right_Normal.jpg?v=1585236174117"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FRight%20Antenna%20Normal.png?v=1588448733643"
     )
     .add(
         "left_antenna1",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Left1.png?v=1584933516264"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Left1.png?v=1588194921081"
     )
     .add(
         "left_antenna1_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Left1_Normal.jpg?v=1584933515645"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Left1_Normal.png?v=1588194921158"
     )
     .add(
         "left_antenna2",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Left2.png?v=1584933516405"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLeft%20Antenna.png?v=1588488019728"
     )
     .add(
         "left_antenna2_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAntenna_Left2_normal.jpg?v=1584933515750"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLeft%20Antenna%20Normal.png?v=1588488019570"
     )
     .add(
         "knob",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob.png?v=1584933515187"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob.png?v=1588538609478"
     )
     .add(
         "knob_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob_normal.jpg?v=1584933515376"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob_normal.png?v=1588538609649"
+    )
+    .add(
+        "switch_on",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch%20On.png?v=1588538609607"
+    )
+    .add(
+        "switch_off",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch%20Off.png?v=1588538609551"
+    )
+    .add(
+        "switch_off_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch_Off_Normal.png?v=1588538609780"
+    )
+    .add(
+        "switch_on_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch_On_Normal.png?v=1588538609821"
     )
     .add(
         "solid2x2",
@@ -102,6 +136,56 @@ export const Loader = PIXI.loader
         "normal2x2",
         "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2F2X2_Normal.png?v=1585365268937"
     )
+    .add(
+        "theremin_mobile",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin_Body_Top_Mobile.png?v=1588539244259"
+    )
+    .add(
+        "theremin_mobile_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin_Body_Top_Mobile_Normal.png?v=1588538333747"
+    )
+    .add(
+        "video",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMonitor.png?v=1588141330638"
+    )
+    .add(
+        "video_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMonitor%20Normal.png?v=1588141330688"
+    )
+    .add(
+        "wire1",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1.png?v=1588094588858"
+    )
+    .add(
+        "wire1_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1%20Normal.png?v=1588094588830"
+    )
+    .add(
+        "wire2",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2.png?v=1588094588879"
+    )
+    .add(
+        "wire2_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2%20Normal.png?v=1588130380900"
+    )
+    .add(
+        "wire3",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3.png?v=1588094589229"
+    )
+    .add(
+        "wire3_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3%20Normal.png?v=1588130380839"
+    )
+    .add(
+        "symbols",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSymbols.png?v=1588539581075"
+    )
+    .add(
+        "symbols_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSymbols%20Normal.png?v=1588539581021"
+    )
+
+    
     
 
 export const Resources = new Promise(
@@ -177,4 +261,24 @@ export const detectCollision = (position,pixiElement) => {
             && position.y < element_bounds.y + element_bounds.height
         ) ? true : false
     return collide
+}
+
+export const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
+    let normalizedPos = {
+        x:element.getBounds().x+element.width/2,
+        y:element.getBounds().y+element.height/2
+    }
+    let minAngle = min*Math.PI
+    let maxAngle = max*Math.PI
+    //Ugly Angle Correction
+    var angleRadians = Math.atan2(normalizedPos.y - mousePos.y, normalizedPos.x - mousePos.x)-0.5*Math.PI;
+    angleRadians = (angleRadians <= minAngle && angleRadians >= -5) ? angleRadians+=2*Math.PI : angleRadians
+    let value = (angleRadians/maxAngle)/(Math.abs(min)+Math.abs(max))
+    let percent = constrain((angleRadians/Math.PI+max)/(Math.abs(min)+Math.abs(max)),{min:0,max:1})
+
+    return {
+        radians:angleRadians, //returns rotation
+        percent:percent //returns between 0 and 1
+    }
+
 }

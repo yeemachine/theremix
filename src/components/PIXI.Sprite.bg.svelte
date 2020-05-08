@@ -2,80 +2,84 @@
 import {createSprite} from './pixiApp.js'
 import { tweened } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
-import {WIDTH,HEIGHT,thereminPos} from './stores.js'
+import {WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,thereminPos,machineLeftPos} from './stores.js'
 export let textures = null;
 export let stage = null;
 
-const tween0_1 = tweened(0, {
-    duration: 700,
-    easing: backOut
-});
-
 const bgContainer = new PIXI.Container();
-const bg = createSprite(textures.static_bg.texture,textures.bg_normal.texture)
-bg.children[0].tint = 0xE54646;
-const bgRatio = textures.static_bg.texture.width/textures.static_bg.texture.height
+const bg = createSprite(textures.static_dark.texture,textures.bg_normal.texture)
+bg.children[0].tint = 0x555555;
+const bgRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
 
 const machineLeft = createSprite(textures.machine_left.texture,textures.machine_left_normal.texture)
 const machineRight = createSprite(textures.machine_right.texture,textures.machine_right_normal.texture)
-
+machineLeft.children[0].tint = 0xFF8484
+machineRight.children[0].tint = 0xFF8484
+machineRight.alpha = .5
 
 $: {
-    if($WIDTH/$HEIGHT > bgRatio){
-        bg.width = $WIDTH
+    if($CANVASWIDTH/$CANVASHEIGHT > bgRatio){
+        bg.width = $CANVASWIDTH
         bg.scale.y = bg.scale.x
     }else{
-        bg.height = $HEIGHT
+        bg.height = $CANVASHEIGHT
         bg.scale.x = bg.scale.y
     }
     
     bg.position.set(
-    ($WIDTH*.5 - bg.width*.5), 
-    ($HEIGHT*.5 - bg.height*.5)
+    ($CANVASWIDTH*.5 - bg.width*.5), 
+    ($CANVASHEIGHT*.5 - bg.height*.5)
     );
-
     
-    machineLeft.width = ($WIDTH*.6)<$HEIGHT ? $WIDTH*.6 : $HEIGHT*.9
+    machineLeft.width = ($CANVASWIDTH*.6)<$CANVASHEIGHT ? $CANVASWIDTH*.6 : $CANVASHEIGHT*.9
     machineLeft.scale.y = machineLeft.scale.x
-    machineLeft.position.x = $WIDTH*.6<$HEIGHT 
-        ? $WIDTH*.1 - machineLeft.width*.15
-        : $WIDTH*.1 - machineLeft.width*.1
+    machineLeft.position.x = $CANVASWIDTH*.6<$CANVASHEIGHT 
+        ? $CANVASWIDTH*.1 - machineLeft.width*.15
+        : $CANVASWIDTH*.1 - machineLeft.width*.1
 
-    machineLeft.position.y = ($HEIGHT*.1)
+    let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.85 - machineLeft.height
+    machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
 
-    machineRight.width = ($WIDTH*.6)<$HEIGHT ? $WIDTH*.55 : $HEIGHT*.85
+    machineRight.width = ($CANVASWIDTH*.6)<$CANVASHEIGHT ? $CANVASWIDTH*.55 : $CANVASHEIGHT*.85
     machineRight.scale.y = machineLeft.scale.x
-    machineRight.position.x = (($WIDTH*.6)<$HEIGHT)
-        ? $WIDTH*.9 - machineRight.width*.48 
-        : $WIDTH*.9 - machineRight.width*.45
+    machineRight.position.x = (($CANVASWIDTH*.6)<$CANVASHEIGHT)
+        ? $CANVASWIDTH*.9 - machineRight.width*.48 
+        : $CANVASWIDTH*.9 - machineRight.width*.45
     machineRight.position.y = machineLeft.position.y * 1.3
 
     if($WIDTH>=900){
         machineRight.visible = true
+        machineLeft.alpha = .5
     }
     if($WIDTH >= 600 && $WIDTH < 900){
-        machineLeft.width = $WIDTH - 160
+        machineLeft.width = $CANVASWIDTH - 160
         machineLeft.scale.y = machineLeft.scale.x
         machineLeft.position.x = 80
-        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.85 - machineLeft.height
+        machineLeft.alpha = .5
+        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.95 - machineLeft.height
         machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
         machineRight.visible = false
     }
-    if($WIDTH < 600){ //Media Query
-        machineLeft.width = $WIDTH - 30
+    if($WIDTH < 600){
+        machineLeft.width = $CANVASWIDTH - 30
         machineLeft.scale.y = machineLeft.scale.x
         machineLeft.position.x = 15
-        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.85 - machineLeft.height
+        machineLeft.alpha = .5
+        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.95 - machineLeft.height
         machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
         machineRight.visible = false
     }
+
+    machineLeftPos.set({
+        x:machineLeft.x,
+        y:machineLeft.y,
+        width:machineLeft.width,
+        height:machineLeft.height
+    })
 
 }
 
-bgContainer.addChild(bg,machineRight,machineLeft)
+bgContainer.addChild(bg)
 stage.addChild(bgContainer)
 
-
-
-tween0_1.set(1)
 </script>

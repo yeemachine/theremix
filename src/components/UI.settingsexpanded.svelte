@@ -1,6 +1,6 @@
 <script>
 import {expandSettings,oscillatorType,scaleType} from './stores.js'
-import {scales,oscillators} from './presets.js'
+import {scales,oscillators} from './config.js'
 
 let selectedScale
 let selectedOsc

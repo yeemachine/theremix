@@ -1,16 +1,27 @@
 <script>
-import {loaded,thereminPos,active,mousePos,poseNetRes,WIDTH,HEIGHT,videoReady} from './stores.js'
+import {loaded,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride} from './stores.js'
+import {constrain} from './helpers.js'
 import { onMount } from 'svelte';
 import { tweened,spring } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
 import {createGradientTexture} from './pixiApp.js'
+import {posenetOptions} from './config.js'
+
 export let stage = null
 export let app = null;
 
+//Initialize Mouse Pos
+canvasMousePos.set({
+        x:($WIDTH > 600) ? $thereminPos.x + $thereminPos.width*.12 : $thereminPos.x + $thereminPos.width*.12,
+        y:($WIDTH > 600) ? $thereminPos.y + $thereminPos.height*.7 : $thereminPos.y + $thereminPos.height*.7
+})
+
 let htmlCursor
-const cursorLight = new PIXI.lights.PointLight(0xff7f00,3);
-const gradientTexture = createGradientTexture(0, 12, app.renderer.resolution);
-const gradientTexture2 = createGradientTexture(0, 24, app.renderer.resolution);
+const cursorLight = new PIXI.lights.PointLight(0xff7f00,2);
+cursorLight.falloff = [0.75, 3, 10]
+
+const gradientTexture = createGradientTexture(0, 12*$SCALE, app.renderer.resolution);
+const gradientTexture2 = createGradientTexture(0, 24*$SCALE, app.renderer.resolution);
 
 const particleContainer = new PIXI.particles.ParticleContainer(5000, {
   scale: true,
@@ -24,7 +35,7 @@ const emitter = new PIXI.particles.Emitter(particleContainer, [gradientTexture],
   emit:false,
   alpha: {
     start: 0.8,
-    end: 0.15
+    end: 0.1
   },
   scale: {
     start: 1,
@@ -55,8 +66,8 @@ const emitter = new PIXI.particles.Emitter(particleContainer, [gradientTexture],
     max: 0
   },
   lifetime: {
-    min: 2,
-    max: 2
+    min: 1,
+    max: 1
   },  
   blendMode: "normal",
   frequency: 0.0008,
@@ -110,7 +121,7 @@ const emitterRight = new PIXI.particles.Emitter(particleContainer, [gradientText
   blendMode: "normal",
   frequency: 0.0008,
   emitterLifetime: -1,
-  maxParticles: 5000,
+  maxParticles: 2500,
   pos: {x:0,y:0},
   addAtBack: false,
   spawnType: "point"
@@ -158,107 +169,143 @@ const emitterLeft = new PIXI.particles.Emitter(particleContainer, [gradientTextu
   blendMode: "normal",
   frequency: 0.0008,
   emitterLifetime: -1,
-  maxParticles: 5000,
+  maxParticles: 2500,
   pos: {x:0,y:0},
   addAtBack: false,
   spawnType: "point"
 });
 
-let springMousePos=null
-let springLeftPos=null
-let springRightPos=null
+let springLeftPos = spring(
+{
+  x:($WIDTH > 600) ? $thereminPos.x + $thereminPos.width*.12 : $CANVASWIDTH*.7,
+  y:($WIDTH > 600) ? $thereminPos.y + $thereminPos.height*.7 : $CANVASHEIGHT*.1
+}, 
+{
+  stiffness: 0.3,
+  damping: 0.8
+}); 
 
-$:{
-  //Initilizes spring position relative to where Theremin Sprite is
-  if($thereminPos.x>0 && !springMousePos){
-
-        mousePos.set({
-          x:$thereminPos.x + $thereminPos.width*.12,
-          y:$thereminPos.y + $thereminPos.height*.7
-        })
-
-        springMousePos = spring(
-        {
-          x:$thereminPos.x + $thereminPos.width*.12,
-          y:$thereminPos.y + $thereminPos.height*.7
-        }, 
-        {
-          stiffness: 0.3,
-          damping: 0.8
-        }); 
-
-        springLeftPos = spring(
-        {
-          x:$thereminPos.x + $thereminPos.width*.12,
-          y:$thereminPos.y + $thereminPos.height*.7
-        }, 
-        {
-          stiffness: 0.05,
-          damping: 0.65
-        }); 
-
-        springRightPos = spring(
-        {
-          x:$thereminPos.x + $thereminPos.width*.88,
-          y:$thereminPos.y + $thereminPos.height*.7
-        }, 
-        {
-          stiffness: 0.05,
-          damping: 0.65
-        }); 
-
-    } 
-}
-
-
+let springRightPos = spring(
+{
+  x:$thereminPos.x + $thereminPos.width*.88,
+  y:$thereminPos.y + $thereminPos.height*.7
+}, 
+{
+  stiffness: 0.3,
+  damping: 0.8
+}); 
 
 $: {
   //Handles toggling of gesture controls vs mouse controls
-   if(springMousePos && springLeftPos && springRightPos){
-      if($poseNetRes && $videoReady){
 
+      if($poseNetRes && $videoReady && $mouseOverride>.1){
+        let leftWrist = {
+          pose:$poseNetRes[9],
+          x:0,
+          y:0
+        }
+        let rightWrist = {
+          pose:$poseNetRes[10],
+          x:0,
+          y:0,
+        }
         emitter.emit = false
 
-        if($poseNetRes[9].score > .3){
-          emitterLeft.emit = true
-          springLeftPos.set($poseNetRes[9].position)
-          let xScaled = $springLeftPos.x/$videoReady.videoWidth * $WIDTH
-          let yScaled = $springLeftPos.y/$videoReady.videoHeight * $HEIGHT
-          emitterLeft.updateOwnerPos(xScaled, yScaled);
-        }else{
-          emitterLeft.emit = false
+        if(rightWrist.pose.score > posenetOptions.minPartConfidence){
+          if($WIDTH>600){
+              //Don't Interpolate on mobile
+              springRightPos.set(rightWrist.pose.position)
+          }
+          rightWrist.x = ($WIDTH > 600)
+            ? $springRightPos.x/$videoReady.videoWidth * $CANVASWIDTH
+            : rightWrist.pose.position.x/$videoReady.videoWidth * $CANVASWIDTH
+          rightWrist.y = ($WIDTH > 600) 
+            ? $springRightPos.y/$videoReady.videoHeight * $CANVASHEIGHT
+            : rightWrist.pose.position.y/$videoReady.videoHeight * $thereminMobilePos.y
+          rightWrist.audioX = constrain((rightWrist.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1})
+          rightWrist.audioY = constrain(rightWrist.y/($thereminPos.x+$thereminPos.height),{min:0,max:1})
+          emitterRight.updateOwnerPos(rightWrist.x, rightWrist.y);
         }
 
-        if($poseNetRes[10].score > .3){
+        if(leftWrist.pose.score > posenetOptions.minPartConfidence){
+          if($WIDTH>600){
+            //Don't Interpolate on mobile
+            springLeftPos.set(leftWrist.pose.position)
+          }
+          leftWrist.x = ($WIDTH > 600) 
+            ? $springLeftPos.x/$videoReady.videoWidth * $CANVASWIDTH 
+            : leftWrist.pose.position.x/$videoReady.videoWidth * $CANVASWIDTH 
+          leftWrist.y = ($WIDTH > 600) 
+            ? $springLeftPos.y/$videoReady.videoHeight * $CANVASHEIGHT
+            : leftWrist.pose.position.y/$videoReady.videoHeight * $thereminMobilePos.y
+          leftWrist.audioX = constrain((leftWrist.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1})
+          leftWrist.audioY = constrain(leftWrist.y/($thereminPos.x+$thereminPos.height),{min:0,max:1})
+          emitterLeft.updateOwnerPos(leftWrist.x, leftWrist.y);
+        }
+
+        if(leftWrist.pose.score>posenetOptions.minPartConfidence && rightWrist.pose.score>posenetOptions.minPartConfidence){
+          //both hands
           emitterRight.emit = true
-          springRightPos.set($poseNetRes[10].position)
-          let xScaled = $springRightPos.x/$videoReady.videoWidth * $WIDTH
-          let yScaled = $springRightPos.y/$videoReady.videoHeight * $HEIGHT
-          emitterRight.updateOwnerPos(xScaled, yScaled);
-        }else{
+          emitterLeft.emit = true
+          audioControls.set({
+            x:rightWrist.audioX,
+            y:leftWrist.audioY
+          })
+        }else if(leftWrist.pose.score > rightWrist.pose.score){
+          //left hand
           emitterRight.emit = false
+          if(leftWrist.pose.score > posenetOptions.minPartConfidence){
+            emitterLeft.emit = true
+            audioControls.set({
+              x:leftWrist.audioX,
+              y:leftWrist.audioY
+            })
+          }
+        }else if(leftWrist.pose.score < rightWrist.pose.score){
+          //right hand
+          if(rightWrist.pose.score > posenetOptions.minPartConfidence){
+            emitterRight.emit = true
+            audioControls.set({
+              x:rightWrist.audioX,
+              y:rightWrist.audioY
+            })
+          }
+          emitterLeft.emit = false
+        }else{
+          //no hands
+          emitterRight.emit = false
+          emitterLeft.emit = false
         }
         
       }else{
         emitter.emit = true
         emitterRight.emit = false
         emitterLeft.emit = false
+
+        cursorLight.brightness = 2*constrain(2-$SCALE,{max:1,min:0.2})
+        if($canvasMousePos.y > $thereminMobilePos.y && $WIDTH < 600 || $dragged){
+          
+        }else{
+          emitter.updateOwnerPos($canvasMousePos.x, $canvasMousePos.y);
+          cursorLight.position.set($canvasMousePos.x,$canvasMousePos.y)
+          audioControls.set({
+            x:constrain(($canvasMousePos.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1}),
+            y:constrain($canvasMousePos.y/($thereminPos.x+$thereminPos.height),{min:0,max:1})
+          })
+        }
+
       }
 
-      springMousePos.set($mousePos)
-      emitter.updateOwnerPos($springMousePos.x, $springMousePos.y);
-      cursorLight.position.set($springMousePos.x,$springMousePos.y)
-      cursorLight.brightness = (.5+2*Math.min(Math.max($WIDTH/1200, 0), 1))
+     
          
   }
 
-}
-
 stage.addChild(cursorLight,particleContainer)
+
 
 </script>
 
-<container bind:this={htmlCursor} style='opacity:{springMousePos ? 1 : 0};
+<container bind:this={htmlCursor} style='opacity:{mousePos ? 1 : 0};
   transform:translate({$mousePos.x-26}px, {$mousePos.y-26}px)'>
   <div>
     <span>2</span>

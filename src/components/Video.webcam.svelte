@@ -6,8 +6,9 @@ let videoObj;
 const getStream = () => {
   const constraints = {
     video: {
-      facingMode: "user"
-      
+      facingMode: "user",
+      width: { min: 480, ideal: 480, max: 1920 },
+      height: { min: 400, ideal: 480 },
     },
     audio: false
   };
@@ -22,7 +23,7 @@ const getStream = () => {
           handleStream(stream);
         })
         .catch(err => {
-          alert(err);
+          alert('Please allow camera to use gesture controls.');
           setTimeout(()=>{
             camera.set(false)
             videoReady.set(null)

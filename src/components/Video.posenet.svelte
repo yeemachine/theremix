@@ -1,19 +1,7 @@
 <script>
 import {videoReady,poseNetRes,mousePos} from './stores.js'
-const options = {
-  architecture: "MobileNetV1",
-  imageScaleFactor: 0.3,
-  outputStride: 16,
-  flipHorizontal: true,
-  minConfidence: 0.8,
-  maxPoseDetections: 1,
-  scoreThreshold: 0.5,
-  nmsRadius: 20,
-  detectionType: "single",
-  inputResolution: 513,
-  multiplier: 0.5,
-  quantBytes: 2
-};
+import {smooth,getDistance} from './helpers.js'
+import {posenetOptions} from './config.js'
 
 let net;
 posenet.load().then(e=>{
@@ -22,13 +10,18 @@ posenet.load().then(e=>{
 
 async function estimatePoseOnImage() {
     if($videoReady){
-        const pose = await net.estimateSinglePose($videoReady, options);
-        if(pose.score>0){
+        const pose = await net.estimateMultiplePoses($videoReady, posenetOptions);
+        if(pose.length>0){
+            if(pose[0].score>posenetOptions.minPoseConfidence){
             // console.log(pose)
-            poseNetRes.set(pose.keypoints)
-        }else{
-            poseNetRes.set(null)
+            let armspan = getDistance(pose[0].keypoints[9].position,pose[0].keypoints[10].position)
+            let smoothPose = smooth(pose[0],armspan)
+            poseNetRes.set(smoothPose.keypoints)
+            }else{
+                poseNetRes.set(null)
+            }
         }
+        
         requestAnimationFrame(estimatePoseOnImage);
     }else{
         poseNetRes.set(null)
