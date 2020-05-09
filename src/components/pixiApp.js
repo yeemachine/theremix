@@ -184,6 +184,14 @@ export const Loader = PIXI.loader
         "symbols_normal",
         "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSymbols%20Normal.png?v=1588539581021"
     )
+    .add(
+        "logo",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLogo.png?v=1588975850466"
+    )
+    .add(
+        "logo_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLogo_normal.png?v=1588978041228"
+    )
 
     
     

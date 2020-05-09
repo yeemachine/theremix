@@ -6,6 +6,7 @@ export let color = '#E54646'
 
 <svg 
 class="{loaded ? 'loaded' : ''} {hide ? 'hide' : ''}"
+preserveAspectRatio="xMidYMin slice"
 width="400" height="406" viewBox="0 0 400 406" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 <path d="M360.5,84.1l36.8,161.2c0.8,3.5,0,7.1-2.3,9.9L292,384.5c-2.2,2.8-5.6,4.4-9.1,4.4H117.6
@@ -22,8 +23,8 @@ width="400" height="406" viewBox="0 0 400 406" fill="none" xmlns="http://www.w3.
 
 <style>
 svg{
-    height:100%;
-    width:100%;
+    height:95%;
+    width:95%;
     transition: .5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -66,13 +67,16 @@ svg.hide path:nth-child(1),svg.hide path:nth-child(2){
         ;
     z-index: 2
 }
+
 .loaded .triangle{
     opacity: 1;
 }
+
 svg.loaded:hover .triangle{
     transform:scale(1.3);
     fill: var(--offwhite);
 }
+
 svg.loaded path:nth-child(1){
     animation: 
         rotate 10s linear infinite,
@@ -80,7 +84,6 @@ svg.loaded path:nth-child(1){
     animation-fill-mode: forwards;
     animation-play-state: start;
     /* transition:stroke-dashoffset 2s cubic-bezier(0.46, 0.03, 0.52, 0.96); */
-    
 }
 svg.loaded path:nth-child(2){
     animation: 

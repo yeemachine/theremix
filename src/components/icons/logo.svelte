@@ -29,6 +29,7 @@ svg{
     -o-user-select: none;
     user-select: none;
 }
+
 path{
     transition: .5s linear;
 }
@@ -62,4 +63,5 @@ svg path:nth-child(9){
 svg.hide path{
     opacity:0;
 }
+
 </style>

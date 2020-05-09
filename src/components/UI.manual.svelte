@@ -53,7 +53,7 @@ $:{
 	</span>
 		<div class="slide-content {(currentSlide === 0 && $loaded) ? 'current' : ''}" >
 			<div class="graphic">
-				<h2>Basic<br>Controls</h2>
+				<h2>Basics</h2>
 				<div class="svg">
 					<BasicControls/>
 				</div>
@@ -63,7 +63,7 @@ $:{
 		</div> 
 		<div class="slide-content {(currentSlide === 1 && $loaded) ? 'current' : ''}">
 			<div class="graphic">
-				<h2>Gesture<br>Controls</h2>
+				<h2>Gesture<br>Control</h2>
 				<div class="svg">
 				<BasicControls/>
 				</div>
@@ -106,8 +106,6 @@ $:{
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		-webkit-backface-visibility: hidden;
-		-moz-backface-visibility: hidden;
 		-webkit-transform: translate3d(0, 0, 0);
 		-moz-transform: translate3d(0, 0, 0);
 		transition: transform .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);

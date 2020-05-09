@@ -3,7 +3,7 @@ import { onMount } from 'svelte';
 import { tweened,spring } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
 import {constrain} from './helpers.js'
-import {loaded,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,expandSettings,globalPointerUp,dragged,mouseOverride} from './stores.js'
+import {loaded,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,expandSettings,globalPointerUp,dragged,mouseOverride,hovered} from './stores.js'
 import {App,Stage,Resources} from './pixiApp.js'
 import BG from './PIXI.Sprite.bg.svelte'
 import Table from './PIXI.Sprite.table.svelte'
@@ -13,7 +13,7 @@ import ThereminMobile from './PIXI.Sprite.theremin.mobile.svelte'
 import AmbientLights from './PIXI.Light.ambient.svelte'
 import CursorLight from './PIXI.Light.cursor.svelte'
 import PIXIGraphics from './PIXI.graphics.svelte';
-import Play from './UI.play.svelte'
+import Logo from './PIXI.Sprite.logo.svelte';
 import Text from './PIXI.text.svelte'
 import Title from './UI.title.svelte'
 import Manual from './UI.manual.svelte'
@@ -119,7 +119,7 @@ on:mouseup={(e)=>{globalPointerUp.set(true)}}
 on:touchmove={(e)=>{updateMouse(e)}}
 on:mousemove={(e)=>{updateMouse(e)}}
 bind:this={canvasContainer} 
-class="canvasContainer"
+class="canvasContainer {$hovered?'hovered':''}"
 style="width:{containerWidth}px;height:{containerHeight}px"
 >
     <Title/>
@@ -135,6 +135,7 @@ style="width:{containerWidth}px;height:{containerHeight}px"
         <!-- Sprites -->
         <BG stage={Stage} textures={value}/>
         <PIXIGraphics stage={Stage}/>
+        <!-- <Logo stage={Stage} textures={value}/> -->
         <Table stage={Stage} textures={value}/>
         <Theremin stage={Stage} textures={value}/> 
         <ThereminMobile stage={Stage} textures={value}/> 
@@ -161,6 +162,9 @@ style="width:{containerWidth}px;height:{containerHeight}px"
     display:flex;
     align-items:center;
     justify-content:center;
+}
+.canvasContainer.hovered{
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
 }
 :global(canvas){
     width:100vw;

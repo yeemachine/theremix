@@ -16,7 +16,6 @@ const backOut0_1 = tweened(0, {
     easing: backInOut
 });
 
-
 const wire1 = createSprite(textures.wire1.texture,textures.wire1_normal.texture)
 const wire2 = createSprite(textures.wire2.texture,textures.wire2_normal.texture)
 const wire3 = createSprite(textures.wire3.texture,textures.wire3_normal.texture)
