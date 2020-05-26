@@ -26,11 +26,11 @@ const video_light = new PIXI.lights.PointLight(0xff7f00, 0);
 stage.addChild(wire1,wire2,wire3,video,video_light)
 
 $:{
-    video.width = 160*$SCALE
+    video.width = 240*$SCALE
     video.scale.y = video.scale.x
 
     let margin = ($WIDTH>600) ? 24 : 16
-    video.x = margin*$SCALE - (video.width+30)*(1-$sineInOut0_1)
+    video.x = margin*$SCALE - (video.width*2)*(1-$sineInOut0_1)
     video.y = (margin*2+56)*$SCALE
     video_light.x = margin*2*$SCALE + video.width*.5
     video_light.y = video.y
@@ -44,15 +44,15 @@ $:{
     })
 
     wire1.scale = {x:video.scale.x,y:video.scale.x}
-    wire1.x = video.x - margin - margin*2*(1-$backOut0_1)
+    wire1.x = video.x - margin*.85 - margin*2*(1-$backOut0_1)
     wire1.y = 0 - margin
 
     wire2.scale = {x:video.scale.x,y:video.scale.x}
-    wire2.x = video.x - margin*1.6 - margin*2*(1-$backOut0_1)
+    wire2.x = video.x - margin*2 - margin*2*(1-$backOut0_1)
     wire2.y = video.y + video.height*.95
 
     wire3.scale = {x:video.scale.x,y:video.scale.x}
-    wire3.x = video.x - margin*2.2 - margin*1*(1-$backOut0_1)
+    wire3.x = video.x - margin*2.7 - margin*1*(1-$backOut0_1)
     wire3.y = video.y + video.height*.95
 
     if($videoReady){

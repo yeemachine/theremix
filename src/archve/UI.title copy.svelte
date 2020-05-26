@@ -16,6 +16,7 @@ import Logo from './UI.logo.svelte';
         <span>M</span>
         <span>I</span>
         <span>X</span>
+        
     </h1>
     <div>
         <Logo/>

@@ -1,27 +1,43 @@
 <script>
-import {expandSettings,oscillatorType,scaleType} from './stores.js'
-import {scales,oscillators} from './config.js'
+
+import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide} from './stores.js'
+import {scales,oscillators,maxOctaves,maxTonicOctave,tonicOrder} from './config.js'
+import Toggle from './UI.toggle.svelte'
+import Slider from './UIElements/SteppedSlider.svelte'
+// import Slider from 'svelte-slider'
 
 let selectedScale
 let selectedOsc
+let selectedTonic
+let selectedTonicOctave = 4
+// let selectedTonic = $tonic.replace(/[0-9]/g, '');
+// let selectedTonicOctave = $tonic.replace(/\D/g, "");
+let selectedStartOctave = 4
+let selectedEndOctave = maxOctaves
+let octaveDifference = selectedEndOctave - selectedStartOctave
+
+const handleSlider = (e) => {
+    selectedStartOctave = e.lower
+    selectedEndOctave = e.upper
+    // octaveDifference = selectedEndOctave - selectedStartOctave
+    tonic.set(selectedTonic)
+    // octaves.set(octaveDifference)
+    startOctave.set(selectedStartOctave)
+    endOctave.set(selectedEndOctave)
+    console.log(e.lower,e.upper)
+}
+
+const updateVolume = (e) => {
+    volumeVal.set(e.target.valueAsNumber)
+}
 
 </script>
 
-<section class={$expandSettings ? '' : 'hide'}>
-
-<div class="select">
-<select bind:value={selectedScale} class="scales" 
-on:change={()=>scaleType.set(selectedScale)}
->
-    {#each scales as scaleName}
-        <option value={scaleName} selected={(scaleName === $scaleType) ? true : false}>
-            {scaleName.replace(/-/g, ' ')}
-        </option>
-    {/each}
-</select>
-<div class="select_arrow">
-    </div>
-</div>
+<section class={($active && $expandSettings) ? '' : 'hide'}>
+<h2>Settings</h2>
+ <input
+    on:input={(e)=>updateVolume(e)}
+    type="range" min={-48} max={0} value={$volumeVal}>
 
 <div class="select">
 <select bind:value={selectedOsc} class="oscillators" 
@@ -33,21 +49,87 @@ on:change={()=>oscillatorType.set(selectedOsc)}
         </option>
     {/each}
 </select>
-<div class="select_arrow">
-    </div>
 </div>
 
+<Toggle 
+    setting={glide} 
+    hide={(!$expandSettings) ? true :false}/>
+
+<div class="select">
+<select bind:value={selectedScale} class="scales" 
+on:change={()=>scaleType.set(selectedScale)}
+>
+    {#each scales as scaleName}
+        <option value={scaleName} selected={(scaleName === $scaleType) ? true : false}>
+            {scaleName.replace(/-/g, ' ')}
+        </option>
+    {/each}
+</select>
+</div>
+
+<div class="select">
+    <select bind:value={selectedTonic} class="oscillators" 
+    on:change={()=>{
+        if(selectedTonic){
+            tonic.set(selectedTonic)
+        }
+        }}
+    >
+        {#each tonicOrder as tonicNote}
+            <option value={tonicNote} selected={(tonicNote === $tonic) ? true : false}>
+                {tonicNote}
+            </option>
+        {/each}
+    </select>
+</div>
+
+<Slider on:change={(e) => handleSlider(e.detail)} initVal={[$startOctave, $endOctave]} min={1} max={maxOctaves}/>
+
+<Toggle 
+    setting={enableMIDI} 
+    hide={(!$expandSettings) ? true :false}/>
 </section>
 
 <style>
-section{
+:global(:root) {
+      --sliderPrimary: #FF9800;
+      --sliderSecondary: rgba(0, 0, 0, 0.05);
+}
+/* section{
+    --padding:56px;
     position:absolute;
     top:0;left:0;
-    width:100%;
-    height:100%;
+    padding: calc(2 * var(--padding)) var(--padding) 0 var(--padding);
+    width:calc(100% - 2 * var(--padding));
+    height:calc(100% - 2 * var(--padding));
     overflow-y:scroll;
     background-color:rgba(0,0,0,0.5);
     transition:opacity .4s;
+    display: flex;
+    flex-direction: column;
+} */
+section{
+	position: absolute;
+    width: 80vw;
+    height: 80vh;
+    max-height: 100%;
+    max-width: 400px;
+    max-height: 800px;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    right: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform-origin: bottom;
+    border-radius: 16px;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    transition: transform .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
+    background: rgba(0, 0, 0, 0.2);
 }
 section.hide{
     opacity:0;

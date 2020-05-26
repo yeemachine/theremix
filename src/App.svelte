@@ -1,18 +1,26 @@
 <script>
-	import {mousePos, loaded } from './components/stores.js';
+	import {mousePos, loaded, darkMode } from './components/stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import UI from './components/UI.svelte'
+	import CenterNotif from './components/UI.centerNotif.svelte'
 	import Tone from './components/Tone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
 	import Settings from './components/UI.settingsexpanded.svelte'
-	let containerHeight,containerWidth
+
+	// if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+	// 	darkMode.set(true)
+	// }
+
+	// window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+	// 	const theme = e.matches ? true : false;
+	// 	darkMode.set(theme)
+	// });
 
 </script>
 
 <style>
 
-	
 	:global(button){
 		background: transparent;
     	border: none;
@@ -42,24 +50,24 @@
 
 	/* no outline for non-keyboard-inputs elements */
 	:global(button:focus),
+	:global(input:focus),
 	:global(label:focus),
-	:global(select:focus) {
+	:global(select:focus){
 	outline: none;
 	}
 
-	:global(body.user-is-tabbing *:focus) {
+	:global(body.user-is-tabbing *:focus),
+	:global(body.user-is-tabbing input:focus + container) {
 	outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
 	outline: 5px auto -webkit-focus-ring-color !important;
 	}
 </style>
 
-<svelte:window 
-bind:innerWidth = {containerWidth} 
-bind:innerHeight = {containerHeight} 
-/> 
+
 
 <main>
 	<Canvas/>
+	<CenterNotif/>
 	<Settings/>
 	<UI/>
 	<Tone/>

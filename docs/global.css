@@ -5,11 +5,26 @@
 	}
 
 	@font-face {
-	font-family: "Whirly Birdie Narrow";
-	src: url("https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-Narrow.woff?v=1587787534986")
-		format("woff");
-	}
+	font-family: "Whirly Birdie Narrow Light";
+	src: url("https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-NarrowLight.ttf?v=1590394473989")
+		format("ttf");
+    }
 
+    @font-face {
+        font-family: "Whirly Birdie Narrow";
+        src: url("https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-Narrow.woff?v=1587787534986")
+            format("woff");
+        }
+
+    @font-face {
+        font-family: "Whirly Birdie Regular";
+        src: url("    https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-Regular.woff?v=1590326472854")
+            format("woff");
+    }
+
+
+
+    
 	@font-face {
 	font-family: "Whirlybats";
 	src: url("https://cdn.glitch.com/1711052e-ea5e-4036-9c61-dd3ef6782855%2FWhirlybatsGX.ttf?v=1583959223787")
@@ -37,22 +52,42 @@
 --black: #000000;
 --white: #ffffff;
 --red: #D53540;
---blue: #3E8BCA;
---sun: #FCD836;
+--blue: rgb(62, 139, 202);
+
 --forest: #464D33;
 --green: #079548;
 --lightgreen: #CCD9D1;
 --wood: #AD6C2F;
---navy: #1D3767;
---offwhite: #FFF8E4;
---crimson: #E54646;
---charcoal: #3C3C3C;
+/* --navy: rgb(29, 55, 103); */
+--lightcharcoal: #9d9d9d;
 --radius: 45px;
+
+--sun: 252, 216, 54;
+--blue:62, 139, 202;
+--navy:29, 55, 103;
+
+--offwhite: 250, 236, 197;
+/* --offwhite: rgb(var(--offwhiteS)); */
+
+--offwhitetint:255, 221, 176;
+/* --offwhitetint:rgb(var(--offwhitetintS)); */
+
+--offwhitegradient: linear-gradient(0deg, rgb(var(--offwhitetint)) 0%, rgba(var(--offwhitetint),0.920045518207283) 70%, rgba(var(--offwhitetint),0) 100%);
+--offwhitegradient2: linear-gradient(0deg, rgb(var(--offwhitetint)) 0%, rgba(var(--offwhitetint),0.920045518207283) 70%, rgba(var(--offwhitetint),0) 100%);
+
+--crimson:229,70,70;
+
+--charcoal:60,60,60;
+
+--wave:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fh.svg?v=1589236773572);
+--waveRed:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fhred.svg?v=1589238550292);
+/* --charcoal: rgb(var(--charcoalS)); */
+
 }
 
 html, body {
 font-family: "Whirly Birdie";
-background-color: var(--crimson);
+background-color: rgb(var(--crimson));
 font-variation-settings: "wght" 90, "wdth" 120, "ital" 0;
 margin:0;
 padding:0;
@@ -78,13 +113,28 @@ button:hover{
     height:110%;
     position: absolute;
     top:-5%;left: -10%;
-    background: var(--crimson);
+    background: rgb(var(--crimson));
     transform: rotate(0deg) translate3d(0,0,0);
     transform-origin: center;
     transition:transform 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1s;
     overflow:hidden;
     z-index:99
 }
+/* .cover:before{
+    content: '';
+    background-size: auto 10px;
+    opacity: 0.05;
+    position: absolute;
+    border: none;
+    height: 200%;
+    width: 200%;
+    left: -50%;
+    top: -50%;
+    background-position: 100% 100%;
+    background-image: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fh.svg?v=1589236773572);
+    transform-origin: center;
+    transform: rotate(45deg);
+} */
 .cover.hide{
     transform: rotate(-8deg) translate3d(0,-130%,0);
     pointer-events: none;
@@ -95,9 +145,10 @@ button:hover{
     color:var(--offwhite);
     position: absolute;
     margin:auto;
+    padding-bottom: 25px;
     top:0;left:0;right:0;bottom:0;
-    height: max-content;
-    width:max-content;
+    height: 100px;
+    width:100px;
     opacity: 1;
     animation-fill-mode: forwards;
     animation-play-state: start;
@@ -105,10 +156,7 @@ button:hover{
     transform: scale3d(1,1,1);
     transition: transform 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1s;
 }
-.cover.hide .icon{
-    transform: scale3d(2,2,2);
-}
-.cover .icon:before{
+/* .cover .icon:before{
     content: '';
     width: 75%;
     height: 44%;
@@ -117,12 +165,12 @@ button:hover{
     top: 30%;
     left: 12%;
     z-index: -1;
-}
+} */
 .cover .icon span{
     position: absolute;
     width: 20%;
     height: 30%;
-    top: -4%;
+    top: -3.5%;
     right: 6%;
     display: flex;
 }

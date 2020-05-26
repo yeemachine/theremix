@@ -42,7 +42,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "machine_right_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMachine_Right_normal.jpg?v=1584933515948"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FRight%20Machine%20Normal.png?v=1589242815494"
     )
     .add(
         "machine_left",
@@ -50,7 +50,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "machine_left_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMachine_Left_Normal.jpg?v=1584933516036"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLeft%20Machine%20Normal.png?v=1589242816592"
     )
     .add(
         "theremin_null",
@@ -154,15 +154,15 @@ export const Loader = PIXI.loader
     )
     .add(
         "wire1",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1.png?v=1588094588858"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1.png?v=1589076997985"
     )
     .add(
         "wire1_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1%20Normal.png?v=1588094588830"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1%20Normal.png?v=1589077164374"
     )
     .add(
         "wire2",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2.png?v=1588094588879"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2.png?v=1589076997946"
     )
     .add(
         "wire2_normal",
@@ -170,7 +170,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "wire3",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3.png?v=1588094589229"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3.png?v=1589076997881"
     )
     .add(
         "wire3_normal",
@@ -192,8 +192,61 @@ export const Loader = PIXI.loader
         "logo_normal",
         "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLogo_normal.png?v=1588978041228"
     )
+    .add(
+        "bgm_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_normal.png?v=1590448261585"
+    )
+    .add(
+        "bgm",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg.png?v=1590448179543"
+    )
+    .add(
+        "DAYBREAK FRONTLINE",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg2.png?v=1590466648299"
+    )
+    .add(
+        "濫觴生命",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg3.png?v=1590452789559"
+    )
+    .add(
+        "夜に駆ける",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg4.png?v=1590452787697"
+    )
+    .add(
+        "快晴",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg5.png?v=1590452788360"
+    )
+    .add(
+        "太陽になれるかな",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg6.png?v=1590452787751"
+    )
+    .add(
+        "Alice in 冷凍庫",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg1.png?v=1590466647838"
+    )
+    .add(
+        "アスノヨゾラ哨戒班",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm12.png?v=1590466642863"
+    )
+    .add(
+        "雨き声残響",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg9.png?v=1590452787070"
+    )
+    .add(
+        "金木犀",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg10.png?v=1590452791458"
+    )
+    .add(
+        "だから僕は音楽を辞めた",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg11.png?v=1590458994381"
+    )
+    .add(
+        "シャルル",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm13.png?v=1590467299372"
+    )
 
-    
+
+
     
 
 export const Resources = new Promise(

@@ -23,6 +23,30 @@ export function getMidpoint(a, b, axis) {
     const x2 = b.position[axis];
     return (x1 + x2) / 2;
   }
+
+export function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
+export function jsUcfirst(string) 
+  {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
   
 function getKeypoint(pose, part) {
     return pose.keypoints.filter((keypoint) => keypoint.part === part )[0];
@@ -146,4 +170,23 @@ export function smooth(pose, armspan) {
   
       jumpResetPose = Object.assign({}, jumpPrevPose);
     }, config.smoothing.jumpResetTime)
+  }
+
+  export function pointerEvents() {
+    if (document && 'ontouchstart' in document.documentElement) {
+      return {
+        start: 'touchstart',
+        move: 'touchmove',
+        end: 'touchend',
+      };
+    }
+    return {
+      start: 'mousedown',
+      move: 'mousemove',
+      end: 'mouseup',
+    };
+  }
+  
+  export function toPercent(n) {
+    return n * 100;
   }

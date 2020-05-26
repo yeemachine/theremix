@@ -1,7 +1,7 @@
 <script>
 import Toggle from './UI.toggle.svelte'
 import ButtonCircle from './UI.buttoncircle.svelte'
-import videoIcon from './icons/video.svelte'
+import gestureIcon from './icons/gesture.svelte'
 import pauseIcon from './icons/pause.svelte'
 import settingsIcon from './icons/settings.svelte'
 import closeIcon from './icons/close.svelte'
@@ -11,17 +11,18 @@ import {expandSettings,active,camera} from './stores.js'
 
 <nav>
     <ButtonCircle 
-    icon={pauseIcon} 
+    icon={pauseIcon}
+    settingState={false}  
     setting={active} 
     hide={
-        ($expandSettings || !$active) ? true
+        (!$active) ? true
          :false}
     styles={'margin-right:16px'}/>
     <Toggle 
-    icon={videoIcon} 
+    icon={gestureIcon} 
     setting={camera} 
     hide={
-        ($expandSettings || !$active) ? true
+        (!$active) ? true
          :false}/>
     
     <div>
@@ -35,6 +36,7 @@ import {expandSettings,active,camera} from './stores.js'
             : false
         }
         setting={expandSettings} 
+        settingState={null}  
         hide={$active ? false : true}
         />
     </div>
