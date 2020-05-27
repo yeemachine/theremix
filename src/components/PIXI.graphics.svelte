@@ -1,11 +1,11 @@
 <script>
-import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride,gestures,enableMIDI,tablePos,MIDITextSprite,MIDI_finished,MIDI_Display_Text} from './stores.js'
-import {getDistance,getMidpoint} from './helpers.js'
+import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride,gestures,enableMIDI,tablePos,MIDITextSprite,MIDI_finished,MIDI_Display_Text,currentMIDITint,currentMIDITitle} from './stores.js'
+import {getDistance,getMidpoint,lerpColor} from './helpers.js'
 import { tweened } from 'svelte/motion';
 import {constrain} from './helpers.js';
 import {graphicsGroup} from './pixiApp.js'
 import { backOut, sineInOut } from 'svelte/easing';
-import {posenetOptions} from './config.js'
+import {posenetOptions,midiList} from './config.js'
 
 export let stage = null
 
@@ -181,21 +181,26 @@ let marqueeTime = 0
 const draw = () => {
     TIME+=.01
     frameCount += 1
-        if($enableMIDI && $MIDITextSprite){
-            if(!$MIDI_finished || $MIDI_Display_Text !== 'Loading...'){
-                marqueeTime = 
-                    (!$active) ? marqueeTime
-                    :(marqueeTime<=1) ? marqueeTime+.001 
-                    : 0
-                $MIDITextSprite.x = ($WIDTH > 600) 
-                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width*1/4) 
-                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width/4) 
-            }else{
-                marqueeTime = 0
-                $MIDITextSprite.x = ($WIDTH > 600) 
-                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width/2 
-                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
+        if($enableMIDI){
+
+            if($MIDITextSprite){
+                if(!$MIDI_finished){
+                    marqueeTime = 
+                        (!$active) ? marqueeTime
+                        :(marqueeTime<=1) ? marqueeTime+.001 
+                        : 0
+                    $MIDITextSprite.x = ($WIDTH > 600) 
+                        ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width*1/4) 
+                        : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width/4) 
+                }else{
+                    marqueeTime = 0
+                    $MIDITextSprite.x = ($WIDTH > 600) 
+                        ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width/2 
+                        : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
+                }
             }
+            
+        }else{
             
         }
 
@@ -245,7 +250,7 @@ const draw = () => {
                         0)
                     graphics3.lineTo(
                         $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
-                        $tablePos.y)
+                        ($thereminPos.y+$thereminPos.height))
                     // if($enableMIDI && i!==0){
                     //     graphics3.moveTo(
                     //     $thereminPos.x,
@@ -262,16 +267,16 @@ const draw = () => {
                 if($enableMIDI){
                     graphics3.drawRect(
                         $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
-                        ($tablePos.y)*($toneOutput.index.y)/$toneOutput.total,
+                        (($thereminPos.y+$thereminPos.height))*($toneOutput.index.y)/$toneOutput.total,
                         $thereminPos.width/$toneOutput.total,
-                        ($tablePos.y)/$toneOutput.total
+                        (($thereminPos.y+$thereminPos.height))/$toneOutput.total
                     )
                 }else{
                     graphics3.drawRect(
                         $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
                         0,
                         $thereminPos.width/$toneOutput.total,
-                        $tablePos.y
+                        ($thereminPos.y+$thereminPos.height)
                     )
                 }
                 

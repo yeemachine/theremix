@@ -22,6 +22,7 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "@tensorflow-models/posenet": "^2.2.1",
-    "@beyonk/svelte-carousel": "^2.4.0"
+    "@beyonk/svelte-carousel": "^2.4.0",
+    "d3-interpolate": "^1.4.0"
   }
 }

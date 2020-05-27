@@ -22,7 +22,7 @@ Stage.addChild(
 export const Loader = PIXI.loader
     .add(
         "table",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstatic_light.png?v=1588712825397"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable.png?v=1590552762584"
     )
     .add(
         "static_dark",
@@ -34,7 +34,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "table_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstatic_light_normal.png?v=1588486193784"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable_normal.png?v=1590552086543"
     )
     .add(
         "machine_right",
@@ -226,7 +226,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "アスノヨゾラ哨戒班",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm12.png?v=1590466642863"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg8.png?v=1590452791657"
     )
     .add(
         "雨き声残響",
@@ -270,6 +270,16 @@ export const createPair = (diffuseTex, normalTex) => {
     return container;
 }
 
+export const createMultiTextSpriteGroup = (textureArr, spriteGroup) => {
+    var container = new PIXI.Container();
+    textureArr.forEach(element => {
+        var diffuseSprite = new PIXI.Sprite(diffuseTex);
+        diffuseSprite.parentGroup = PIXI.lights.diffuseGroup;
+    });
+    var normalSprite = new PIXI.Sprite(normalTex);
+    normalSprite.parentGroup = PIXI.lights.normalGroup;
+}
+
 export const createSprite = (diffuseTex, normalTex)=>{
     if(normalTex){
         const spriteGroup = createPair(diffuseTex, normalTex)
@@ -300,19 +310,7 @@ export function createGradientTexture(r1, r2, resolution) {
     return PIXI.Texture.fromCanvas(canvas);
   }
 
-export const lerpColor = function(a, b, amount) {
-    const ar = a >> 16,
-        ag = (a >> 8) & 0xff,
-        ab = a & 0xff,
-        br = b >> 16,
-        bg = (b >> 8) & 0xff,
-        bb = b & 0xff,
-        rr = ar + amount * (br - ar),
-        rg = ag + amount * (bg - ag),
-        rb = ab + amount * (bb - ab);
 
-    return (rr << 16) + (rg << 8) + (rb | 0);
-};
 
 export const detectCollision = (position,pixiElement) => {
     const element_bounds = pixiElement.getBounds()

@@ -224,7 +224,7 @@ $: {
             ? $springRightPos.y/$videoReady.videoHeight * $CANVASHEIGHT
             : rightWrist.pose.position.y/$videoReady.videoHeight * $thereminMobilePos.y
           rightWrist.audioX = constrain((rightWrist.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1})
-          rightWrist.audioY = constrain(rightWrist.y/$tablePos.y,{min:0,max:1})
+          rightWrist.audioY = constrain(rightWrist.y/($thereminPos.y+$thereminPos.height),{min:0,max:1})
           emitterRight.updateOwnerPos(rightWrist.x, rightWrist.y);
         }
 
@@ -240,7 +240,7 @@ $: {
             ? $springLeftPos.y/$videoReady.videoHeight * $CANVASHEIGHT
             : leftWrist.pose.position.y/$videoReady.videoHeight * $thereminMobilePos.y
           leftWrist.audioX = constrain((leftWrist.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1})
-          leftWrist.audioY = constrain(leftWrist.y/$tablePos.y,{min:0,max:1})
+          leftWrist.audioY = constrain(leftWrist.y/($thereminPos.y+$thereminPos.height),{min:0,max:1})
           emitterLeft.updateOwnerPos(leftWrist.x, leftWrist.y);
         }
 
@@ -292,7 +292,7 @@ $: {
           cursorLight.position.set($canvasMousePos.x,$canvasMousePos.y)
           audioControls.set({
             x:constrain(($canvasMousePos.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1}),
-            y:constrain($canvasMousePos.y/$tablePos.y,{min:0,max:1})
+            y:constrain($canvasMousePos.y/($thereminPos.y+$thereminPos.height),{min:0,max:1})
           })
         }
 

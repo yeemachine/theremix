@@ -57,11 +57,12 @@ export const enableMIDI = writable(false);
 export const MIDI_Display_Text = writable('Loading...');
 export const currentMIDITitle = writable(null);
 export const currentMIDIOffset = writable(.5);
+export const currentMIDITint = writable(0xffffff);
+export const MIDI_tint = writable(null);
 export const MIDITextSprite = writable(null);
 export const MIDI_finished = writable(null);
 export const poseNetRes = writable(null);
 
 export const dragged = writable(null)
 export const hovered = writable(null)
-
 

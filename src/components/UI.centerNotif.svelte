@@ -57,7 +57,7 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
         top:0;left:0;right:0;bottom:0;
         margin: auto;
         padding-bottom: 5vh;
-        color: rgb(var(--crimson));
+        color: rgb(var(--offwhite));
         pointer-events: none;
         text-align: center;
         transition: 0s;
@@ -76,7 +76,7 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
     font-size: calc(12px + 4vw + 6vh);
     margin: 0;
     padding: 0 0 16px 0;
-    border-bottom: 1px solid rgb(var(--crimson)); 
+    border-bottom: 1px solid rgb(var(--offwhite)); 
     }
     h4{
         font-variation-settings: "wght" 70, "wdth" 70, "ital" 0;

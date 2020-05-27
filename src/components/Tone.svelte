@@ -30,7 +30,7 @@ $:  {
 const masterVolume = new Tone.Volume($volumeVal);
 const masterCompressor = new Tone.Compressor({
     ratio : 12 ,
-    threshold : -24 ,
+    threshold : -28 ,
     release : 0.25 ,
     attack : 0.003 ,
     knee : 30
@@ -116,7 +116,7 @@ const initMidi = (url)=>{
             midiSynths.push(synth)
             //schedule all of the events
             track.notes.forEach(note => {
-                Tone.Transport.schedule((time)=>{
+                Tone.Transport.scheduleOnce((time)=>{
                     synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
                 }, note.time + now)
 
@@ -125,11 +125,11 @@ const initMidi = (url)=>{
 
         })
 
-        Tone.Transport.scheduleOnce(()=>{MIDI_finished.set('forwards')}, nowDelay+midi.duration)
+        Tone.Transport.scheduleOnce(()=>{MIDI_finished.set('forward')}, nowDelay+midi.duration)
 
         midi.header.keySignatures.forEach(signature=>{
 
-            Tone.Transport.schedule(
+            Tone.Transport.scheduleOnce(
                ()=>{
                    let scale = scales.find(a =>a.includes(jsUcfirst(signature.scale))) || null
                    if(scale){
@@ -139,7 +139,7 @@ const initMidi = (url)=>{
                 }, 
                Tone.Time(now).toTicks()+signature.ticks+'i') 
 
-            Tone.Transport.schedule(
+            Tone.Transport.scheduleOnce(
                 ()=>{
                     let key = (signature.key.length > 1) ? tonicOrder.find(a =>a.includes(signature.key)) 
                         : signature.key
@@ -152,9 +152,7 @@ const initMidi = (url)=>{
             })
 
         console.log('Current Playing: '+midiQueue[MIDI_Display_TextIndex].name)
-        MIDI_Display_Text.set('♫ '+midiQueue[MIDI_Display_TextIndex].name+' / '+midiQueue[MIDI_Display_TextIndex].artist)
         currentMIDITitle.set(midiQueue[MIDI_Display_TextIndex].name)
-        currentMIDIOffset.set(midiQueue[MIDI_Display_TextIndex].offset)
     })
 }
 
@@ -171,21 +169,11 @@ let playNext = (direction = 'forward')=>{
 }
 
 const cleanupSynths = () => {
-    Tone.Transport.cancel()
+    Tone.Transport.cancel(0)
     while (midiSynths.length) {
         const synth = midiSynths.shift()
         synth.dispose()
     }
-}
-
-const reverse = {reverse:false}
-$:{
-    if($keydown_left || $keydown_down){
-        reverse.reverse = true
-    }else{
-        reverse.reverse = false
-    }
-
 }
 
 
@@ -204,13 +192,13 @@ $:{
                     MIDI_finished.set(null)    
                 }, 1000); 
                 
-                MIDI_Display_Text.set('Loading...')
+                // MIDI_Display_Text.set('Loading...')
               
                 
         }
     } else {
         cleanupSynths()
-        MIDI_Display_Text.set('Loading...')
+        // MIDI_Display_Text.set('Loading...')
         
     }
 }

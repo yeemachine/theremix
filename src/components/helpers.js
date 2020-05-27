@@ -47,6 +47,35 @@ export function jsUcfirst(string)
   {
       return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+export  let rgbToHex = (string) => {
+    if(string.includes('rgb')){
+        var a = string.split("(")[1].split(")")[0];
+        a = a.split(",");
+        var b = a.map(function(x){                      //For each array element
+            x = parseInt(x).toString(16);      //Convert to a base16 string
+            return (x.length==1) ? "0"+x : x; //Add zero if we get only one character
+        });
+        b = "#"+b.join("");
+        return b
+    }else{
+        return string
+    }
+}
+
+  export const lerpColor = function(a, b, amount) {
+    const ar = a >> 16,
+        ag = (a >> 8) & 0xff,
+        ab = a & 0xff,
+        br = b >> 16,
+        bg = (b >> 8) & 0xff,
+        bb = b & 0xff,
+        rr = ar + amount * (br - ar),
+        rg = ag + amount * (bg - ag),
+        rb = ab + amount * (bb - ab);
+
+    return (rr << 16) + (rg << 8) + (rb | 0);
+};
   
 function getKeypoint(pose, part) {
     return pose.keypoints.filter((keypoint) => keypoint.part === part )[0];

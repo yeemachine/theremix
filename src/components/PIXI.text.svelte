@@ -4,8 +4,8 @@ import {createSprite, lerpColor, detectCollision, calcRotation, graphicsGroup} f
 import { tweened } from 'svelte/motion';
 import {constrain} from './helpers.js';
 import { backOut, sineInOut } from 'svelte/easing';
-import { oscillators } from './config.js';
-import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,toneOutput,MIDI_Display_Text,enableMIDI,MIDI_finished,MIDITextSprite} from './stores.js';
+import { oscillators, midiList } from './config.js';
+import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,toneOutput,MIDI_Display_Text,enableMIDI,MIDI_finished,MIDITextSprite,currentMIDITitle} from './stores.js';
 export let textures = null;
 export let stage = null;
 
@@ -106,9 +106,11 @@ $:{
         noteText.alpha = ($toneOutput.glide) ? .15+.15*$sineInOut0_1 : .15+.55*$sineInOut0_1
     }
     if(midiText){
+        let songObj = midiList.find(o => o.name === $currentMIDITitle)
+        let text = (songObj) ? '♫ '+songObj.name+' / '+songObj.artist : null;
         midiText.text = 
-            ($enableMIDI && $MIDI_finished || $enableMIDI && $MIDI_Display_Text === 'Loading...') ? "Loading..."
-            : $enableMIDI ? '   '+$MIDI_Display_Text+'      '+$MIDI_Display_Text+'      '+$MIDI_Display_Text+'      '+$MIDI_Display_Text+'   ' 
+            ($enableMIDI && $MIDI_finished || $enableMIDI && !text) ? "Loading..."
+            : $enableMIDI ? '   '+text+'      '+text+'      '+text+'      '+text+'   ' 
             : ''
         midiText.style.fontSize = ($WIDTH > 600) ? $thereminPos.width*.0100 : $thereminMobilePos.width*.04
         midiText.style.padding = ($WIDTH > 600) ? $thereminPos.width*.0100 : $thereminMobilePos.width*.04

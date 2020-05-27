@@ -1,11 +1,12 @@
 <script>
 import { onMount } from 'svelte';
-import {createSprite, lerpColor, detectCollision, calcRotation} from './pixiApp.js';
+import {createSprite, detectCollision, calcRotation} from './pixiApp.js';
+import { interpolateRgb } from 'd3-interpolate';
 import { tweened,spring } from 'svelte/motion';
-import {constrain} from './helpers.js';
+import {constrain,lerpColor} from './helpers.js';
 import { backOut, sineInOut, quadInOut } from 'svelte/easing';
-import { oscillators } from './config.js';
-import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,TIME,SCALE} from './stores.js';
+import { oscillators,midiList } from './config.js';
+import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,TIME,SCALE,enableMIDI,currentMIDITitle,currentMIDITint} from './stores.js';
 export let textures = null;
 export let stage = null;
 
@@ -34,24 +35,9 @@ const tweenKnobRight = tweened(0, {
     easing: backOut
 });
 
-const tweenO = tweened(0, {
-    duration: 700,
-    easing: backOut
-});
-
-const tweenG = tweened(0, {
-    duration: 700,
-    easing: backOut
-});
-
-const tweenS = tweened(0, {
-    duration: 700,
-    easing: backOut
-});
-
-const tweenT = tweened(0, {
-    duration: 700,
-    easing: backOut
+const colorTween = tweened('#ffffff', {
+		duration: 800,
+		interpolate: interpolateRgb
 });
 
 const theremin = new PIXI.Container();
@@ -276,7 +262,8 @@ $: {
 
     dirLight.target = theremin_body_top
     dirLight.brightness = constrain(2-$SCALE,{max:.3,min:.05})
-    
+    dirLight.color = $currentMIDITint
+    // console.log($currentMIDITint)
 }
 
 // Reset Dragged Value when Pointer is Up

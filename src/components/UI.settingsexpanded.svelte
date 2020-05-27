@@ -1,6 +1,6 @@
 <script>
 
-import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide} from './stores.js'
+import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,MIDI_finished} from './stores.js'
 import {scales,oscillators,maxOctaves,maxTonicOctave,tonicOrder} from './config.js'
 import Toggle from './UI.toggle.svelte'
 import Slider from './UIElements/SteppedSlider.svelte'
@@ -34,7 +34,7 @@ const updateVolume = (e) => {
 </script>
 
 <section class={($active && $expandSettings) ? '' : 'hide'}>
-<h2>Settings</h2>
+<h2>Theremin Controls</h2>
  <input
     on:input={(e)=>updateVolume(e)}
     type="range" min={-48} max={0} value={$volumeVal}>
@@ -88,6 +88,8 @@ on:change={()=>scaleType.set(selectedScale)}
 <Toggle 
     setting={enableMIDI} 
     hide={(!$expandSettings) ? true :false}/>
+
+<button style="width:50px;height:50px;background:red;" on:click={()=>{if($enableMIDI){MIDI_finished.set('forward')}}}></button>    
 </section>
 
 <style>
@@ -111,29 +113,34 @@ on:change={()=>scaleType.set(selectedScale)}
 section{
 	position: absolute;
     width: 80vw;
-    height: 80vh;
-    max-height: 100%;
+    height: max-content;
+    max-height: calc(100% - 120px);
     max-width: 400px;
     max-height: 800px;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    right: 56px;
+    /* margin: auto; */
+    padding:24px;
+    top:96px;
+    right: 24px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transform-origin: bottom;
+    align-items: flex-start;
+    justify-content: flex-start;
     border-radius: 16px;
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    transition: transform .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
-    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(30px);
+    transition: opacity .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
+    background: rgba(var(--offwhite), 0.2);
+    overflow-y:scroll;
+    color:rgb(var(--offwhite))
 }
 section.hide{
     opacity:0;
     pointer-events: none;
+}
+h2{
+    margin: 0;
 }
 
 :root {

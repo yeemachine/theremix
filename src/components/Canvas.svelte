@@ -14,7 +14,8 @@ import ThereminMobile from './PIXI.Sprite.theremin.mobile.svelte'
 import AmbientLights from './PIXI.Light.ambient.svelte'
 import CursorLight from './PIXI.Light.cursor.svelte'
 import PIXIGraphics from './PIXI.graphics.svelte';
-import Logo from './PIXI.Sprite.logo.svelte';
+import TweenColor from './PIXI.tweenColor.svelte';
+// import Logo from './PIXI.Sprite.logo.svelte';
 import Text from './PIXI.text.svelte'
 import Title from './UI.title.svelte'
 import Manual from './UI.manual.svelte'
@@ -163,7 +164,7 @@ const handleKeydown = e => {
                 let nextItem = findNext($scaleType,scales,'reverse')
                 scaleType.set(nextItem)
             }else{
-                 if($enableMIDI){
+                 if($enableMIDI && $MIDI_finished===null){
                     MIDI_finished.set('back')
                 }
             }
@@ -180,7 +181,7 @@ const handleKeydown = e => {
                 let nextItem = findNext($scaleType,scales)
                 scaleType.set(nextItem)
             }else{
-                 if($enableMIDI){
+                 if($enableMIDI && $MIDI_finished===null){
                     MIDI_finished.set('forward')
                 }
             }
@@ -273,6 +274,8 @@ style="width:{containerWidth}px;height:{containerHeight}px"
         <!-- Lights -->
         <AmbientLights stage={Stage}/>
         <CursorLight app={App} stage={Stage}/>
+        <!-- Color Tint -->
+        <TweenColor/>
 
 
     {:catch err}

@@ -1,14 +1,19 @@
 <script>
 import {createSprite} from './pixiApp.js';
 import { tweened } from 'svelte/motion';
-import { cubicOut } from 'svelte/easing';
-import {CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos} from './stores.js';
+import { sineInOut } from 'svelte/easing';
+import { lerpColor } from './helpers.js'
+import {CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,currentMIDITint,enableMIDI} from './stores.js';
 export let textures = null;
 export let stage = null;
 
+const sineInOut0_1 = tweened(1, {
+    duration: 1000,
+    easing: sineInOut
+});
+
 const table = createSprite(textures.table.texture,textures.table_normal.texture)
 const tableRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
-table.children[0].tint = 0x666666
 stage.addChild(table)
 
 
@@ -21,7 +26,10 @@ $:{
         table.scale.x = table.scale.y
     }
     table.x = ($CANVASWIDTH - table.width)*.5
-    table.y = $thereminPos.y + $thereminPos.height*.92;
+    table.y = $thereminPos.y + $thereminPos.height*.9;
+    // table.children[0].tint = lerpColor(0xffffff,0xB08FA3,$sineInOut0_1)
+        table.children[0].tint = $currentMIDITint
+
 
     tablePos.set({
         x:table.x,
@@ -31,5 +39,17 @@ $:{
     })
 }
 
+
+// $:{
+//     if($enableMIDI){
+//         if($sineInOut0_1 === 0){
+//             sineInOut0_1.set(1)
+//         }
+//     }else{
+//         if($sineInOut0_1 === 1){
+//             sineInOut0_1.set(0)
+//         }
+//     }
+// }
 
 </script>

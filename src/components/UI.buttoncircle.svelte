@@ -22,7 +22,7 @@ const handleClick = () => {
     style={styles} 
     on:click={handleClick}>
         {#if icon}
-            <svelte:component this={icon} color={'var(--svgColor)'} hoverColor={'var(--svgColorHover)'}/>
+            <svelte:component this={icon} color={(selected)?'var(--svgColorHover)':'var(--svgColor)'} hoverColor={'var(--svgColorHover)'}/>
         {/if}
 </button>
 
