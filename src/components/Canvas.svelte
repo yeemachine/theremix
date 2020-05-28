@@ -275,7 +275,7 @@ style="width:{containerWidth}px;height:{containerHeight}px"
         <AmbientLights stage={Stage}/>
         <CursorLight app={App} stage={Stage}/>
         <!-- Color Tint -->
-        <!-- <TweenColor/> -->
+        <TweenColor/>
 
 
     {:catch err}
