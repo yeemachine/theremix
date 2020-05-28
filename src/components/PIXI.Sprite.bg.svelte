@@ -118,6 +118,19 @@ $: {
 }
 
 let bgmClone = false
+$:{
+    if($currentMIDITitle){
+        BGM_bg.children[0].texture === testures[$currentMIDITitle.name].texture
+        BGM_bg.children[0].tint === testures[$currentMIDITitle.name].tint
+        if($WIDTH < 600){
+            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+        }else{
+            BGM_bg.children[0].anchor.set(0.5, 0.5);
+            BGM_bg.children[1].anchor.set(0.5, 0.5);
+        }
+    }
+}
 // $:{
 //     if($currentMIDITitle && $enableMIDI){
 //         if(bgmClone === true){
