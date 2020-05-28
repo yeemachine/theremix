@@ -1,5 +1,5 @@
 <script>
-import {loaded,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride} from './stores.js'
+import {loaded,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual,tablePos} from './stores.js'
 import {constrain} from './helpers.js'
 import { onMount } from 'svelte';
 import { tweened,spring } from 'svelte/motion';
@@ -66,13 +66,13 @@ const emitter = new PIXI.particles.Emitter(particleContainer, [gradientTexture],
     max: 0
   },
   lifetime: {
-    min: 1,
-    max: 1
+    min: .6,
+    max: .6
   },  
   blendMode: "normal",
   frequency: 0.0008,
   emitterLifetime: -1,
-  maxParticles: 5000,
+  maxParticles: 3000,
   pos: {x:0,y:0},
   addAtBack: false,
   spawnType: "point"
@@ -115,8 +115,8 @@ const emitterRight = new PIXI.particles.Emitter(particleContainer, [gradientText
     max: 0
   },
   lifetime: {
-    min: 1,
-    max: 1
+    min: .6,
+    max: .6
   },  
   blendMode: "normal",
   frequency: 0.0008,
@@ -163,8 +163,8 @@ const emitterLeft = new PIXI.particles.Emitter(particleContainer, [gradientTextu
     max: 0
   },
   lifetime: {
-    min: 1,
-    max: 1
+    min: .6,
+    max: .6
   },  
   blendMode: "normal",
   frequency: 0.0008,
@@ -210,6 +210,7 @@ $: {
           y:0,
         }
         emitter.emit = false
+        gestures.set(true)
 
         if(rightWrist.pose.score > posenetOptions.minPartConfidence){
           if($WIDTH>600){
@@ -223,7 +224,7 @@ $: {
             ? $springRightPos.y/$videoReady.videoHeight * $CANVASHEIGHT
             : rightWrist.pose.position.y/$videoReady.videoHeight * $thereminMobilePos.y
           rightWrist.audioX = constrain((rightWrist.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1})
-          rightWrist.audioY = constrain(rightWrist.y/($thereminPos.x+$thereminPos.height),{min:0,max:1})
+          rightWrist.audioY = constrain(rightWrist.y/($thereminPos.y+$thereminPos.height),{min:0,max:1})
           emitterRight.updateOwnerPos(rightWrist.x, rightWrist.y);
         }
 
@@ -239,7 +240,7 @@ $: {
             ? $springLeftPos.y/$videoReady.videoHeight * $CANVASHEIGHT
             : leftWrist.pose.position.y/$videoReady.videoHeight * $thereminMobilePos.y
           leftWrist.audioX = constrain((leftWrist.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1})
-          leftWrist.audioY = constrain(leftWrist.y/($thereminPos.x+$thereminPos.height),{min:0,max:1})
+          leftWrist.audioY = constrain(leftWrist.y/($thereminPos.y+$thereminPos.height),{min:0,max:1})
           emitterLeft.updateOwnerPos(leftWrist.x, leftWrist.y);
         }
 
@@ -281,8 +282,9 @@ $: {
         emitter.emit = true
         emitterRight.emit = false
         emitterLeft.emit = false
+        gestures.set(false)
 
-        cursorLight.brightness = 2*constrain(2-$SCALE,{max:1,min:0.2})
+        cursorLight.brightness = 2*constrain(2-$SCALE,{max:1,min:0.5})
         if($canvasMousePos.y > $thereminMobilePos.y && $WIDTH < 600 || $dragged){
           
         }else{
@@ -290,10 +292,16 @@ $: {
           cursorLight.position.set($canvasMousePos.x,$canvasMousePos.y)
           audioControls.set({
             x:constrain(($canvasMousePos.x-$thereminPos.x)/$thereminPos.width,{min:0,max:1}),
-            y:constrain($canvasMousePos.y/($thereminPos.x+$thereminPos.height),{min:0,max:1})
+            y:constrain($canvasMousePos.y/($thereminPos.y+$thereminPos.height),{min:0,max:1})
           })
         }
 
+      }
+
+      if($manual){
+        emitter.emit=false;
+        emitterRight.emit = false
+        emitterLeft.emit = false
       }
 
      

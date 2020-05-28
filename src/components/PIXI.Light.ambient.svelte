@@ -18,7 +18,7 @@ const warmLightCoords = [
       y: 0,
       color: 0xff7f00,
       falloff:[0.75, 13, 40],
-      brightness: 1.1,
+      brightness: .8,
       start:.5
     },
     {
@@ -26,7 +26,7 @@ const warmLightCoords = [
       y: -0.25,
       color: 0xE54646,
       falloff:[0.75, 13, 40],
-      brightness: 1.3,
+      brightness: .8,
       start:.5
     },
     {
@@ -71,6 +71,7 @@ $: {
       sineInOut0_1.set(0)
     }
   }
+
   warmLightContainer.children.forEach((e,i)=>{
     e.position.x = $thereminPos.x + $thereminPos.width/2 + warmLightCoords[i].x * $thereminPos.width;
     e.position.y = $thereminPos.y + $thereminPos.height/2 + warmLightCoords[i].y * $thereminPos.height;
@@ -79,7 +80,7 @@ $: {
       * constrain(2-$SCALE,{max:1,min:0.2})
     e.falloff = warmLightCoords[i].falloff
   })
-  ambientLight.brightness = ($WIDTH > 600) ? .3*$sineInOut0_1 : .05 + .1*$sineInOut0_1
+  ambientLight.brightness = ($WIDTH > 600) ? .5*$sineInOut0_1 : .05 + .1*$sineInOut0_1
 }
 
 stage.addChild(ambientLight,warmLightContainer)

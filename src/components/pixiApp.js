@@ -22,7 +22,7 @@ Stage.addChild(
 export const Loader = PIXI.loader
     .add(
         "table",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstatic_light.png?v=1588712825397"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable.png?v=1590600624315"
     )
     .add(
         "static_dark",
@@ -34,7 +34,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "table_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstatic_light_normal.png?v=1588486193784"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable_normal.png?v=1590617511598"
     )
     .add(
         "machine_right",
@@ -42,7 +42,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "machine_right_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMachine_Right_normal.jpg?v=1584933515948"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FRight%20Machine%20Normal.png?v=1589242815494"
     )
     .add(
         "machine_left",
@@ -50,7 +50,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "machine_left_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMachine_Left_Normal.jpg?v=1584933516036"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLeft%20Machine%20Normal.png?v=1589242816592"
     )
     .add(
         "theremin_null",
@@ -154,15 +154,15 @@ export const Loader = PIXI.loader
     )
     .add(
         "wire1",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1.png?v=1588094588858"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1.png?v=1589076997985"
     )
     .add(
         "wire1_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1%20Normal.png?v=1588094588830"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1%20Normal.png?v=1589077164374"
     )
     .add(
         "wire2",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2.png?v=1588094588879"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2.png?v=1589076997946"
     )
     .add(
         "wire2_normal",
@@ -170,7 +170,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "wire3",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3.png?v=1588094589229"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3.png?v=1589076997881"
     )
     .add(
         "wire3_normal",
@@ -184,8 +184,69 @@ export const Loader = PIXI.loader
         "symbols_normal",
         "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSymbols%20Normal.png?v=1588539581021"
     )
+    .add(
+        "logo",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLogo.png?v=1588975850466"
+    )
+    .add(
+        "logo_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLogo_normal.png?v=1588978041228"
+    )
+    .add(
+        "bgm_normal",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_normal.png?v=1590448261585"
+    )
+    .add(
+        "bgm",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg.png?v=1590448179543"
+    )
+    .add(
+        "DAYBREAK FRONTLINE",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg2.png?v=1590466648299"
+    )
+    .add(
+        "濫觴生命",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg3.png?v=1590452789559"
+    )
+    .add(
+        "夜に駆ける",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg4.png?v=1590452787697"
+    )
+    .add(
+        "快晴",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg5.png?v=1590452788360"
+    )
+    .add(
+        "太陽になれるかな",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg6.png?v=1590452787751"
+    )
+    .add(
+        "Alice in 冷凍庫",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg1.png?v=1590466647838"
+    )
+    .add(
+        "アスノヨゾラ哨戒班",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg8.png?v=1590452791657"
+    )
+    .add(
+        "雨き声残響",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg9.png?v=1590452787070"
+    )
+    .add(
+        "金木犀",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg10.png?v=1590452791458"
+    )
+    .add(
+        "だから僕は音楽を辞めた",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg11.png?v=1590458994381"
+    )
+    .add(
+        "シャルル",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm13.png?v=1590467299372"
+    )
 
-    
+
+
     
 
 export const Resources = new Promise(
@@ -207,6 +268,16 @@ export const createPair = (diffuseTex, normalTex) => {
     container.addChild(diffuseSprite);
     container.addChild(normalSprite);
     return container;
+}
+
+export const createMultiTextSpriteGroup = (textureArr, spriteGroup) => {
+    var container = new PIXI.Container();
+    textureArr.forEach(element => {
+        var diffuseSprite = new PIXI.Sprite(diffuseTex);
+        diffuseSprite.parentGroup = PIXI.lights.diffuseGroup;
+    });
+    var normalSprite = new PIXI.Sprite(normalTex);
+    normalSprite.parentGroup = PIXI.lights.normalGroup;
 }
 
 export const createSprite = (diffuseTex, normalTex)=>{
@@ -239,19 +310,7 @@ export function createGradientTexture(r1, r2, resolution) {
     return PIXI.Texture.fromCanvas(canvas);
   }
 
-export const lerpColor = function(a, b, amount) {
-    const ar = a >> 16,
-        ag = (a >> 8) & 0xff,
-        ab = a & 0xff,
-        br = b >> 16,
-        bg = (b >> 8) & 0xff,
-        bb = b & 0xff,
-        rr = ar + amount * (br - ar),
-        rg = ag + amount * (bg - ag),
-        rb = ab + amount * (bb - ab);
 
-    return (rr << 16) + (rg << 8) + (rb | 0);
-};
 
 export const detectCollision = (position,pixiElement) => {
     const element_bounds = pixiElement.getBounds()

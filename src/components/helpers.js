@@ -23,6 +23,59 @@ export function getMidpoint(a, b, axis) {
     const x2 = b.position[axis];
     return (x1 + x2) / 2;
   }
+
+export function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
+export function jsUcfirst(string) 
+  {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+export  let rgbToHex = (string) => {
+    if(string.includes('rgb')){
+        var a = string.split("(")[1].split(")")[0];
+        a = a.split(",");
+        var b = a.map(function(x){                      //For each array element
+            x = parseInt(x).toString(16);      //Convert to a base16 string
+            return (x.length==1) ? "0"+x : x; //Add zero if we get only one character
+        });
+        b = "#"+b.join("");
+        return b
+    }else{
+        return string
+    }
+}
+
+  export const lerpColor = function(a, b, amount) {
+    const ar = a >> 16,
+        ag = (a >> 8) & 0xff,
+        ab = a & 0xff,
+        br = b >> 16,
+        bg = (b >> 8) & 0xff,
+        bb = b & 0xff,
+        rr = ar + amount * (br - ar),
+        rg = ag + amount * (bg - ag),
+        rb = ab + amount * (bb - ab);
+
+    return (rr << 16) + (rg << 8) + (rb | 0);
+};
   
 function getKeypoint(pose, part) {
     return pose.keypoints.filter((keypoint) => keypoint.part === part )[0];
@@ -146,4 +199,23 @@ export function smooth(pose, armspan) {
   
       jumpResetPose = Object.assign({}, jumpPrevPose);
     }, config.smoothing.jumpResetTime)
+  }
+
+  export function pointerEvents() {
+    if (document && 'ontouchstart' in document.documentElement) {
+      return {
+        start: 'touchstart',
+        move: 'touchmove',
+        end: 'touchend',
+      };
+    }
+    return {
+      start: 'mousedown',
+      move: 'mousemove',
+      end: 'mouseup',
+    };
+  }
+  
+  export function toPercent(n) {
+    return n * 100;
   }

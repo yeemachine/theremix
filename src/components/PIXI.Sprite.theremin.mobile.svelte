@@ -91,7 +91,7 @@ symbols.children[1].anchor.set(0.5, 0.5);
 symbols.children[0].tint = 0xE54646;
 
 
-const knob_light = new PIXI.lights.PointLight(0xff7f00, 0);
+const knob_light = new PIXI.lights.PointLight(0xffffff, 0);
 
 const switchRight = createSprite(
     textures.switch_off.texture,
@@ -119,11 +119,14 @@ thereminMobile.addChild(
     symbols,
     knob_left,
     knob_right,
-    switchRight,
-    knob_light
+    switchRight
     )
 
-stage.addChild(thereminMobile)
+var dirLight = new PIXI.lights.DirectionalLight(0xffffff, .3, base)
+dirLight.falloff = [0.75, 13, 20]
+dirLight.lightHeight = 1.8
+
+stage.addChild(thereminMobile,dirLight)
 
 $:{
 
@@ -181,7 +184,10 @@ $:{
         height:thereminMobile.height
     })
 
+    dirLight.target = base
+    dirLight.brightness = ($WIDTH > 600) ? 0 : 0.3 * $sineInOut0_1
 }
+
 
 $: {
 

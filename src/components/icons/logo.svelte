@@ -1,6 +1,6 @@
 <script>
 export let hide = false
-export let color = '#E54646'
+export let color = 'rgb(var(--crimson))'
 </script>
 
 <svg 
@@ -21,14 +21,9 @@ width="1763" height="214" viewBox="0 0 1763 214" fill="none" xmlns="http://www.w
 svg{
     width:100%;
     height:100%;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+    overflow: visible;
 }
+
 path{
     transition: .5s linear;
 }
@@ -62,4 +57,5 @@ svg path:nth-child(9){
 svg.hide path{
     opacity:0;
 }
+
 </style>

@@ -13,10 +13,9 @@ async function estimatePoseOnImage() {
         const pose = await net.estimateMultiplePoses($videoReady, posenetOptions);
         if(pose.length>0){
             if(pose[0].score>posenetOptions.minPoseConfidence){
-            // console.log(pose)
-            let armspan = getDistance(pose[0].keypoints[9].position,pose[0].keypoints[10].position)
-            let smoothPose = smooth(pose[0],armspan)
-            poseNetRes.set(smoothPose.keypoints)
+                let armspan = getDistance(pose[0].keypoints[9].position,pose[0].keypoints[10].position)
+                let smoothPose = smooth(pose[0],armspan)
+                poseNetRes.set(smoothPose.keypoints)
             }else{
                 poseNetRes.set(null)
             }

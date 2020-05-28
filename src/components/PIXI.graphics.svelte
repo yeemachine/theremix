@@ -1,11 +1,11 @@
 <script>
-import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride} from './stores.js'
-import {getDistance,getMidpoint} from './helpers.js'
+import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride,gestures,enableMIDI,tablePos,MIDITextSprite,MIDI_finished,MIDI_Display_Text,currentMIDITint,currentMIDITitle} from './stores.js'
+import {getDistance,getMidpoint,lerpColor} from './helpers.js'
 import { tweened } from 'svelte/motion';
 import {constrain} from './helpers.js';
 import {graphicsGroup} from './pixiApp.js'
 import { backOut, sineInOut } from 'svelte/easing';
-import {posenetOptions} from './config.js'
+import {posenetOptions,midiList} from './config.js'
 
 export let stage = null
 
@@ -56,8 +56,8 @@ const createAudioPoints = baseValues => {
         ? $thereminPos.width*.2495/(baseValues.length-1)*i 
         : $thereminMobilePos.width*.87/(baseValues.length-1)*i;
     const y = ($WIDTH>600) 
-        ? amplitude * $thereminPos.height*.06
-        : amplitude * $thereminMobilePos.height*.2;
+        ? amplitude * $thereminPos.height*.04
+        : amplitude * $thereminMobilePos.height*.15;
     newArr.push({x:x,y:y});
     }
     return (newArr)
@@ -176,10 +176,29 @@ let audioArr = [0,0]
 let frameCount = 0
 let TIME = 0
 let frameInterval = 4 //how much to slow fps
+let marqueeTime = 0
 
 const draw = () => {
     TIME+=.01
     frameCount += 1
+
+        if($MIDITextSprite){
+            if($MIDITextSprite.text !== "Loading..."){
+                marqueeTime = 
+                    (!$active) ? marqueeTime
+                    :(marqueeTime<=1) ? marqueeTime+.001 
+                    : 0
+                $MIDITextSprite.x = ($WIDTH > 600) 
+                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width*1/4) 
+                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width/4) 
+            }else{
+                marqueeTime = 0
+                $MIDITextSprite.x = ($WIDTH > 600) 
+                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width/2 
+                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
+            }
+        }
+            
 
         if(analyser){
             if(frameCount % frameInterval === 0){
@@ -202,6 +221,7 @@ const draw = () => {
             }
             
         }
+        
 
         if($poseNetRes && $videoReady){
             mouseOverride.set($mouseOverride+.01)
@@ -220,22 +240,42 @@ const draw = () => {
             graphics3.clear()
             if(!$toneOutput.glide){
                 for(let i=0; i<$toneOutput.total+1;i++){
-                    graphics3.lineStyle(2,0xE54646);
+                    graphics3.lineStyle(2,0xffffff);
                     graphics3.moveTo(
                         $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
                         0)
                     graphics3.lineTo(
                         $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
-                        $thereminPos.y+$thereminPos.height)
+                        ($thereminPos.y+$thereminPos.height))
+                    // if($enableMIDI && i!==0){
+                    //     graphics3.moveTo(
+                    //     $thereminPos.x,
+                    //     ($thereminPos.y+$thereminPos.height)*i/$toneOutput.total)
+                    //     graphics3.lineTo(
+                    //     $thereminPos.x + $thereminPos.width,
+                    //     ($thereminPos.y+$thereminPos.height)*i/$toneOutput.total)
+                    // }
                 }
-                graphics3.lineStyle(0)
-                graphics3.beginFill(0xE54646,1)
-                graphics3.drawRect(
-                    $thereminPos.x + $thereminPos.width*$toneOutput.index/$toneOutput.total,
-                    0,
-                    $thereminPos.width/$toneOutput.total,
-                    $thereminPos.y+$thereminPos.height
+                let currentColor = ($gestures) ? 0xE54646 : 0xFFFF33
+                graphics3.lineStyle(2,currentColor);
+                graphics3.beginFill(currentColor,1)
+
+                if($enableMIDI){
+                    graphics3.drawRect(
+                        $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
+                        (($thereminPos.y+$thereminPos.height))*($toneOutput.index.y)/$toneOutput.total,
+                        $thereminPos.width/$toneOutput.total,
+                        (($thereminPos.y+$thereminPos.height))/$toneOutput.total
                     )
+                }else{
+                    graphics3.drawRect(
+                        $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
+                        0,
+                        $thereminPos.width/$toneOutput.total,
+                        ($thereminPos.y+$thereminPos.height)
+                    )
+                }
+                
             }
         }
 
@@ -280,7 +320,7 @@ draw()
 
 $:{
     graphics.x = ($WIDTH > 600) ? $thereminPos.x+$thereminPos.width*.379 : $thereminMobilePos.x+$thereminMobilePos.width*.065;
-    graphics.y = ($WIDTH > 600) ? $thereminPos.y+$thereminPos.height*.862+0 : $thereminMobilePos.y+$thereminMobilePos.height*.73+0;
+    graphics.y = ($WIDTH > 600) ? $thereminPos.y+$thereminPos.height*.852 : $thereminMobilePos.y+$thereminMobilePos.height*.71+0;
    
     graphics2.x = $videoPos.x;
     graphics2.y = $videoPos.y

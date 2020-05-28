@@ -1,11 +1,12 @@
 <script>
 import { onMount } from 'svelte';
-import {createSprite, lerpColor, detectCollision, calcRotation} from './pixiApp.js';
+import {createSprite, detectCollision, calcRotation} from './pixiApp.js';
+import { interpolateRgb } from 'd3-interpolate';
 import { tweened,spring } from 'svelte/motion';
-import {constrain} from './helpers.js';
+import {constrain,lerpColor} from './helpers.js';
 import { backOut, sineInOut, quadInOut } from 'svelte/easing';
-import { oscillators } from './config.js';
-import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,TIME,SCALE} from './stores.js';
+import { oscillators,midiList } from './config.js';
+import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,TIME,SCALE,enableMIDI,currentMIDITitle,currentMIDITint} from './stores.js';
 export let textures = null;
 export let stage = null;
 
@@ -32,6 +33,11 @@ const tweenKnobLeft = tweened(0, {
 const tweenKnobRight = tweened(0, {
     duration: 700,
     easing: backOut
+});
+
+const colorTween = tweened('#ffffff', {
+		duration: 800,
+		interpolate: interpolateRgb
 });
 
 const theremin = new PIXI.Container();
@@ -72,8 +78,6 @@ knob_left.on('pointerdown',()=>{
     })
     globalPointerUp.set(false)
 })
-const knob_left_light = new PIXI.lights.PointLight(0xff7f00, 0);
-
 
 const knob_right = createSprite(
     textures.knob.texture,
@@ -98,7 +102,6 @@ knob_right.on('pointerdown',()=>{
     })
     globalPointerUp.set(false)
 })
-const knob_right_light = new PIXI.lights.PointLight(0xff0000, 0);
 
 const switchRight = createSprite(
     textures.switch_off.texture,
@@ -121,13 +124,11 @@ switchRight.on('mouseout',()=>{
     hovered.set(null)
     switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
 })
-const switchRight_light = new PIXI.lights.PointLight(0xff7f00, 0);
 
 const right_antenna = createSprite(
     textures.right_antenna.texture,
     textures.right_antenna_normal.texture
 )
-// right_antenna.children[0].tint = 0xE54646
 const right_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
 right_antenna_light.falloff = [0.75, 4, 10]
 
@@ -141,18 +142,14 @@ const left_antenna2 = createSprite(
     textures.left_antenna2.texture,
     textures.left_antenna2_normal.texture
 )
-// left_antenna2.children[0].tint = 0xE54646
 const left_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
 left_antenna_light.falloff = [0.75, 4, 10]
 
 const symbols = createSprite(
-    textures.symbols.texture,
-    textures.symbols_normal.texture
+    textures.symbols.texture
 )
-symbols.children[0].anchor.set(0.5, 0.5);
-symbols.children[1].anchor.set(0.5, 0.5);
-symbols.children[0].tint = 0xE54646;
-
+symbols.anchor.set(0.5, 0.5);
+symbols.tint = 0xE54646;
 
 var dirLight = new PIXI.lights.DirectionalLight(0xffffff, .3, theremin_body_top)
 dirLight.falloff = [0.75, 13, 20]
@@ -169,12 +166,14 @@ theremin.addChild(
     switchRight,
     left_antenna_light,
     right_antenna_light,
-    switchRight_light,
     )
 
-stage.addChild(theremin,dirLight)
+stage.addChild(
+    theremin,
+    dirLight)
 
 $: {
+    
 
     theremin_body_bottom.y = theremin_null.height-theremin_body_bottom.height
     theremin_body_bottom.x = theremin_null.width*.45
@@ -233,9 +232,6 @@ $: {
     switchRight.y = theremin_null.height*.8476
     switchRight.interactive = ($active) ? true : false
     switchRight.visible = ($WIDTH > 600) ? true : false
-    // switchRight_light.x = switchRight.x
-    // switchRight_light.y = switchRight.y
-    // switchRight_light.brightness = .1+.8*constrain($CANVASWIDTH/1200,{min:0,max:1})
     
     if(textures.theremin_null.texture.width/textures.theremin_null.texture.height > $CANVASWIDTH/$CANVASHEIGHT){
         theremin.width = $CANVASWIDTH*.9
@@ -245,8 +241,8 @@ $: {
         theremin.scale.x = theremin.scale.y
     }
 
-    theremin.x = ($CANVASWIDTH - theremin.width)*.48
-    theremin.y = ($CANVASHEIGHT - theremin.height)*.5
+    theremin.x = ($CANVASWIDTH - theremin.width)*.48 
+    theremin.y = ($CANVASHEIGHT - theremin.height)*.65
 
     if($WIDTH<600){
         theremin.width = $CANVASWIDTH-32
@@ -265,8 +261,9 @@ $: {
     })
 
     dirLight.target = theremin_body_top
-    dirLight.brightness = constrain(2-$SCALE,{max:.3,min:.15})
-    
+    dirLight.brightness = constrain(2-$SCALE,{max:.3,min:.05})
+    dirLight.color = $currentMIDITint
+    // console.log($currentMIDITint)
 }
 
 // Reset Dragged Value when Pointer is Up
@@ -285,9 +282,7 @@ $: {
         if($sineInOut0_1 === 0){
              sineInOut0_1.set(1)
         }
-        // if($pulse0_1 === 0){
-        //     pulse0_1.set(1)
-        // }
+       
     }
     if(!$active){
         if($backOut0_1 === 1){
@@ -296,12 +291,6 @@ $: {
         if($sineInOut0_1 === 1){
              sineInOut0_1.set(0)
         }
-        // if($pulse0_1 === 0){
-        //     pulse0_1.set(1)
-        // }
-        // if($pulse0_1 === 1){
-        //     pulse0_1.set(0)
-        // }
     } 
 }
 

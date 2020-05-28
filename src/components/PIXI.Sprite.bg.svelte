@@ -1,35 +1,73 @@
 <script>
 import {createSprite} from './pixiApp.js'
 import { tweened } from 'svelte/motion';
-import { backOut } from 'svelte/easing';
-import {WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,thereminPos,machineLeftPos} from './stores.js'
+import { sineInOut } from 'svelte/easing';
+import {midiList} from './config.js';
+import {lerpColor} from './helpers.js'
+import {WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,thereminPos,machineLeftPos,currentMIDITitle,currentMIDIOffset,enableMIDI,tablePos, currentMIDITint} from './stores.js'
 export let textures = null;
 export let stage = null;
 
+const sineInOut0_1 = tweened(0, {
+    duration: 1000,
+    easing: sineInOut
+});
+
+const sineInOut0_1_1 = tweened(1, {
+    duration: 1000,
+    easing: sineInOut
+});
+
+const sineInOut0_1_2 = tweened(0, {
+    duration: 1000,
+    easing: sineInOut
+});
+
+const tint0_1 = tweened(0, {
+    duration: 500,
+    easing: sineInOut
+});
+
 const bgContainer = new PIXI.Container();
 const bg = createSprite(textures.static_dark.texture,textures.bg_normal.texture)
-bg.children[0].tint = 0x555555;
+bg.children[0].tint = 0x666666;
 const bgRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
+
+const BGM_bg = createSprite(textures[midiList[0].name].texture,textures.bgm_normal.texture)
+BGM_bg.children[0].tint = midiList[0].tint;
+const BGM_bg2 = createSprite(textures[midiList[3].name].texture,textures.bgm_normal.texture)
+BGM_bg2.children[0].tint = midiList[0].tint;
 
 const machineLeft = createSprite(textures.machine_left.texture,textures.machine_left_normal.texture)
 const machineRight = createSprite(textures.machine_right.texture,textures.machine_right_normal.texture)
-machineLeft.children[0].tint = 0xFF8484
-machineRight.children[0].tint = 0xFF8484
-machineRight.alpha = .5
 
 $: {
     if($CANVASWIDTH/$CANVASHEIGHT > bgRatio){
         bg.width = $CANVASWIDTH
         bg.scale.y = bg.scale.x
     }else{
-        bg.height = $CANVASHEIGHT
+        bg.height = ($WIDTH > 600) ? $CANVASHEIGHT : ($CANVASHEIGHT - $thereminPos.height*.5)
         bg.scale.x = bg.scale.y
     }
     
     bg.position.set(
     ($CANVASWIDTH*.5 - bg.width*.5), 
-    ($CANVASHEIGHT*.5 - bg.height*.5)
+    0
     );
+
+    BGM_bg.width=bg.width
+    BGM_bg.scale.y = BGM_bg.scale.x
+    BGM_bg.x = $CANVASWIDTH * .5 
+    BGM_bg.y = ($WIDTH > 600) ? $CANVASHEIGHT * .5
+        : $CANVASHEIGHT * .5 - $thereminPos.height*.25
+    BGM_bg.alpha = $sineInOut0_1_1 - (1-$sineInOut0_1)
+
+    BGM_bg2.width=BGM_bg.width
+    BGM_bg2.scale.y = BGM_bg.scale.x
+    BGM_bg2.x = BGM_bg.x
+    BGM_bg2.y = BGM_bg.y
+    BGM_bg2.alpha = $sineInOut0_1_2 - (1-$sineInOut0_1)
+
     
     machineLeft.width = ($CANVASWIDTH*.6)<$CANVASHEIGHT ? $CANVASWIDTH*.6 : $CANVASHEIGHT*.9
     machineLeft.scale.y = machineLeft.scale.x
@@ -79,7 +117,77 @@ $: {
 
 }
 
-bgContainer.addChild(bg)
+let bgmClone = false
+$:{
+    if($currentMIDITitle && $enableMIDI){
+        if(bgmClone === true){
+            if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
+                
+                
+                if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
+                    if($sineInOut0_1_2 === 1){
+                        sineInOut0_1_2.set(0)
+                        bgmClone = false
+                    }
+                }
+
+
+            }else{
+                if($sineInOut0_1_2 === 1){
+                    sineInOut0_1_2.set(0)
+                }
+                BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture;
+                BGM_bg.children[0].tint = $currentMIDITitle.tint;
+                bgmClone = false
+            }
+        }else{
+            if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
+
+                if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
+                    if($sineInOut0_1_2 === 0){
+                        sineInOut0_1_2.set(1)
+                        bgmClone = true
+                    }
+                }
+                
+            }else{
+                if($sineInOut0_1_2 === 0){
+                    sineInOut0_1_2.set(1)
+                }
+                BGM_bg2.children[0].texture = textures[$currentMIDITitle.name].texture;
+                BGM_bg2.children[0].tint = $currentMIDITitle.tint;
+                bgmClone = true
+            }
+        }
+
+        if($sineInOut0_1 === 0){
+            sineInOut0_1.set(1)
+        }
+
+        console.log('bgchanged')
+    }else{
+        if($sineInOut0_1 === 1){
+            sineInOut0_1.set(0)
+        }
+        console.log('bgchanged')
+    }
+}
+
+$:{
+    if($WIDTH < 600){
+            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+    }else{
+        BGM_bg.children[0].anchor.set(0.5, 0.5);
+        BGM_bg.children[1].anchor.set(0.5, 0.5);
+        BGM_bg2.children[0].anchor.set(0.5, 0.5);
+        BGM_bg2.children[1].anchor.set(0.5, 0.5);
+    }
+}
+
+bgContainer.addChild(bg,BGM_bg,BGM_bg2)
 stage.addChild(bgContainer)
 
 </script>
