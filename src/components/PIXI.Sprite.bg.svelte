@@ -119,19 +119,19 @@ $: {
 
 let bgmClone = false
 
-$:{
-    if($currentMIDITitle){
-        BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture
-        BGM_bg.children[0].tint = $currentMIDITitle.tint
-        if($WIDTH < 600){
-            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
-        }else{
-            BGM_bg.children[0].anchor.set(0.5, 0.5);
-            BGM_bg.children[1].anchor.set(0.5, 0.5);
-        }
-    }
-}
+// $:{
+//     if($currentMIDITitle){
+//         BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture
+//         BGM_bg.children[0].tint = $currentMIDITitle.tint
+//         if($WIDTH < 600){
+//             BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+//             BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+//         }else{
+//             BGM_bg.children[0].anchor.set(0.5, 0.5);
+//             BGM_bg.children[1].anchor.set(0.5, 0.5);
+//         }
+//     }
+// }
 
 $:{
     if($enableMIDI){
@@ -145,72 +145,63 @@ $:{
     }
 }
 
-// $:{
-//     if($currentMIDITitle && $enableMIDI){
-//         if(bgmClone === true){
-//             if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
+$:{
+    if($currentMIDITitle){
+        if(bgmClone === true){
+            if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
                 
                 
-//                 if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
-//                     if($sineInOut0_1_2 === 1){
-//                         sineInOut0_1_2.set(0)
-//                         bgmClone = false
-//                     }
-//                 }
+                if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
+                    if($sineInOut0_1_2 === 1){
+                        sineInOut0_1_2.set(0)
+                        bgmClone = false
+                    }
+                }
 
 
-//             }else{
-//                 if($sineInOut0_1_2 === 1){
-//                     sineInOut0_1_2.set(0)
-//                 }
-//                 BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture;
-//                 BGM_bg.children[0].tint = $currentMIDITitle.tint;
-//                 bgmClone = false
-//             }
-//         }else{
-//             if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
+            }else{
+                if($sineInOut0_1_2 === 1){
+                    sineInOut0_1_2.set(0)
+                }
+                BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture;
+                BGM_bg.children[0].tint = $currentMIDITitle.tint;
+                bgmClone = false
+            }
+        }else{
+            if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
 
-//                 if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
-//                     if($sineInOut0_1_2 === 0){
-//                         sineInOut0_1_2.set(1)
-//                         bgmClone = true
-//                     }
-//                 }
+                if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
+                    if($sineInOut0_1_2 === 0){
+                        sineInOut0_1_2.set(1)
+                        bgmClone = true
+                    }
+                }
                 
-//             }else{
-//                 if($sineInOut0_1_2 === 0){
-//                     sineInOut0_1_2.set(1)
-//                 }
-//                 BGM_bg2.children[0].texture = textures[$currentMIDITitle.name].texture;
-//                 BGM_bg2.children[0].tint = $currentMIDITitle.tint;
-//                 bgmClone = true
-//             }
-//         }
+            }else{
+                if($sineInOut0_1_2 === 0){
+                    sineInOut0_1_2.set(1)
+                }
+                BGM_bg2.children[0].texture = textures[$currentMIDITitle.name].texture;
+                BGM_bg2.children[0].tint = $currentMIDITitle.tint;
+                bgmClone = true
+            }
+        }
 
-//         if($sineInOut0_1 === 0){
-//             sineInOut0_1.set(1)
-//         }
+        if($WIDTH < 600){
+            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+        }else{
+            BGM_bg.children[0].anchor.set(0.5, 0.5);
+            BGM_bg.children[1].anchor.set(0.5, 0.5);
+            BGM_bg2.children[0].anchor.set(0.5, 0.5);
+            BGM_bg2.children[1].anchor.set(0.5, 0.5);
+        }
 
-//         if($WIDTH < 600){
-//             BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-//             BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
-//             BGM_bg2.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-//             BGM_bg2.children[1].anchor.set($currentMIDITitle.offset, 0.5);
-//         }else{
-//             BGM_bg.children[0].anchor.set(0.5, 0.5);
-//             BGM_bg.children[1].anchor.set(0.5, 0.5);
-//             BGM_bg2.children[0].anchor.set(0.5, 0.5);
-//             BGM_bg2.children[1].anchor.set(0.5, 0.5);
-//         }
-
-//         console.log('bgchanged')
-//     }else{
-//         if($sineInOut0_1 === 1){
-//             sineInOut0_1.set(0)
-//         }
-//         console.log('bgchanged')
-//     }
-// }
+    }else{
+    }
+}
 
 bgContainer.addChild(bg,BGM_bg,BGM_bg2)
 stage.addChild(bgContainer)
