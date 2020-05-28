@@ -110,7 +110,7 @@ export const midiList = [
    
     {
         name:'アスノヨゾラ哨戒班',
-        url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FOrangestar_-_Asu_no_yozora_shoukaihan_feat.IA.mid?v=1590264388711",
+        url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAsu_no_Yozora_Shoukaihan_-_BanG_Dream_Afterglow_-_Orangestar_IA.mid?v=1590302769688",
         artist:'Orangestar feat. IA',
         offset:.5,
         tint:0x89AEC3
