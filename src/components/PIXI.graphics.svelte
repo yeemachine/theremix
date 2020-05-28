@@ -182,6 +182,7 @@ const draw = () => {
     TIME+=.01
     frameCount += 1
 
+    if($enableMIDI){
         if($MIDITextSprite){
             if($MIDITextSprite.text !== "Loading..."){
                 marqueeTime = 
@@ -198,6 +199,7 @@ const draw = () => {
                     : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
             }
         }
+    }
             
 
         if(analyser){
