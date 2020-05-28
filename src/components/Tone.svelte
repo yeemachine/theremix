@@ -116,7 +116,7 @@ const initMidi = (url)=>{
             midiSynths.push(synth)
             //schedule all of the events
             track.notes.forEach(note => {
-                Tone.Transport.scheduleOnce((time)=>{
+                Tone.Transport.schedule((time)=>{
                     synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
                 }, note.time + now)
 
@@ -125,11 +125,11 @@ const initMidi = (url)=>{
 
         })
 
-        Tone.Transport.scheduleOnce(()=>{MIDI_finished.set('forward')}, nowDelay+midi.duration)
+        Tone.Transport.schedule(()=>{MIDI_finished.set('forward')}, now+midi.duration)
 
         midi.header.keySignatures.forEach(signature=>{
 
-            Tone.Transport.scheduleOnce(
+            Tone.Transport.schedule(
                ()=>{
                    let scale = scales.find(a =>a.includes(jsUcfirst(signature.scale))) || null
                    if(scale){
@@ -139,7 +139,7 @@ const initMidi = (url)=>{
                 }, 
                Tone.Time(now).toTicks()+signature.ticks+'i') 
 
-            Tone.Transport.scheduleOnce(
+            Tone.Transport.schedule(
                 ()=>{
                     let key = (signature.key.length > 1) ? tonicOrder.find(a =>a.includes(signature.key)) 
                         : signature.key
