@@ -169,7 +169,7 @@ let playNext = (direction = 'forward')=>{
 }
 
 const cleanupSynths = () => {
-    Tone.Transport.cancel(0)
+    Tone.Transport.cancel()
     while (midiSynths.length) {
         const synth = midiSynths.shift()
         synth.dispose()
@@ -191,9 +191,9 @@ $:{
                 checkSynthClear = setTimeout(function() {
                     playNext($MIDI_finished)
                     MIDI_finished.set(null)    
-                    // Tone.Transport.start()
+                    Tone.Transport.start()
                 }, 1000); 
-                // Tone.Transport.stop();
+                Tone.Transport.stop();
                 
                 // MIDI_Display_Text.set('Loading...')
               
