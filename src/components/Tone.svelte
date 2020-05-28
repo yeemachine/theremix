@@ -87,7 +87,7 @@ const initMidi = (url)=>{
 
         midi.tracks.forEach((track,i) => {
             //create a synth for each track
-            const synth = new Tone.PolySynth(8, Tone.Synth, {
+            const synth = new Tone.PolySynth(6, Tone.Synth, {
                 oscillator:{
                         type:($oscillatorType === 'Fat Sine') ? 'sine' 
                         : ($oscillatorType === 'Fat Triangle') ? 'triangle'
@@ -110,8 +110,9 @@ const initMidi = (url)=>{
                     sustain: 0.3,
                     release: 1
                 }
-            }).connect(gain2)
+            })
 
+            synth.connect(gain2)
             
             midiSynths.push(synth)
             //schedule all of the events
