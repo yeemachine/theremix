@@ -122,7 +122,7 @@ let bgmClone = false
 $:{
     if($currentMIDITitle){
         BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture
-        BGM_bg.children[0].tint === textures[$currentMIDITitle.name].tint
+        BGM_bg.children[0].tint === $currentMIDITitle.tint
         if($WIDTH < 600){
             BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
             BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
