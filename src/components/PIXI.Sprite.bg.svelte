@@ -164,26 +164,24 @@ $:{
             sineInOut0_1.set(1)
         }
 
+        if($WIDTH < 600){
+            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+        }else{
+            BGM_bg.children[0].anchor.set(0.5, 0.5);
+            BGM_bg.children[1].anchor.set(0.5, 0.5);
+            BGM_bg2.children[0].anchor.set(0.5, 0.5);
+            BGM_bg2.children[1].anchor.set(0.5, 0.5);
+        }
+
         console.log('bgchanged')
     }else{
         if($sineInOut0_1 === 1){
             sineInOut0_1.set(0)
         }
         console.log('bgchanged')
-    }
-}
-
-$:{
-    if($WIDTH < 600){
-            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
-            BGM_bg2.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-            BGM_bg2.children[1].anchor.set($currentMIDITitle.offset, 0.5);
-    }else{
-        BGM_bg.children[0].anchor.set(0.5, 0.5);
-        BGM_bg.children[1].anchor.set(0.5, 0.5);
-        BGM_bg2.children[0].anchor.set(0.5, 0.5);
-        BGM_bg2.children[1].anchor.set(0.5, 0.5);
     }
 }
 
