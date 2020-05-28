@@ -133,20 +133,20 @@ let bgmClone = false
 //     }
 // }
 
-$:{
-    if($enableMIDI){
-        if($sineInOut0_1 === 0){
-            sineInOut0_1.set(1)
-        }
-    }else{
-        if($sineInOut0_1 === 1){
-            sineInOut0_1.set(0)
-        }
-    }
-}
+// $:{
+//     if($enableMIDI){
+//         if($sineInOut0_1 === 0){
+//             sineInOut0_1.set(1)
+//         }
+//     }else{
+//         if($sineInOut0_1 === 1){
+//             sineInOut0_1.set(0)
+//         }
+//     }
+// }
 
 $:{
-    if($currentMIDITitle){
+    if($currentMIDITitle && $enableMIDI){
         if(bgmClone === true){
             if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
                 
@@ -187,6 +187,10 @@ $:{
             }
         }
 
+        if($sineInOut0_1 === 0){
+            sineInOut0_1.set(1)
+        }
+
         if($WIDTH < 600){
             BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
             BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
@@ -199,7 +203,12 @@ $:{
             BGM_bg2.children[1].anchor.set(0.5, 0.5);
         }
 
+        console.log('bgchanged')
     }else{
+        if($sineInOut0_1 === 1){
+            sineInOut0_1.set(0)
+        }
+        console.log('bgchanged')
     }
 }
 
