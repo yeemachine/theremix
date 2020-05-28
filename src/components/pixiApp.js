@@ -22,7 +22,7 @@ Stage.addChild(
 export const Loader = PIXI.loader
     .add(
         "table",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable.png?v=1590552762584"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable.png?v=1590600624315"
     )
     .add(
         "static_dark",
@@ -34,7 +34,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "table_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable_normal.png?v=1590552086543"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable_normal.png?v=1590617511598"
     )
     .add(
         "machine_right",

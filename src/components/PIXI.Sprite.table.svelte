@@ -3,7 +3,7 @@ import {createSprite} from './pixiApp.js';
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
 import { lerpColor } from './helpers.js'
-import {CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,currentMIDITint,enableMIDI} from './stores.js';
+import {WIDTH,CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,currentMIDITint,enableMIDI} from './stores.js';
 export let textures = null;
 export let stage = null;
 
@@ -19,10 +19,10 @@ stage.addChild(table)
 
 $:{
     if($CANVASWIDTH/$CANVASHEIGHT > tableRatio){
-        table.width = $CANVASWIDTH
+        table.width = ($WIDTH>600) ? $CANVASWIDTH*1.5 :$CANVASWIDTH
         table.scale.y = table.scale.x
     }else{
-        table.height = $CANVASHEIGHT
+        table.height = ($WIDTH>600)? $CANVASHEIGHT*1.5 : $CANVASHEIGHT
         table.scale.x = table.scale.y
     }
     table.x = ($CANVASWIDTH - table.width)*.5

@@ -79,7 +79,7 @@ export const midiList = [
         name:"だから僕は音楽を辞めた",
         url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FYorushika%20-%20Thats%20Why%20I%20Gave%20Up%20on%20Music-1.mid?v=1590458865992",
         artist:'ヨルシカ',
-        offset:.4,
+        offset:.35,
         tint:0x89AEC3
         //https://www.youtube.com/watch?v=AimJ-EWDK1I
     },
@@ -145,7 +145,7 @@ export const midiList = [
         name:'雨き声残響',
         url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FEcho_of_My_Voice_in_the_Rain__-_OrangestarIA_-_Ver._Wolpis_Kater.mid?v=1590264416383",
         artist:'Orangestar feat. IA',
-        offset:.5,
+        offset:.7,
         tint:0xC39E89
     },
     {

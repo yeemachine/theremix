@@ -181,28 +181,24 @@ let marqueeTime = 0
 const draw = () => {
     TIME+=.01
     frameCount += 1
-        if($enableMIDI){
 
-            if($MIDITextSprite){
-                if(!$MIDI_finished){
-                    marqueeTime = 
-                        (!$active) ? marqueeTime
-                        :(marqueeTime<=1) ? marqueeTime+.001 
-                        : 0
-                    $MIDITextSprite.x = ($WIDTH > 600) 
-                        ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width*1/4) 
-                        : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width/4) 
-                }else{
-                    marqueeTime = 0
-                    $MIDITextSprite.x = ($WIDTH > 600) 
-                        ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width/2 
-                        : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
-                }
+        if($MIDITextSprite){
+            if($MIDITextSprite.text !== "Loading..."){
+                marqueeTime = 
+                    (!$active) ? marqueeTime
+                    :(marqueeTime<=1) ? marqueeTime+.001 
+                    : 0
+                $MIDITextSprite.x = ($WIDTH > 600) 
+                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width*1/4) 
+                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width/4) 
+            }else{
+                marqueeTime = 0
+                $MIDITextSprite.x = ($WIDTH > 600) 
+                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width/2 
+                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
             }
-            
-        }else{
-            
         }
+            
 
         if(analyser){
             if(frameCount % frameInterval === 0){

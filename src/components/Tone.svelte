@@ -82,8 +82,8 @@ let monoSynth = new Tone.Synth()
 const initMidi = (url)=>{
     console.log('loading midi...')
     Midi.fromUrl(url).then(midi => {
-        const now = Tone.now() + 0.5
-        const nowDelay = Tone.now() + 1
+        const now = Tone.now() + 0
+        const nowDelay = Tone.now() + .5
 
         midi.tracks.forEach((track,i) => {
             //create a synth for each track
@@ -152,7 +152,7 @@ const initMidi = (url)=>{
             })
 
         console.log('Current Playing: '+midiQueue[MIDI_Display_TextIndex].name)
-        currentMIDITitle.set(midiQueue[MIDI_Display_TextIndex].name)
+        currentMIDITitle.set(midiQueue[MIDI_Display_TextIndex])
     })
 }
 
@@ -182,6 +182,7 @@ $:{
 
     if ($enableMIDI) {
         if(!$MIDI_finished){
+            clearTimeout(checkSynthClear)
             initMidi(midiQueue[MIDI_Display_TextIndex].url)
         }else{
             cleanupSynths()
@@ -190,7 +191,9 @@ $:{
                 checkSynthClear = setTimeout(function() {
                     playNext($MIDI_finished)
                     MIDI_finished.set(null)    
+                    // Tone.Transport.start()
                 }, 1000); 
+                // Tone.Transport.stop();
                 
                 // MIDI_Display_Text.set('Loading...')
               

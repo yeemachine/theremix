@@ -46,20 +46,20 @@ $: {
         bg.width = $CANVASWIDTH
         bg.scale.y = bg.scale.x
     }else{
-        bg.height = $CANVASHEIGHT
+        bg.height = ($WIDTH > 600) ? $CANVASHEIGHT : ($CANVASHEIGHT - $thereminPos.height*.5)
         bg.scale.x = bg.scale.y
     }
     
     bg.position.set(
     ($CANVASWIDTH*.5 - bg.width*.5), 
-    ($CANVASHEIGHT*.5 - bg.height*.5)
+    0
     );
 
     BGM_bg.width=bg.width
     BGM_bg.scale.y = BGM_bg.scale.x
-    BGM_bg.x = $CANVASWIDTH * .5
+    BGM_bg.x = $CANVASWIDTH * .5 
     BGM_bg.y = ($WIDTH > 600) ? $CANVASHEIGHT * .5
-        : ($CANVASHEIGHT - $thereminPos.width*.635 - $thereminPos.height)*.8 + $thereminPos.height*.4
+        : $CANVASHEIGHT * .5 - $thereminPos.height*.25
     BGM_bg.alpha = $sineInOut0_1_1 - (1-$sineInOut0_1)
 
     BGM_bg2.width=BGM_bg.width
@@ -120,14 +120,11 @@ $: {
 let bgmClone = false
 $:{
     if($currentMIDITitle && $enableMIDI){
-        let songObj = midiList.find(o => o.name === $currentMIDITitle)
-        // BGM_bg.children[0].texture = textures[songObj.name].texture;
-        // BGM_bg.children[0].tint = songObj.tint;
         if(bgmClone === true){
-            if(BGM_bg2.children[0].texture === textures[songObj.name].texture || BGM_bg.children[0].texture === textures[songObj.name].texture){
+            if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
                 
                 
-                if(BGM_bg.children[0].texture === textures[songObj.name].texture){
+                if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
                     if($sineInOut0_1_2 === 1){
                         sineInOut0_1_2.set(0)
                         bgmClone = false
@@ -139,14 +136,14 @@ $:{
                 if($sineInOut0_1_2 === 1){
                     sineInOut0_1_2.set(0)
                 }
-                BGM_bg.children[0].texture = textures[songObj.name].texture;
-                BGM_bg.children[0].tint = songObj.tint;
+                BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture;
+                BGM_bg.children[0].tint = $currentMIDITitle.tint;
                 bgmClone = false
             }
         }else{
-            if(BGM_bg.children[0].texture === textures[songObj.name].texture || BGM_bg2.children[0].texture === textures[songObj.name].texture){
+            if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
 
-                if(BGM_bg2.children[0].texture === textures[songObj.name].texture){
+                if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
                     if($sineInOut0_1_2 === 0){
                         sineInOut0_1_2.set(1)
                         bgmClone = true
@@ -157,31 +154,36 @@ $:{
                 if($sineInOut0_1_2 === 0){
                     sineInOut0_1_2.set(1)
                 }
-                BGM_bg2.children[0].texture = textures[songObj.name].texture;
-                BGM_bg2.children[0].tint = songObj.tint;
+                BGM_bg2.children[0].texture = textures[$currentMIDITitle.name].texture;
+                BGM_bg2.children[0].tint = $currentMIDITitle.tint;
                 bgmClone = true
             }
-        }
-
-        if($WIDTH < 600){
-            BGM_bg.children[0].anchor.set(songObj.offset, 0.5);
-            BGM_bg.children[1].anchor.set(songObj.offset, 0.5);
-            BGM_bg2.children[0].anchor.set(songObj.offset, 0.5);
-            BGM_bg2.children[1].anchor.set(songObj.offset, 0.5);
-        }else{
-            BGM_bg.children[0].anchor.set(0.5, 0.5);
-            BGM_bg.children[1].anchor.set(0.5, 0.5);
-            BGM_bg2.children[0].anchor.set(0.5, 0.5);
-            BGM_bg2.children[1].anchor.set(0.5, 0.5);
         }
 
         if($sineInOut0_1 === 0){
             sineInOut0_1.set(1)
         }
+
+        console.log('bgchanged')
     }else{
         if($sineInOut0_1 === 1){
             sineInOut0_1.set(0)
         }
+        console.log('bgchanged')
+    }
+}
+
+$:{
+    if($WIDTH < 600){
+            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[0].anchor.set($currentMIDITitle.offset, 0.5);
+            BGM_bg2.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+    }else{
+        BGM_bg.children[0].anchor.set(0.5, 0.5);
+        BGM_bg.children[1].anchor.set(0.5, 0.5);
+        BGM_bg2.children[0].anchor.set(0.5, 0.5);
+        BGM_bg2.children[1].anchor.set(0.5, 0.5);
     }
 }
 

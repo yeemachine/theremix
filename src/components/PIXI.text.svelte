@@ -106,8 +106,7 @@ $:{
         noteText.alpha = ($toneOutput.glide) ? .15+.15*$sineInOut0_1 : .15+.55*$sineInOut0_1
     }
     if(midiText){
-        let songObj = midiList.find(o => o.name === $currentMIDITitle)
-        let text = (songObj) ? '♫ '+songObj.name+' / '+songObj.artist : null;
+        let text = ($currentMIDITitle) ? '♫ '+$currentMIDITitle.name+' / '+$currentMIDITitle.artist : null;
         midiText.text = 
             ($enableMIDI && $MIDI_finished || $enableMIDI && !text) ? "Loading..."
             : $enableMIDI ? '   '+text+'      '+text+'      '+text+'      '+text+'   ' 
