@@ -26,7 +26,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "static_dark",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG%20Machine.png?v=1590860596420"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG%20Machine.png?v=1590874525795"
     )
     .add(
         "bg_normal",
@@ -154,7 +154,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "wire1",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1.png?v=1589076997985"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire1.png?v=1590871308127"
     )
     .add(
         "wire1_normal",
@@ -162,7 +162,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "wire2",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2.png?v=1589076997946"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire2.png?v=1590871307955"
     )
     .add(
         "wire2_normal",
@@ -170,7 +170,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "wire3",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3.png?v=1589076997881"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire3.png?v=1590871308058"
     )
     .add(
         "wire3_normal",
@@ -218,7 +218,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "太陽になれるかな",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg6.png?v=1590452787751"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg6.png?v=1590873246977"
     )
     .add(
         "Alice in 冷凍庫",
