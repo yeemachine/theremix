@@ -26,7 +26,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "static_dark",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG%20Machine.png?v=1590874525795"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG%20Machine.png?v=1590875292549"
     )
     .add(
         "bg_normal",
