@@ -278,34 +278,36 @@ const draw = (now) => {
 
         if($machineLeftPos){
             bgGraphics.clear()
-            bgLights.left.forEach((e,i)=>{
+            if(!$enableMIDI){
+                bgLights.left.forEach((e,i)=>{
 
-                let opacity = (e.pause) ? constrain((Math.sin(TIME*e.speed)),{min:0,max:1})
-                    : Math.abs(Math.sin(TIME*e.speed))
-                let opacityStepped = (opacity>e.step) ? .7 : 0
-                    
-                bgGraphics.beginFill(e.color,opacityStepped)
+                    let opacity = (e.pause) ? constrain((Math.sin(TIME*e.speed)),{min:0,max:1})
+                        : Math.abs(Math.sin(TIME*e.speed))
+                    let opacityStepped = (opacity>e.step) ? .7 : 0
+                        
+                    bgGraphics.beginFill(e.color,opacityStepped)
 
-                if(e.r){
-                    bgGraphics.drawEllipse(
-                        $machineLeftPos.x+$machineLeftPos.width*e.x,
-                        $machineLeftPos.y+$machineLeftPos.height*e.y,
-                        $machineLeftPos.width*e.r,
-                        $machineLeftPos.width*e.r
-                    )
-                }
-                if(e.w){
-                    bgGraphics.drawRoundedRect(
-                        $machineLeftPos.x+$machineLeftPos.width*e.x,
-                        $machineLeftPos.y+$machineLeftPos.height*e.y,
-                        $machineLeftPos.width*e.w,
-                        $machineLeftPos.width*e.w,
-                        $machineLeftPos.width*e.w*.3
-                    )
-                }
+                    if(e.r){
+                        bgGraphics.drawEllipse(
+                            $machineLeftPos.x+$machineLeftPos.width*e.x,
+                            $machineLeftPos.y+$machineLeftPos.height*e.y,
+                            $machineLeftPos.width*e.r,
+                            $machineLeftPos.width*e.r
+                        )
+                    }
+                    if(e.w){
+                        bgGraphics.drawRoundedRect(
+                            $machineLeftPos.x+$machineLeftPos.width*e.x,
+                            $machineLeftPos.y+$machineLeftPos.height*e.y,
+                            $machineLeftPos.width*e.w,
+                            $machineLeftPos.width*e.w,
+                            $machineLeftPos.width*e.w*.3
+                        )
+                    }
 
 
-            })  
+                })  
+            }
            
         }
         
