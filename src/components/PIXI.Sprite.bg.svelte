@@ -49,11 +49,6 @@ $: {
         bg.height = ($WIDTH > 600) ? $CANVASHEIGHT : ($CANVASHEIGHT - $thereminPos.height*.5)
         bg.scale.x = bg.scale.y
     }
-    
-    bg.position.set(
-    ($CANVASWIDTH*.5 - bg.width*.5), 
-    0
-    );
 
     BGM_bg.width=bg.width
     BGM_bg.scale.y = BGM_bg.scale.x
@@ -209,8 +204,15 @@ $:{
             BGM_bg2.children[0].anchor.set(midiList[bgmTitle2].offset, 0.5);
             BGM_bg2.children[1].anchor.set(midiList[bgmTitle2].offset, 0.5);
         }
-        
+        bg.position.set(
+            ($CANVASWIDTH*.5 - bg.width*.5), 
+            0
+        );
     }else{
+        bg.position.set(
+            ($CANVASWIDTH*.5 - bg.width*.4), 
+            0
+        );
         BGM_bg.children[0].anchor.set(0.5, 0.5);
         BGM_bg.children[1].anchor.set(0.5, 0.5);
         BGM_bg2.children[0].anchor.set(0.5, 0.5);
