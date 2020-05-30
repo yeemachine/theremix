@@ -71,21 +71,23 @@ var ampEnv = new Tone.AmplitudeEnvelope({
 mainOsc.chain(vibrato,gain1,Tone.Master);
 gain2.connect(Tone.Master)
 Tone.Master.chain(masterCompressor,masterVolume,masterAnalyser);
+Tone.Transport.start();
 
 let midiSynths = []
 // let midiQueue = shuffle(midiList)
-let midiQueue = midiList
+let midiQueue = Object.keys(midiList)
 let MIDI_Display_TextIndex = 0
 var checkSynthClear
 
 let monoSynth = new Tone.Synth()
 const initMidi = (url)=>{
-    console.log('loading midi...')
+    // console.log('loading midi...')
     Midi.fromUrl(url).then(midi => {
-        const now = Tone.now() + .5
+        const now = Tone.now() + 0.5
         const nowDelay = Tone.now() + 1
 
         midi.tracks.forEach((track,i) => {
+            console.log(track.instrument)
             //create a synth for each track
             const synth = new Tone.PolySynth(8, Tone.Synth, {
                 oscillator:{
@@ -111,12 +113,13 @@ const initMidi = (url)=>{
                     release: 1
                 }
             }).connect(gain2)
+            
 
             
             midiSynths.push(synth)
-            //schedule all of the events
+            //scheduleOnce all of the events
             track.notes.forEach(note => {
-                Tone.Transport.schedule((time)=>{
+                Tone.Transport.scheduleOnce((time)=>{
                     synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
                 }, note.time + now)
 
@@ -125,33 +128,33 @@ const initMidi = (url)=>{
 
         })
 
-        Tone.Transport.schedule(()=>{MIDI_finished.set('forward')}, now+midi.duration)
+        Tone.Transport.scheduleOnce(()=>{MIDI_finished.set('forward')}, nowDelay+midi.duration)
 
         midi.header.keySignatures.forEach(signature=>{
 
-            Tone.Transport.schedule(
+            Tone.Transport.scheduleOnce(
                ()=>{
                    let scale = scales.find(a =>a.includes(jsUcfirst(signature.scale))) || null
                    if(scale){
                     scaleType.set(scale)
                    }
-                   console.log('SCALE: '+scale)
+                //    console.log('SCALE: '+scale)
                 }, 
                Tone.Time(now).toTicks()+signature.ticks+'i') 
 
-            Tone.Transport.schedule(
+            Tone.Transport.scheduleOnce(
                 ()=>{
                     let key = (signature.key.length > 1) ? tonicOrder.find(a =>a.includes(signature.key)) 
                         : signature.key
                     if(key){
                         tonic.set(key)
                     }
-                    console.log('KEY: '+key)
+                    // console.log('KEY: '+key)
                 }, 
                 Tone.Time(now).toTicks()+signature.ticks+'i') 
-            })
+        })
 
-        console.log('Current Playing: '+midiQueue[MIDI_Display_TextIndex].name)
+        console.log('Current Playing: '+midiQueue[MIDI_Display_TextIndex])
         currentMIDITitle.set(midiQueue[MIDI_Display_TextIndex])
     })
 }
@@ -169,10 +172,12 @@ let playNext = (direction = 'forward')=>{
 }
 
 const cleanupSynths = () => {
-    Tone.Transport.cancel()
+    Tone.Transport.cancel(0)
     while (midiSynths.length) {
         const synth = midiSynths.shift()
+        console.log(synth)
         synth.dispose()
+        console.log(synth)
     }
 }
 
@@ -183,24 +188,27 @@ $:{
     if ($enableMIDI) {
         if(!$MIDI_finished){
             clearTimeout(checkSynthClear)
-            initMidi(midiQueue[MIDI_Display_TextIndex].url)
+            initMidi(midiList[midiQueue[MIDI_Display_TextIndex]].url)
         }else{
-            cleanupSynths()
-               //Delay Midi init for synth cleanup
-                
-                checkSynthClear = setTimeout(function() {
-                    playNext($MIDI_finished)
-                    MIDI_finished.set(null)    
-                    // Tone.Transport.start()
-                }, 1000); 
-                // Tone.Transport.stop();
-                
-                // MIDI_Display_Text.set('Loading...')
-              
-                
+            if(midiSynths.length>0){
+                cleanupSynths()
+            }
+            //Delay Midi init for synth cleanup
+            
+            checkSynthClear = setTimeout(function() {
+                playNext($MIDI_finished)
+                MIDI_finished.set(null)    
+                // Tone.Transport.start()
+            }, 1000); 
+            // Tone.Transport.stop();
+            
+            // MIDI_Display_Text.set('Loading...')
+                 
         }
     } else {
-        cleanupSynths()
+        if(midiSynths.length>0){
+            cleanupSynths()
+        }
         // MIDI_Display_Text.set('Loading...')
         
     }

@@ -177,10 +177,30 @@ let frameCount = 0
 let TIME = 0
 let frameInterval = 4 //how much to slow fps
 let marqueeTime = 0
+var before; 
+var delay = 1000/24;
 
-const draw = () => {
-    TIME+=.01
-    frameCount += 1
+const draw = (now) => {
+    if ( !before ) before = now;
+
+    if ( now - before > delay) {
+        //delays to 12 fps
+        TIME+=.01
+
+        if(analyser){
+            audioArr = createAudioPoints($analyser.getValue())  
+            graphics.clear();
+            graphics.lineStyle(2,0xE54646);
+            graphics.lineAlpha = (!$active && $WIDTH > 600) ? Math.abs(Math.sin(TIME*5)) : 1
+            if(audioArr){
+                audioArr.forEach((e,i)=>{
+                if(i===0){
+                    graphics.moveTo(e.x,e.y)
+                }
+                graphics.lineTo(e.x,e.y);
+                })
+            }
+        }
 
         if($MIDITextSprite){
             if($MIDITextSprite.text !== "Loading..."){
@@ -198,28 +218,14 @@ const draw = () => {
                     : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
             }
         }
+
+        before = now;
+    }
+
+
+        
             
-        if(analyser){
-            if(frameCount % frameInterval === 0){
-                audioArr = createAudioPoints($analyser.getValue())
-            }
-            graphics.clear();
-            graphics.lineStyle(2,0xE54646);
-            // let opacity = (!$active && $WIDTH > 600) ? constrain((Math.sin(TIME*5)),{min:0,max:1})
-            //         : 1
-            // let opacityStepped = (opacity>.4) ? .7 : .3
-            // graphics.lineAlpha = opacityStepped
-            graphics.lineAlpha = (!$active && $WIDTH > 600) ? Math.abs(Math.sin(TIME*5)) : 1
-            if(audioArr){
-                audioArr.forEach((e,i)=>{
-                if(i===0){
-                    graphics.moveTo(e.x,e.y)
-                }
-                graphics.lineTo(e.x,e.y);
-                })
-            }
-            
-        }
+        
         
 
         if($poseNetRes && $videoReady){
@@ -246,16 +252,8 @@ const draw = () => {
                     graphics3.lineTo(
                         $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
                         ($thereminPos.y+$thereminPos.height))
-                    // if($enableMIDI && i!==0){
-                    //     graphics3.moveTo(
-                    //     $thereminPos.x,
-                    //     ($thereminPos.y+$thereminPos.height)*i/$toneOutput.total)
-                    //     graphics3.lineTo(
-                    //     $thereminPos.x + $thereminPos.width,
-                    //     ($thereminPos.y+$thereminPos.height)*i/$toneOutput.total)
-                    // }
                 }
-                let currentColor = ($gestures) ? 0xE54646 : 0xFFFF33
+                let currentColor = ($gestures) ? 0xFF5555 : 0xFFFF33
                 graphics3.lineStyle(2,currentColor);
                 graphics3.beginFill(currentColor,1)
 

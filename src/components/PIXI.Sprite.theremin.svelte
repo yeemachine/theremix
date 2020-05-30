@@ -261,7 +261,7 @@ $: {
     })
 
     dirLight.target = theremin_body_top
-    dirLight.brightness = constrain(2-$SCALE,{max:.3,min:.05})
+    dirLight.brightness = constrain(2-$SCALE,{max:.5,min:.2})
     dirLight.color = $currentMIDITint
     // console.log($currentMIDITint)
 }
