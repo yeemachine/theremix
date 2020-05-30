@@ -230,7 +230,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "秒針を噛む",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg9.png?v=1590452787070"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg12.png?v=1590874527928"
     )
     .add(
         "金木犀",
@@ -246,11 +246,11 @@ export const Loader = PIXI.loader
     )
     .add(
         "眩しいDNAだけ",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm13.png?v=1590663728605"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg13.png?v=1590874528127"
     )
     .add(
         "脳裏上のクラッカー",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg11.png?v=1590458994381"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg14.png?v=1590876010641"
     )
     .add(
         "雨き声残響",
