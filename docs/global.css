@@ -67,6 +67,7 @@
 --navy:29, 55, 103;
 
 --offwhite: 250, 236, 197;
+--darkoffwhite: 230 216,177;
 /* --offwhite: rgb(var(--offwhiteS)); */
 
 --offwhitetint:255, 221, 176;
@@ -76,8 +77,10 @@
 --offwhitegradient2: linear-gradient(0deg, rgb(var(--offwhitetint)) 0%, rgba(var(--offwhitetint),0.920045518207283) 70%, rgba(var(--offwhitetint),0) 100%);
 
 --crimson:229,70,70;
+--deepCrimson: 139,39,39;
 
 --charcoal:60,60,60;
+--lightcharcoal:85,85,85;
 
 --wave:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fh.svg?v=1589236773572);
 --waveRed:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fhred.svg?v=1589238550292);

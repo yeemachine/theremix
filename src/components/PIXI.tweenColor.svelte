@@ -14,7 +14,7 @@ let settingTween = false
 $:{
     if($enableMIDI){
         if($currentMIDITitle){
-            let tintTarget = PIXI.utils.hex2string($currentMIDITitle.tint)
+            let tintTarget = PIXI.utils.hex2string(midiList[$currentMIDITitle].tint)
             if($colorTween !== tintTarget){
                 if(settingTween){
                     let hexString = rgbToHex($colorTween)

@@ -1,5 +1,5 @@
 <script>
-import {active,thereminPos,CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE} from './stores.js'
+import {active,thereminPos,CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,currentMIDITint} from './stores.js'
 import {constrain} from './helpers.js';
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
@@ -13,36 +13,36 @@ const sineInOut0_1 = tweened(0, {
 const ambientLight = new PIXI.lights.AmbientLight(0xFFffff, .1)
 const warmLightContainer = new PIXI.Container();
 const warmLightCoords = [
-    {
-      x: 0,
-      y: 0,
-      color: 0xff7f00,
-      falloff:[0.75, 13, 40],
-      brightness: .8,
-      start:.5
-    },
-    {
-      x: -.25,
-      y: -0.25,
-      color: 0xE54646,
-      falloff:[0.75, 13, 40],
-      brightness: .8,
-      start:.5
-    },
-    {
-      x: -.5,
-      y: 0.2,
-      color: 0xFFFE7E,
-      falloff:[0, 13, 40],
-      brightness: .8,
-      start:.5
-    },
+    // {
+    //   x: 0,
+    //   y: 0,
+    //   color: 0xff7f00,
+    //   falloff:[0.75, 13, 40],
+    //   brightness: .8,
+    //   start:.5
+    // },
+    // {
+    //   x: -.25,
+    //   y: -0.25,
+    //   color: 0xE54646,
+    //   falloff:[0.75, 13, 40],
+    //   brightness: .8,
+    //   start:.5
+    // },
+    // {
+    //   x: -.5,
+    //   y: 0.2,
+    //   color: 0xFFFE7E,
+    //   falloff:[0, 13, 40],
+    //   brightness: .8,
+    //   start:.5
+    // },
     {
       x:.39,
       y: 0.1,
       color: 0xff7f00,
       falloff:[0.75, 3, 8],
-      brightness: 2.5,
+      brightness: 1.5,
       start:1
     },
     {
@@ -50,7 +50,7 @@ const warmLightCoords = [
       y: .22,
       color: 0xff7f00,
       falloff:[0.75, 3, 8],
-      brightness: 2.5,
+      brightness: 1.5,
       start:1
     },
 ];
@@ -80,7 +80,8 @@ $: {
       * constrain(2-$SCALE,{max:1,min:0.2})
     e.falloff = warmLightCoords[i].falloff
   })
-  ambientLight.brightness = ($WIDTH > 600) ? .5*$sineInOut0_1 : .05 + .1*$sineInOut0_1
+  ambientLight.brightness = ($WIDTH > 600) ? .15+.35*$sineInOut0_1 : .25 + .25*$sineInOut0_1
+  ambientLight.color = $currentMIDITint
 }
 
 stage.addChild(ambientLight,warmLightContainer)

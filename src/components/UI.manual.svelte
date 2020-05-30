@@ -52,7 +52,7 @@ $:{
     styles={'--bgColor:var(--buttonColor);--svgColor:var(--iconColor);--svgColorHover:var(--iconColor);position:absolute;top:0px;right:0px;border-radius:0;border-top-right-radius: 16px;border-bottom-left-radius: 16px;z-index:2'}
 	tabindex={$manual ? 0 : -1}
 	/>
-	<Carousel loop={false} perPage={1} startIndex={startSlide} duration={200} threshold={$WIDTH>600 ? 200 : 100} on:change={e=>{handleChange(e.detail)}}>
+	<Carousel loop={false} perPage={1} startIndex={startSlide} duration={400} threshold={$WIDTH>600 ? 200 : 100} on:change={e=>{handleChange(e.detail)}}>
 
 	<span class="control" slot="left-control">
 		<Arrow color={'rgb(var(--arrowColor))'}/>
@@ -187,6 +187,7 @@ $:{
 	section{
 		--cardColor: var(--offwhite);
 		--containerColor:var(--crimson);
+		--manualColor: 255, 211, 166;
 		--descriptionColor:var(--offwhitetint);
 		--cardGradient:linear-gradient(0deg, rgb(var(--descriptionColor)) 0%, rgba(var(--descriptionColor),0.920045518207283) 70%, rgba(var(--descriptionColor),0) 100%);
 		--containerGradient:linear-gradient(0deg, rgb(var(--descriptionColor)) 0%, rgb(var(--descriptionColor)) 26%, rgb(var(--cardColor)) 30%, rgb(var(--cardColor)) 32%, rgb(var(--cardColor)) 100%);
@@ -203,6 +204,7 @@ $:{
 	@media (prefers-color-scheme: dark) {
 		section{
 			--cardColor: 27,27,27;
+			--manualColor: 50,42,42;
 			--descriptionColor: 40,32,32;
 			--arrowColor:var(--crimson);
 			--textColor2:var(--offwhite);
@@ -241,7 +243,7 @@ $:{
 	:global(.slides){
 		border-radius:16px;
 		background:#FBDDCC;
-		background: rgb(var(--containerColor));
+		background: rgb(var(--manualColor));
 		overflow: hidden;
 		-webkit-backface-visibility: hidden;
 		-moz-backface-visibility: hidden;

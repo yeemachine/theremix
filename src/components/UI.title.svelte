@@ -150,7 +150,7 @@ $:{
         bottom:32px;
 		left:32px;
 		padding:16px 24px 16px 24px;
-		background: rgba(229,70,70,.2);
+		background: rgba(var(--crimson),.2);
         border-left: 2px solid rgb(var(--crimson));
         border-right: 2px solid rgb(var(--crimson));
 		color:rgb(var(--offwhite));
@@ -158,14 +158,15 @@ $:{
 		font-family: 'Whirly Birdie';
 		font-variation-settings: "wght" 90, "wdth" 120, "ital" 0;
         transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) .4s;
-        font-size:16px;
+        font-size:14px;
     }
     .manual:hover{
-        background: rgba(229,70,70,.7);
+        background: rgba(var(--crimson),.7);
+        color: rgb(var(--sun))
     }
     .manual.hide{
         opacity: 0;
-        background: rgba(229,70,70,.2);
+        background: rgba(var(--crimson),.2);
         pointer-events: none;
         transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
     }

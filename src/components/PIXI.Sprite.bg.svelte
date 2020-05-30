@@ -33,13 +33,13 @@ const bg = createSprite(textures.static_dark.texture,textures.bg_normal.texture)
 bg.children[0].tint = 0x666666;
 const bgRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
 
-const BGM_bg = createSprite(textures[midiList[0].name].texture,textures.bgm_normal.texture)
-BGM_bg.children[0].tint = midiList[0].tint;
-const BGM_bg2 = createSprite(textures[midiList[3].name].texture,textures.bgm_normal.texture)
-BGM_bg2.children[0].tint = midiList[0].tint;
+const BGM_bg = createSprite(textures[Object.keys(midiList)[0]].texture,textures.bgm_normal.texture)
+BGM_bg.children[0].tint = midiList[Object.keys(midiList)[0]].tint;
+const BGM_bg2 = createSprite(textures.bgm_normal.texture,textures.bgm_normal.texture)
 
-const machineLeft = createSprite(textures.machine_left.texture,textures.machine_left_normal.texture)
-const machineRight = createSprite(textures.machine_right.texture,textures.machine_right_normal.texture)
+// const machineLeft = createSprite(textures.machine_left.texture,textures.machine_left_normal.texture)
+// machineLeft.alpha = 0.5
+// const machineRight = createSprite(textures.machine_right.texture,textures.machine_right_normal.texture)
 
 $: {
     if($CANVASWIDTH/$CANVASHEIGHT > bgRatio){
@@ -69,66 +69,73 @@ $: {
     BGM_bg2.alpha = $sineInOut0_1_2 - (1-$sineInOut0_1)
 
     
-    machineLeft.width = ($CANVASWIDTH*.6)<$CANVASHEIGHT ? $CANVASWIDTH*.6 : $CANVASHEIGHT*.9
-    machineLeft.scale.y = machineLeft.scale.x
-    machineLeft.position.x = $CANVASWIDTH*.6<$CANVASHEIGHT 
-        ? $CANVASWIDTH*.1 - machineLeft.width*.15
-        : $CANVASWIDTH*.1 - machineLeft.width*.1
+    // machineLeft.width = ($CANVASWIDTH*.6)<$CANVASHEIGHT ? $CANVASWIDTH*.6 : $CANVASHEIGHT*.9
+    // machineLeft.scale.y = machineLeft.scale.x
+    // machineLeft.position.x = $CANVASWIDTH*.6<$CANVASHEIGHT 
+    //     ? $CANVASWIDTH*.1 - machineLeft.width*.15
+    //     : $CANVASWIDTH*.1 - machineLeft.width*.1
 
-    let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.85 - machineLeft.height
-    machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
+    // let yBasedOnTheremin = $thereminPos.y + $thereminPos.height - machineLeft.height
+    // machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
 
-    machineRight.width = ($CANVASWIDTH*.6)<$CANVASHEIGHT ? $CANVASWIDTH*.55 : $CANVASHEIGHT*.85
-    machineRight.scale.y = machineLeft.scale.x
-    machineRight.position.x = (($CANVASWIDTH*.6)<$CANVASHEIGHT)
-        ? $CANVASWIDTH*.9 - machineRight.width*.48 
-        : $CANVASWIDTH*.9 - machineRight.width*.45
-    machineRight.position.y = machineLeft.position.y * 1.3
+    // machineRight.width = ($CANVASWIDTH*.6)<$CANVASHEIGHT ? $CANVASWIDTH*.55 : $CANVASHEIGHT*.85
+    // machineRight.scale.y = machineLeft.scale.x
+    // machineRight.position.x = (($CANVASWIDTH*.6)<$CANVASHEIGHT)
+    //     ? $CANVASWIDTH*.9 - machineRight.width*.48 
+    //     : $CANVASWIDTH*.9 - machineRight.width*.45
+    // machineRight.position.y = machineLeft.position.y * 1.3
 
-    if($WIDTH>=900){
-        machineRight.visible = true
-        machineLeft.alpha = .5
-    }
-    if($WIDTH >= 600 && $WIDTH < 900){
-        machineLeft.width = $CANVASWIDTH - 160
-        machineLeft.scale.y = machineLeft.scale.x
-        machineLeft.position.x = 80
-        machineLeft.alpha = .5
-        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.95 - machineLeft.height
-        machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
-        machineRight.visible = false
-    }
-    if($WIDTH < 600){
-        machineLeft.width = $CANVASWIDTH - 30
-        machineLeft.scale.y = machineLeft.scale.x
-        machineLeft.position.x = 15
-        machineLeft.alpha = .5
-        let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.95 - machineLeft.height
-        machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
-        machineRight.visible = false
-    }
+    // if($WIDTH>=900){
+    //     machineRight.visible = true
+    //     machineLeft.alpha = .5
+    // }
+    // if($WIDTH >= 600 && $WIDTH < 900){
+    //     machineLeft.width = $CANVASWIDTH - 160
+    //     machineLeft.scale.y = machineLeft.scale.x
+    //     machineLeft.position.x = 80
+    //     machineLeft.alpha = .5
+    //     let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.95 - machineLeft.height
+    //     machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
+    //     machineRight.visible = false
+    // }
+    // if($WIDTH < 600){
+    //     machineLeft.width = $CANVASWIDTH - 30
+    //     machineLeft.scale.y = machineLeft.scale.x
+    //     machineLeft.position.x = 15
+    //     machineLeft.alpha = .5
+    //     let yBasedOnTheremin = $thereminPos.y + $thereminPos.height*.95 - machineLeft.height
+    //     machineLeft.position.y = (yBasedOnTheremin>20) ? yBasedOnTheremin : 20
+    //     machineRight.visible = false
+    // }
 
     machineLeftPos.set({
-        x:machineLeft.x,
-        y:machineLeft.y,
-        width:machineLeft.width,
-        height:machineLeft.height
+        x:bg.x,
+        y:bg.y,
+        width:bg.width,
+        height:bg.height
     })
 
 }
 
-let bgmClone = false
+
 
 // $:{
-//     if($currentMIDITitle){
-//         BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture
-//         BGM_bg.children[0].tint = $currentMIDITitle.tint
+//     if($currentMIDITitle && $enableMIDI){
+//         BGM_bg.children[0].texture = textures[$currentMIDITitle].texture
+//         BGM_bg.children[0].tint = midiList[$currentMIDITitle].tint
 //         if($WIDTH < 600){
-//             BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-//             BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
+//             BGM_bg.children[0].anchor.set(midiList[$currentMIDITitle].offset, 0.5);
+//             BGM_bg.children[1].anchor.set(midiList[$currentMIDITitle].offset, 0.5);
 //         }else{
 //             BGM_bg.children[0].anchor.set(0.5, 0.5);
 //             BGM_bg.children[1].anchor.set(0.5, 0.5);
+//         }
+//         if($sineInOut0_1 === 0){
+//             sineInOut0_1.set(1)
+//         }
+//     }else{
+//         if($sineInOut0_1 === 1){
+//             sineInOut0_1.set(0)
 //         }
 //     }
 // }
@@ -144,14 +151,17 @@ let bgmClone = false
 //         }
 //     }
 // }
+let bgmClone = false
+let bgmTitle1 = Object.keys(midiList)[0]
+let bgmTitle2 = 'bgm_normal'
 
 $:{
     if($currentMIDITitle && $enableMIDI){
         if(bgmClone === true){
-            if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
+            if(bgmTitle2 === $currentMIDITitle || bgmTitle1 === $currentMIDITitle){
                 
                 
-                if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture){
+                if(bgmTitle1 === $currentMIDITitle){
                     if($sineInOut0_1_2 === 1){
                         sineInOut0_1_2.set(0)
                         bgmClone = false
@@ -163,14 +173,15 @@ $:{
                 if($sineInOut0_1_2 === 1){
                     sineInOut0_1_2.set(0)
                 }
-                BGM_bg.children[0].texture = textures[$currentMIDITitle.name].texture;
-                BGM_bg.children[0].tint = $currentMIDITitle.tint;
+                BGM_bg.children[0].texture = textures[$currentMIDITitle].texture;
+                BGM_bg.children[0].tint = midiList[$currentMIDITitle].tint;
                 bgmClone = false
+                bgmTitle1 = $currentMIDITitle
             }
         }else{
-            if(BGM_bg.children[0].texture === textures[$currentMIDITitle.name].texture || BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
+            if(bgmTitle1 === $currentMIDITitle || bgmTitle2 === $currentMIDITitle){
 
-                if(BGM_bg2.children[0].texture === textures[$currentMIDITitle.name].texture){
+                if(bgmTitle2 === $currentMIDITitle){
                     if($sineInOut0_1_2 === 0){
                         sineInOut0_1_2.set(1)
                         bgmClone = true
@@ -181,34 +192,41 @@ $:{
                 if($sineInOut0_1_2 === 0){
                     sineInOut0_1_2.set(1)
                 }
-                BGM_bg2.children[0].texture = textures[$currentMIDITitle.name].texture;
-                BGM_bg2.children[0].tint = $currentMIDITitle.tint;
+                BGM_bg2.children[0].texture = textures[$currentMIDITitle].texture;
+                BGM_bg2.children[0].tint = midiList[$currentMIDITitle].tint;
                 bgmClone = true
+                bgmTitle2 = $currentMIDITitle
             }
         }
+    }
+}
 
+$:{
+    if($WIDTH < 600){
+        BGM_bg.children[0].anchor.set(midiList[bgmTitle1].offset, 0.5);
+        BGM_bg.children[1].anchor.set(midiList[bgmTitle1].offset, 0.5);
+        if(bgmTitle2 !== 'bgm_normal'){
+            BGM_bg2.children[0].anchor.set(midiList[bgmTitle2].offset, 0.5);
+            BGM_bg2.children[1].anchor.set(midiList[bgmTitle2].offset, 0.5);
+        }
+        
+    }else{
+        BGM_bg.children[0].anchor.set(0.5, 0.5);
+        BGM_bg.children[1].anchor.set(0.5, 0.5);
+        BGM_bg2.children[0].anchor.set(0.5, 0.5);
+        BGM_bg2.children[1].anchor.set(0.5, 0.5);
+    }
+}
+
+$:{
+    if($enableMIDI){
         if($sineInOut0_1 === 0){
-            sineInOut0_1.set(1)
+                sineInOut0_1.set(1)
         }
-
-        if($WIDTH < 600){
-            BGM_bg.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-            BGM_bg.children[1].anchor.set($currentMIDITitle.offset, 0.5);
-            BGM_bg2.children[0].anchor.set($currentMIDITitle.offset, 0.5);
-            BGM_bg2.children[1].anchor.set($currentMIDITitle.offset, 0.5);
-        }else{
-            BGM_bg.children[0].anchor.set(0.5, 0.5);
-            BGM_bg.children[1].anchor.set(0.5, 0.5);
-            BGM_bg2.children[0].anchor.set(0.5, 0.5);
-            BGM_bg2.children[1].anchor.set(0.5, 0.5);
-        }
-
-        console.log('bgchanged')
     }else{
         if($sineInOut0_1 === 1){
             sineInOut0_1.set(0)
         }
-        console.log('bgchanged')
     }
 }
 
