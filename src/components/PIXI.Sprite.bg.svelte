@@ -31,7 +31,6 @@ const tint0_1 = tweened(0, {
 const bgContainer = new PIXI.Container();
 const bg = createSprite(textures.static_dark.texture,textures.bg_normal.texture)
 bg.children[0].tint = 0x666666;
-  
 const bgRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
 
 const BGM_bg = createSprite(textures[Object.keys(midiList)[0]].texture,textures.bgm_normal.texture)
@@ -50,9 +49,10 @@ $: {
         bg.height = ($WIDTH > 600) ? $CANVASHEIGHT : ($CANVASHEIGHT - $thereminPos.height*.5)
         bg.scale.x = bg.scale.y
     }
+    
     bg.position.set(
-            ($CANVASWIDTH*.5 - bg.width*.5), 
-            0
+    ($CANVASWIDTH*.5 - bg.width*.5), 
+    0
     );
 
     BGM_bg.width=bg.width
@@ -209,15 +209,9 @@ $:{
             BGM_bg2.children[0].anchor.set(midiList[bgmTitle2].offset, 0.5);
             BGM_bg2.children[1].anchor.set(midiList[bgmTitle2].offset, 0.5);
         }
-        // bg.position.set(
-        //     ($CANVASWIDTH*.5 - bg.width*.5), 
-        //     0
-        // );
+        
     }else{
-        // bg.position.set(
-        //     ($CANVASWIDTH*.5 - bg.width*.4), 
-        //     0
-        // );
+        
         BGM_bg.children[0].anchor.set(0.5, 0.5);
         BGM_bg.children[1].anchor.set(0.5, 0.5);
         BGM_bg2.children[0].anchor.set(0.5, 0.5);
