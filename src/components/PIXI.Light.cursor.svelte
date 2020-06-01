@@ -20,7 +20,7 @@ let htmlCursor
 const cursorLight = new PIXI.lights.PointLight(0xff7f00,2);
 cursorLight.falloff = [0.75, 3, 10]
 
-const gradientTexture = createGradientTexture(0, 20*$SCALE, app.renderer.resolution);
+const gradientTexture = createGradientTexture(0, 12*$SCALE, app.renderer.resolution);
 const gradientTexture2 = createGradientTexture(0, 24*$SCALE, app.renderer.resolution);
 
 const particleContainer = new PIXI.particles.ParticleContainer(5000, {

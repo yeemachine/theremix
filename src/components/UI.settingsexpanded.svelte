@@ -1,7 +1,7 @@
 <script>
 
-import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,MIDI_finished} from './stores.js'
-import {scales,oscillators,maxOctaves,maxTonicOctave,tonicOrder} from './config.js'
+import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,MIDI_finished,currentMIDI} from './stores.js'
+import {scales,oscillators,maxOctaves,maxTonicOctave,tonicOrder,midiList} from './config.js'
 import Toggle from './UI.toggle.svelte'
 import Slider from './UIElements/SteppedSlider.svelte'
 // import Slider from 'svelte-slider'
@@ -9,6 +9,7 @@ import Slider from './UIElements/SteppedSlider.svelte'
 let selectedScale
 let selectedOsc
 let selectedTonic
+let selectedMIDI
 let selectedTonicOctave = 4
 // let selectedTonic = $tonic.replace(/[0-9]/g, '');
 // let selectedTonicOctave = $tonic.replace(/\D/g, "");
@@ -89,7 +90,27 @@ on:change={()=>scaleType.set(selectedScale)}
     setting={enableMIDI} 
     hide={(!$expandSettings) ? true :false}/>
 
-<button style="width:50px;height:50px;background:red;" on:click={()=>{if($enableMIDI){MIDI_finished.set('forward')}}}></button>    
+<div class="select {$enableMIDI ? '' : 'hide'}">
+    <select bind:value={selectedMIDI} class="midi" 
+    on:change={()=>{
+        if(selectedMIDI){
+            currentMIDI.set(selectedMIDI)
+        }
+        }}
+    >
+        <!-- <option value='Off' selected={("Off" === $currentMIDI) ? true : false}>
+                Off
+        </option>  -->
+
+        {#each Object.keys(midiList) as midiTitle}
+            <option value={midiTitle} selected={(midiTitle === $currentMIDI) ? true : false}>
+                {midiTitle}
+            </option>
+        {/each}
+        
+    </select>
+</div>
+<!-- <button style="width:50px;height:50px;background:red;" on:click={()=>{if($enableMIDI){MIDI_finished.set('forward')}}}></button>     -->
 </section>
 
 <style>
@@ -160,6 +181,11 @@ div {
     }
     
 
+
+.select.hide{
+    opacity:0;
+    pointer-events: none;
+}
 
 .select {
     position: relative;

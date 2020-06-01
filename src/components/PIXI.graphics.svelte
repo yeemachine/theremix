@@ -11,11 +11,11 @@ export let stage = null
 
 let ratio = 0
 const sineInOut0_1 = tweened(0, {
-    duration: 600,
+    duration: 1000,
     easing: sineInOut
 });
-const blink0_1 = tweened(0, {
-    duration: 600,
+const hideLights0_1 = tweened(1, {
+    duration: 1000,
     easing: sineInOut
 });
 
@@ -143,8 +143,8 @@ let bgLights = {
     left:[
      {
         x:.398,
-        y:.3205,
-        r:.0055,
+        y:.205,
+        r:.0025,
         color:0xE54646,
         speed:5,
         step:.4,
@@ -152,8 +152,8 @@ let bgLights = {
      },
      {
         x:.359,
-        y:.3205,
-        r:.0055,
+        y:.205,
+        r:.0025,
         color:0xE54646,
         speed:2,
         step:.4,
@@ -162,10 +162,19 @@ let bgLights = {
      {
         x:.24,
         y:.577,
-        w:.01125,
+        w:.00525,
         color:0xFFFF33,
         speed:2,
         step:.2,
+        pause:false
+     },
+      {
+        x:.759,
+        y:.3205,
+        r:.0025,
+        color:0xffffff,
+        speed:2,
+        step:.4,
         pause:false
      }      
     ]
@@ -185,8 +194,8 @@ const draw = (now) => {
 
     if ( now - before > delay) {
         //delays to 12 fps
-        TIME+=.01
 
+        //Draw Audio Analyser
         if(analyser){
             audioArr = createAudioPoints($analyser.getValue())  
             graphics.clear();
@@ -202,6 +211,7 @@ const draw = (now) => {
             }
         }
 
+        //Text Marquee
         if($MIDITextSprite){
             if($MIDITextSprite.text !== "Loading..."){
                 marqueeTime = 
@@ -222,12 +232,9 @@ const draw = (now) => {
         before = now;
     }
 
+    TIME+=.01
 
-        
-            
-        
-        
-
+        //Draw Pose
         if($poseNetRes && $videoReady){
             mouseOverride.set($mouseOverride+.01)
             graphics2.clear()
@@ -241,6 +248,7 @@ const draw = (now) => {
             graphics2add.clear()
         }
 
+        //Draw Glide Guides
         if($toneOutput){
             graphics3.clear()
             if(!$toneOutput.glide){
@@ -276,16 +284,16 @@ const draw = (now) => {
             }
         }
 
+        //Draw Machine Lights
         if($machineLeftPos){
             bgGraphics.clear()
-            if(!$enableMIDI){
                 bgLights.left.forEach((e,i)=>{
 
                     let opacity = (e.pause) ? constrain((Math.sin(TIME*e.speed)),{min:0,max:1})
                         : Math.abs(Math.sin(TIME*e.speed))
                     let opacityStepped = (opacity>e.step) ? .7 : 0
                         
-                    bgGraphics.beginFill(e.color,opacityStepped)
+                    bgGraphics.beginFill(e.color,opacityStepped*$hideLights0_1)
 
                     if(e.r){
                         bgGraphics.drawEllipse(
@@ -307,7 +315,6 @@ const draw = (now) => {
 
 
                 })  
-            }
            
         }
         
@@ -352,6 +359,18 @@ $:{
         sineInOut0_1.set(0)
     }
      
+}
+
+$:{
+    if($enableMIDI){
+        if($hideLights0_1 === 1){
+            hideLights0_1.set(0)
+        }
+    }else{
+        if($hideLights0_1 === 0){
+            hideLights0_1.set(1)
+        }
+    }
 }
 
 

@@ -2,9 +2,9 @@
 import { onMount } from 'svelte';
 import { tweened,spring } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
-import {constrain} from './helpers.js'
-import {active,loaded,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,expandSettings,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,MIDI_finished} from './stores.js'
-import {oscillators,scales,tonicOrder} from './config.js'
+import {constrain,findNext} from './helpers.js'
+import {active,loaded,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,expandSettings,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,MIDI_finished,currentMIDI} from './stores.js'
+import {oscillators,scales,tonicOrder,midiList} from './config.js'
 import {App,Stage,Resources} from './pixiApp.js'
 import BG from './PIXI.Sprite.bg.svelte'
 import Table from './PIXI.Sprite.table.svelte'
@@ -164,8 +164,9 @@ const handleKeydown = e => {
                 let nextItem = findNext($scaleType,scales,'reverse')
                 scaleType.set(nextItem)
             }else{
-                 if($enableMIDI && $MIDI_finished===null){
-                    MIDI_finished.set('back')
+                 if($enableMIDI){
+                     let nextItem = findNext($currentMIDI,Object.keys(midiList),'reverse')
+                     currentMIDI.set(nextItem)
                 }
             }
         }
@@ -181,8 +182,9 @@ const handleKeydown = e => {
                 let nextItem = findNext($scaleType,scales)
                 scaleType.set(nextItem)
             }else{
-                 if($enableMIDI && $MIDI_finished===null){
-                    MIDI_finished.set('forward')
+                 if($enableMIDI){
+                     let nextItem = findNext($currentMIDI,Object.keys(midiList))
+                     currentMIDI.set(nextItem)
                 }
             }
         }
@@ -214,17 +216,6 @@ const handleKeyup = e => {
             keydown_right.set(false)
         }
     
-}
-
-const findNext = (item, arr, direction='forward') => {
-    const index = arr.indexOf(item)
-    let nextItem;
-    if(direction==='reverse'){
-        nextItem = (index > 0) ? arr[index-1] : arr[arr.length-1]
-    }else{
-        nextItem = (index < arr.length-1) ? arr[index+1] : arr[0]
-    }
-    return nextItem
 }
 
 onMount(async () => {
