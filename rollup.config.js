@@ -3,19 +3,26 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-// import builtins from 'rollup-plugin-node-builtins';
-// import globals from 'rollup-plugin-node-globals';
-
 
 const production = !process.env.ROLLUP_WATCH;
+// const production = true
 
 export default {
+  external: ['tone', '@tonejs/midi', 'pixi.js','@tensorflow/tfjs','@tensorflow-models/posenet','pixi-lights','pixi-layers','d3-interpolate'],
+ 
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'docs/build/bundle.js'
+		file: 'docs/build/bundle.js',
+    globals: {
+      'pixi.js':'PIXI',
+      'tone': 'Tone',
+      '@tonejs/midi':'Midi',
+      '@tensorflow-models/posenet':'posenet',
+      'd3-interpolate':'d3'
+    }
 	},
 	plugins: [
 		svelte({
@@ -27,21 +34,18 @@ export default {
 				css.write('docs/build/bundle.css');
 			}
 		}),
+
+		// If you have external dependencies installed from
+		// npm, you'll most likely need these plugins. In
+		// some cases you'll need additional configuration -
+		// consult the documentation for details:
+		// https://github.com/rollup/plugins/tree/master/packages/commonjs
 		resolve({
 			browser: true,
-			dedupe: ['svelte']
+			dedupe: ['svelte'],
+      preferBuiltins: false
 		}),
-    // builtins(),
-		commonjs({
-			// namedExports: {
-            //     'pixi.js': [
-            //         'VERSION',
-            //         'Application',
-            //         'Graphics'
-            //     ]
-            // }
-		}),
-    // globals(),
+		commonjs(),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

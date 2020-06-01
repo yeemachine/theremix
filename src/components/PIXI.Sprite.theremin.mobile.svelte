@@ -1,6 +1,10 @@
 <script>
+import * as PIXI from 'pixi.js'
+import 'pixi-layers'
+import 'pixi-lights'
+
 import { onMount } from 'svelte';
-import {createSprite, lerpColor, detectCollision} from './pixiApp.js';
+import {createSprite, detectCollision} from './pixiApp.js';
 import { tweened } from 'svelte/motion';
 import {constrain} from './helpers.js';
 import { backOut, sineInOut } from 'svelte/easing';

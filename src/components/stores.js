@@ -24,7 +24,7 @@ export const keydown_G = writable(false)
 
 export const keydown_left = writable(false)
 export const keydown_right = writable(false)
-export const keydown_Kop = writable(false)
+export const keydown_up = writable(false)
 export const keydown_down = writable(false)
 export const reverseDirection = writable(false)
 
@@ -58,6 +58,7 @@ export const MIDI_Display_Text = writable('Loading...');
 export const currentMIDITitle = writable(null);
 export const currentMIDIOffset = writable(.5);
 export const currentMIDITint = writable(0xffffff);
+export const currentMIDI = writable('だから僕は音楽を辞めた');
 export const MIDI_tint = writable(null);
 export const MIDITextSprite = writable(null);
 export const MIDI_finished = writable(null);

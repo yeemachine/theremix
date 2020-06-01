@@ -1,12 +1,12 @@
 <script>
+import * as PIXI from 'pixi.js'
 import { onMount } from 'svelte';
-import {createSprite, lerpColor, detectCollision, calcRotation, graphicsGroup} from './pixiApp.js';
+import {createSprite, detectCollision, calcRotation, graphicsGroup} from './pixiApp.js';
 import { tweened } from 'svelte/motion';
 import {constrain} from './helpers.js';
 import { backOut, sineInOut } from 'svelte/easing';
 import { oscillators, midiList } from './config.js';
 import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,toneOutput,MIDI_Display_Text,enableMIDI,MIDI_finished,MIDITextSprite,currentMIDITitle} from './stores.js';
-export let textures = null;
 export let stage = null;
 
 const sineInOut0_1 = tweened(0, {

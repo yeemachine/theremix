@@ -1,7 +1,6 @@
 <script>
 export let icon
 export let setting
-export let settingState = null
 export let hide = false
 export let styles = ''
 export let selected = false

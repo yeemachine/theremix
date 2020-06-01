@@ -1,4 +1,7 @@
 <script>
+import * as PIXI from 'pixi.js'
+import 'pixi-layers'
+import 'pixi-lights'
 import {loaded,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual,tablePos} from './stores.js'
 import {constrain} from './helpers.js'
 import { onMount } from 'svelte';
@@ -20,7 +23,7 @@ let htmlCursor
 const cursorLight = new PIXI.lights.PointLight(0xff7f00,2);
 cursorLight.falloff = [0.75, 3, 10]
 
-const gradientTexture = createGradientTexture(0, 20*$SCALE, app.renderer.resolution);
+const gradientTexture = createGradientTexture(0, 12*$SCALE, app.renderer.resolution);
 const gradientTexture2 = createGradientTexture(0, 24*$SCALE, app.renderer.resolution);
 
 const particleContainer = new PIXI.particles.ParticleContainer(5000, {

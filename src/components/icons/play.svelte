@@ -2,7 +2,6 @@
 export let loaded = false
 export let hide = false
 export let color = 'rgb(var(--crimson))'
-export let color2 = 'rgb(var(--sun))'
 </script>
 
 <svg 

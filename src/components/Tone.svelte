@@ -1,8 +1,12 @@
 <script>
-import {active,enableMIDI,volumeVal,thereminPos,canvasMousePos,mousePos,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,dragged,analyser,audioControls,startOctave,endOctave,MIDI_finished,MIDI_Display_Text,currentMIDITitle,currentMIDIOffset,keydown_left,keydown_down,reverseDirection} from './stores.js'
-import {constrain, shuffle, jsUcfirst} from './helpers.js'
+import * as Tone from "tone"
+import * as Midi from '@tonejs/midi'
+import * as teoria from 'teoria'
+import {active,enableMIDI,volumeVal,thereminPos,canvasMousePos,mousePos,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,dragged,analyser,audioControls,startOctave,endOctave,MIDI_finished,MIDI_Display_Text,currentMIDITitle,currentMIDIOffset,keydown_left,keydown_down,reverseDirection,currentMIDI} from './stores.js'
+import {constrain, shuffle, jsUcfirst, findNext} from './helpers.js'
 import {midiList,tonicOrder,scales} from './config.js'
 
+  
 const generateScale = (tonic,key,octaves)=>{
     let scale = teoria.scale(tonic,key)
     let newNotes = []
@@ -40,6 +44,7 @@ analyser.set(masterAnalyser)
 
 const gain1 = new Tone.Gain(0.1);
 const gain2 = new Tone.Gain(0.1);
+
 const mainOsc = new Tone.OmniOscillator({
   frequency: 440,
   detune: 0,
@@ -60,13 +65,7 @@ let vibrato = new Tone.Vibrato({
   depth: 0.05,
   type: "sine"
 });
-
-var ampEnv = new Tone.AmplitudeEnvelope({
-	"attack": 0.1,
-	"decay": 0.2,
-	"sustain": 1.0,
-	"release": 0.8
-}).toMaster();
+console.log(gain1)
 
 mainOsc.chain(vibrato,gain1,Tone.Master);
 gain2.connect(Tone.Master)
@@ -76,6 +75,7 @@ Tone.Transport.start();
 let midiSynths = []
 // let midiQueue = shuffle(midiList)
 let midiQueue = Object.keys(midiList)
+let lastMIDI
 let MIDI_Display_TextIndex = 0
 var checkSynthClear
 
@@ -128,7 +128,10 @@ const initMidi = (url)=>{
 
         })
 
-        Tone.Transport.scheduleOnce(()=>{MIDI_finished.set('forward')}, nowDelay+midi.duration)
+        Tone.Transport.scheduleOnce(()=>{
+            let nextItem = findNext($currentMIDI,Object.keys(midiList))
+            currentMIDI.set(nextItem)
+        }, nowDelay+midi.duration)
 
         midi.header.keySignatures.forEach(signature=>{
 
@@ -154,22 +157,12 @@ const initMidi = (url)=>{
                 Tone.Time(now).toTicks()+signature.ticks+'i') 
         })
 
-        console.log('Current Playing: '+midiQueue[MIDI_Display_TextIndex])
-        currentMIDITitle.set(midiQueue[MIDI_Display_TextIndex])
+        console.log('Current Playing: '+lastMIDI)
+        currentMIDITitle.set(lastMIDI)
     })
 }
 
-let playNext = (direction = 'forward')=>{
-    if(direction==='back'){
-         MIDI_Display_TextIndex = MIDI_Display_TextIndex > 0 
-            ? MIDI_Display_TextIndex-1 
-            : midiQueue.length-1
-    }else{
-        MIDI_Display_TextIndex = (MIDI_Display_TextIndex < (midiQueue.length-1)) 
-            ? MIDI_Display_TextIndex+1 
-            : 0
-    }
-}
+
 
 const cleanupSynths = () => {
     Tone.Transport.cancel(0)
@@ -181,40 +174,24 @@ const cleanupSynths = () => {
     }
 }
 
-
-
 $:{
-
-    if ($enableMIDI) {
-        if(!$MIDI_finished){
-            clearTimeout(checkSynthClear)
-            initMidi(midiList[midiQueue[MIDI_Display_TextIndex]].url)
-        }else{
+    console.log($currentMIDI)
+    if($enableMIDI){
+        if(lastMIDI !== $currentMIDI){
+            lastMIDI = $currentMIDI
             if(midiSynths.length>0){
                 cleanupSynths()
             }
-            //Delay Midi init for synth cleanup
-            
-            checkSynthClear = setTimeout(function() {
-                playNext($MIDI_finished)
-                MIDI_finished.set(null)    
-                // Tone.Transport.start()
-            }, 1000); 
-            // Tone.Transport.stop();
-            
-            // MIDI_Display_Text.set('Loading...')
-                 
+            initMidi(midiList[lastMIDI].url)
         }
-    } else {
+    }else{
+        lastMIDI = null
         if(midiSynths.length>0){
             cleanupSynths()
         }
-        // MIDI_Display_Text.set('Loading...')
-        
     }
+
 }
-
-
 
 $:{
     if($active){

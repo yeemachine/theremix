@@ -1,4 +1,7 @@
 import {constrain} from './helpers.js';
+import * as PIXI from 'pixi.js'
+import 'pixi-layers'
+import 'pixi-lights'
 
 //PIXI Global Variables & Helper Functions
 export const App = new PIXI.Application()
@@ -11,6 +14,7 @@ export const graphicsGroup = new PIXI.display.Group(1,true)
 export const graphicsLayer = new PIXI.display.Layer(graphicsGroup)
 export const cursorGroup = new PIXI.display.Group(2,true)
 export const cursorLayer = new PIXI.display.Layer(cursorGroup)
+
 
 Stage.addChild(
     diffuseLayer,
@@ -26,7 +30,11 @@ export const Loader = PIXI.loader
     )
     .add(
         "static_dark",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG%20Machine.png?v=1590871057274"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG%20Machine.png?v=1590886698592"
+    )
+    .add(
+        "bg_wire",
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM%20Wire.png?v=1590935271525"
     )
     .add(
         "bg_normal",

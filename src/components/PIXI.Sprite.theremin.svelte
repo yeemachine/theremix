@@ -1,4 +1,8 @@
 <script>
+import * as PIXI from 'pixi.js'
+import 'pixi-layers'
+import 'pixi-lights'
+  
 import { onMount } from 'svelte';
 import {createSprite, detectCollision, calcRotation} from './pixiApp.js';
 import { interpolateRgb } from 'd3-interpolate';

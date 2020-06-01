@@ -24,6 +24,17 @@ export function getMidpoint(a, b, axis) {
     return (x1 + x2) / 2;
   }
 
+export const findNext = (item, arr, direction='forward') => {
+    const index = arr.indexOf(item)
+    let nextItem;
+    if(direction==='reverse'){
+        nextItem = (index > 0) ? arr[index-1] : arr[arr.length-1]
+    }else{
+        nextItem = (index < arr.length-1) ? arr[index+1] : arr[0]
+    }
+    return nextItem
+}
+
 export function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
   

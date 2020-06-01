@@ -1,5 +1,4 @@
 <script>
-export let hide = false
 export let color = 'rgb(var(--crimson))'
 export let bgColor = 'rgb(var(--offwhite))'
 </script>

@@ -1,4 +1,7 @@
 <script>
+import * as PIXI from 'pixi.js'
+import 'pixi-layers'
+import 'pixi-lights'
 import {active,thereminPos,CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,currentMIDITint} from './stores.js'
 import {constrain} from './helpers.js';
 import { tweened } from 'svelte/motion';
@@ -80,7 +83,7 @@ $: {
       * constrain(2-$SCALE,{max:1,min:0.2})
     e.falloff = warmLightCoords[i].falloff
   })
-  ambientLight.brightness = ($WIDTH > 600) ? .15+.35*$sineInOut0_1 : .25 + .25*$sineInOut0_1
+  ambientLight.brightness = ($WIDTH > 600) ? .1+.4*$sineInOut0_1 : .35 + .1*$sineInOut0_1
   ambientLight.color = $currentMIDITint
 }
 
