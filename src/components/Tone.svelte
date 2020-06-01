@@ -1,8 +1,12 @@
 <script>
+import * as Tone from "tone"
+import * as Midi from '@tonejs/midi'
+import * as teoria from 'teoria'
 import {active,enableMIDI,volumeVal,thereminPos,canvasMousePos,mousePos,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,dragged,analyser,audioControls,startOctave,endOctave,MIDI_finished,MIDI_Display_Text,currentMIDITitle,currentMIDIOffset,keydown_left,keydown_down,reverseDirection,currentMIDI} from './stores.js'
 import {constrain, shuffle, jsUcfirst, findNext} from './helpers.js'
 import {midiList,tonicOrder,scales} from './config.js'
 
+  
 const generateScale = (tonic,key,octaves)=>{
     let scale = teoria.scale(tonic,key)
     let newNotes = []
@@ -61,12 +65,12 @@ let vibrato = new Tone.Vibrato({
   type: "sine"
 });
 
-var ampEnv = new Tone.AmplitudeEnvelope({
-	"attack": 0.1,
-	"decay": 0.2,
-	"sustain": 1.0,
-	"release": 0.8
-}).toMaster();
+// var ampEnv = new Tone.AmplitudeEnvelope({
+// 	"attack": 0.1,
+// 	"decay": 0.2,
+// 	"sustain": 1.0,
+// 	"release": 0.8
+// }).connect(Tone.Master);
 
 mainOsc.chain(vibrato,gain1,Tone.Master);
 gain2.connect(Tone.Master)

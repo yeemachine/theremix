@@ -1,4 +1,5 @@
 import {constrain} from './helpers.js';
+// import * as PIXI from 'pixi.js'
 
 //PIXI Global Variables & Helper Functions
 export const App = new PIXI.Application()

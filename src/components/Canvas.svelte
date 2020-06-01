@@ -20,6 +20,8 @@ import Text from './PIXI.text.svelte'
 import Title from './UI.title.svelte'
 import Manual from './UI.manual.svelte'
 
+  
+  
 let containerWidth,
 canvasContainer, containerHeight;
 let noiseFilter = new PIXI.filters.NoiseFilter(.02,.1186887)

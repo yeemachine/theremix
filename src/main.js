@@ -1,4 +1,5 @@
 import App from './App.svelte';
+;
 
 // if ("serviceWorker" in navigator) {
 //     navigator.serviceWorker
