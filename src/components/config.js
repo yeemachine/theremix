@@ -27,25 +27,6 @@ export const scales = [
     'Melodicminor'
 ]
 
-// export const tonicOrder = [
-//     'C',
-//     'C#',
-//     'Db',
-//     'D',
-//     'D#',
-//     'Eb',
-//     'E',
-//     'F',
-//     'F#',
-//     'Gb',
-//     'G',
-//     'G#',
-//     'Ab',
-//     'A',
-//     'A#',
-//     'Bb',
-//     'B'
-// ]
 export const tonicOrder = [
     'C',
     'C#/Db',
@@ -177,29 +158,3 @@ export const midiList =
         
     }
 
-
-
- 
-// {
-//     name:'雨き声残響',
-//     url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FEcho_of_My_Voice_in_the_Rain__-_OrangestarIA_-_Ver._Wolpis_Kater.mid?v=1590264416383",
-//     artist:'Orangestar feat. IA'
-// },
-// {
-//     name:'濫觴生命',
-//     url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Flanshangshengming_Ranshou_Seimei.mid?v=1590264396535",
-//     artist:'Orangestar feat. IA'
-// },
-//     {
-//         name:"太陽になれるかな",
-//         url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FPerhaps%20I'll%20be%20able%20to%20become%20the%20sun.mid?v=1590263479994",
-//         artist:'ツユ'
-//     }
-
-// "脳裏上のクラッカー":{
-//     url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2F%5BNii%5D%20%E8%84%B3%E8%A3%8F%E4%B8%8A%E3%81%AE%E3%82%AF%E3%83%A9%E3%83%83%E3%82%AB%E3%83%BC%20MIDI.mid?v=1590783737877",
-//     artist:'ずっと真夜中でいいのに。',
-//     offset:.5,
-//     tint:0xC39E89
-//     //https://www.youtube.com/watch?v=F0xGjqhVglQ
-// },

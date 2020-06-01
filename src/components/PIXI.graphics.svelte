@@ -1,4 +1,5 @@
 <script>
+import * as PIXI from 'pixi.js'
 import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride,gestures,enableMIDI,tablePos,MIDITextSprite,MIDI_finished,MIDI_Display_Text,currentMIDITint,currentMIDITitle} from './stores.js'
 import {getDistance,getMidpoint,lerpColor} from './helpers.js'
 import { tweened } from 'svelte/motion';
@@ -139,8 +140,7 @@ const createLine = (point1,point2,graphics) => {
     graphics.moveTo(point1.position.x*ratio,point1.position.y*ratio)
     graphics.lineTo(point2.position.x*ratio,point2.position.y*ratio)
 }
-let bgLights = {
-    left:[
+let bgLights = [
      {
         x:.398,
         y:.205,
@@ -171,14 +171,22 @@ let bgLights = {
       {
         x:.759,
         y:.3205,
-        r:.0025,
+        r:.00125,
         color:0xffffff,
         speed:2,
         step:.4,
         pause:false
-     }      
+     },
+      {
+        x:.799,
+        y:.3205,
+        r:.00125,
+        color:0xffffff,
+        speed:2,
+        step:.9,
+        pause:false
+     }    
     ]
-}
 
 const fps = 14
 let audioArr = [0,0]
@@ -287,7 +295,7 @@ const draw = (now) => {
         //Draw Machine Lights
         if($machineLeftPos){
             bgGraphics.clear()
-                bgLights.left.forEach((e,i)=>{
+                bgLights.forEach((e,i)=>{
 
                     let opacity = (e.pause) ? constrain((Math.sin(TIME*e.speed)),{min:0,max:1})
                         : Math.abs(Math.sin(TIME*e.speed))

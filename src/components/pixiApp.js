@@ -1,5 +1,7 @@
 import {constrain} from './helpers.js';
-// import * as PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js'
+import 'pixi-layers'
+import 'pixi-lights'
 
 //PIXI Global Variables & Helper Functions
 export const App = new PIXI.Application()
@@ -12,6 +14,7 @@ export const graphicsGroup = new PIXI.display.Group(1,true)
 export const graphicsLayer = new PIXI.display.Layer(graphicsGroup)
 export const cursorGroup = new PIXI.display.Group(2,true)
 export const cursorLayer = new PIXI.display.Layer(cursorGroup)
+
 
 Stage.addChild(
     diffuseLayer,

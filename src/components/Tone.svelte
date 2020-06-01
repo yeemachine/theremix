@@ -44,6 +44,7 @@ analyser.set(masterAnalyser)
 
 const gain1 = new Tone.Gain(0.1);
 const gain2 = new Tone.Gain(0.1);
+
 const mainOsc = new Tone.OmniOscillator({
   frequency: 440,
   detune: 0,
@@ -64,13 +65,7 @@ let vibrato = new Tone.Vibrato({
   depth: 0.05,
   type: "sine"
 });
-
-// var ampEnv = new Tone.AmplitudeEnvelope({
-// 	"attack": 0.1,
-// 	"decay": 0.2,
-// 	"sustain": 1.0,
-// 	"release": 0.8
-// }).connect(Tone.Master);
+console.log(gain1)
 
 mainOsc.chain(vibrato,gain1,Tone.Master);
 gain2.connect(Tone.Master)

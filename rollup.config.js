@@ -5,20 +5,24 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
+// const production = true
 
 export default {
-  external: ['tone', '@tonejs/midi', 'pixi.js'],
-  globals: {
-    'pixi.js':'PIXI',
-    'tone': 'Tone',
-    '@tonejs/midi':'midi'
-  },
+  external: ['tone', '@tonejs/midi', 'pixi.js','@tensorflow/tfjs','@tensorflow-models/posenet','pixi-lights','pixi-layers','d3-interpolate'],
+ 
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'docs/build/bundle.js'
+		file: 'docs/build/bundle.js',
+    globals: {
+      'pixi.js':'PIXI',
+      'tone': 'Tone',
+      '@tonejs/midi':'Midi',
+      '@tensorflow-models/posenet':'posenet',
+      'd3-interpolate':'d3'
+    }
 	},
 	plugins: [
 		svelte({

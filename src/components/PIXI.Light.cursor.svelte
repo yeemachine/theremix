@@ -1,4 +1,7 @@
 <script>
+import * as PIXI from 'pixi.js'
+import 'pixi-layers'
+import 'pixi-lights'
 import {loaded,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual,tablePos} from './stores.js'
 import {constrain} from './helpers.js'
 import { onMount } from 'svelte';

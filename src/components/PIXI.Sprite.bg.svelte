@@ -1,4 +1,5 @@
 <script>
+import * as PIXI from 'pixi.js'
 import {createSprite} from './pixiApp.js'
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
@@ -24,7 +25,7 @@ $:{
     BGMContainer.alpha = $sineInOut0_1
 }
 const bg = createSprite(textures.static_dark.texture,textures.bg_normal.texture)
-bg.children[0].tint = 0x888888;
+bg.children[0].tint = 0x444444;
 const bgRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
 
 const BGM_bg = createSprite(textures[Object.keys(midiList)[0]].texture,textures.bgm_normal.texture)

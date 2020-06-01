@@ -1,7 +1,7 @@
 <script>
 
 import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,MIDI_finished,currentMIDI} from './stores.js'
-import {scales,oscillators,maxOctaves,maxTonicOctave,tonicOrder,midiList} from './config.js'
+import {scales,oscillators,maxOctaves,tonicOrder,midiList} from './config.js'
 import Toggle from './UI.toggle.svelte'
 import Slider from './UIElements/SteppedSlider.svelte'
 // import Slider from 'svelte-slider'
@@ -150,7 +150,9 @@ section{
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+    -webkit-backdrop-filter: blur(30px);
     backdrop-filter: blur(30px);
+    
     transition: opacity .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
     background: rgba(var(--offwhite), 0.2);
     overflow-y:scroll;

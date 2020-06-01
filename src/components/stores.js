@@ -24,7 +24,7 @@ export const keydown_G = writable(false)
 
 export const keydown_left = writable(false)
 export const keydown_right = writable(false)
-export const keydown_Kop = writable(false)
+export const keydown_up = writable(false)
 export const keydown_down = writable(false)
 export const reverseDirection = writable(false)
 

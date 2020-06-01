@@ -1,11 +1,11 @@
 {
-  "name": "svelte-app",
+  "name":"svelte-app",
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c && sirv docs"
   },
-  "dependencies": {
+  "dependencies":{
     "sirv-cli": "^0.4.6",
     "tone": "^13.8.27",
     "rollup-plugin-node-builtins": "^2.1.2",
@@ -20,7 +20,7 @@
     "pixi-particles": "^4.2.1",
     "pixi-lights": "^2.0.3"
   },
-  "devDependencies": {
+  "devDependencies":{
     "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "rollup": "^2.11.2",
@@ -29,7 +29,7 @@
     "rollup-plugin-terser": "^6.1.0",
     "svelte": "^3.23.0"
   },
-  "engines": {
+  "engines":{
     "node": "11.x"
   }
 }

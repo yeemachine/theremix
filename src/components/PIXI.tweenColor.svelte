@@ -1,4 +1,5 @@
 <script>
+import * as PIXI from 'pixi.js'
 import { interpolateRgb } from 'd3-interpolate';
 import { tweened,spring } from 'svelte/motion';
 import { midiList } from './config.js';
