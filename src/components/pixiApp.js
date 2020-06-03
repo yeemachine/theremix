@@ -234,7 +234,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "アスノヨゾラ哨戒班",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm12.png?v=1590831566332"
+        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm_bg8.png?v=1590452791657"
     )
     .add(
         "秒針を噛む",
