@@ -203,10 +203,10 @@ h3{
     font-weight: normal;
 }
 h4{
-    margin: 0 0 12px 0;
+    margin: 0 0 16px 0;
     color: rgb(var(--offwhite));
-    font-size: 14px;
-    font-variation-settings: "wght" 75, "wdth" 120, "ital" 0;
+    font-size: 10px;
+    font-variation-settings: "wght" 80, "wdth" 120, "ital" 0;
     line-height: 1;
     font-weight: normal;
     display: flex;
@@ -237,7 +237,7 @@ h4.noMargin{
 hr{
     border: 1px solid;
     width: calc(100% + 48px);
-    opacity: .1;
+    opacity: .05;
     margin: 0 0 0 -24px;
 }
 :root {
@@ -306,8 +306,8 @@ input[type=range] {
     outline: none;
     padding: 0;
     width: 100%;
-    height: 2px;
-    background-color: rgb(var(--lightcharcoal));
+    height: 6px;
+    background-color: rgb(var(--darkcharcoal));
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgb(var(--crimson))), color-stop(100%, rgb(var(--crimson))));
     background-size: 50% 100%;
     background-repeat: no-repeat;
@@ -324,8 +324,8 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 input[type=range]::-webkit-slider-thumb {
-  height: 18px;
-  width: 28px;
+  height: 32px;
+  width: 18px;
     border: 0;
     background: rgb(var(--offwhite));
     border: none;
