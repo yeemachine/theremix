@@ -48,7 +48,7 @@ knob_left.children[0].anchor.set(0.5, 0.5);
 knob_left.children[1].anchor.set(0.5, 0.5);
 knob_left.children[0].tint = 0x999999;
 knob_left.on('mouseover',()=>{
-    hovered.set(knob_left)
+    hovered.set('knob left')
     knob_left.children[0].tint = 0xffffff
 })
 knob_left.on('mouseout',()=>{
@@ -71,7 +71,7 @@ knob_right.children[0].anchor.set(0.5, 0.5);
 knob_right.children[1].anchor.set(0.5, 0.5);
 knob_right.children[0].tint = 0x999999;
 knob_right.on('mouseover',()=>{
-    hovered.set(knob_right)
+    hovered.set('knob right')
     knob_right.children[0].tint = 0xffffff
 })
 knob_right.on('mouseout',()=>{
@@ -110,7 +110,7 @@ switchRight.on('pointerup',()=>{
     glide.set(!$glide)
 })
 switchRight.on('mouseover',()=>{
-    hovered.set(switchRight)
+    hovered.set('switch')
     switchRight.children[0].tint = 0xffffff
 })
 switchRight.on('mouseout',()=>{

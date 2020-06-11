@@ -2,7 +2,7 @@
 import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
-import {loaded,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual,tablePos} from './stores.js'
+import {loaded,hovered,glide,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual,tablePos} from './stores.js'
 import {constrain} from './helpers.js'
 import { onMount } from 'svelte';
 import { tweened,spring } from 'svelte/motion';
@@ -314,13 +314,21 @@ $: {
 
 stage.addChild(cursorLight,particleContainer)
 
-
 </script>
 
-<container bind:this={htmlCursor} style='opacity:{mousePos ? 1 : 0};
+<container 
+bind:this={htmlCursor}
+class="{$hovered?'hovered':''}"
+style='opacity:{mousePos ? 1 : 0};
   transform:translate({$mousePos.x-26}px, {$mousePos.y-26}px)'>
   <div>
-    <span>2</span>
+    <span>{
+      ($hovered === 'switch' && !$glide) ?  'Enable Glide' 
+      : ($hovered === 'switch' && $glide) ? 'Disable Glide'
+      : ($hovered === 'knob left') ? 'Adjust Volume'
+      : ($hovered === 'knob right') ? 'Change Oscillator'
+      : ''
+      }</span>
   </div>
 </container>
 
@@ -341,21 +349,33 @@ stage.addChild(cursorLight,particleContainer)
     transform-origin: center;
     /* background:rgba(255,255,50,.2); */
     /* background:white; */
-    border:2px transparent rgba(255,197,47,1);
-    
+    border:2px transparent;
+    position:relative; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
     /* animation: pulse 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite */
   }
   span{
-    position:absolute;
-    transform:translate(18px,12px);
-    font-size:48px;
-    font-family: 'Whirlybats';
-    color:#FFF5D0;
-    opacity:0;
+    position: absolute;
+    top:-21px;
+    width: max-content;
+    line-break: normal;
+    font-size: 12px;
+    background: rgb(var(--crimson));
+    padding: 6px 12px 6px 12px;
+    border-radius: 16px;
+    color: rgb(var(--offwhite));
+    opacity: 0;
     text-align: center;
     text-shadow: 0 0 20px rgba(0,0,0,0.5);
+    transition:0s;
     /* animation: animateGlyph 1s linear infinite;
     animation-play-state: start; */
+  }
+  .hovered span{
+    opacity: 1;
+    /* transition: opacity .5s cubic-bezier(0.46, 0.03, 0.52, 0.96); */
   }
   @keyframes pulse {
     0%   { 

@@ -73,10 +73,12 @@ $:{
     
     type="range" min={min} max={max} value={initVal[1]} id="upper">
     <div class="progress"
-    style="width:calc((100% - 28px) * {difference/(max-min)});left:calc(14px + (100% - 28px) * {(lower-1)/(max-min)})"></div>
+    style="width:calc((100% - 18px) * {difference/(max-min)});left:calc(9px + (100% - 18px) * {(lower-1)/(max-min)})"></div>
     <div class="tick-track">
     {#each Array(max-min+1) as _, i}
-      <div class="tick" style="background:{(lower<=i+1 && upper>=i+1) ? 'rgb(var(--crimson))' : 'rgb(var(--lightcharcoal))'}">
+      <div class="tick" style="background:{(lower<=i+1 && upper>=i+1) ? 'rgb(var(--crimson))' : 'rgb(var(--darkcharcoal))'};
+      color:{(lower<=i+1 && upper>=i+1) ? 'rgba(var(--offwhite),1)' : 'rgb(var(--charcoal))'}
+      ">
         <!-- {#if i+1 === min || i+1 === max} -->
             <label>{i+1<=9 ? '0'+(i+1) : i+1}</label>
         <!-- {/if} -->
@@ -92,6 +94,7 @@ input[type=range] {
      -moz-appearance: none;
           appearance: none;
   width: 100%;
+  height:32px;
   margin: 0;
   left: 0;
   padding: 0;
@@ -111,8 +114,8 @@ input[type=range]:focus {
   outline: none;
 }
 input[type=range]::-webkit-slider-thumb {
-  height: 18px;
-  width: 28px;
+  height: 32px;
+  width: 18px;
   border-radius: 8px;
   background-color: rgb(var(--offwhite));
   position: relative;
@@ -122,7 +125,9 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
           appearance: none;
   pointer-events: all;
-  box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+  border: 0;
+  border: none;
+  box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
 }
 input[type=range]::-webkit-slider-thumb::before {
   content: ' ';
@@ -157,45 +162,46 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 .tick-track{
-    width: calc(100% - 28px);
+    width: calc(100% - 18px);
     position: absolute;
-    height: 7px;
+    height: 14px;
     display: flex;
-    left: 14px;
+    left: 9px;
     top: 13px;
     justify-content: space-between;
     pointer-events: none;
     z-index: -2;
 }
 .tick-track:before{
-  content:'';
-  width:calc(100% + 28px);
-  top:0;
-  background:rgb(var(--lightcharcoal));
-  position:absolute;
-  left:-14px;
-  height:2px;
+  content: '';
+    width: calc(100% + 18px);
+    top: 0;
+    background: rgb(var(--darkcharcoal));
+    position: absolute;
+    left: -9px;
+    height: 6px;
+    border-radius: 6px;
 }
 .tick{
   width:2px;
-  background: rgb(var(--lightcharcoal));
+  background: rgb(var(--darkcharcoal));
   position:relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .progress{
-  position:absolute;
-  width:100%;
-  height:2px;
-  top:13px;
-  background:rgb(var(--crimson));
-  z-index:-1
+  position: absolute;
+    width: 0%;
+    height: 6px;
+    top: 13px;
+    background: rgb(var(--crimson));
+    z-index: -1;
 }
 label{
   font-family: 'Nicholson Beta';
   position: absolute;
-  top: 14px;
+  top: 22px;
   font-size: 10px;
 }
 </style>
