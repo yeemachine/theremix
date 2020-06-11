@@ -129,6 +129,29 @@ input[type=range]::-webkit-slider-thumb {
   border: none;
   box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
 }
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+  border: none;
+  height: 32px;
+  width: 18px;
+  border-radius: 8px;
+  background: rgb(var(--offwhite));
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  pointer-events: all;
+}
+
+input[type=range]::-ms-thumb {
+  box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+  border: none;
+  height: 32px;
+  width: 18px;
+  border-radius: 8px;
+  background: rgb(var(--offwhite));
+  pointer-events: all;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+}
+
 input[type=range]::-webkit-slider-thumb::before {
   content: ' ';
   display: block;
@@ -138,6 +161,7 @@ input[type=range]::-webkit-slider-thumb::before {
   width: 2000px;
   height: 2px;
 }
+
 .multi-range {
   position: relative;
   height: 50px;
@@ -201,7 +225,7 @@ input[type=range]::-webkit-slider-runnable-track {
 label{
   font-family: 'Nicholson Beta';
   position: absolute;
-  top: 22px;
+  top: 24px;
   font-size: 10px;
 }
 </style>
