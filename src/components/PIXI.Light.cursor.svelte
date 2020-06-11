@@ -358,7 +358,7 @@ style='opacity:{mousePos ? 1 : 0};
   }
   span{
     position: absolute;
-    top:-21px;
+    top:-32px;
     width: max-content;
     line-break: normal;
     font-size: 12px;
