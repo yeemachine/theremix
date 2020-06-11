@@ -3,8 +3,9 @@ import * as PIXI from 'pixi.js'
 import {createSprite} from './pixiApp.js';
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
-import { lerpColor } from './helpers.js'
-import {WIDTH,CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,currentMIDITint,enableMIDI} from './stores.js';
+import { lerpColor } from './helpers.js';
+import {midiList} from './config.js';
+import {WIDTH,CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,currentMIDITint,enableMIDI,currentMIDI} from './stores.js';
 export let textures = null;
 export let stage = null;
 
@@ -20,17 +21,15 @@ stage.addChild(table)
 
 $:{
     if($CANVASWIDTH/$CANVASHEIGHT > tableRatio){
-        table.width = ($WIDTH>600) ? $CANVASWIDTH*1.5 :$CANVASWIDTH
+        table.width = ($WIDTH>600) ? $CANVASWIDTH :$CANVASWIDTH
         table.scale.y = table.scale.x
     }else{
-        table.height = ($WIDTH>600)? $CANVASHEIGHT*1.5 : $CANVASHEIGHT
+        table.height = ($WIDTH>600)? $CANVASHEIGHT : $CANVASHEIGHT
         table.scale.x = table.scale.y
     }
     table.x = ($CANVASWIDTH - table.width)*.5
     table.y = $thereminPos.y + $thereminPos.height*.9;
-    // table.children[0].tint = lerpColor(0xffffff,0xB08FA3,$sineInOut0_1)
-        table.children[0].tint = $currentMIDITint
-
+    table.children[0].tint = lerpColor(0xeeccec,0x80797F,$sineInOut0_1)
 
     tablePos.set({
         x:table.x,
@@ -41,16 +40,16 @@ $:{
 }
 
 
-// $:{
-//     if($enableMIDI){
-//         if($sineInOut0_1 === 0){
-//             sineInOut0_1.set(1)
-//         }
-//     }else{
-//         if($sineInOut0_1 === 1){
-//             sineInOut0_1.set(0)
-//         }
-//     }
-// }
+$:{
+    if($enableMIDI){
+        if($sineInOut0_1 === 0){
+            sineInOut0_1.set(1)
+        }
+    }else{
+        if($sineInOut0_1 === 1){
+            sineInOut0_1.set(0)
+        }
+    }
+}
 
 </script>

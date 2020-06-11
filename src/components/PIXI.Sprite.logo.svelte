@@ -19,7 +19,6 @@ const logoLight3 = new PIXI.lights.PointLight(0xffffff, 0);
 
 
 $: {
-
     logo.width = $CANVASWIDTH*.8
     logo.scale.y = logo.scale.x
     logo.x = ($CANVASWIDTH - logo.width)*.5

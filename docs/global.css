@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Whirly Birdie";
-	src: url("https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdieGX.ttf?v=1588569607311")
+	src: url("https://cdn.glitch.com/1711052e-ea5e-4036-9c61-dd3ef6782855%2FWhirlyBirdieGX.ttf?v=1591228424609")
 		format("truetype");
 	}
 
@@ -81,6 +81,7 @@
 
 --charcoal:60,60,60;
 --lightcharcoal:85,85,85;
+--darkcharcoal:35,35,35;
 
 --wave:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fh.svg?v=1589236773572);
 --waveRed:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fhred.svg?v=1589238550292);
@@ -181,3 +182,7 @@ button:hover{
     width:100%;
     height:100%
 }
+
+* {  -webkit-backface-visibility:  hidden;
+    -webkit-tap-highlight-color:  transparent;
+ }

@@ -83,7 +83,7 @@ $: {
       * constrain(2-$SCALE,{max:1,min:0.2})
     e.falloff = warmLightCoords[i].falloff
   })
-  ambientLight.brightness = ($WIDTH > 600) ? .1+.4*$sineInOut0_1 : .35 + .1*$sineInOut0_1
+  ambientLight.brightness = ($WIDTH > 600) ? .05+.3*$sineInOut0_1 : .3 + .05*$sineInOut0_1
   ambientLight.color = $currentMIDITint
 }
 

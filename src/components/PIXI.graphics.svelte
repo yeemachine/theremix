@@ -168,24 +168,70 @@ let bgLights = [
         step:.2,
         pause:false
      },
-      {
-        x:.759,
-        y:.3205,
-        r:.00125,
+     {
+        x:.14,
+        y:.377,
+        w:.0025,
         color:0xffffff,
         speed:2,
+        step:.5,
+        pause:true
+     },
+      {
+        x:.759,
+        y:.3005,
+        r:.00125,
+        color:0xffffff,
+        speed:1,
         step:.4,
         pause:false
      },
       {
-        x:.799,
-        y:.3205,
+        x:.959,
+        y:.5115,
         r:.00125,
         color:0xffffff,
-        speed:2,
+        speed:1,
+        step:.7,
+        pause:false
+     },
+      {
+        x:.899,
+        y:.6215,
+        r:.00125,
+        color:0xffffff,
+        speed:1,
         step:.9,
         pause:false
-     }    
+     } 
+     ,
+      {
+        x:.545,
+        y:.541,
+        r:.00125,
+        color:0xABF3FD,
+        speed:2,
+        step:.1,
+        pause:true
+     },
+      {
+        x:.545,
+        y:.559,
+        r:.00125,
+        color:0xABF3FD,
+        speed:2,
+        step:.4,
+        pause:true
+     },
+      {
+        x:.545,
+        y:.577,
+        r:.00125,
+        color:0xABF3FD,
+        speed:2,
+        step:.7,
+        pause:true
+     }     
     ]
 
 const fps = 14

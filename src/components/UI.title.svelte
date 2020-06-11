@@ -36,14 +36,17 @@ $:{
     <button 
     class="play"
     on:click={playStart}
+    on:touchend={playStart}
     tabindex={!$active?1:-1}
     >
         <Play loaded={$coverLoaded} hide={$active}/>
     </button>
 
 </section>
-<button on:click={manualOpen} class="manual {(!$coverLoaded || $active || $manual) ? 'hide' : ''}">
-		Operation Manual
+<button 
+    on:click={manualOpen} 
+    class="manual {(!$coverLoaded || $active || $manual) ? 'hide' : ''}">
+		User Manual
 </button>
 
 <style>
@@ -87,24 +90,6 @@ $:{
         position: relative
         /* display: none; */
     }
-    /* .title:before{
-        content:'';
-        height:100%;
-        width:100%;
-        top:0;
-        position: absolute;
-        border-top: 4px solid rgb(var(--crimson));
-        border-bottom: 4px solid rgb(var(--crimson));
-        opacity: 0.3;
-        transform:scale3d(1,1,1);
-        transition: 
-            transform .8s cubic-bezier(0.46, 0.03, 0.52, 0.96) .2s
-    }
-    .title.hide:before{
-        transform:scale3d(0,1,1);
-        transition: 
-            transform .8s cubic-bezier(0.46, 0.03, 0.52, 0.96)
-    } */
    
     .play{
        /* width: 20vh;
@@ -148,11 +133,13 @@ $:{
     .manual{
 		position:absolute;
         bottom:32px;
-		left:32px;
-		padding:16px 24px 16px 24px;
+        left:32px;
+        height: 56px;
+		padding:0 24px 0 24px;
 		background: rgba(var(--crimson),.2);
-        border-left: 2px solid rgb(var(--crimson));
-        border-right: 2px solid rgb(var(--crimson));
+        border-radius: 8px;
+        /* border-left: 2px solid rgb(var(--crimson));
+        border-right: 2px solid rgb(var(--crimson)); */
 		color:rgb(var(--offwhite));
 		/* border-radius:4px; */
 		font-family: 'Whirly Birdie';
@@ -160,15 +147,16 @@ $:{
         transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) .4s;
         font-size:14px;
     }
-    .manual:hover{
-        background: rgba(var(--crimson),.7);
-        color: rgb(var(--sun))
+    .manual:hover, .manual:focus{
+        background: rgba(var(--crimson),1);
+        /* color: rgb(var(--charcoal)) */
     }
     .manual.hide{
         opacity: 0;
         background: rgba(var(--crimson),.2);
+        /* color:rgb(var(--offwhite)); */
         pointer-events: none;
-        transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
+        transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s
     }
 
      @media screen and (max-width: 600px) {
@@ -188,7 +176,7 @@ $:{
             margin: 8px 0 16px 0;
         }
         .manual{
-		  width:calc(100% - 64px)
+          width:calc(100% - 64px);
 	  }
       
     

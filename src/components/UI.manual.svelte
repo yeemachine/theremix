@@ -8,7 +8,7 @@ import closeIcon from './icons/close.svelte';
 import ButtonCircle from './UI.buttoncircle.svelte';
 import BasicControls from './icons/basicControls.svelte'
 import GestureControls from './icons/gestureControls.svelte'
-import MIDI from './icons/MIDI.svelte'
+import MIDIControls from './icons/MIDISupport.svelte'
 import Arrow from './icons/arrow.svelte'
 
 let startSlide = 0
@@ -119,7 +119,32 @@ $:{
 			</container>
 			<div class="gradient"></div>
 		</div> 
-		<div class="slide-content fullscreen {(currentSlide === 2 && $loaded) ? 'current' : ''}">
+		<div class="slide-content {(currentSlide === 2 && $loaded) ? 'current' : ''}">
+			<container>
+			<div class="graphic">
+				<h2>Midi<br>Controls</h2>
+				<div class="svg">
+					<MIDIControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
+				</div>
+			</div>
+			<div class="description">
+				<p>Webcam motion capture allows you to experience the gestural movements of playing a physical theremin. Powered by the <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a> machine learning model for pose detection.</p>
+				<hr>
+				<ul>
+					<li>
+						<h3>Both Hands Present</h3>
+						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
+					</li>
+					<li>
+						<h3>One Hand Present</h3>
+						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
+					</li>
+				</ul>
+			</div>
+			</container>
+			<div class="gradient"></div>
+		</div> 
+		<div class="slide-content fullscreen {(currentSlide === 3 && $loaded) ? 'current' : ''}">
 			<container>
 			<div class="description">
 				<h2>Resources<br>and Links</h2>
@@ -165,15 +190,7 @@ $:{
 			</container>
 			<div class="gradient"></div>
 		</div> 
-		<div class="slide-content fullscreen {(currentSlide === 3 && $loaded) ? 'current' : ''}">
-			<container>
-			<div class="graphic">
-				<h2>MIDI<br>Support</h2>
-				<div class="svg">
-					<MIDI color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
-				</div>
-			</div>
-		</div> 
+		
 		
 		
 	<span class="control" slot="right-control">
@@ -203,9 +220,9 @@ $:{
 
 	@media (prefers-color-scheme: dark) {
 		section{
-			--cardColor: 27,27,27;
+			--cardColor: 17,17,17;
 			--manualColor: 50,42,42;
-			--descriptionColor: 40,32,32;
+			--descriptionColor: 30,25,25;
 			--arrowColor:var(--crimson);
 			--textColor2:var(--offwhite);
 			--listColor:var(--crimson);
@@ -346,17 +363,7 @@ $:{
 		-webkit-transform: translate3d(0, 0, 0);
 		-moz-transform: translate3d(0, 0, 0);
 	}
-	/* .slide-content:before{
-		content: '';
-		width: 510px;
-		height: 300%;
-		position: absolute;
-		right: -30px;
-		top: -100%;
-		border-radius: 50%;
-		background: rgb(var(--crimson));
-		opacity: 5%;
-	} */
+
 	.fullscreen .description{
 		width:calc(100% - 80px);
 		column-count: 2;
@@ -457,7 +464,7 @@ $:{
     align-items: center;
     justify-content: center;
     width: 32px;
-    font-variation-settings: "wght" 50, "wdth" 80, "ital" 0;
+    font-variation-settings: "wght" 60, "wdth" 80, "ital" 0;
 	}
 
 	h3{

@@ -70,7 +70,7 @@ console.log(gain1)
 mainOsc.chain(vibrato,gain1,Tone.Master);
 gain2.connect(Tone.Master)
 Tone.Master.chain(masterCompressor,masterVolume,masterAnalyser);
-Tone.Transport.start();
+// Tone.Transport.start();
 
 let midiSynths = []
 // let midiQueue = shuffle(midiList)
@@ -83,8 +83,9 @@ let monoSynth = new Tone.Synth()
 const initMidi = (url)=>{
     // console.log('loading midi...')
     Midi.fromUrl(url).then(midi => {
-        const now = Tone.now() + 0.5
-        const nowDelay = Tone.now() + 1
+        // const now = Tone.now() + 0.5
+        const now = 1
+        const nowDelay = 2
 
         midi.tracks.forEach((track,i) => {
             console.log(track.instrument)
@@ -114,7 +115,7 @@ const initMidi = (url)=>{
                 }
             }).connect(gain2)
             
-
+        
             
             midiSynths.push(synth)
             //scheduleOnce all of the events
@@ -158,6 +159,7 @@ const initMidi = (url)=>{
         })
 
         console.log('Current Playing: '+lastMIDI)
+        Tone.Transport.start()
         currentMIDITitle.set(lastMIDI)
     })
 }
@@ -166,6 +168,7 @@ const initMidi = (url)=>{
 
 const cleanupSynths = () => {
     Tone.Transport.cancel(0)
+    Tone.Transport.stop()
     while (midiSynths.length) {
         const synth = midiSynths.shift()
         console.log(synth)
@@ -194,11 +197,11 @@ $:{
 }
 
 $:{
-    if($active){
-        Tone.Transport.start();
-    }else{
-        Tone.Transport.pause();
-    }
+    // if($active){
+    //     Tone.Transport.start();
+    // }else{
+    //     Tone.Transport.pause();
+    // }
 }
 
 $:{
@@ -210,7 +213,8 @@ $:{
             mainOsc.start()
         }
         if(Tone.context.state !== 'running'){  
-            Tone.context.resume();
+            // Tone.context.resume();
+            Tone.start()
         }
 
         let gain1Max = 
