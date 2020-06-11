@@ -6,7 +6,7 @@
 	import Tone from './components/Tone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
-	import Settings from './components/UI.settingsexpanded.svelte'
+	// import Settings from './components/UI.settingsexpanded.svelte'
 
 	// if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 	// 	darkMode.set(true)
@@ -68,7 +68,6 @@
 <main>
 	<Canvas/>
 	<CenterNotif/>
-	<Settings/>
 	<UI/>
 	<Tone/>
 	<Webcam/>

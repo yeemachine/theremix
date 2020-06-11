@@ -29,15 +29,16 @@ bg.children[0].tint = 0x444444;
 const bgRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
 
 const BGM_bg = createSprite(textures[Object.keys(midiList)[0]].texture,textures.bgm_normal.texture)
+BGM_bg.children[0].tint = 0x80797F
+$:{
+BGM_bg.children[0].texture = textures[$currentMIDI].texture;
+BGM_bg.alpha = 1-$sineInOut0_1_2
+}
 
-BGM_bg.children[0].tint = midiList[Object.keys(midiList)[0]].tint;
-$:{
- BGM_bg.alpha = 1-$sineInOut0_1_2
-}
-const BGM_bg2 = createSprite(textures.bgm_normal.texture,textures.bgm_normal.texture)
-$:{
- BGM_bg2.alpha = $sineInOut0_1_2
-}
+// const BGM_bg2 = createSprite(textures.bgm_normal.texture,textures.bgm_normal.texture)
+// $:{
+//  BGM_bg2.alpha = $sineInOut0_1_2
+// }
 
 $: {
     if($CANVASWIDTH/$CANVASHEIGHT > bgRatio){
@@ -54,71 +55,71 @@ $: {
     BGM_bg.y = ($WIDTH > 600) ? $CANVASHEIGHT * .5
         : $CANVASHEIGHT * .5 - $thereminPos.height*.25
 
-    BGM_bg2.width=BGM_bg.width
-    BGM_bg2.scale.y = BGM_bg.scale.x
-    BGM_bg2.x = BGM_bg.x
-    BGM_bg2.y = BGM_bg.y
+    // BGM_bg2.width=BGM_bg.width
+    // BGM_bg2.scale.y = BGM_bg.scale.x
+    // BGM_bg2.x = BGM_bg.x
+    // BGM_bg2.y = BGM_bg.y
 }
 
-let bgmClone = false
-let bgmTitle1 = Object.keys(midiList)[0]
-let bgmTitle2 = 'bgm_normal'
+// let bgmClone = false
+// let bgmTitle1 = Object.keys(midiList)[0]
+// let bgmTitle2 = 'bgm_normal'
 
-$:{
-    if($currentMIDI){
-        console.log($currentMIDITitle)
-        if(bgmClone === true){
-            if(bgmTitle2 === $currentMIDI || bgmTitle1 === $currentMIDI){
+// $:{
+//     if($currentMIDI){
+//         console.log($currentMIDITitle)
+//         if(bgmClone === true){
+//             if(bgmTitle2 === $currentMIDI || bgmTitle1 === $currentMIDI){
                 
                 
-                if(bgmTitle1 === $currentMIDI){
-                    if($sineInOut0_1_2 === 1){
-                        sineInOut0_1_2.set(0)
-                        bgmClone = false
-                    }
-                }
+//                 if(bgmTitle1 === $currentMIDI){
+//                     if($sineInOut0_1_2 === 1){
+//                         sineInOut0_1_2.set(0)
+//                         bgmClone = false
+//                     }
+//                 }
 
 
-            }else{
-                if($sineInOut0_1_2 === 1){
-                    sineInOut0_1_2.set(0)
-                }
-                BGM_bg.children[0].texture = textures[$currentMIDI].texture;
-                BGM_bg.children[0].tint = midiList[$currentMIDI].tint;
-                bgmClone = false
-                bgmTitle1 = $currentMIDI
-            }
-        }else{
-            if(bgmTitle1 === $currentMIDI || bgmTitle2 === $currentMIDI){
+//             }else{
+//                 if($sineInOut0_1_2 === 1){
+//                     sineInOut0_1_2.set(0)
+//                 }
+//                 BGM_bg.children[0].texture = textures[$currentMIDI].texture;
+//                 BGM_bg.children[0].tint = midiList[$currentMIDI].tint;
+//                 bgmClone = false
+//                 bgmTitle1 = $currentMIDI
+//             }
+//         }else{
+//             if(bgmTitle1 === $currentMIDI || bgmTitle2 === $currentMIDI){
 
-                if(bgmTitle2 === $currentMIDI){
-                    if($sineInOut0_1_2 === 0){
-                        sineInOut0_1_2.set(1)
-                        bgmClone = true
-                    }
-                }
+//                 if(bgmTitle2 === $currentMIDI){
+//                     if($sineInOut0_1_2 === 0){
+//                         sineInOut0_1_2.set(1)
+//                         bgmClone = true
+//                     }
+//                 }
                 
-            }else{
-                if($sineInOut0_1_2 === 0){
-                    sineInOut0_1_2.set(1)
-                }
-                BGM_bg2.children[0].texture = textures[$currentMIDI].texture;
-                BGM_bg2.children[0].tint = midiList[$currentMIDI].tint;
-                bgmClone = true
-                bgmTitle2 = $currentMIDI
-            }
-        }
-    }
-}
+//             }else{
+//                 if($sineInOut0_1_2 === 0){
+//                     sineInOut0_1_2.set(1)
+//                 }
+//                 BGM_bg2.children[0].texture = textures[$currentMIDI].texture;
+//                 BGM_bg2.children[0].tint = midiList[$currentMIDI].tint;
+//                 bgmClone = true
+//                 bgmTitle2 = $currentMIDI
+//             }
+//         }
+//     }
+// }
 
 $:{
     if($WIDTH < 600){
-        BGM_bg.children[0].anchor.set(midiList[bgmTitle1].offset, 0.5);
-        BGM_bg.children[1].anchor.set(midiList[bgmTitle1].offset, 0.5);
-        if(bgmTitle2 !== 'bgm_normal'){
-            BGM_bg2.children[0].anchor.set(midiList[bgmTitle2].offset, 0.5);
-            BGM_bg2.children[1].anchor.set(midiList[bgmTitle2].offset, 0.5);
-        }
+        BGM_bg.children[0].anchor.set(midiList[$currentMIDI].offset, 0.5);
+        BGM_bg.children[1].anchor.set(midiList[$currentMIDI].offset, 0.5);
+        // if(bgmTitle2 !== 'bgm_normal'){
+        //     BGM_bg2.children[0].anchor.set(midiList[bgmTitle2].offset, 0.5);
+        //     BGM_bg2.children[1].anchor.set(midiList[bgmTitle2].offset, 0.5);
+        // }
          bg.position.set(
             ($CANVASWIDTH*.5 - bg.width*.5), 
             0
@@ -127,8 +128,8 @@ $:{
         
         BGM_bg.children[0].anchor.set(0.5, 0.5);
         BGM_bg.children[1].anchor.set(0.5, 0.5);
-        BGM_bg2.children[0].anchor.set(0.5, 0.5);
-        BGM_bg2.children[1].anchor.set(0.5, 0.5);
+        // BGM_bg2.children[0].anchor.set(0.5, 0.5);
+        // BGM_bg2.children[1].anchor.set(0.5, 0.5);
          bg.position.set(
             ($CANVASWIDTH*.5 - bg.width*.5), 
             0
@@ -155,7 +156,7 @@ $:{
 }
 
 bgContainer.addChild(bg)
-BGMContainer.addChild(BGM_bg,BGM_bg2)
+BGMContainer.addChild(BGM_bg)
 stage.addChild(bgContainer,BGMContainer)
 
 </script>

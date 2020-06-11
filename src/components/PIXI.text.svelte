@@ -130,7 +130,7 @@ $:{
         maskGraphic.drawRoundedRect(
             $thereminPos.x + $thereminPos.width*.379,
             $thereminPos.y + $thereminPos.height*.783,
-            $thereminPos.width*.25,
+            $thereminPos.width*.2495,
             $thereminPos.height*.139,
             $thereminPos.width*.014
         )

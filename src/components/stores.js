@@ -37,7 +37,7 @@ export const tablePos = writable({x:0,y:0})
 export const videoPos = writable({x:0,y:0})
 
 export const expandSettings = writable(false)
-export const volumeVal = writable(0)
+export const volumeVal = writable(-40)
 export const gain1Val = writable(0.1)
 export const FFT = writable([])
 export const glide = writable(true)
@@ -57,7 +57,7 @@ export const enableMIDI = writable(false);
 export const MIDI_Display_Text = writable('Loading...');
 export const currentMIDITitle = writable(null);
 export const currentMIDIOffset = writable(.5);
-export const currentMIDITint = writable(0xffffff);
+export const currentMIDITint = writable(0xeeccec);
 export const currentMIDI = writable('だから僕は音楽を辞めた');
 export const MIDI_tint = writable(null);
 export const MIDITextSprite = writable(null);

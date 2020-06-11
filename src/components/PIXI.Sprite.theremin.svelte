@@ -49,16 +49,16 @@ const theremin = new PIXI.Container();
 const theremin_null = createSprite(textures.theremin_null.texture)
 theremin_null.alpha = 0
 
-const theremin_body_bottom = createSprite(
-    textures.theremin_body_bottom.texture,
-    textures.theremin_body_bottom_normal.texture
-)
-
 const theremin_body_top = createSprite(
     textures.theremin_body_top.texture,
     textures.theremin_body_top_normal.texture
 )
-// theremin_body_top.children[0].tint = 0x5B0909
+
+const theremin_screen = createSprite(textures.screen.texture)
+theremin_screen.parentGroup = PIXI.lights.diffuseGroup;
+$:{
+    theremin_screen.visible = ($WIDTH > 600) ? true : false
+}
 
 const knob_left = createSprite(
     textures.knob.texture,
@@ -136,12 +136,6 @@ const right_antenna = createSprite(
 const right_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
 right_antenna_light.falloff = [0.75, 4, 10]
 
-const left_antenna1 = createSprite(
-    textures.left_antenna1.texture,
-    textures.left_antenna1_normal.texture
-)
-left_antenna1.children[0].tint = 0x333366
-
 const left_antenna2 = createSprite(
     textures.left_antenna2.texture,
     textures.left_antenna2_normal.texture
@@ -149,13 +143,11 @@ const left_antenna2 = createSprite(
 const left_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
 left_antenna_light.falloff = [0.75, 4, 10]
 
-const symbols = createSprite(
-    textures.symbols.texture
-)
+const symbols = createSprite(textures.symbols.texture)
 symbols.anchor.set(0.5, 0.5);
 symbols.tint = 0xE54646;
 
-var dirLight = new PIXI.lights.DirectionalLight(0xffffff, .3, theremin_body_top)
+var dirLight = new PIXI.lights.DirectionalLight(0xeeccec, .3, theremin_body_top)
 dirLight.falloff = [0.75, 13, 20]
 dirLight.lightHeight = 1.8
 
@@ -164,6 +156,7 @@ theremin.addChild(
     left_antenna2,
     right_antenna,
     theremin_body_top,
+    theremin_screen,
     symbols,
     knob_left,
     knob_right,
@@ -179,12 +172,13 @@ stage.addChild(
 $: {
     
 
-    theremin_body_bottom.y = theremin_null.height-theremin_body_bottom.height
-    theremin_body_bottom.x = theremin_null.width*.45
-
     theremin_body_top.scale = {x:.5,y:.5}
     theremin_body_top.y = theremin_null.height*.68
     theremin_body_top.x = theremin_null.width*.22
+  
+    // theremin_screen.scale = {x:.5,y:.5}
+    theremin_screen.y = theremin_null.height*.784
+    theremin_screen.x = theremin_null.width*.3033
 
     left_antenna2.scale = new PIXI.Point(.5, .5);
     left_antenna2.x = theremin_null.width*(.005 + .05 - .05*$backOut0_1)
@@ -255,8 +249,6 @@ $: {
         theremin.y = ($CANVASHEIGHT - theremin.width*.635*(.2+.8*$sineInOut0_1) - theremin.height)*.8
     }
 
-    theremin_body_top.children[0].texture = ($WIDTH>600) ? textures.theremin_body_top.texture : textures.theremin_body_top_mobile.texture
-
     thereminPos.set({
         x:theremin.x,
         y:theremin.y,
@@ -266,8 +258,6 @@ $: {
 
     dirLight.target = theremin_body_top
     dirLight.brightness = constrain(2-$SCALE,{max:.5,min:.2})
-    dirLight.color = $currentMIDITint
-    // console.log($currentMIDITint)
 }
 
 // Reset Dragged Value when Pointer is Up

@@ -6,7 +6,9 @@ import { midiList } from './config.js';
 import {rgbToHex} from './helpers.js'
 import {enableMIDI,currentMIDITitle,currentMIDITint} from './stores.js';
 
-const colorTween = tweened('#ffffff', {
+let defaultColor = PIXI.utils.hex2string($currentMIDITint)
+
+const colorTween = tweened(defaultColor, {
 		duration: 800,
 		interpolate: interpolateRgb
 });
@@ -32,7 +34,6 @@ $:{
             }
         }
     }else{
-        let defaultColor = PIXI.utils.hex2string(0xffffff)
         if($colorTween !== defaultColor){
             if(settingTween){
                 let hexString = rgbToHex($colorTween)
