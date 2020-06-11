@@ -323,7 +323,7 @@ input[type=range]::-webkit-slider-runnable-track {
     -webkit-appearance: none;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type=range]::-webkit-slider-thumb{
   height: 32px;
   width: 18px;
     border: 0;
@@ -332,6 +332,27 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 8px;
     box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
     -webkit-appearance: none;
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+}
+
+input[type=range]::-ms-thumb {
+  box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+  border: none;
+  height: 32px;
+  width: 18px;
+  border-radius: 8px;
+  background: rgb(var(--offwhite));
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+  border: none;
+  height: 32px;
+  width: 18px;
+  border-radius: 8px;
+  background: rgb(var(--offwhite));
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
 }
 
 @media screen and (max-width: 600px) {
