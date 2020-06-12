@@ -38,7 +38,7 @@ const updateVolume = (e) => {
 <h3>Settings</h3>
 <hr>
 <div class="setting">
-    <h4>Master Volume</h4>
+    <h4>Volume</h4>
     <input
     on:input={(e)=>updateVolume(e)}
     type="range" min={-48} max={0} value={$volumeVal} style='background-size:{ ($volumeVal - (-48)) * 100 / (0 - (-48))}% 100%'>
@@ -47,7 +47,7 @@ const updateVolume = (e) => {
 <hr>
 
 <div class="setting">
-    <h4>Oscillator Type</h4>
+    <h4>Oscillator</h4>
     <div class="select">
     <select bind:value={selectedOsc} class="oscillators" 
     on:change={()=>oscillatorType.set(selectedOsc)}
@@ -107,7 +107,7 @@ const updateVolume = (e) => {
 
 <hr>
 <div class="setting">
-    <h4 class="noMargin">Enable Glide
+    <h4 class="noMargin">Glide
         <Toggle 
         setting={glide} 
         hide={(!$expandSettings) ? true :false}/>
@@ -118,7 +118,10 @@ const updateVolume = (e) => {
 <hr>
 
 <div class="setting">
-    <h4>Enable MIDI
+    <h4>
+        <span>MIDI 
+            <span style="margin-left: 5px;color:rgb(var(--crimson))">Beta</span>
+        </span>
         <Toggle 
         setting={enableMIDI} 
         hide={(!$expandSettings) ? true :false}/>
@@ -205,7 +208,7 @@ h3{
 h4{
     margin: 0 0 16px 0;
     color: rgb(var(--offwhite));
-    font-size: 10px;
+    font-size: 14px;
     font-variation-settings: "wght" 80, "wdth" 120, "ital" 0;
     line-height: 1;
     font-weight: normal;
@@ -302,6 +305,10 @@ div {
 }
 
 input[type=range] {
+    box-sizing: border-box;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
     margin: 16px 0 8px 0;
     outline: none;
     padding: 0;
@@ -312,8 +319,13 @@ input[type=range] {
     background-size: 50% 100%;
     background-repeat: no-repeat;
     border-radius: 10px;
-    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
     -webkit-appearance: none;
+}
+
+input[type=range]:active,
+input[type=range]:focus {
+  outline: none;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
@@ -332,7 +344,8 @@ input[type=range]::-webkit-slider-thumb{
     border-radius: 8px;
     box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
     -webkit-appearance: none;
-    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+          appearance: none;
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
 }
 
 input[type=range]::-ms-thumb {
@@ -342,7 +355,7 @@ input[type=range]::-ms-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
 }
 
 input[type=range]::-moz-range-thumb {
@@ -352,7 +365,7 @@ input[type=range]::-moz-range-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
 }
 
 @media screen and (max-width: 600px) {

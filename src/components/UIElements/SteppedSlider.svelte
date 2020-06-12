@@ -98,14 +98,11 @@ input[type=range] {
   margin: 0;
   left: 0;
   padding: 0;
-  /* Add some L/R padding to ensure box shadow of handle is shown */
   overflow: hidden;
   border: 0;
   border-radius: 1px;
   outline: none;
   background: transparent;
-  /* background: linear-gradient(rgb(var(--offwhite)), rgb(var(--offwhite))) no-repeat center; */
-  /* Use a linear gradient to generate only the 2px height background */
   background-size: 100% 2px;
   pointer-events: none;
 }
@@ -121,7 +118,7 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
   margin: 5px 0;
   /* Add some margin to ensure box shadow is shown */
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
   -webkit-appearance: none;
           appearance: none;
   pointer-events: all;
@@ -137,7 +134,7 @@ input[type=range]::-moz-range-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
   pointer-events: all;
 }
 
@@ -149,7 +146,7 @@ input[type=range]::-ms-thumb {
   border-radius: 8px;
   background: rgb(var(--offwhite));
   pointer-events: all;
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
 }
 
 input[type=range]::-webkit-slider-thumb::before {

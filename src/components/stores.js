@@ -37,7 +37,7 @@ export const tablePos = writable({x:0,y:0})
 export const videoPos = writable({x:0,y:0})
 
 export const expandSettings = writable(false)
-export const volumeVal = writable(-40)
+export const volumeVal = writable(0)
 export const gain1Val = writable(0.1)
 export const FFT = writable([])
 export const glide = writable(true)

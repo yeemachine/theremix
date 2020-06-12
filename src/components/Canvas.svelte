@@ -242,7 +242,11 @@ on:mouseup={(e)=>{globalPointerUp.set(true)}}
 on:touchmove={(e)=>{updateMouse(e)}}
 on:mousemove={(e)=>{updateMouse(e)}}
 bind:this={canvasContainer} 
-class="canvasContainer {$hovered?'hovered':''}"
+class="canvasContainer {
+    $hovered==='switch'?'hovered'
+    : ($hovered==='knob right' || $hovered==='knob left') ? 'grab'
+    :''
+} {$dragged ? 'grabbing' : ''}"
 style="width:{containerWidth}px;height:{containerHeight}px"
 >
     <Title/>
@@ -290,6 +294,12 @@ style="width:{containerWidth}px;height:{containerHeight}px"
 }
 .canvasContainer.hovered{
     cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+}
+.canvasContainer.grab{
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+}
+.canvasContainer.grabbing{
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrabbed.svg?v=1591926626227) 14 0, grabbing;
 }
 :global(canvas){
     width:100vw;
