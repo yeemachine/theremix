@@ -6,25 +6,61 @@
 	import Tone from './components/Tone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
-	// import Settings from './components/UI.settingsexpanded.svelte'
-
-	// if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-	// 	darkMode.set(true)
-	// }
-
-	// window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-	// 	const theme = e.matches ? true : false;
-	// 	darkMode.set(theme)
-	// });
-
+  
 </script>
 
 <style>
+  
+  @font-face {
+    font-family: "Whirly Birdie";
+    src: url("https://cdn.glitch.com/1711052e-ea5e-4036-9c61-dd3ef6782855%2FWhirlyBirdieGX.ttf?v=1591228424609")
+      format("truetype");
+  }
 
-	:global(button){
-		background: transparent;
-    	border: none;
+
+  @font-face {
+      font-family: "Whirly Birdie Regular";
+      src: url("    https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-Regular.woff?v=1590326472854")
+          format("woff");
+  }
+
+	@font-face {
+    font-family: "Nicholson Beta";
+    src: url("https://cdn.glitch.com/1711052e-ea5e-4036-9c61-dd3ef6782855%2Fnicholsonbeta-webfont.woff2?v=1584151257949")
+      format("woff2");
 	}
+
+  :root {
+
+    --sun: 252, 216, 54;
+    --blue:62, 139, 202;
+    --navy:29, 55, 103;
+
+    --offwhite: 250, 236, 197;
+    --darkoffwhite: 230 216,177;
+
+    --offwhitetint:255, 221, 176;
+
+    --offwhitegradient: linear-gradient(0deg, rgb(var(--offwhitetint)) 0%, rgba(var(--offwhitetint),0.920045518207283) 70%, rgba(var(--offwhitetint),0) 100%);
+    --offwhitegradient2: linear-gradient(0deg, rgb(var(--offwhitetint)) 0%, rgba(var(--offwhitetint),0.920045518207283) 70%, rgba(var(--offwhitetint),0) 100%);
+
+    --crimson:229,70,70;
+    --deepCrimson: 139,39,39;
+
+    --charcoal:60,60,60;
+    --lightcharcoal:85,85,85;
+    --darkcharcoal:35,35,35;
+
+    --wave:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fh.svg?v=1589236773572);
+    --waveRed:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fhred.svg?v=1589238550292);
+
+  }
+
+
+  :global(*) {  
+    -webkit-backface-visibility:  hidden;
+    -webkit-tap-highlight-color:  transparent;
+   }
 		
 	main {
 		position: fixed;
@@ -40,12 +76,17 @@
 	}
 
 	:global(button){
+     background: transparent;
+    border: none;
 		padding:0;
 	}
+  :global(button:hover){
+     cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  }
 
 	/* a subtle focus style for keyboard-input elements */
 	:global(.text-input:focus) {
-	outline: 1px solid #aaa; /* Adjust to suit your tastes */
+	  outline: 1px solid #aaa; /* Adjust to suit your tastes */
 	}
 
 	/* no outline for non-keyboard-inputs elements */
@@ -53,13 +94,13 @@
 	:global(input:focus),
 	:global(label:focus),
 	:global(select:focus){
-	outline: none;
+	  outline: none;
 	}
 
 	:global(body.user-is-tabbing *:focus),
 	:global(body.user-is-tabbing input:focus + container) {
-	outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
-	outline: 5px auto -webkit-focus-ring-color !important;
+	  outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
+	  outline: 5px auto -webkit-focus-ring-color !important;
 	}
 </style>
 

@@ -1,43 +1,4 @@
-// const assets = [
-//     "/offline.html"
-// ]
 
-// let cache_name = "SimiCart"; // The string used to identify our cache
-
-// self.addEventListener("install", event => {
-//     console.log("installing...");
-//     event.waitUntil(
-//         caches
-//             .open(cache_name)
-//             .then(cache => {
-//                 console.log(cache)
-//                 return cache.addAll(assets);
-//             })
-//             .catch(err => console.log(err))
-//     );
-// });
-
-// self.addEventListener("fetch", event => {
-//     if (event.request.url === "https://100.theremin.app/") {
-//         // or whatever your app's URL is
-//         event.respondWith(
-//             fetch(event.request).catch(err =>
-//                 self.cache.open(cache_name).then(
-//                     cache => {
-//                         console.log('offline!')
-//                         cache.match("/offline.html")
-//                     }
-//                 )
-//             )
-//         );
-//     } else {
-//         event.respondWith(
-//             fetch(event.request).catch(err =>
-//                 caches.match(event.request).then(response => response)
-//             )
-//         );
-//     }
-// });
 
 var cacheName = 'js13kPWA-v1-8';
 var appShellFiles = [

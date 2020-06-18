@@ -19,9 +19,6 @@ maskGraphic.parentGroup = graphicsGroup
 maskGraphic.lineStyle(0)
 
 let oscText, freqText, noteText, midiText
-document.fonts.load('10pt "Whirly Birdie Narrow"').then(() => {
-
-})
 
 document.fonts.load('10pt "Whirly Birdie Regular"').then(() => {
     oscText = new PIXI.Text($oscillatorType, {
@@ -68,15 +65,6 @@ document.fonts.load('10pt "Whirly Birdie Regular"').then(() => {
     stage.addChild(midiText)
 
     MIDITextSprite.set(midiText)
-    // midiText = new PIXI.Text('', {
-    //     fontFamily: "Nicholson Beta",
-    //     fontSize: 40,
-    //     fill: 0xE54646,
-    //     align: "right"
-    // });
-    // midiText.alpha = 0.15
-    // midiText.parentGroup = graphicsGroup;
-    // stage.addChild(midiText)
 })
 
 
