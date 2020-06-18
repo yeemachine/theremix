@@ -358,7 +358,7 @@ style='opacity:{mousePos ? 1 : 0};
   }
   span{
     position: absolute;
-    top:-21px;
+    top:-32px;
     width: max-content;
     line-break: normal;
     font-size: 12px;
@@ -370,8 +370,18 @@ style='opacity:{mousePos ? 1 : 0};
     text-align: center;
     text-shadow: 0 0 20px rgba(0,0,0,0.5);
     transition:0s;
-    /* animation: animateGlyph 1s linear infinite;
-    animation-play-state: start; */
+    display: flex;
+    justify-content: center;
+  }
+  span:before{
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    margin: auto;
+    pointer-events: none;
+    border-style: solid;
+    border-width: 6px 4px 0px 4px;
+    border-color: rgb(var(--crimson)) transparent transparent transparent;
   }
   .hovered span{
     opacity: 1;

@@ -4,6 +4,7 @@ import {loaded,active,WIDTH,HEIGHT,SCALE,thereminPos,manual,coverLoaded} from '.
 import { onMount } from 'svelte';
 import Logo from './icons/logo.svelte'; 
 import Play from './icons/play.svelte'; 
+import About from './icons/about.svelte'; 
 import closeIcon from './icons/close.svelte'; 
 import ButtonCircle from './UI.buttoncircle.svelte';
 import BasicControls from './icons/basicControls.svelte'
@@ -82,12 +83,25 @@ $:{
 						Controls the overall volume <span>(-48db — 0db)</span> of the app.
 					</li>
 					<li>
-						<h3>Oscillator</h3>
+						<h3>Oscillator<span class="keycap">O</span></h3>
 						Choose from 18 different oscillator waveforms to change the timbre of the theremin. Includes <span>Sine</span>, <span>Triangle</span>, <span>Sawtooth</span>, <span>Square</span>, <span>Pulse</span> oscillators as well as many other alternates. 
+						<br>
+						<br>
+						'O' to cycle between oscillators. 'O' + Arrow Keys to switch back and forth.
 					</li>
 					<li>
-						<h3>Glide</h3>
+						<h3>Glide <span class="keycap">G</span></h3>
 						Glide is how the theremin tone operates traditionally, <span>sliding smoothly</span> between pitches. This is on by default. Turning this off will snap the tone to a <span>perfect note</span>.   
+						<br>
+						<br>
+						Hold 'G' to toggle glide.
+					</li>
+					<li>
+						<h3>Key/Scale<span class="keycap">K</span><span class="keycap">S</span></h3>
+						Modifying this setting changes the freqency range of the theremin as well as the tones played when Glide is off. Choose between <span>12 different tonic keys</span> and <span>18 different scales types</span>. Octave range is also adjustable under Settings.
+						<br>
+						<br>
+						'K' or 'S' to cycle between keys and scales. 'K' or 'S' + Arrow Keys to switch back and forth.    
 					</li>
 				</ol>
 			</div>
@@ -122,7 +136,7 @@ $:{
 		<div class="slide-content {(currentSlide === 2 && $loaded) ? 'current' : ''}">
 			<container>
 			<div class="graphic">
-				<h2>Midi<br>Controls</h2>
+				<h2>Midi<br>Controller</h2>
 				<div class="svg">
 					<MIDIControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
 				</div>
@@ -144,48 +158,52 @@ $:{
 			</container>
 			<div class="gradient"></div>
 		</div> 
-		<div class="slide-content fullscreen {(currentSlide === 3 && $loaded) ? 'current' : ''}">
-			<container>
-			<div class="description">
+		<div class="slide-content {(currentSlide === 3 && $loaded) ? 'current' : ''}">
+				<container>
+			<div class="graphic">
 				<h2>Resources<br>and Links</h2>
-				<p>Webcam motion capture allows you to experience the gestural movements of playing a physical theremin. Powered by the <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a> machine learning model for pose detection.</p>
+				<div class="svg">
+					<About color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
+				</div>
+			</div>
+			<div class="description">
+				<p>The theremin is an electic musical instrument played by the movement of both hands in the space surrounding it. THEREMIX's default controls translates these 2 movements into 1 fluid cursor movement.</p>
 				<hr>
-				<ul>
+				<ol>
 					<li>
-						<h3>Both Hands Present</h3>
+						<h3>Volume Antenna</h3>
 						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
 					</li>
 					<li>
-						<h3>One Hand Present</h3>
+						<h3>Pitch Antenna</h3>
 						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
 					</li>
 					<li>
-						<h3>Both Hands Present</h3>
-						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						<h3>Master Volume</h3>
+						Controls the overall volume <span>(-48db — 0db)</span> of the app.
 					</li>
 					<li>
-						<h3>One Hand Present</h3>
-						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
+						<h3>Oscillator<span class="keycap">O</span></h3>
+						Choose from 18 different oscillator waveforms to change the timbre of the theremin. Includes <span>Sine</span>, <span>Triangle</span>, <span>Sawtooth</span>, <span>Square</span>, <span>Pulse</span> oscillators as well as many other alternates. 
+						<br>
+						<br>
+						'O' to cycle between oscillators. 'O' + Arrow Keys to switch back and forth.
 					</li>
 					<li>
-						<h3>Both Hands Present</h3>
-						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						<h3>Glide <span class="keycap">G</span></h3>
+						Glide is how the theremin tone operates traditionally, <span>sliding smoothly</span> between pitches. This is on by default. Turning this off will snap the tone to a <span>perfect note</span>.   
+						<br>
+						<br>
+						Hold 'G' to toggle glide.
 					</li>
 					<li>
-						<h3>One Hand Present</h3>
-						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
+						<h3>Key/Scale<span class="keycap">K</span><span class="keycap">S</span></h3>
+						Modifying this setting changes the freqency range of the theremin as well as the tones played when Glide is off. Choose between <span>12 different tonic keys</span> and <span>18 different scales types</span>. Octave range is also adjustable under Settings.
+						<br>
+						<br>
+						'K' or 'S' to cycle between keys and scales. 'K' or 'S' + Arrow Keys to switch back and forth.    
 					</li>
-					<li>
-						<h3>Both Hands Present</h3>
-						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
-					</li>
-					<li>
-						<h3>One Hand Present</h3>
-						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
-					</li>
-				</ul>
-				<hr>
-				<p style="margin-top:24px">Webcam motion capture allows you to experience the gestural movements of playing a physical theremin. Powered by the <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a> machine learning model for pose detection.</p>
+				</ol>
 			</div>
 			</container>
 			<div class="gradient"></div>
@@ -474,7 +492,16 @@ $:{
     padding-top: 12px;
     font-weight: normal;
 	font-variation-settings: "wght" 90, "wdth" 110, "ital" 0;
-	color:rgb(var(--textColor1))
+	color:rgb(var(--textColor1));
+	display:flex;
+	}
+	.keycap{
+		padding: 4px;
+		background: rgba(var(--crimson),0.3);
+		color:rgb(var(--offwhite));
+		font-size: 8px;
+		border-radius: 2px;
+		margin-left: 8px;
 	}
 	
 	:global(.carousel>ul>li.active){

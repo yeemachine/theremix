@@ -294,9 +294,13 @@ $:{
     knob_right.rotation = (-0.9 + 1.8*((oscillators.indexOf($oscillatorType))/(oscillators.length-1)) * $backOut0_1) * Math.PI
     
     if($dragged){
+
+        let distance = calcRotation($dragged.element,$canvasMousePos).distance
         let percent = calcRotation($dragged.element,$canvasMousePos).percent
         if($dragged.id === 'vol'){
-            volumeVal.set(-48+48*percent)
+            if(distance > 40){
+                volumeVal.set(-48+48*percent)
+            }
             knob_left.children[0].tint = 0xffffff
             if($tweenKnobLeft === 0){
                 tweenKnobLeft.set(1)
@@ -305,7 +309,9 @@ $:{
         if($dragged.id === 'osc'){
             let inc = 1/oscillators.length
             let steppedPercent = constrain(Math.floor(percent/inc),{min:0,max:18})
-            oscillatorType.set(oscillators[steppedPercent])
+            if(distance > 40){
+                oscillatorType.set(oscillators[steppedPercent])
+            }
             knob_right.children[0].tint = 0xffffff
             if($tweenKnobRight === 0){
                 tweenKnobRight.set(1)

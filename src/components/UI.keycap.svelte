@@ -4,7 +4,7 @@ export let position = 'relative'
 export let top = 0
 export let left = 0
 export let styles=''
-import {keydown_S,keydown_K,keydown_O,keydown_G,tonic,thereminPos,thereminMobilePos,HEIGHT,WIDTH,SCALE} from './stores.js'
+import {keydown_S,keydown_K,keydown_O,keydown_G,keydown_M,tonic,thereminPos,thereminMobilePos,HEIGHT,WIDTH,SCALE} from './stores.js'
 let containerDom
 let containerWidth = 0
 let containerHeight = 0
@@ -39,6 +39,9 @@ $: {
             break;
         case 'S':
             containerHide = ($keydown_S) ? false : true
+            break;
+        case 'M':
+            containerHide = ($keydown_M) ? false : true
             break;
         default:
             break;

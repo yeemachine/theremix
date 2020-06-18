@@ -106,7 +106,7 @@ switchRight.children[1].anchor.set(0.5, 0.5);
 $: switchRight.children[0].texture = ($glide && $active) ? textures.switch_on.texture : textures.switch_off.texture
 $: switchRight.children[1].texture = ($glide && $active) ? textures.switch_on_normal.texture : textures.switch_off_normal.texture
 $: switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
-switchRight.on('pointerup',()=>{
+switchRight.on('pointerdown',()=>{
     glide.set(!$glide)
 })
 switchRight.on('mouseover',()=>{

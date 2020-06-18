@@ -4,6 +4,7 @@ import {createEventDispatcher} from 'svelte'
 export let initVal = [0,1]
 export let min = 0
 export let max = 1
+export let hide = false
 
 var lowerSlider,
    upperSlider,
@@ -63,7 +64,7 @@ $:{
 
 </script>
 
-<span class="multi-range">
+<span class="multi-range {hide ? 'hide' : ''}">
     <input bind:this={lowerSlider} 
     on:input={updateLower}
     type="range" min={min} max={max} value={initVal[0]} 
@@ -98,14 +99,11 @@ input[type=range] {
   margin: 0;
   left: 0;
   padding: 0;
-  /* Add some L/R padding to ensure box shadow of handle is shown */
   overflow: hidden;
   border: 0;
   border-radius: 1px;
   outline: none;
   background: transparent;
-  /* background: linear-gradient(rgb(var(--offwhite)), rgb(var(--offwhite))) no-repeat center; */
-  /* Use a linear gradient to generate only the 2px height background */
   background-size: 100% 2px;
   pointer-events: none;
 }
@@ -121,13 +119,16 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
   margin: 5px 0;
   /* Add some margin to ensure box shadow is shown */
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
   -webkit-appearance: none;
           appearance: none;
   pointer-events: all;
   border: 0;
   border: none;
   box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+}
+.hide input[type=range]::-webkit-slider-thumb {
+  pointer-events: none;
 }
 
 input[type=range]::-moz-range-thumb {
@@ -137,8 +138,11 @@ input[type=range]::-moz-range-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
   pointer-events: all;
+}
+.hide input[type=range]::-moz-range-thumb {
+  pointer-events: none;
 }
 
 input[type=range]::-ms-thumb {
@@ -149,7 +153,10 @@ input[type=range]::-ms-thumb {
   border-radius: 8px;
   background: rgb(var(--offwhite));
   pointer-events: all;
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+}
+.hide input[type=range]::-ms-thumb {
+  pointer-events: none;
 }
 
 input[type=range]::-webkit-slider-thumb::before {

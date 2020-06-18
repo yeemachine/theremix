@@ -1,4 +1,4 @@
-import {constrain} from './helpers.js';
+import {constrain,getDistance} from './helpers.js';
 import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
@@ -294,7 +294,8 @@ export const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
 
     return {
         radians:angleRadians, //returns rotation
-        percent:percent //returns between 0 and 1
+        percent:percent, //returns between 0 and 1
+        distance:getDistance(normalizedPos,mousePos)
     }
 
 }

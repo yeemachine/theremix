@@ -38,7 +38,7 @@ const updateVolume = (e) => {
 <h3>Settings</h3>
 <hr>
 <div class="setting">
-    <h4>Master Volume</h4>
+    <h4>Volume</h4>
     <input
     on:input={(e)=>updateVolume(e)}
     type="range" min={-48} max={0} value={$volumeVal} style='background-size:{ ($volumeVal - (-48)) * 100 / (0 - (-48))}% 100%'>
@@ -47,7 +47,7 @@ const updateVolume = (e) => {
 <hr>
 
 <div class="setting">
-    <h4>Oscillator Type</h4>
+    <h4>Oscillator<span class="keycap">O</span></h4>
     <div class="select">
     <select bind:value={selectedOsc} class="oscillators" 
     on:change={()=>oscillatorType.set(selectedOsc)}
@@ -65,7 +65,7 @@ const updateVolume = (e) => {
 <hr>
 
 <div class="setting">
-    <h4>Key/Scale</h4>
+    <h4>Key/Scale<span class="keycap">K</span><span class="keycap">S</span></h4>
     <container>
         <div class="select key">
             <select bind:value={selectedTonic} 
@@ -102,27 +102,36 @@ const updateVolume = (e) => {
 
 <div class="setting">
     <h4>Octave Range</h4>
-    <Slider on:change={(e) => handleSlider(e.detail)} initVal={[$startOctave, $endOctave]} min={1} max={maxOctaves}/>
+    <Slider 
+    on:change={(e) => handleSlider(e.detail)} 
+    hide={!$expandSettings}
+    initVal={[$startOctave, $endOctave]} min={1} max={maxOctaves}/>
 </div>
 
 <hr>
 <div class="setting">
-    <h4 class="noMargin">Enable Glide
+    <div class="toggle">
+        <h4 style="margin:0;">Glide<span class="keycap">G</span>
+        </h4>
         <Toggle 
-        setting={glide} 
-        hide={(!$expandSettings) ? true :false}/>
-    </h4>
+            setting={glide} 
+            hide={(!$expandSettings) ? true :false}/>
+    </div>
    
 </div>
 
 <hr>
 
 <div class="setting">
-    <h4>Enable MIDI
+    <div class="toggle" style="margin-bottom: 16px;">
+        <h4 style="margin:0;display: flex;align-items: flex-start;">
+            MIDI Controller
+            <span style="font-size:9px;margin-left: 8px;color:rgb(var(--crimson))">Beta</span>
+        </h4>
         <Toggle 
-        setting={enableMIDI} 
-        hide={(!$expandSettings) ? true :false}/>
-    </h4>
+            setting={enableMIDI} 
+            hide={(!$expandSettings) ? true :false}/>
+    </div>
     <div class="select {$enableMIDI ? '' : 'hide'}">
         <select bind:value={selectedMIDI} class="midi" 
         on:change={()=>{
@@ -203,20 +212,32 @@ h3{
     font-weight: normal;
 }
 h4{
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
     color: rgb(var(--offwhite));
-    font-size: 10px;
+    font-size: 14px;
     font-variation-settings: "wght" 80, "wdth" 120, "ital" 0;
     line-height: 1;
     font-weight: normal;
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
     align-items: center;
 }
-h4.noMargin{
-    margin:0;
+.keycap{
+    padding: 6px 6px 6px 6px;
+    /* background: rgba(var(--crimson),0.3); */
+    border:1px solid;
+    font-size: 10px;
+    border-radius: 2px;
+    margin-left: 8px;
+    opacity: .7;
+}
+.toggle{
+    width:100%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .setting{
     width:100%;
@@ -302,7 +323,11 @@ div {
 }
 
 input[type=range] {
-    margin: 16px 0 8px 0;
+    box-sizing: border-box;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+    margin: 13px 0 8px 0;
     outline: none;
     padding: 0;
     width: 100%;
@@ -312,8 +337,13 @@ input[type=range] {
     background-size: 50% 100%;
     background-repeat: no-repeat;
     border-radius: 10px;
-    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
     -webkit-appearance: none;
+}
+
+input[type=range]:active,
+input[type=range]:focus {
+  outline: none;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
@@ -332,7 +362,8 @@ input[type=range]::-webkit-slider-thumb{
     border-radius: 8px;
     box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
     -webkit-appearance: none;
-    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+          appearance: none;
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
 }
 
 input[type=range]::-ms-thumb {
@@ -342,7 +373,7 @@ input[type=range]::-ms-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
 }
 
 input[type=range]::-moz-range-thumb {
@@ -352,7 +383,7 @@ input[type=range]::-moz-range-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
 }
 
 @media screen and (max-width: 600px) {
@@ -374,4 +405,5 @@ input[type=range]::-moz-range-thumb {
         margin:0 0 0 -16px;
     }
 }
+
 </style>

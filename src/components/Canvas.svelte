@@ -3,7 +3,7 @@ import { onMount } from 'svelte';
 import { tweened,spring } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
 import {constrain,findNext} from './helpers.js'
-import {active,loaded,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,expandSettings,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,MIDI_finished,currentMIDI} from './stores.js'
+import {active,loaded,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,expandSettings,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,MIDI_finished,currentMIDI} from './stores.js'
 import {oscillators,scales,tonicOrder,midiList} from './config.js'
 import {App,Stage,Resources} from './pixiApp.js'
 import BG from './PIXI.Sprite.bg.svelte'
@@ -139,6 +139,10 @@ const handleKeydown = e => {
             glide.set(false)
             keydown_G.set(true)
         }
+        if(keyCode===77 && !$keydown_M){
+            enableMIDI.set(!$enableMIDI)
+            keydown_M.set(true)
+        }
         if(keyCode===79 && !$keydown_O){
             let nextItem = findNext($oscillatorType,oscillators)
             oscillatorType.set(nextItem)
@@ -154,6 +158,7 @@ const handleKeydown = e => {
             tonic.set(nextItem)
             keydown_K.set(true)
         }
+
         if(keyCode===37 && !$keydown_left){
             keydown_left.set(true)
             if($keydown_O){
@@ -202,6 +207,9 @@ const handleKeyup = e => {
             glide.set(true)
             keydown_G.set(false)
         }
+        if(keyCode===77){
+            keydown_M.set(false)
+        }
         if(keyCode===79){
             keydown_O.set(false)
         }
@@ -242,7 +250,11 @@ on:mouseup={(e)=>{globalPointerUp.set(true)}}
 on:touchmove={(e)=>{updateMouse(e)}}
 on:mousemove={(e)=>{updateMouse(e)}}
 bind:this={canvasContainer} 
-class="canvasContainer {$hovered?'hovered':''}"
+class="canvasContainer {
+    $hovered==='switch'?'hovered'
+    : ($hovered==='knob right' || $hovered==='knob left') ? 'grab'
+    :''
+} {$dragged ? 'grabbing' : ''}"
 style="width:{containerWidth}px;height:{containerHeight}px"
 >
     <Title/>
@@ -290,6 +302,12 @@ style="width:{containerWidth}px;height:{containerHeight}px"
 }
 .canvasContainer.hovered{
     cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+}
+.canvasContainer.grab{
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+}
+.canvasContainer.grabbing{
+    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrabbed.svg?v=1591926626227) 14 0, grabbing;
 }
 :global(canvas){
     width:100vw;

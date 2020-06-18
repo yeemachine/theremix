@@ -71,6 +71,20 @@ export const midiList =
             tint:0xFFD4D4
             //https://www.youtube.com/watch?v=Rq60NW2TxbM
         },
+        "秒針を噛む":{
+            url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2F%E7%A7%92%E9%87%9D%E3%82%92%E5%99%9B%E3%82%80guit.mid?v=1590789047130",
+            artist:'ずっと真夜中でいいのに。',
+            offset:.5,
+            tint:0xC39E89
+            //https://musescore.com/user/28172954/scores/5926366
+        },
+        "シャルル":{
+            url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FCharles.mid?v=1590467081432",
+            artist:'バルーン',
+            offset:.5,
+            tint:0xC39E89
+            //credits https://twitter.com/kakimuki2011?lang=en
+        },
         "金木犀":{
             url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKinmokusei.mid?v=1590264503440",
             artist:'くじら feat. Ado',
@@ -100,13 +114,6 @@ export const midiList =
             tint:0xAFA69B
             //https://musescore.com/user/31847617/scores/5660409
         },
-        "シャルル":{
-            url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FCharles.mid?v=1590467081432",
-            artist:'バルーン',
-            offset:.5,
-            tint:0xC39E89
-            //credits https://twitter.com/kakimuki2011?lang=en
-        },
         '青春なんていらないわ':{
             url:'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FI_Dont_Need_Youth.mid?v=1591337846713',
             artist:'三月のパンタシア',
@@ -115,7 +122,7 @@ export const midiList =
             //https://musescore.com/neko_rare/scores/5506440
         },
         'アスノヨゾラ哨戒班':{
-            url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FAsu_no_Yozora_Shoukaihan_-_BanG_Dream_Afterglow_-_Orangestar_IA.mid?v=1590302769688",
+            url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FOrangestar_-_Asu_no_yozora_shoukaihan_feat.IA.mid?v=1590264388711",
             artist:'Orangestar feat. IA',
             offset:.5,
             tint:0x89AEC3
@@ -129,14 +136,6 @@ export const midiList =
             //https://musescore.com/user/14598701/scores/5805051
         }
         ,
-        "秒針を噛む":{
-            url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2F%E7%A7%92%E9%87%9D%E3%82%92%E5%99%9B%E3%82%80guit.mid?v=1590789047130",
-            artist:'ずっと真夜中でいいのに。',
-            offset:.5,
-            tint:0xC39E89
-            //https://musescore.com/user/28172954/scores/5926366
-        },
-     
         '雨き声残響':{
             url:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FEcho_of_My_Voice_in_the_Rain__-_OrangestarIA_-_Ver._Wolpis_Kater.mid?v=1590264416383",
             artist:'Orangestar feat. IA',
