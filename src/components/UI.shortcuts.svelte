@@ -47,7 +47,7 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
 </container>
 <Keycap letter={'O'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .679 : .5095}/>
 <Keycap letter={'G'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .7415 : .778}/>
-
+<Keycap letter={'M'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .5005 : .5095}/>
 
 <style>
     container{

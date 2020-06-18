@@ -21,6 +21,7 @@ export const keydown_O = writable(false)
 export const keydown_K = writable(false)
 export const keydown_S = writable(false)
 export const keydown_G = writable(false)
+export const keydown_M = writable(false)
 
 export const keydown_left = writable(false)
 export const keydown_right = writable(false)

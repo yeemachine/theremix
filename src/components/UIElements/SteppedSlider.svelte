@@ -4,6 +4,7 @@ import {createEventDispatcher} from 'svelte'
 export let initVal = [0,1]
 export let min = 0
 export let max = 1
+export let hide = false
 
 var lowerSlider,
    upperSlider,
@@ -63,7 +64,7 @@ $:{
 
 </script>
 
-<span class="multi-range">
+<span class="multi-range {hide ? 'hide' : ''}">
     <input bind:this={lowerSlider} 
     on:input={updateLower}
     type="range" min={min} max={max} value={initVal[0]} 
@@ -126,6 +127,9 @@ input[type=range]::-webkit-slider-thumb {
   border: none;
   box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
 }
+.hide input[type=range]::-webkit-slider-thumb {
+  pointer-events: none;
+}
 
 input[type=range]::-moz-range-thumb {
   box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
@@ -137,6 +141,9 @@ input[type=range]::-moz-range-thumb {
   cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
   pointer-events: all;
 }
+.hide input[type=range]::-moz-range-thumb {
+  pointer-events: none;
+}
 
 input[type=range]::-ms-thumb {
   box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
@@ -147,6 +154,9 @@ input[type=range]::-ms-thumb {
   background: rgb(var(--offwhite));
   pointer-events: all;
   cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+}
+.hide input[type=range]::-ms-thumb {
+  pointer-events: none;
 }
 
 input[type=range]::-webkit-slider-thumb::before {

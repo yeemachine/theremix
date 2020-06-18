@@ -2,7 +2,7 @@
 	import {mousePos, loaded, darkMode } from './components/stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import UI from './components/UI.svelte'
-	import CenterNotif from './components/UI.centerNotif.svelte'
+	import Shortcuts from './components/UI.shortcuts.svelte'
 	import Tone from './components/Tone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
@@ -67,7 +67,7 @@
 
 <main>
 	<Canvas/>
-	<CenterNotif/>
+	<Shortcuts/>
 	<UI/>
 	<Tone/>
 	<Webcam/>
