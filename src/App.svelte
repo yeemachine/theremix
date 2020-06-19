@@ -12,20 +12,20 @@
   
   @font-face {
     font-family: "Whirly Birdie";
-    src: url("https://cdn.glitch.com/1711052e-ea5e-4036-9c61-dd3ef6782855%2FWhirlyBirdieGX.ttf?v=1591228424609")
+    src: url("https://theremin.app/assets/fonts/WhirlyBirdieGX.ttf")
       format("truetype");
   }
 
   @font-face {
       font-family: "Whirly Birdie Regular";
-      src: url("https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-Regular.woff?v=1590326472854")
+      src: url("https://theremin.app/assets/fonts/WhirlyBirdie-Regular.woff")
           format("woff");
   }
 
 	@font-face {
-    font-family: "Nicholson Beta";
-    src: url("https://cdn.glitch.com/1711052e-ea5e-4036-9c61-dd3ef6782855%2Fnicholsonbeta-webfont.woff2?v=1584151257949")
-      format("woff2");
+	font-family: "Nicholson Beta";
+	src: url("https://theremin.app/assets/fonts/nicholsonbeta-webfont.woff2")
+		format("woff2");
 	}
 
   :root {
