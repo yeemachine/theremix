@@ -1,12 +1,10 @@
 <script>
 import * as PIXI from 'pixi.js'
-import {camera,videoReady,active,volumeVal,thereminPos,thereminMobilePos,poseNetRes,videoPos,mousePos,FFT,CANVASWIDTH,CANVASHEIGHT,WIDTH,toneOutput,machineLeftPos,analyser,mouseOverride,gestures,enableMIDI,tablePos,MIDITextSprite,MIDI_finished,MIDI_Display_Text,currentMIDITint,currentMIDITitle} from './stores.js'
-import {getDistance,getMidpoint,lerpColor} from './helpers.js'
+import {videoReady,active,thereminPos,thereminMobilePos,poseNetRes,videoPos,WIDTH,toneOutput,bgPos,analyser,mouseOverride,gestures,enableMIDI,MIDITextSprite} from '../stores.js'
 import { tweened } from 'svelte/motion';
-import {constrain} from './helpers.js';
-import {graphicsGroup} from './pixiApp.js'
-import { backOut, sineInOut } from 'svelte/easing';
-import {posenetOptions,midiList} from './config.js'
+import {constrain} from '../helpers.js';
+import {graphicsGroup} from '../pixiApp.js'
+import {sineInOut } from 'svelte/easing';
 
 export let stage = null
 
@@ -72,22 +70,6 @@ let headPos = {
 const createPose = (pose,graphics) => { 
 
     graphics2.lineStyle(2,0xE54646);
-
-    //Face T
-    // createLine(pose[1],pose[2],graphics2);
-    // let nosePoint1 = {
-    //     position: {
-    //         x:pose[0].position.x,
-    //         y:pose[0].position.y
-    //     }
-    // }
-    // let nosePoint2 = {
-    //     position: {
-    //         x:getMidpoint(pose[1],pose[2],'x'),
-    //         y:getMidpoint(pose[1],pose[2],'y')
-    //     }
-    // }
-    // createLine(nosePoint1,nosePoint2,graphics2);
 
     //Torso
     createLine(pose[5],pose[6],graphics2);
@@ -339,7 +321,7 @@ const draw = (now) => {
         }
 
         //Draw Machine Lights
-        if($machineLeftPos){
+        if($bgPos){
             bgGraphics.clear()
                 bgLights.forEach((e,i)=>{
 
@@ -351,19 +333,19 @@ const draw = (now) => {
 
                     if(e.r){
                         bgGraphics.drawEllipse(
-                            $machineLeftPos.x+$machineLeftPos.width*e.x,
-                            $machineLeftPos.y+$machineLeftPos.height*e.y,
-                            $machineLeftPos.width*e.r,
-                            $machineLeftPos.width*e.r
+                            $bgPos.x+$bgPos.width*e.x,
+                            $bgPos.y+$bgPos.height*e.y,
+                            $bgPos.width*e.r,
+                            $bgPos.width*e.r
                         )
                     }
                     if(e.w){
                         bgGraphics.drawRoundedRect(
-                            $machineLeftPos.x+$machineLeftPos.width*e.x,
-                            $machineLeftPos.y+$machineLeftPos.height*e.y,
-                            $machineLeftPos.width*e.w,
-                            $machineLeftPos.width*e.w,
-                            $machineLeftPos.width*e.w*.3
+                            $bgPos.x+$bgPos.width*e.x,
+                            $bgPos.y+$bgPos.height*e.y,
+                            $bgPos.width*e.w,
+                            $bgPos.width*e.w,
+                            $bgPos.width*e.w*.3
                         )
                     }
 

@@ -2,8 +2,8 @@
 import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
-import {active,thereminPos,CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,currentMIDITint} from './stores.js'
-import {constrain} from './helpers.js';
+import {active,thereminPos,WIDTH,SCALE} from '../stores.js'
+import {constrain} from '../helpers.js';
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
 export let stage = null
@@ -16,30 +16,6 @@ const sineInOut0_1 = tweened(0, {
 const ambientLight = new PIXI.lights.AmbientLight(0xFFffff, .1)
 const warmLightContainer = new PIXI.Container();
 const warmLightCoords = [
-    // {
-    //   x: 0,
-    //   y: 0,
-    //   color: 0xff7f00,
-    //   falloff:[0.75, 13, 40],
-    //   brightness: .8,
-    //   start:.5
-    // },
-    // {
-    //   x: -.25,
-    //   y: -0.25,
-    //   color: 0xE54646,
-    //   falloff:[0.75, 13, 40],
-    //   brightness: .8,
-    //   start:.5
-    // },
-    // {
-    //   x: -.5,
-    //   y: 0.2,
-    //   color: 0xFFFE7E,
-    //   falloff:[0, 13, 40],
-    //   brightness: .8,
-    //   start:.5
-    // },
     {
       x:.39,
       y: 0.1,
@@ -84,7 +60,7 @@ $: {
     e.falloff = warmLightCoords[i].falloff
   })
   ambientLight.brightness = ($WIDTH > 600) ? .05+.3*$sineInOut0_1 : .3 + .05*$sineInOut0_1
-  ambientLight.color = $currentMIDITint
+  ambientLight.color = 0xeeccec
 }
 
 stage.addChild(ambientLight,warmLightContainer)

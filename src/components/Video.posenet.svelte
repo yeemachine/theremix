@@ -1,7 +1,7 @@
 <script>
 import '@tensorflow/tfjs'
 import * as posenet from '@tensorflow-models/posenet'
-import {videoReady,poseNetRes,mousePos} from './stores.js'
+import {videoReady,poseNetRes} from './stores.js'
 import {smooth,getDistance} from './helpers.js'
 import {posenetOptions} from './config.js'
 
@@ -33,7 +33,6 @@ $:{
     if($videoReady && net){
         estimatePoseOnImage();
     }
-    // console.log($poseNetRes)
 }
 
 

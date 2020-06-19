@@ -2,7 +2,7 @@
 import * as Tone from "tone"
 import * as Midi from '@tonejs/midi'
 import * as teoria from 'teoria'
-import {active,enableMIDI,volumeVal,thereminPos,canvasMousePos,mousePos,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,dragged,analyser,audioControls,startOctave,endOctave,MIDI_finished,MIDI_Display_Text,currentMIDITitle,currentMIDIOffset,keydown_left,keydown_down,reverseDirection,currentMIDI} from './stores.js'
+import {active,enableMIDI,volumeVal,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,analyser,audioControls,startOctave,endOctave,currentMIDITitle,currentMIDI} from './stores.js'
 import {constrain, shuffle, jsUcfirst, findNext} from './helpers.js'
 import {midiList,tonicOrder,scales} from './config.js'
 
@@ -65,30 +65,23 @@ let vibrato = new Tone.Vibrato({
   depth: 0.05,
   type: "sine"
 });
-console.log(gain1)
 
 mainOsc.chain(vibrato,gain1,Tone.Master);
 gain2.connect(Tone.Master)
 Tone.Master.chain(masterCompressor,masterVolume,masterAnalyser);
-// Tone.Transport.start();
 
 let midiSynths = []
-// let midiQueue = shuffle(midiList)
 let midiQueue = Object.keys(midiList)
 let lastMIDI
-let MIDI_Display_TextIndex = 0
 var checkSynthClear
 
 let monoSynth = new Tone.Synth()
 const initMidi = (url)=>{
-    // console.log('loading midi...')
     Midi.fromUrl(url).then(midi => {
-        // const now = Tone.now() + 0.5
         const now = 1
         const nowDelay = 2
 
         midi.tracks.forEach((track,i) => {
-            console.log(track.instrument)
             //create a synth for each track
             const synth = new Tone.PolySynth(8, Tone.Synth, {
                 oscillator:{
@@ -124,7 +117,6 @@ const initMidi = (url)=>{
                     synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
                 }, note.time + now)
 
-                // synth.triggerAttackRelease(note.name, note.duration, note.time + now, note.velocity)
             })
 
         })
@@ -142,7 +134,6 @@ const initMidi = (url)=>{
                    if(scale){
                     scaleType.set(scale)
                    }
-                //    console.log('SCALE: '+scale)
                 }, 
                Tone.Time(now).toTicks()+signature.ticks+'i') 
 
@@ -153,7 +144,6 @@ const initMidi = (url)=>{
                     if(key){
                         tonic.set(key)
                     }
-                    // console.log('KEY: '+key)
                 }, 
                 Tone.Time(now).toTicks()+signature.ticks+'i') 
         })
@@ -171,14 +161,11 @@ const cleanupSynths = () => {
     Tone.Transport.stop()
     while (midiSynths.length) {
         const synth = midiSynths.shift()
-        console.log(synth)
         synth.dispose()
-        console.log(synth)
     }
 }
 
 $:{
-    console.log($currentMIDI)
     if($enableMIDI){
         if(lastMIDI !== $currentMIDI){
             lastMIDI = $currentMIDI
@@ -255,7 +242,7 @@ $:{
             x:($enableMIDI) ? steps.x/$scaleNotes.length : $audioControls.x,
             y:($enableMIDI) ? steps.y/$scaleNotes.length : $audioControls.y
         }
-        if(midiSynths.length>0 && $enableMIDI && !$MIDI_finished){
+        if(midiSynths.length>0 && $enableMIDI){
             midiSynths.forEach(synth=>{
                 synth.set({
                     oscillator:{

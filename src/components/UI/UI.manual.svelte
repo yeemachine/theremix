@@ -1,16 +1,16 @@
 <script>
 import Carousel from '@beyonk/svelte-carousel'
-import {loaded,active,WIDTH,HEIGHT,SCALE,thereminPos,manual,coverLoaded} from './stores.js';
+import {loaded,active,WIDTH,HEIGHT,SCALE,manual} from '../stores.js';
 import { onMount } from 'svelte';
-import Logo from './icons/logo.svelte'; 
-import Play from './icons/play.svelte'; 
-import About from './icons/about.svelte'; 
-import closeIcon from './icons/close.svelte'; 
-import ButtonCircle from './UI.buttoncircle.svelte';
-import BasicControls from './icons/basicControls.svelte'
-import GestureControls from './icons/gestureControls.svelte'
-import MIDIControls from './icons/MIDISupport.svelte'
-import Arrow from './icons/arrow.svelte'
+import Logo from '../icons/logo.svelte'; 
+import Play from '../icons/play.svelte'; 
+import About from '../icons/about.svelte'; 
+import closeIcon from '../icons/close.svelte'; 
+import ButtonCircle from './UIElements/UI.buttoncircle.svelte';
+import BasicControls from '../icons/basicControls.svelte'
+import GestureControls from '../icons/gestureControls.svelte'
+import MIDIControls from '../icons/MIDISupport.svelte'
+import Arrow from '../icons/arrow.svelte'
 
 let startSlide = 0
 let currentSlide = startSlide

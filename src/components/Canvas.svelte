@@ -1,54 +1,36 @@
 <script>
 import { onMount } from 'svelte';
-import { tweened,spring } from 'svelte/motion';
+import { tweened } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
 import {constrain,findNext} from './helpers.js'
-import {active,loaded,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,expandSettings,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,MIDI_finished,currentMIDI} from './stores.js'
+import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,currentMIDI} from './stores.js'
 import {oscillators,scales,tonicOrder,midiList} from './config.js'
 import {App,Stage,Resources} from './pixiApp.js'
-import BG from './PIXI.Sprite.bg.svelte'
-import Table from './PIXI.Sprite.table.svelte'
-import Video from './PIXI.Sprite.video.svelte';
-import Theremin from './PIXI.Sprite.theremin.svelte'
-import ThereminMobile from './PIXI.Sprite.theremin.mobile.svelte'
-import AmbientLights from './PIXI.Light.ambient.svelte'
-import CursorLight from './PIXI.Light.cursor.svelte'
-import PIXIGraphics from './PIXI.graphics.svelte';
-import TweenColor from './PIXI.tweenColor.svelte';
-// import Logo from './PIXI.Sprite.logo.svelte';
-import Text from './PIXI.text.svelte'
-import Title from './UI.title.svelte'
-import Manual from './UI.manual.svelte'
+import BG from './PIXI/PIXI.Sprite.bg.svelte'
+import Table from './PIXI/PIXI.Sprite.table.svelte'
+import Video from './PIXI/PIXI.Sprite.video.svelte';
+import Theremin from './PIXI/PIXI.Sprite.theremin.svelte'
+import ThereminMobile from './PIXI/PIXI.Sprite.theremin.mobile.svelte'
+import AmbientLights from './PIXI/PIXI.Light.ambient.svelte'
+import CursorLight from './PIXI/PIXI.Light.cursor.svelte'
+import PIXIGraphics from './PIXI/PIXI.graphics.svelte';
+import Text from './PIXI/PIXI.text.svelte'
+import Title from './UI/UI.title.svelte'
+import Manual from './UI/UI.manual.svelte'
 
   
   
 let containerWidth,
 canvasContainer, containerHeight;
-let noiseFilter = new PIXI.filters.NoiseFilter(.02,.1186887)
-let blurFilter = new PIXI.filters.BlurFilter()
-// let colorMatrix = new PIXI.filters.ColorMatrixFilter();
-// colorMatrix.desaturate()
-
-blurFilter.blur = 0
-// blurFilter.quality = 1
-blurFilter.enabled = false
-Stage.filterArea = App.screen;
-Stage.filters = [blurFilter];
 let scale
 let maxWidth = 1440
-const tween0_1 = tweened(0, {
-    duration: 700,
-    easing: backOut
-});
+
 const active0_1 = tweened(0, {
     duration: 700,
     easing: backOut
 });
 
-let stopApp
-
 $: {
-    // alert(containerWidth+','+containerHeight)
     WIDTH.set(containerWidth)
     HEIGHT.set(containerHeight)
     SCALE.set(
@@ -66,30 +48,14 @@ $: {
     App.renderer.resize($CANVASWIDTH,$CANVASHEIGHT)  
     App.render()
 
-    // if($manual){
-    //     stopApp = setTimeout(function(){ App.stop() }, 3000);
-    // }else{
-    //     clearTimeout(stopApp);
-    //     App.start()
-    // }
-
 }
 $: {
-   if($expandSettings && $tween0_1 === 0){
-        // tween0_1.set(1)
-    }
-    if(!$expandSettings && $tween0_1 === 1){
-        tween0_1.set(0)
-    }
     if($active && $active0_1 === 0){
         active0_1.set(1)
     }
     if(!$active && $active0_1 === 1){
         active0_1.set(0)
     }
-    blurFilter.blur = 0 + $tween0_1*20
-    blurFilter.enabled = ($tween0_1 > 0) ? true : false
-    // colorMatrix.alpha = 0.5 - 0.5*($active0_1)
 };
 
 let updateMouse = e => {
@@ -202,7 +168,6 @@ const handleKeydown = e => {
 const handleKeyup = e => {
     const key = event.key;
     const keyCode = event.keyCode;
-    // console.log(keyCode)
         if(keyCode===71){
             glide.set(true)
             keydown_G.set(false)
@@ -265,12 +230,10 @@ style="width:{containerWidth}px;height:{containerHeight}px"
         <!-- Loading -->
 
     {:then value}
-        <!-- Null Obj for global interactions -->
         
         <!-- Sprites -->
         <BG stage={Stage} textures={value}/>
         <PIXIGraphics stage={Stage}/>
-        <!-- <Logo stage={Stage} textures={value}/> -->
         <Table stage={Stage} textures={value}/>
         <Theremin stage={Stage} textures={value}/> 
         <ThereminMobile stage={Stage} textures={value}/> 
@@ -279,9 +242,6 @@ style="width:{containerWidth}px;height:{containerHeight}px"
         <!-- Lights -->
         <AmbientLights stage={Stage}/>
         <CursorLight app={App} stage={Stage}/>
-        <!-- Color Tint -->
-        <!-- <TweenColor/> -->
-
 
     {:catch err}
 

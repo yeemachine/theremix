@@ -1,10 +1,10 @@
 <script>
 import * as PIXI from 'pixi.js'
-import {createSprite} from './pixiApp.js';
+import {createSprite} from '../pixiApp.js';
 import { tweened } from 'svelte/motion';
 import { backInOut, sineInOut } from 'svelte/easing';
-import {constrain} from './helpers.js'
-import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady} from './stores.js';
+import {constrain} from '../helpers.js'
+import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady} from '../stores.js';
 export let textures = null;
 export let stage = null;
 

@@ -1,1 +1,1 @@
-Image Assets found on Github.
+Splash Assets found on Github.
