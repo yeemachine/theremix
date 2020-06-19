@@ -1,8 +1,8 @@
 <script>
-import {loaded,active,WIDTH,HEIGHT,SCALE,thereminPos,manual,coverLoaded} from './stores.js';
+import {loaded,active,WIDTH,HEIGHT,manual,coverLoaded} from '../stores.js';
 import { onMount } from 'svelte';
-import Logo from './icons/logo.svelte'; 
-import Play from './icons/play.svelte'; 
+import Logo from '../icons/logo.svelte'; 
+import Play from '../icons/play.svelte'; 
 
 let fontLoaded = false
 const playStart = ()=>{

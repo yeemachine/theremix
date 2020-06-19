@@ -1,12 +1,11 @@
 <script>
 	import {mousePos, loaded, darkMode } from './components/stores.js';
 	import Canvas from './components/Canvas.svelte'
-	import UI from './components/UI.svelte'
-	import Shortcuts from './components/UI.shortcuts.svelte'
+	import Nav from './components/UI/UI.nav.svelte'
+	import Shortcuts from './components/UI/UI.shortcuts.svelte'
 	import Tone from './components/Tone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
-  
 </script>
 
 <style>
@@ -17,10 +16,9 @@
       format("truetype");
   }
 
-
   @font-face {
       font-family: "Whirly Birdie Regular";
-      src: url("    https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-Regular.woff?v=1590326472854")
+      src: url("https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWhirlyBirdie-Regular.woff?v=1590326472854")
           format("woff");
   }
 
@@ -51,8 +49,8 @@
     --lightcharcoal:85,85,85;
     --darkcharcoal:35,35,35;
 
-    --wave:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fh.svg?v=1589236773572);
-    --waveRed:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fhred.svg?v=1589238550292);
+    --wave:url(https://theremin.app/assets/global/h.svg);
+    --waveRed:url(https://theremin.app/assets/global/hred.svg);
 
   }
 
@@ -72,7 +70,7 @@
 		height:100%;
 		overflow:hidden;
 		background:black;
-		cursor:url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor1.svg?v=1587279853708), auto;
+		cursor:url(https://theremin.app/assets/global/cursor1.svg), auto;
 	}
 
 	:global(button){
@@ -81,7 +79,7 @@
 		padding:0;
 	}
   :global(button:hover){
-     cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+     cursor: url(https://theremin.app/assets/global/cursor4.svg) 21 20, pointer;
   }
 
 	/* a subtle focus style for keyboard-input elements */
@@ -109,7 +107,7 @@
 <main>
 	<Canvas/>
 	<Shortcuts/>
-	<UI/>
+	<Nav/>
 	<Tone/>
 	<Webcam/>
 	<PoseNet/>

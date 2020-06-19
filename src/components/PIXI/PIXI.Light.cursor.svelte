@@ -2,13 +2,12 @@
 import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
-import {loaded,hovered,glide,thereminPos,thereminMobilePos,active,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual,tablePos} from './stores.js'
-import {constrain} from './helpers.js'
-import { onMount } from 'svelte';
+import {hovered,glide,thereminPos,thereminMobilePos,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual} from '../stores.js'
+import {constrain} from '../helpers.js'
 import { tweened,spring } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
-import {createGradientTexture} from './pixiApp.js'
-import {posenetOptions} from './config.js'
+import {createGradientTexture} from '../pixiApp.js'
+import {posenetOptions} from '../config.js'
 
 export let stage = null
 export let app = null;
@@ -347,14 +346,11 @@ style='opacity:{mousePos ? 1 : 0};
     height:100%;
     border-radius: 50%;
     transform-origin: center;
-    /* background:rgba(255,255,50,.2); */
-    /* background:white; */
     border:2px transparent;
     position:relative; 
     display: flex;
     justify-content: center;
     align-items: center;
-    /* animation: pulse 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite */
   }
   span{
     position: absolute;
@@ -385,22 +381,7 @@ style='opacity:{mousePos ? 1 : 0};
   }
   .hovered span{
     opacity: 1;
-    /* transition: opacity .5s cubic-bezier(0.46, 0.03, 0.52, 0.96); */
   }
-  @keyframes pulse {
-    0%   { 
-      transform: scale3d(1,1,1); 
-      opacity: 1
-    }
-    50%   { 
-      transform: scale3d(1.3,1.3,1.3); 
-      opacity: .5
-    }
-    0%   { 
-      transform: scale3d(1,1,1); 
-      opacity: 1
-    }
-    }
     @media (hover: none) {
       div{
         opacity:0;

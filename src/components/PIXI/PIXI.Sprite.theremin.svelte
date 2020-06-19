@@ -3,14 +3,12 @@ import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
   
-import { onMount } from 'svelte';
-import {createSprite, detectCollision, calcRotation} from './pixiApp.js';
-import { interpolateRgb } from 'd3-interpolate';
-import { tweened,spring } from 'svelte/motion';
-import {constrain,lerpColor} from './helpers.js';
-import { backOut, sineInOut, quadInOut } from 'svelte/easing';
-import { oscillators,midiList } from './config.js';
-import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,TIME,SCALE,enableMIDI,currentMIDITitle,currentMIDITint} from './stores.js';
+import {createSprite, calcRotation} from '../pixiApp.js';
+import { tweened } from 'svelte/motion';
+import {constrain} from '../helpers.js';
+import { backOut, sineInOut } from 'svelte/easing';
+import { oscillators } from '../config.js';
+import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,glide, volumeVal,oscillatorType,dragged,hovered,SCALE} from '../stores.js';
 export let textures = null;
 export let stage = null;
 
@@ -37,11 +35,6 @@ const tweenKnobLeft = tweened(0, {
 const tweenKnobRight = tweened(0, {
     duration: 700,
     easing: backOut
-});
-
-const colorTween = tweened('#ffffff', {
-		duration: 800,
-		interpolate: interpolateRgb
 });
 
 const theremin = new PIXI.Container();
@@ -176,7 +169,6 @@ $: {
     theremin_body_top.y = theremin_null.height*.68
     theremin_body_top.x = theremin_null.width*.22
   
-    // theremin_screen.scale = {x:.5,y:.5}
     theremin_screen.y = theremin_null.height*.784
     theremin_screen.x = theremin_null.width*.3033
 

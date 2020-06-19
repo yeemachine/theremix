@@ -1,5 +1,5 @@
 <script>
-import {constrain} from '../helpers.js'
+import {constrain} from '../../helpers.js'
 import {createEventDispatcher} from 'svelte'
 export let initVal = [0,1]
 export let min = 0
@@ -58,10 +58,6 @@ const dispatchChange = ()=>{
     });
 }
 
-$:{
-  console.log(lowerVal,(lowerVal-1)/(max - min)*100)
-}
-
 </script>
 
 <span class="multi-range {hide ? 'hide' : ''}">
@@ -80,9 +76,7 @@ $:{
       <div class="tick" style="background:{(lower<=i+1 && upper>=i+1) ? 'rgb(var(--crimson))' : 'rgb(var(--darkcharcoal))'};
       color:{(lower<=i+1 && upper>=i+1) ? 'rgba(var(--offwhite),1)' : 'rgb(var(--charcoal))'}
       ">
-        <!-- {#if i+1 === min || i+1 === max} -->
-            <label>{i+1<=9 ? '0'+(i+1) : i+1}</label>
-        <!-- {/if} -->
+      <label>{i+1<=9 ? '0'+(i+1) : i+1}</label>
       </div>
     {/each}
     </div>
@@ -119,7 +113,7 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
   margin: 5px 0;
   /* Add some margin to ensure box shadow is shown */
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+  cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
   -webkit-appearance: none;
           appearance: none;
   pointer-events: all;
@@ -138,7 +132,7 @@ input[type=range]::-moz-range-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+  cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
   pointer-events: all;
 }
 .hide input[type=range]::-moz-range-thumb {
@@ -153,7 +147,7 @@ input[type=range]::-ms-thumb {
   border-radius: 8px;
   background: rgb(var(--offwhite));
   pointer-events: all;
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+  cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
 }
 .hide input[type=range]::-ms-thumb {
   pointer-events: none;

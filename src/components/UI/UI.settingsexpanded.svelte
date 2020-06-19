@@ -1,18 +1,15 @@
 <script>
 
-import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,MIDI_finished,currentMIDI} from './stores.js'
-import {scales,oscillators,maxOctaves,tonicOrder,midiList} from './config.js'
-import Toggle from './UI.toggleSmall.svelte'
+import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,currentMIDI} from '../stores.js'
+import {scales,oscillators,maxOctaves,tonicOrder,midiList} from '../config.js'
+import Toggle from './UIElements/UI.toggleSmall.svelte'
 import Slider from './UIElements/SteppedSlider.svelte'
-// import Slider from 'svelte-slider'
 
 let selectedScale
 let selectedOsc
 let selectedTonic
 let selectedMIDI
 let selectedTonicOctave = 4
-// let selectedTonic = $tonic.replace(/[0-9]/g, '');
-// let selectedTonicOctave = $tonic.replace(/\D/g, "");
 let selectedStartOctave = 4
 let selectedEndOctave = maxOctaves
 let octaveDifference = selectedEndOctave - selectedStartOctave
@@ -20,12 +17,9 @@ let octaveDifference = selectedEndOctave - selectedStartOctave
 const handleSlider = (e) => {
     selectedStartOctave = e.lower
     selectedEndOctave = e.upper
-    // octaveDifference = selectedEndOctave - selectedStartOctave
     tonic.set(selectedTonic)
-    // octaves.set(octaveDifference)
     startOctave.set(selectedStartOctave)
     endOctave.set(selectedEndOctave)
-    console.log(e.lower,e.upper)
 }
 
 const updateVolume = (e) => {
@@ -295,7 +289,7 @@ div {
         font-family: "Nicholson Beta";
         font-size: 16px;
         display: inline-block;
-        cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
+        cursor: url(https://theremin.app/assets/global/cursor4.svg) 21 20, pointer;
         padding: 7px 10px;
         height:40px;
         outline: 0;
@@ -337,7 +331,7 @@ input[type=range] {
     background-size: 50% 100%;
     background-repeat: no-repeat;
     border-radius: 10px;
-    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+    cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
     -webkit-appearance: none;
 }
 
@@ -363,7 +357,7 @@ input[type=range]::-webkit-slider-thumb{
     box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
     -webkit-appearance: none;
           appearance: none;
-    cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+    cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
 }
 
 input[type=range]::-ms-thumb {
@@ -373,7 +367,7 @@ input[type=range]::-ms-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+  cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
 }
 
 input[type=range]::-moz-range-thumb {
@@ -383,7 +377,7 @@ input[type=range]::-moz-range-thumb {
   width: 18px;
   border-radius: 8px;
   background: rgb(var(--offwhite));
-  cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrab.svg?v=1591926626154) 14 0, grab;
+  cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
 }
 
 @media screen and (max-width: 600px) {

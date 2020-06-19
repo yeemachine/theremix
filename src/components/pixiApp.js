@@ -3,7 +3,6 @@ import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
 
-//PIXI Global Variables & Helper Functions
 export const App = new PIXI.Application()
 export const Stage = (App.stage = new PIXI.display.Stage());
 
@@ -26,183 +25,183 @@ Stage.addChild(
 export const Loader = PIXI.loader
     .add(
         "table",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable.png?v=1591233825418"
+        "https://theremin.app/assets/pixi/roundtable.png"
     )
     .add(
         "table_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable_normal.jpg?v=1591152690632"
+        "https://theremin.app/assets/pixi/roundtable_normal.jpg"
     )
     .add(
         "static_dark",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG-Machine.jpg?v=1591150654793"
+        "https://theremin.app/assets/pixi/BG-Machine.jpg"
     )
     .add(
         "bg_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBG-Normal.jpg?v=1591150654713"
+        "https://theremin.app/assets/pixi/BG-Normal.jpg"
     )
     .add(
         "theremin_null",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ftheremin_null.png?v=1591147974960"
+        "https://theremin.app/assets/pixi/theremin_null.png"
     )
     .add(
         "theremin_body_top",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin%20Body%20Mobile.png?v=1591232761092"
+        "https://theremin.app/assets/pixi/Theremin%20Body%20Mobile.png"
     )
     .add(
         "theremin_body_top_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FTheremin%20Body%20Normal.png?v=1591232670559"
+        "https://theremin.app/assets/pixi/Theremin%20Body%20Normal.png"
     )
     .add(
       "screen",
-      "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FScreen.jpg?v=1591230139444"
+      "https://theremin.app/assets/pixi/Screen.jpg"
     )
     .add(
         "right_antenna",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FRight-Antenna.png?v=1591147974877"
+        "https://theremin.app/assets/pixi/Right-Antenna.png"
     )
     .add(
         "right_antenna_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FRight-Antenna-Normal.png?v=1591147974801"
+        "https://theremin.app/assets/pixi/Right-Antenna-Normal.png"
     )
     .add(
         "left_antenna2",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLeft-Antenna.png?v=1591147974750"
+        "https://theremin.app/assets/pixi/Left-Antenna.png"
     )
     .add(
         "left_antenna2_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FLeft-Antenna-Normal.png?v=1591147974620"
+        "https://theremin.app/assets/pixi/Left-Antenna-Normal.png"
     )
     .add(
         "knob",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob.png?v=1591147974074"
+        "https://theremin.app/assets/pixi/Knob.png"
     )
     .add(
         "knob_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob-Normal.png?v=1591147974043"
+        "https://theremin.app/assets/pixi/Knob-Normal.png"
     )
     .add(
         "switch_on",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch-On.png?v=1591147973982"
+        "https://theremin.app/assets/pixi/Switch-On.png"
     )
     .add(
         "switch_on_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch-On-Normal.png?v=1591147974013"
+        "https://theremin.app/assets/pixi/Switch-On-Normal.png"
     )
     .add(
         "switch_off",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch-Off.png?v=1591147973946"
+        "https://theremin.app/assets/pixi/Switch-Off.png"
     )
     .add(
         "switch_off_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSwitch_Off_Normal.png?v=1588538609780"
+        "https://theremin.app/assets/pixi/Switch_Off_Normal.png"
     )
     .add(
         "theremin_mobile",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMobile-Controls.png?v=1591147974572"
+        "https://theremin.app/assets/pixi/Mobile-Controls.png"
     )
     .add(
         "theremin_mobile_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMobile-Controls-Normal.png?v=1591147974455"
+        "https://theremin.app/assets/pixi/Mobile-Controls-Normal.png"
     )
     .add(
         "video",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FVideo.png?v=1591147973610"
+        "https://theremin.app/assets/pixi/Video.png"
     )
     .add(
         "video_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FVideo-Normal.png?v=1591147973819"
+        "https://theremin.app/assets/pixi/Video-Normal.png"
     )
     .add(
         "wire1",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire-1.png?v=1591147974281"
+        "https://theremin.app/assets/pixi/Wire-1.png"
     )
     .add(
         "wire1_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire-1-Normal.png?v=1591147974224"
+        "https://theremin.app/assets/pixi/Wire-1-Normal.png"
     )
     .add(
         "wire2",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire-2.png?v=1591147973696"
+        "https://theremin.app/assets/pixi/Wire-2.png"
     )
     .add(
         "wire2_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire-2-Normal.png?v=1591147973720"
+        "https://theremin.app/assets/pixi/Wire-2-Normal.png"
     )
     .add(
         "wire3",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire-3.png?v=1591147973747"
+        "https://theremin.app/assets/pixi/Wire-3.png"
     )
     .add(
         "wire3_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FWire-3-Normal.png?v=1591147973793"
+        "https://theremin.app/assets/pixi/Wire-3-Normal.png"
     )
     .add(
         "symbols",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSymbols.png?v=1591147973853"
+        "https://theremin.app/assets/pixi/Symbols.png"
     )
     .add(
         "symbols_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSymbols-Normal.png?v=1591147973671"
+        "https://theremin.app/assets/pixi/Symbols-Normal.png"
     )
     .add(
         "bgm_normal",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM-Normal.jpg?v=1591151268082"
+        "https://theremin.app/assets/pixi/BGM-Normal.jpg"
     )
     .add(
         "DAYBREAK FRONTLINE",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM3.jpg?v=1591151268823"
+        "https://theremin.app/assets/pixi/BGM3.jpg"
     )
     .add(
         "濫觴生命",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM4.jpg?v=1591151268639"
+        "https://theremin.app/assets/pixi/BGM4.jpg"
     )
     .add(
         "夜に駆ける",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM5.jpg?v=1591151268580"
+        "https://theremin.app/assets/pixi/BGM5.jpg"
     )
     .add(
         "快晴",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM6.jpg?v=1591151268522"
+        "https://theremin.app/assets/pixi/BGM6.jpg"
     )
     .add(
         "青春なんていらないわ",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM16.jpg?v=1591336886030"
+        "https://theremin.app/assets/pixi/BGM16.jpg"
     )
     .add(
         "Alice in 冷凍庫",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM2.jpg?v=1591151268183"
+        "https://theremin.app/assets/pixi/BGM2.jpg"
     )
     .add(
         "アスノヨゾラ哨戒班",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM9.jpg?v=1591151270003"
+        "https://theremin.app/assets/pixi/BGM9.jpg"
     )
     .add(
         "秒針を噛む",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM12.jpg?v=1591151269313"
+        "https://theremin.app/assets/pixi/BGM12.jpg"
     )
     .add(
         "金木犀",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM11.jpg?v=1591151268246"
+        "https://theremin.app/assets/pixi/BGM11.jpg"
     )
     .add(
         "だから僕は音楽を辞めた",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM8.jpg?v=1591151269230"
+        "https://theremin.app/assets/pixi/BGM8.jpg"
     )
     .add(
         "シャルル",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM1.jpg?v=1591151269373"
+        "https://theremin.app/assets/pixi/BGM1.jpg"
     )
     .add(
         "眩しいDNAだけ",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM15.jpg?v=1591151268999"
+        "https://theremin.app/assets/pixi/BGM15.jpg"
     )
     .add(
         "脳裏上のクラッカー",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM14.jpg?v=1591151269091"
+        "https://theremin.app/assets/pixi/BGM14.jpg"
     )
     .add(
         "雨き声残響",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM10.jpg?v=1591151269045"
+        "https://theremin.app/assets/pixi/BGM10.jpg"
     )
     
 
@@ -210,7 +209,6 @@ export const Resources = new Promise(
     (resolve, reject)=>
         Loader.load(
             (loader, resources) => {
-                // console.log(resources)
                 resolve(resources)
             }
         )

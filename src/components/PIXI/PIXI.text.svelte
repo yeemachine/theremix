@@ -1,12 +1,10 @@
 <script>
 import * as PIXI from 'pixi.js'
-import { onMount } from 'svelte';
-import {createSprite, detectCollision, calcRotation, graphicsGroup} from './pixiApp.js';
+import { graphicsGroup} from '../pixiApp.js';
 import { tweened } from 'svelte/motion';
-import {constrain} from './helpers.js';
-import { backOut, sineInOut } from 'svelte/easing';
-import { oscillators, midiList } from './config.js';
-import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,thereminMobilePos,glide, volumeVal,oscillatorType,dragged,hovered,toneOutput,MIDI_Display_Text,enableMIDI,MIDI_finished,MIDITextSprite,currentMIDITitle} from './stores.js';
+import {sineInOut } from 'svelte/easing';
+import { oscillators, midiList } from '../config.js';
+import {active,WIDTH,HEIGHT, thereminPos,thereminMobilePos,glide,oscillatorType,toneOutput,enableMIDI,MIDI_finished,MIDITextSprite,currentMIDITitle} from '../stores.js';
 export let stage = null;
 
 const sineInOut0_1 = tweened(0, {
@@ -96,7 +94,7 @@ $:{
     if(midiText){
         let text = ($currentMIDITitle) ? '♫ '+$currentMIDITitle+' / '+midiList[$currentMIDITitle].artist : null;
         midiText.text = 
-            ($enableMIDI && $MIDI_finished || $enableMIDI && !text) ? "Loading..."
+            ($enableMIDI && !text) ? "Loading..."
             : $enableMIDI ? '   '+text+'      '+text+'      '+text+'      '+text+'   ' 
             : ''
         midiText.style.fontSize = ($WIDTH > 600) ? $thereminPos.width*.0100 : $thereminMobilePos.width*.035

@@ -4,7 +4,8 @@ export let position = 'relative'
 export let top = 0
 export let left = 0
 export let styles=''
-import {keydown_S,keydown_K,keydown_O,keydown_G,keydown_M,tonic,thereminPos,thereminMobilePos,HEIGHT,WIDTH,SCALE} from './stores.js'
+export let hide = true;
+import {thereminPos,thereminMobilePos,HEIGHT,WIDTH,SCALE} from '../../stores.js'
 let containerDom
 let containerWidth = 0
 let containerHeight = 0
@@ -14,7 +15,6 @@ let containerPos = {
     width:'56px',
     height:'56px'
 }
-let containerHide = true;
 
 $: {
     containerPos = {
@@ -27,25 +27,6 @@ $: {
         width:($WIDTH > 600) ? ($thereminPos.width/$SCALE*.035) : ($thereminMobilePos.width/$SCALE*.1),
         height:($WIDTH > 600) ? ($thereminPos.width/$SCALE*.035) : ($thereminMobilePos.width/$SCALE*.1)
     }
-    switch(letter){
-        case 'O':
-            containerHide = ($keydown_O) ? false : true
-            break;
-        case 'G':
-            containerHide = ($keydown_G) ? false : true
-            break;
-        case 'K':
-            containerHide = ($keydown_K) ? false : true
-            break;
-        case 'S':
-            containerHide = ($keydown_S) ? false : true
-            break;
-        case 'M':
-            containerHide = ($keydown_M) ? false : true
-            break;
-        default:
-            break;
-    }
 }
 </script>
 
@@ -54,7 +35,7 @@ $: {
 bind:this={containerDom} 
 bind:clientWidth={containerWidth} 
 bind:clientHeight={containerHeight} 
-class="{containerHide ? 'hide' : ''}"
+class="{hide ? 'hide' : ''}"
 style="position:{position};width:{containerPos.width.toFixed(0)}px;height:{containerPos.height.toFixed(0)}px;top:{position==='absolute'?containerPos.top.toFixed(0):''}px;left:{position==='absolute'?containerPos.left.toFixed(0):''}px;font-size:{(containerPos.width/2).toFixed(0)}px;border-radius:{(containerPos.width/10).toFixed(0)}px;{styles}">
 <p>{letter}</p>
 </div>

@@ -1,13 +1,13 @@
 <script>
-import Toggle from './UI.toggle.svelte'
-import ButtonCircle from './UI.buttoncircle.svelte'
-import gestureIcon from './icons/gesture.svelte'
-import pauseIcon from './icons/pause.svelte'
-import settingsIcon from './icons/settings.svelte'
-import closeIcon from './icons/close.svelte'
+import Toggle from './UIElements/UI.toggle.svelte'
+import ButtonCircle from './UIElements/UI.buttoncircle.svelte'
+import gestureIcon from '../icons/gesture.svelte'
+import pauseIcon from '../icons/pause.svelte'
+import settingsIcon from '../icons/settings.svelte'
+import closeIcon from '../icons/close.svelte'
 import Settings from './UI.settingsexpanded.svelte'
 
-import {expandSettings,active,camera} from './stores.js'
+import {expandSettings,active,camera} from '../stores.js'
 </script>
 
 

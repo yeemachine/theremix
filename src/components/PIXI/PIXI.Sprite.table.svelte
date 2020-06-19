@@ -1,11 +1,10 @@
 <script>
 import * as PIXI from 'pixi.js'
-import {createSprite} from './pixiApp.js';
+import {createSprite} from '../pixiApp.js';
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
-import { lerpColor } from './helpers.js';
-import {midiList} from './config.js';
-import {WIDTH,CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,currentMIDITint,enableMIDI,currentMIDI} from './stores.js';
+import { lerpColor } from '../helpers.js';
+import {WIDTH,CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,enableMIDI} from '../stores.js';
 export let textures = null;
 export let stage = null;
 
