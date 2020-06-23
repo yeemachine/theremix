@@ -199,8 +199,6 @@ onMount(async () => {
     containerHeight = document.documentElement.clientHeight;
     WIDTH.set(containerWidth)
     HEIGHT.set(containerHeight)
-
-    console.log(containerWidth,containerHeight)
 });
 
 
