@@ -11,6 +11,7 @@ import BasicControls from '../icons/basicControls.svelte'
 import GestureControls from '../icons/gestureControls.svelte'
 import MIDIControls from '../icons/MIDISupport.svelte'
 import Arrow from '../icons/arrow.svelte'
+import {midiList} from '../config.js'
 
 let startSlide = 0
 let currentSlide = startSlide
@@ -72,36 +73,54 @@ $:{
 				<ol>
 					<li>
 						<h3>Volume Antenna</h3>
-						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						<p>
+						Movement towards this antenna <span>(y-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						</p>
 					</li>
 					<li>
 						<h3>Pitch Antenna</h3>
-						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
+						<p>
+						Movement towards this antenna <span>(x-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
+						</p>
 					</li>
 					<li>
 						<h3>Master Volume</h3>
+						<p>
 						Controls the overall volume <span>(-48db — 0db)</span> of the app.
+						</p>
 					</li>
 					<li>
-						<h3>Oscillator<span class="keycap">O</span></h3>
+						<h3>Oscillator</h3>
+						<p>
 						Choose from 18 different oscillator waveforms to change the timbre of the theremin. Includes <span>Sine</span>, <span>Triangle</span>, <span>Sawtooth</span>, <span>Square</span>, <span>Pulse</span> oscillators as well as many other alternates. 
-						<br>
-						<br>
-						'O' to cycle between oscillators. 'O' + Arrow Keys to switch back and forth.
+						</p>
+						<p class="sub">
+						<span class="keycap">O</span> to cycle between oscillators. 
+						</p>
+						<p class="sub">
+						<span class="keycap">O</span> + Arrow Keys to switch back and forth.
+						</p>
 					</li>
 					<li>
-						<h3>Glide <span class="keycap">G</span></h3>
-						Glide is how the theremin tone operates traditionally, <span>sliding smoothly</span> between pitches. This is on by default. Turning this off will snap the tone to a <span>perfect note</span>.   
-						<br>
-						<br>
-						Hold 'G' to toggle glide.
+						<h3>Glide</h3>
+						<p>
+						Glide is how the theremin tone operates traditionally, <span>sliding smoothly</span> between pitches. This is on by default. Turning this off will snap the tone to a <span>perfect note</span>.  
+						</p> 
+						<p class="sub">
+						Hold/Release <span class="keycap">G</span> to toggle on/off glide.
+						</p>
 					</li>
 					<li>
-						<h3>Key/Scale<span class="keycap">K</span><span class="keycap">S</span></h3>
+						<h3>Key/Scale</h3>
+						<p>
 						Modifying this setting changes the freqency range of the theremin as well as the tones played when Glide is off. Choose between <span>12 different tonic keys</span> and <span>18 different scales types</span>. Octave range is also adjustable under Settings.
-						<br>
-						<br>
-						'K' or 'S' to cycle between keys and scales. 'K' or 'S' + Arrow Keys to switch back and forth.    
+						</p>
+						<p class="sub">
+						<span class="keycap">K</span> or <span class="keycap">S</span> to cycle between keys and scales.
+						</p>
+						<p class="sub">
+						Hold <span class="keycap">K</span> or <span class="keycap">S</span> + Arrow Keys to switch back and forth. 
+						</p>   
 					</li>
 				</ol>
 			</div>
@@ -117,16 +136,20 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>Webcam motion capture allows you to experience the gestural movements of playing a physical theremin. Powered by the <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a> machine learning model for pose detection.</p>
+				<p>Webcam motion capture allows you to experience the gestural movements of playing a physical theremin. Powered by <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a>, a machine learning model which allows for real-time human pose estimation in the browser.</p>
 				<hr>
 				<ul>
 					<li>
-						<h3>Both Hands Present</h3>
-						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						<h3>2-Hands Controls</h3>
+						<p>
+						The <span>right hand controls pitch</span> while the <span>left hand controls volume</span>. These controls are mapped to how a physical theremin would operate. Movement towards the right antenna increases the frequency while movement towards the left antenna increases the amplitude of the waveform. 
+						</p>
 					</li>
 					<li>
-						<h3>One Hand Present</h3>
-						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
+						<h3>1-Hand Controls</h3>
+						<p>
+						If only one hand is detected, <span>both volume and pitch are controlled by the dominate hand</span>. Mainly used when a user is viewing on mobile and needs one hand to hold the phone.
+						</p>
 					</li>
 				</ul>
 			</div>
@@ -136,24 +159,33 @@ $:{
 		<div class="slide-content {(currentSlide === 2 && $loaded) ? 'current' : ''}">
 			<container>
 			<div class="graphic">
-				<h2>Midi<br>Controller</h2>
+				<h2>Midi<br>Controls<span style="font-size:9px;margin-left: 8px">Beta<span></h2>
 				<div class="svg">
 					<MIDIControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
 				</div>
 			</div>
 			<div class="description">
-				<p>Webcam motion capture allows you to experience the gestural movements of playing a physical theremin. Powered by the <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a> machine learning model for pose detection.</p>
+
+				<p>A theremin can also be used as an <a href='https://www.youtube.com/watch?v=Hae0g-lDOqw' target="blank">alternative controller</a> for MIDI and other musical applications. This mode is currently in a beta and works best in Chrome. Movement towards X and Y axis modifies the timbre of the oscillators, changing variables such as <span>attack</span>, <span>sustain</span>, <span>decay</span>, and <span>release</span>. User uploaded MIDI to come in a future update.</p>
+				<p class="sub small">
+				<span class="keycap">M</span> to toggle Midi on/off. Arrow Keys to switch between songs in queue. 
+				<br><br>
+				List of the available MIDI demos. All credit for music, illustrations, and MIDI arranges go to their original creators.
+				</p>
 				<hr>
-				<ul>
+				<ol>
+					{#each Object.keys(midiList) as midiTitle}
 					<li>
-						<h3>Both Hands Present</h3>
-						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						<h3 style="font-family:'Nicholson Beta';font-size:16px;margin-bottom:0;padding-top: 14px;">
+							{midiTitle}
+						</h3>
+						<p style="font-family:'Nicholson Beta';font-size:14px;margin:0 0 8px 0;">{midiList[midiTitle].artist}</p>	
+						<p style="margin:0;">		
+						<a href="{midiList[midiTitle].original}" target="blank" style="margin-right:6px">Original Video</a><a href="{midiList[midiTitle].midi}" target="blank">MIDI</a> 
+						</p>
 					</li>
-					<li>
-						<h3>One Hand Present</h3>
-						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
-					</li>
-				</ul>
+					{/each}
+				</ol>
 			</div>
 			</container>
 			<div class="gradient"></div>
@@ -167,43 +199,42 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>The theremin is an electic musical instrument played by the movement of both hands in the space surrounding it. THEREMIX's default controls translates these 2 movements into 1 fluid cursor movement.</p>
+				<p>This app celebrates the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone. <a href="https://glitch.com" target="blank">View Project on Github</a></p>
+				<p class="small sub">This project was made possible with the following platforms and open-source resources:</p>
 				<hr>
-				<ol>
+				<ul>
 					<li>
-						<h3>Volume Antenna</h3>
-						Movement towards this antenna <span>(x-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						<h3>Glitch</h3>
+						<p>Glitch is a friendly platform for all your web project needs, from something as simple as a webpage to something more complex involving servers. All code written is hosted on Glitch's servers, making it easy to preview your work without needing to install packages or starting a web server. Remixing on Glitch also allows you to use projects from other creators as a starting template and explore their code. Feel free to <a href="https://glitch.com/~theremix" target="blank">Remix this Project</a> on Glitch.
+						</p>
+						<p>
+						<a href="https://glitch.com/" target="blank">Glitch.com</a>
+						</p>
 					</li>
 					<li>
-						<h3>Pitch Antenna</h3>
-						Movement towards this antenna <span>(y-axis)</span> increases the frequency of the current oscillator, raising the <span>pitch</span>. You can modify the <span>octave</span> and <span>scale</span> of the pitch antenna under the Settings panel.
+						<h3>Pixijs</h3>
+						<p>Pixi.js is a lightweight open source 2D WebGL renderer. This app is currently running on Pixi V4 with <a href="https://github.com/pixijs/pixi-lights" target="blank">Pixi Lights</a> and <a href="https://github.com/pixijs/pixi-particles" target="blank">Pixi Particles</a> plugins.</p>
+						<p>
+						<a href="https://www.pixijs.com/" target="blank">Pixijs.com</a>
+						</p>
 					</li>
 					<li>
-						<h3>Master Volume</h3>
-						Controls the overall volume <span>(-48db — 0db)</span> of the app.
+						<h3>Tonejs</h3>
+						<p>Tone.js is a framework for creating interactive music in the browser. It provides advanced scheduling capabilities, synths and effects, and intuitive musical abstractions built on top of the Web Audio API.</p>
+						<p>
+						<a href="https://tonejs.github.io/" target="blank">Tonejs.github.io</a>
+						</p>
 					</li>
 					<li>
-						<h3>Oscillator<span class="keycap">O</span></h3>
-						Choose from 18 different oscillator waveforms to change the timbre of the theremin. Includes <span>Sine</span>, <span>Triangle</span>, <span>Sawtooth</span>, <span>Square</span>, <span>Pulse</span> oscillators as well as many other alternates. 
-						<br>
-						<br>
-						'O' to cycle between oscillators. 'O' + Arrow Keys to switch back and forth.
+						<h3>PoseNet</h3>
+						<p>PoseNet is a machine learning model which allows for real-time human pose estimation in the browser.</p>
+						<p>
+						<a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet" target="blank">Github</a>
+						</p>
 					</li>
-					<li>
-						<h3>Glide <span class="keycap">G</span></h3>
-						Glide is how the theremin tone operates traditionally, <span>sliding smoothly</span> between pitches. This is on by default. Turning this off will snap the tone to a <span>perfect note</span>.   
-						<br>
-						<br>
-						Hold 'G' to toggle glide.
-					</li>
-					<li>
-						<h3>Key/Scale<span class="keycap">K</span><span class="keycap">S</span></h3>
-						Modifying this setting changes the freqency range of the theremin as well as the tones played when Glide is off. Choose between <span>12 different tonic keys</span> and <span>18 different scales types</span>. Octave range is also adjustable under Settings.
-						<br>
-						<br>
-						'K' or 'S' to cycle between keys and scales. 'K' or 'S' + Arrow Keys to switch back and forth.    
-					</li>
-				</ol>
+				</ul>
+				<hr>
+				<p class="sub small">This project is typeset in <span>Whirly Birdie</span> and <span>Nicholson Gothic</span>.</p>
 			</div>
 			</container>
 			<div class="gradient"></div>
@@ -412,12 +443,27 @@ $:{
 	.fullscreen .gradient{
 		opacity:1
 	}
-	.description>p{
-		margin:24px 0 24px 0;
+	.description p{
+		margin:0 0 24px 0;
 		width:100%;
 		color:rgba(var(--textColor2),1);
 		font-size:18px;
+		/* line-height:1.4; */
 	}
+	.description li p{
+		font-size:14px;
+		margin:0 0 8px 0;
+		/* line-height: 1.5; */
+	}
+	.description p.sub{
+		color:rgba(var(--textColor2),.6);
+	}
+	.description p.small{
+		margin:0 0 8px 0;
+		font-size:14px;
+		/* line-height:1.5; */
+	}
+
 
 	hr{
 		background-size: auto 4px;
@@ -426,33 +472,25 @@ $:{
     	height: 8px;
         background-repeat: repeat-x;
         background-position: 100% 100%;
-        background-image:var(--hrImage)
+        background-image:var(--hrImage);
+		margin:24px 0 24px 0;
 	}
 	a{
 		color:rgb(var(--spanColor));
 		display: inline-block;
 		position: relative;
-		text-decoration: none;
+		/* text-decoration: none; */
 		width: max-content;
-	}
-	a:before{
-		content:'';
-		position:absolute;
-		height: 2px;
-		bottom:0px;
-		border-top:1px dotted;
-		/* background:rgb(var(--crimson)); */
-		width:100%;  
 	}
 	ol{
 		list-style: none;
-		margin:24px 0 24px 0;
+		margin:0 0 24px 0;
 		width: calc(100% - 72px);
     	padding-inline-start: 72px;
 	}
 	ul{
 		list-style: none;
-		margin:24px 0 24px 0;
+		margin:0 0 24px 0;
 		width: 100%;
     	padding-inline-start: 0;
 	}
@@ -462,8 +500,9 @@ $:{
 		margin:0 0 24px 0;
 		color:rgba(var(--textColor2),1);
 		font-size:14px;
+		line-height: 1.5;
 	}
-	li span{
+	span{
 		color:rgb(var(--spanColor))
 	}
 
@@ -496,12 +535,16 @@ $:{
 	display:flex;
 	}
 	.keycap{
-		padding: 4px;
-		background: rgba(var(--crimson),0.3);
-		color:rgb(var(--offwhite));
-		font-size: 8px;
+		padding: 3px 4px 3px 4px;
+		font-family:'Whirly Birdie';
+		display:inline-block;
+		text-align: center;
+		width:14px;
+		font-variation-settings: "wght" 80, "wdth" 110, "ital" 0;
+		background: rgba(var(--crimson),.3);
+		color:rgb(var(--textColor2));
+		font-size: 12px;
 		border-radius: 2px;
-		margin-left: 8px;
 	}
 	
 	:global(.carousel>ul>li.active){

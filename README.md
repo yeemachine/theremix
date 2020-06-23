@@ -1,23 +1,17 @@
-# svelte app
+# THEREMIX - Virtual Theremin
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+THEREMIX is an web app that brings the interaction of a physical theremin into the virual space. The virtual theremin can be controlled either with mouse/touch inputs or with gestures through a webcam via human post tracking provided by PoseNet. This app celebrates the 100th anniversary of the theremin, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone.
 
+[Theremin.app](https://theremin.app)
 
-## Get started
+##### Basic Theremin
 
-Remix this app on Glitch and you should be ready to go!
+![THEREMIX Basic Theremin Mode](https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FGif1.mp4.gif?v=1592903208068)
 
-When the Glitch runs `npm run build`, this app uses rollup to package everything.
+THEREMIX's basic theremin mode has mouse/touch input or gesture control options built in. Adjust the sound further by playin with the oscillator type, scale/key/octave range, and Glide toggles. 
 
-When `npm run start` is run, this app uses [sirv](https://github.com/lukeed/sirv) to serve the static site.
+##### MIDI Controller (Beta)
 
+![THEREMIX MIDI Controller Mode](https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgif2.mp4.gif?v=1592903207301)
 
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
+THEREMIX's MIDI controller mode uses the same input controls and maps them to modify the attack, sustain, delay, and release of the synths. This mode is still in beta and works most smoothly in Chrome at the moment. Features 14 demo track, with user uploaded MIDI/BG image to be a feature in the next release.
