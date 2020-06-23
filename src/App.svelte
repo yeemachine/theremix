@@ -9,7 +9,7 @@
 </script>
 
 <style>
-  
+
   @font-face {
     font-family: "Whirly Birdie";
     src: url("https://theremin.app/assets/fonts/WhirlyBirdieGX.ttf")
@@ -99,6 +99,10 @@
 	:global(body.user-is-tabbing input:focus + container) {
 	  outline: 2px solid #7AACFE !important; /* for non-webkit browsers */
 	  outline: 5px auto -webkit-focus-ring-color !important;
+	}
+
+	:global(a:hover){
+	cursor: url(https://theremin.app/assets/global/cursor4.svg) 21 20, pointer;
 	}
 </style>
 

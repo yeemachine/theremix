@@ -93,7 +93,7 @@ export const Loader = PIXI.loader
     )
     .add(
         "switch_off_normal",
-        "https://theremin.app/assets/pixi/Switch_Off_Normal.png"
+        "https://theremin.app/assets/pixi/Switch-Off-Normal.png"
     )
     .add(
         "theremin_mobile",

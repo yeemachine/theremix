@@ -1,52 +1,10 @@
 {
-    "name": "Theremix",
+    "name": "Theremix - Virtual Theremin",
     "short_name": "Theremix",
     "theme_color": "#e54646",
     "background_color": "#e54646",
     "display": "standalone",
     "Scope": "./",
     "start_url": "index.html?utm_source=homescreen",
-    "icons": [
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-72x72.png?v=1587403247201",
-        "sizes": "72x72",
-        "type": "image/png"
-      },
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-96x96.png?v=1587403247299",
-        "sizes": "96x96",
-        "type": "image/png"
-      },
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-128x128.png?v=1587403247276",
-        "sizes": "128x128",
-        "type": "image/png"
-      },
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-144x144.png?v=1587403247326",
-        "sizes": "144x144",
-        "type": "image/png"
-      },
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-152x152.png?v=1587403247558",
-        "sizes": "152x152",
-        "type": "image/png"
-      },
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-192x192.png?v=1587403247492",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-384x384.png?v=1587403247516",
-        "sizes": "384x384",
-        "type": "image/png"
-      },
-      {
-        "src": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Ficon-512x512.png?v=1587403247424",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ],
     "splash_pages": null
   }
