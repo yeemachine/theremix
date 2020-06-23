@@ -195,6 +195,12 @@ const handleKeyup = e => {
 
 onMount(async () => {
     canvasContainer.appendChild(App.view);
+    containerWidth = document.documentElement.clientWidth;;
+    containerHeight = document.documentElement.clientHeight;
+    WIDTH.set(containerWidth)
+    HEIGHT.set(containerHeight)
+
+    console.log(containerWidth,containerHeight)
 });
 
 
@@ -215,12 +221,12 @@ on:mouseup={(e)=>{globalPointerUp.set(true)}}
 on:touchmove={(e)=>{updateMouse(e)}}
 on:mousemove={(e)=>{updateMouse(e)}}
 bind:this={canvasContainer} 
+style="width:{containerWidth}px;height:{containerHeight}px"
 class="canvasContainer {
     $hovered==='switch'?'hovered'
     : ($hovered==='knob right' || $hovered==='knob left') ? 'grab'
     :''
 } {$dragged ? 'grabbing' : ''}"
-style="width:{containerWidth}px;height:{containerHeight}px"
 >
     <Title/>
     <Manual/>
@@ -253,12 +259,13 @@ style="width:{containerWidth}px;height:{containerHeight}px"
 
 <style>
 .canvasContainer{
-    width:100vw;
-    height:100vh;
+    width:100%;
+    height:100%;
     grid-column: 1 / 13;
     display:flex;
     align-items:center;
     justify-content:center;
+    overflow: hidden;
 }
 .canvasContainer.hovered{
     cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
@@ -270,6 +277,7 @@ style="width:{containerWidth}px;height:{containerHeight}px"
     cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgrabbed.svg?v=1591926626227) 14 0, grabbing;
 }
 :global(canvas){
-    width:100vw;
+    width: 100%;
+    height: 100%;
 }
 </style>

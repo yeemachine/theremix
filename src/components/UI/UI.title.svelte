@@ -69,7 +69,7 @@ $:{
         text-align: center;
         white-space: nowrap;
         pointer-events: none;
-        overflow: visible;
+        overflow: hidden;
     }
     section{
         -webkit-touch-callout: none;

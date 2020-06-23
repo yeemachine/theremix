@@ -12,20 +12,6 @@ let deferredPrompt;
 //   alert('PWA available')
 // });
 
-
-if ("serviceWorker" in navigator) {
-	//register service worker
-    navigator.serviceWorker
-        .register("./sw.js", {scope: '/'})
-        .then(() => console.log("registered service worker!"));
-}
-
-//Unregister Service Worker
-// navigator.serviceWorker.getRegistrations().then(function(registrations) {
-// 	for(let registration of registrations) {
-// 	 registration.unregister()
-// } })
-
 const app = new App({
 	target: document.body
 });
