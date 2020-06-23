@@ -10,7 +10,6 @@ import Settings from './UI.settingsexpanded.svelte'
 import {expandSettings,active,camera} from '../stores.js'
 </script>
 
-
 <nav>
     <ButtonCircle 
     icon={pauseIcon}
