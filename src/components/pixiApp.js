@@ -32,7 +32,7 @@ export const Loader = PIXI.loader
         "https://theremin.app/assets/pixi/roundtable_normal.jpg"
     )
     .add(
-        "static_dark",
+        "bg_machine",
         "https://theremin.app/assets/pixi/BG-Machine.jpg"
     )
     .add(
