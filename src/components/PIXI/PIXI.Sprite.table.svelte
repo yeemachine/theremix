@@ -14,7 +14,7 @@ const sineInOut0_1 = tweened(1, {
 });
 
 const table = createSprite(textures.table.texture,textures.table_normal.texture)
-const tableRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
+const tableRatio = textures.bg_machine.texture.width/textures.bg_machine.texture.height
 stage.addChild(table)
 
 

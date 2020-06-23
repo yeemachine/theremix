@@ -6,6 +6,43 @@
 	import Tone from './components/Tone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
+
+	// Reload page on sw change
+	navigator.serviceWorker.addEventListener('controllerchange', () => {
+		// location.reload()
+	});
+
+	var newSW;
+	// Register service worker
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('/sw.js')
+			.then((reg) => {
+				// Check if an installed sw is waiting
+				if(newSW = reg.waiting) {
+					// showBtn();
+				}
+				reg.addEventListener('updatefound', () => {
+					// Copy reference of new worker being installed
+					newSW = reg.installing;
+					newSW.addEventListener('statechange', () => {
+						// service worker state changed except initial one
+						if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+							upSW()
+						}
+					})
+				})
+			}).catch((e) => {
+				console.log(e);
+			});
+
+	}
+
+	const upSW = () => {
+		console.log('Initiating upgrade');
+		// Send message to new service worker
+		newSW.postMessage({ action: 'clearOld' });
+		newSW.postMessage({ action: 'skipWaiting' });
+	}
 </script>
 
 <style>

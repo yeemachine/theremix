@@ -29,7 +29,6 @@ $:{
 
 </script>
 
-
 <container 
 bind:this={containerDom} 
 bind:clientWidth={containerWidth} 

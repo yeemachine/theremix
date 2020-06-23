@@ -23,9 +23,9 @@ const BGMContainer = new PIXI.Container();
 $:{
     BGMContainer.alpha = $sineInOut0_1
 }
-const bg = createSprite(textures.static_dark.texture,textures.bg_normal.texture)
+const bg = createSprite(textures.bg_machine.texture,textures.bg_normal.texture)
 bg.children[0].tint = 0x444444;
-const bgRatio = textures.static_dark.texture.width/textures.static_dark.texture.height
+const bgRatio = textures.bg_machine.texture.width/textures.bg_machine.texture.height
 
 const BGM_bg = createSprite(textures[Object.keys(midiList)[0]].texture,textures.bgm_normal.texture)
 BGM_bg.children[0].tint = 0x80797F
