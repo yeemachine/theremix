@@ -1,7 +1,6 @@
 {
   "name": "Theremix - Virtual Theremin",
   "short_name": "Theremix",
-  "theme_color": "#e54646",
   "background_color": "#000000",
   "display": "standalone",
   "Scope": "./",
