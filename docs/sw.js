@@ -1,4 +1,4 @@
-const vn = "v1.0.03";
+const vn = "v1.0.01";
 const production = true;
 
 // files to cache
@@ -121,6 +121,7 @@ self.addEventListener('message', (event) => {
     }
 });
 
+
   self.addEventListener('fetch', (e) => {
         
     if(e.request.url.includes('/build/bundle.js')){
@@ -134,13 +135,42 @@ self.addEventListener('message', (event) => {
             e.respondWith(
                 caches.match(e.request).then((r) => {
                     // console.log('[Service Worker] Fetching resource: '+e.request.url);
-                    return r || fetch(e.request).then((response) => {
-                        return caches.open(vn).then((cache) => {
-                            // console.log('[Service Worker] Caching new resource: '+e.request.url);
-                            cache.put(e.request, response.clone());
-                            return response;
+                    if(!navigator.onLine){
+                      return r || fetch(e.request).then((response) => {
+                          return caches.open(vn).then((cache) => {
+                              // console.log('[Service Worker] Caching new resource: '+e.request.url);
+                              cache.put(e.request, response.clone());
+
+                              return response;
+                          });
+                      });
+                    }else{
+                      
+                      if(pixiAssets.includes(e.request.url)){
+                        
+                        // console.log('[Service Worker] Fetching resource: '+e.request.url);
+                        return r || fetch(e.request).then((response) => {
+                          return caches.open(vn).then((cache) => {
+                              // console.log('[Service Worker] Caching new resource: '+e.request.url);
+                              cache.put(e.request, response.clone());
+
+                              return response;
+                            });
                         });
-                    });
+                        
+                      }else{
+                        
+                        return fetch(e.request).then((response) => {
+                          return caches.open(vn).then((cache) => {
+                              // console.log('[Service Worker] Caching new resource: '+e.request.url);
+                              cache.put(e.request, response.clone());
+
+                              return response;
+                          });
+                        });
+                      }
+                      
+                    }
                 })
             );
         }

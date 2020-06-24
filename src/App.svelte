@@ -19,9 +19,9 @@
 		navigator.serviceWorker.register('/sw.js')
 			.then((reg) => {
 				// Check if an installed sw is waiting
-				if(newSW = reg.waiting) {
-					// showBtn();
-				}
+				// if(newSW = reg.waiting) {
+				// 	update.set(true)
+				// }
 				reg.addEventListener('updatefound', () => {
 					// Copy reference of new worker being installed
 					newSW = reg.installing;
