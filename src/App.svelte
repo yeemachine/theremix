@@ -1,5 +1,5 @@
 <script>
-	import {mousePos, loaded, darkMode, pwa } from './components/stores.js';
+	import {mousePos, loaded, darkMode, pwa, update } from './components/stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import Nav from './components/UI/UI.nav.svelte'
 	import Shortcuts from './components/UI/UI.shortcuts.svelte'
@@ -9,7 +9,7 @@
 
 	// Reload page on sw change
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		location.reload()
+		update.set(true)
 	});
 
 	var newSW;
