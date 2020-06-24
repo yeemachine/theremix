@@ -1,11 +1,18 @@
 <script>
-	import {mousePos, loaded, darkMode, pwa, update } from './components/stores.js';
+	import {mousePos, loaded, darkMode, pwa, update,version } from './components/stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import Nav from './components/UI/UI.nav.svelte'
 	import Shortcuts from './components/UI/UI.shortcuts.svelte'
 	import Tone from './components/Tone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
+
+
+		const channel = new BroadcastChannel('sw-messages');
+			channel.addEventListener('message', event => {
+				version.set(event.data.version)
+				console.log($version)
+		});
 
 	// Reload page on sw change
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -18,6 +25,7 @@
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/sw.js')
 			.then((reg) => {
+				reg.active.postMessage({ action: 'version' });
 				// Check if an installed sw is waiting
 				if(newSW = reg.waiting) {
 					// showBtn();
@@ -35,7 +43,6 @@
 			}).catch((e) => {
 				console.log(e);
 			});
-
 	}
 
 	const upSW = () => {
@@ -48,6 +55,7 @@
 	if (window.matchMedia('(display-mode: standalone)').matches) {  
 		pwa.set(true);
 	}
+
 </script>
 
 <style>

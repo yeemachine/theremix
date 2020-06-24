@@ -1,4 +1,4 @@
-const vn = "v1.0.000";
+const vn = "v1.0.00";
 const production = true;
 
 // files to cache
@@ -86,10 +86,11 @@ const globalAssets = [
 
 let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets).concat(globalAssets);
 
-console.log('THEREMIX '+vn+(production ? '' : ': Dev Build'))
-
 // install and save files to cache
 self.addEventListener('install', (e) => {
+    console.log('%c%s',
+        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+        'THEREMIX '+vn+(production ? '' : ': Dev Build'))
     e.waitUntil(
         caches.open(vn).then((cache) => {
             return cache.addAll(contentToCache);
@@ -97,6 +98,7 @@ self.addEventListener('install', (e) => {
     );
 });
 
+const channel = new BroadcastChannel('sw-messages');
 // Listen for messages from client
 self.addEventListener('message', (event) => {
     if (event.data.action === 'skipWaiting') {
@@ -115,22 +117,34 @@ self.addEventListener('message', (event) => {
             })
         )
     }
+    if(event.data.action === 'version'){
+        channel.postMessage({version: vn});
+    }
 });
 
   self.addEventListener('fetch', (e) => {
+
+    if(e.request.url.includes('/build/bundle.js')){
+        console.log('%c%s',
+        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+        'THEREMIX '+vn+(production ? '' : ': Dev Build'))
+    }
+
     if(production){
-        e.respondWith(
-            caches.match(e.request).then((r) => {
-                // console.log('[Service Worker] Fetching resource: '+e.request.url);
-                return r || fetch(e.request).then((response) => {
-                    return caches.open(vn).then((cache) => {
-                        // console.log('[Service Worker] Caching new resource: '+e.request.url);
-                        cache.put(e.request, response.clone());
-                        return response;
+        if(!e.request.url.includes('googletagmanager')){
+            e.respondWith(
+                caches.match(e.request).then((r) => {
+                    // console.log('[Service Worker] Fetching resource: '+e.request.url);
+                    return r || fetch(e.request).then((response) => {
+                        return caches.open(vn).then((cache) => {
+                            // console.log('[Service Worker] Caching new resource: '+e.request.url);
+                            cache.put(e.request, response.clone());
+                            return response;
+                        });
                     });
-                });
-            })
-        );
+                })
+            );
+        }
     }else{
         // console.log('Dev Mode')
     }

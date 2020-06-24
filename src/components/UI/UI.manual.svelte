@@ -1,6 +1,6 @@
 <script>
 import Carousel from '@beyonk/svelte-carousel'
-import {loaded,active,WIDTH,HEIGHT,SCALE,manual,pwa} from '../stores.js';
+import {loaded,active,WIDTH,HEIGHT,SCALE,manual,pwa,version} from '../stores.js';
 import { onMount } from 'svelte';
 import Logo from '../icons/logo.svelte'; 
 import Play from '../icons/play.svelte'; 
@@ -60,7 +60,7 @@ $:{
 		<div class="slide-content {(currentSlide === 0 && $loaded) ? 'current' : ''}" >
 			<container>
 			<div class="graphic">
-				<h2>Theremin<br>Basics</h2>
+				<h2>Theremin<br>Basics<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
 					<BasicControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
 				</div>
@@ -201,8 +201,8 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>This app celebrates the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone. <a href="https://glitch.com" target="blank">View Project on Github</a></p>
-				<p class="small sub">This project was made possible with the following platforms and open-source resources:</p>
+				<p>This app celebrates the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone. <a href="https://glitch.com" target="blank">View on Github</a></p>
+				<p class="small sub">THEREMIX was made possible with the following platforms and open-source resources:</p>
 				<hr>
 				<ul>
 					<li>
@@ -387,6 +387,9 @@ $:{
 		font-variation-settings: "wght" 100, "wdth" 140, "ital" 0;
 		line-height: 1.1;
 		/* font-feature-settings: 'ss01'; */
+	}
+	h2 span{
+		color:rgb(var(--textColor2))
 	}
 	.description{
 		width: calc(40% - 80px);
