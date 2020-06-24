@@ -7,6 +7,7 @@ import Play from '../icons/play.svelte';
 let fontLoaded = false
 const playStart = ()=>{
     active.set(true)
+    // update.set(false)
 }
 
 const manualOpen = ()=>{
@@ -46,7 +47,13 @@ $:{
 <button 
     on:click={manualOpen} 
     class="manual {(!$coverLoaded || $active || $manual) ? 'hide' : ''}">
-		User Manual
+		Operation Manual
+</button>
+<button
+    on:click={()=>{window.location.reload()}}
+    class="update {(!$update || !$coverLoaded || $active || $manual) ? 'hide': ''}"
+>
+    New Version Available
 </button>
 
 <style>
@@ -138,14 +145,11 @@ $:{
 		padding:0 24px 0 24px;
 		background: rgba(var(--crimson),.2);
         border-radius: 8px;
-        /* border-left: 2px solid rgb(var(--crimson));
-        border-right: 2px solid rgb(var(--crimson)); */
 		color:rgb(var(--offwhite));
-		/* border-radius:4px; */
 		font-family: 'Whirly Birdie';
 		font-variation-settings: "wght" 90, "wdth" 120, "ital" 0;
         transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) .4s;
-        font-size:14px;
+        font-size:12px;
     }
     .manual:hover, .manual:focus{
         background: rgba(var(--crimson),1);
@@ -155,6 +159,28 @@ $:{
         opacity: 0;
         background: rgba(var(--crimson),.2);
         /* color:rgb(var(--offwhite)); */
+        pointer-events: none;
+        transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s
+    }
+
+    .update{
+    position: absolute;
+    top: 24px;
+    height: 40px;
+    padding: 0 24px 0 24px;
+    background: rgba(var(--offwhite),.05);
+    border-radius: 32px;
+    color: rgb(var(--offwhite));
+    font-family: 'Whirly Birdie';
+    font-variation-settings: "wght" 80, "wdth" 120, "ital" 0;
+    transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) .4s;
+    font-size: 10px;
+    }
+    .update:hover, .update:focus{
+        background: rgba(var(--offwhite),.15);
+    }
+    .update.hide{
+        opacity: 0;
         pointer-events: none;
         transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s
     }
