@@ -1,4 +1,4 @@
-const vn = "v1.0.01";
+const vn = "v1.0.02";
 const production = true;
 
 // files to cache

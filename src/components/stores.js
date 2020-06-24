@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 export const pwa = writable(false);
+export const update = writable(false);
 export const darkMode = writable(false);
 export const active = writable(false);
 export const loaded = writable(false);
