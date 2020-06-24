@@ -79,12 +79,12 @@ const midiAssets = [
     "https://theremin.app/assets/midi/Nouriueno_Cracker.mid"
 ]
 
-const globalAssets = [
+const gifAssets = [
   'https://theremin.app/assets/global/basic_controls.gif',
   'https://theremin.app/assets/global/midi_controls.gif'
 ]
 
-let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets).concat(globalAssets);
+let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets).concat(gifAssets);
 
 // install and save files to cache
 self.addEventListener('install', (e) => {
@@ -146,7 +146,7 @@ self.addEventListener('message', (event) => {
                       });
                     }else{
                       
-                      if(pixiAssets.includes(e.request.url)){
+                      if(pixiAssets.includes(e.request.url) || gifAssets.includes(e.request.url)){
                         
                         // console.log('[Service Worker] Fetching resource: '+e.request.url);
                         return r || fetch(e.request).then((response) => {
