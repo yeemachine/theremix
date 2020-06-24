@@ -79,7 +79,12 @@ const midiAssets = [
     "https://theremin.app/assets/midi/Nouriueno_Cracker.mid"
 ]
 
-let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets);
+const globalAssets = [
+  'https://theremin.app/assets/global/basic_controls.gif',
+  'https://theremin.app/assets/global/midi_controls.gif'
+]
+
+let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets).concat(globalAssets);
 
 console.log('THEREMIX '+vn+(production ? '' : ': Dev Build'))
 
