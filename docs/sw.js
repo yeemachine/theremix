@@ -1,4 +1,4 @@
-const vn = "v1.0.0";
+const vn = "v1.0.4";
 const production = true;
 
 // files to cache
@@ -79,7 +79,7 @@ const midiAssets = [
     "https://theremin.app/assets/midi/Nouriueno_Cracker.mid"
 ]
 
-let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets);
+let contentToCache = appShellFiles.concat(midiAssets);
 
 // install and save files to cache
 self.addEventListener('install', (e) => {
