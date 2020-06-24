@@ -81,9 +81,10 @@ const midiAssets = [
 
 let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets);
 
+console.log('THEREMIX '+vn+(production ? '' : ': Dev Build'))
+
 // install and save files to cache
 self.addEventListener('install', (e) => {
-    console.log('THEREMIX '+vn+(production ? '' : ': Dev Build'))
     e.waitUntil(
         caches.open(vn).then((cache) => {
             return cache.addAll(contentToCache);
