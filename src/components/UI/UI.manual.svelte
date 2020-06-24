@@ -144,13 +144,13 @@ $:{
 					<li>
 						<h3>2 Hands</h3>
 						<p>
-						The <span>right hand controls pitch</span> while the <span>left hand controls volume</span>. These controls are mapped to how a physical theremin would operate. Movement towards the right antenna increases the frequency while movement towards the left antenna increases the amplitude of the waveform. 
+						If 2 hands are detected, the <span>right hand controls pitch</span> while the <span>left hand controls volume</span>. These controls are mapped to how a physical theremin would operate. Movement towards the right antenna increases the frequency while movement towards the left antenna increases the amplitude of the waveform. 
 						</p>
 					</li>
 					<li>
 						<h3>1 Hand</h3>
 						<p>
-						If only one hand is detected, <span>both volume and pitch are controlled by the dominate hand</span>. Mainly used when a user is viewing on mobile and needs one hand to hold the phone.
+						If only 1 hand is detected, <span>both volume and pitch are controlled by the dominate hand</span>. Mainly used when a user is viewing on mobile and needs one hand to hold the phone.
 						</p>
 					</li>
 				</ul>
