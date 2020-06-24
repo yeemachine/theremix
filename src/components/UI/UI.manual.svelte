@@ -134,7 +134,7 @@ $:{
 			<div class="graphic">
 				<h2>Gesture<br>Controls</h2>
 				<div class="svg">
-					<img alt="Gesture controls" style="width:100%" src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FGif1.mp4.gif?v=1592903208068"/>
+					<img alt="Gesture controls" style="width:100%" src="https://theremin.app/assets/global/basic_controls.gif"/>
 				</div>
 			</div>
 			<div class="description">
@@ -163,7 +163,7 @@ $:{
 			<div class="graphic">
 				<h2>Midi<br>Controls<span style="font-size:9px;margin-left: 8px">Beta<span></h2>
 				<div class="svg">
-					<img alt="MIDI controls" style="width:100%" src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgif2.mp4.gif?v=1592903207301"/>
+					<img alt="MIDI controls" style="width:100%" src="https://theremin.app/assets/global/midi_controls.gif"/>
 				</div>
 			</div>
 			<div class="description">
