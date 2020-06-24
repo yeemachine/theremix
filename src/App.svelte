@@ -9,7 +9,7 @@
 
 	// Reload page on sw change
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		// location.reload()
+		location.reload()
 	});
 
 	var newSW;
