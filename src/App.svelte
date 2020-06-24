@@ -1,5 +1,5 @@
 <script>
-	import {mousePos, loaded, darkMode } from './components/stores.js';
+	import {mousePos, loaded, darkMode, pwa } from './components/stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import Nav from './components/UI/UI.nav.svelte'
 	import Shortcuts from './components/UI/UI.shortcuts.svelte'
@@ -42,6 +42,10 @@
 		// Send message to new service worker
 		newSW.postMessage({ action: 'clearOld' });
 		newSW.postMessage({ action: 'skipWaiting' });
+	}
+
+	if (window.matchMedia('(display-mode: standalone)').matches) {  
+		pwa.set(true);
 	}
 </script>
 

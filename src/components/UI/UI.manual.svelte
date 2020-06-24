@@ -1,6 +1,6 @@
 <script>
 import Carousel from '@beyonk/svelte-carousel'
-import {loaded,active,WIDTH,HEIGHT,SCALE,manual} from '../stores.js';
+import {loaded,active,WIDTH,HEIGHT,SCALE,manual,pwa} from '../stores.js';
 import { onMount } from 'svelte';
 import Logo from '../icons/logo.svelte'; 
 import Play from '../icons/play.svelte'; 
@@ -121,8 +121,10 @@ $:{
 						</p>   
 					</li>
 				</ol>
+				{#if !$pwa}
 				<hr>
-				<p class="small sub">This app works <span>offline</span> when added to your homescreen.</p>
+				<p class="small sub">THEREMIX works offline and fullscreen when <span>added to your homescreen</span>.</p>
+				{/if}
 			</div>
 			</container>
 			<div class="gradient"></div>
@@ -205,32 +207,22 @@ $:{
 				<ul>
 					<li>
 						<h3>Glitch</h3>
-						<p>Glitch is a friendly platform for all your web project needs, from something as simple as a webpage to something more complex involving servers. All code written is hosted on Glitch's servers, making it easy to preview your work without needing to install packages or starting a web server. Remixing on Glitch also allows you to use projects from other creators as a starting template and explore their code. Feel free to <a href="https://glitch.com/~theremix" target="blank">Remix this Project</a> on Glitch.
-						</p>
-						<p>
-						<a href="https://glitch.com/" target="blank">Glitch.com</a>
+						<p><a href="https://glitch.com/" target="blank">Glitch.com</a> is a friendly platform for all your web project needs, from something as simple as a webpage to something more complex involving servers. All code written is hosted on Glitch's servers, making it easy to preview your work without needing to install packages or starting a web server. Remixing on Glitch also allows you to use projects from other creators as a starting template and explore their code. Feel free to <a href="https://glitch.com/~theremix" target="blank">Remix this Project</a> on Glitch.
 						</p>
 					</li>
 					<li>
 						<h3>Pixijs</h3>
-						<p>Pixi.js is a lightweight open source 2D WebGL renderer. This app is currently running on Pixi V4 with <a href="https://github.com/pixijs/pixi-lights" target="blank">Pixi Lights</a> and <a href="https://github.com/pixijs/pixi-particles" target="blank">Pixi Particles</a> plugins.</p>
-						<p>
-						<a href="https://www.pixijs.com/" target="blank">Pixijs.com</a>
+						<p><a href="https://www.pixijs.com/" target="blank">Pixi.js</a> is a lightweight open source 2D WebGL renderer. This app is currently running on Pixi V4 with <a href="https://github.com/pixijs/pixi-lights" target="blank">Pixi Lights</a> and <a href="https://github.com/pixijs/pixi-particles" target="blank">Pixi Particles</a> plugins.												
 						</p>
 					</li>
 					<li>
 						<h3>Tonejs</h3>
-						<p>Tone.js is a framework for creating interactive music in the browser. It provides advanced scheduling capabilities, synths and effects, and intuitive musical abstractions built on top of the Web Audio API.</p>
-						<p>
-						<a href="https://tonejs.github.io/" target="blank">Tonejs.github.io</a>
+						<p><a href="https://tonejs.github.io/" target="blank">Tone.js</a> is a framework for creating interactive music in the browser. It provides advanced scheduling capabilities, synths and effects, and intuitive musical abstractions built on top of the Web Audio API.
 						</p>
 					</li>
 					<li>
 						<h3>PoseNet</h3>
-						<p>PoseNet is a machine learning model which allows for real-time human pose estimation in the browser.</p>
-						<p>
-						<a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet" target="blank">Github</a>
-						</p>
+						<p><a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet" target="blank">PoseNet</a> is a machine learning model which allows for real-time human pose estimation in the browser.</p>
 					</li>
 				</ul>
 				<hr>
@@ -452,14 +444,14 @@ $:{
 	}
 	.description li p{
 		font-size:14px;
-		margin:0 0 8px 0;
+		margin:0 0 16px 0;
 		/* line-height: 1.5; */
 	}
 	.description p.sub{
 		color:rgba(var(--textColor2),.75);
 	}
 	.description p.small{
-		margin:0 0 8px 0;
+		margin:0 0 16px 0;
 		font-size:14px;
 		/* line-height:1.5; */
 	}
