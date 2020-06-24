@@ -8,8 +8,6 @@ import About from '../icons/about.svelte';
 import closeIcon from '../icons/close.svelte'; 
 import ButtonCircle from './UIElements/UI.buttoncircle.svelte';
 import BasicControls from '../icons/basicControls.svelte'
-import GestureControls from '../icons/gestureControls.svelte'
-import MIDIControls from '../icons/MIDISupport.svelte'
 import Arrow from '../icons/arrow.svelte'
 import {midiList} from '../config.js'
 
@@ -123,6 +121,8 @@ $:{
 						</p>   
 					</li>
 				</ol>
+				<hr>
+				<p class="small sub">This app works <span>offline</span> when added to your homescreen.</p>
 			</div>
 			</container>
 			<div class="gradient"></div>
@@ -133,7 +133,6 @@ $:{
 				<h2>Gesture<br>Controls</h2>
 				<div class="svg">
 					<img alt="Gesture controls" style="width:100%" src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FGif1.mp4.gif?v=1592903208068"/>
-					<!-- <GestureControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/> -->
 				</div>
 			</div>
 			<div class="description">
@@ -163,7 +162,6 @@ $:{
 				<h2>Midi<br>Controls<span style="font-size:9px;margin-left: 8px">Beta<span></h2>
 				<div class="svg">
 					<img alt="MIDI controls" style="width:100%" src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgif2.mp4.gif?v=1592903207301"/>
-					<!-- <MIDIControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/> -->
 				</div>
 			</div>
 			<div class="description">
@@ -236,7 +234,7 @@ $:{
 					</li>
 				</ul>
 				<hr>
-				<p class="sub small">This project is typeset in <span>Whirly Birdie</span> and <span>Nicholson Gothic</span>.</p>
+				<p class="small sub">This project is typeset in <span>Whirly Birdie</span> and <span>Nicholson Gothic</span>.</p>
 			</div>
 			</container>
 			<div class="gradient"></div>
@@ -458,7 +456,7 @@ $:{
 		/* line-height: 1.5; */
 	}
 	.description p.sub{
-		color:rgba(var(--textColor2),.6);
+		color:rgba(var(--textColor2),.75);
 	}
 	.description p.small{
 		margin:0 0 8px 0;
