@@ -98,7 +98,6 @@ self.addEventListener('install', (e) => {
     );
 });
 
-const channel = new BroadcastChannel('sw-messages');
 // Listen for messages from client
 self.addEventListener('message', (event) => {
     if (event.data.action === 'skipWaiting') {
@@ -118,7 +117,7 @@ self.addEventListener('message', (event) => {
         )
     }
     if(event.data.action === 'version'){
-        channel.postMessage({version: vn});
+        event.source.postMessage(vn);
     }
 });
 

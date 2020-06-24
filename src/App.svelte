@@ -7,25 +7,17 @@
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
 
+	var newSW;
 
-		const channel = new BroadcastChannel('sw-messages');
-			channel.addEventListener('message', event => {
-				version.set(event.data.version)
-				console.log($version)
-		});
-
-	// Reload page on sw change
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		// window.location.reload()
 		update.set(true)
 	});
 
-	var newSW;
 	// Register service worker
 	if ('serviceWorker' in navigator) {
+		
 		navigator.serviceWorker.register('/sw.js')
 			.then((reg) => {
-				reg.active.postMessage({ action: 'version' });
 				// Check if an installed sw is waiting
 				if(newSW = reg.waiting) {
 					// showBtn();
@@ -43,6 +35,14 @@
 			}).catch((e) => {
 				console.log(e);
 			});
+
+		navigator.serviceWorker.addEventListener('message', event => {
+			version.set(event.data)
+		});
+
+		navigator.serviceWorker.ready.then( registration => {
+			registration.active.postMessage({ action: 'version' });
+		});
 	}
 
 	const upSW = () => {
