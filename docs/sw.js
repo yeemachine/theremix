@@ -5,7 +5,10 @@ const production = true;
 const appShellFiles = [
   '/index.html',
   '/build/bundle.js',
-  '/build/bundle.css',
+  '/build/bundle.css'
+];
+
+const libraries = [
   'https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js',
   '/libraries/pixi.layers.js',
   '/libraries/pixi-lights.js',
@@ -14,7 +17,7 @@ const appShellFiles = [
   'https://unpkg.com/@tonejs/midi',
   'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs',
   'https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet'
-];
+]
 
 const pixiAssets = [
     'https://theremin.app/assets/pixi/roundtable.png',
@@ -79,12 +82,13 @@ const midiAssets = [
     "https://theremin.app/assets/midi/Nouriueno_Cracker.mid"
 ]
 
-const globalAssets = [
+const gifAssets = [
   'https://theremin.app/assets/global/basic_controls.gif',
   'https://theremin.app/assets/global/midi_controls.gif'
 ]
 
-let contentToCache = appShellFiles.concat(pixiAssets).concat(midiAssets).concat(globalAssets);
+let stableContent = libraries.concat(pixiAssets).concat(gifAssets)
+let contentToCache = appShellFiles.concat(stableContent).concat(midiAssets)
 
 // install and save files to cache
 self.addEventListener('install', (e) => {
@@ -146,8 +150,8 @@ self.addEventListener('message', (event) => {
                       });
                     }else{
                       
-                      if(pixiAssets.includes(e.request.url)){
-                        
+                      if(stableContent.includes(e.request.url)){
+
                         // console.log('[Service Worker] Fetching resource: '+e.request.url);
                         return r || fetch(e.request).then((response) => {
                           return caches.open(vn).then((cache) => {

@@ -60,7 +60,7 @@ $:{
 		<div class="slide-content {(currentSlide === 0 && $loaded) ? 'current' : ''}" >
 			<container>
 			<div class="graphic">
-				<h2>Theremin<br>Basics<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
+				<h2>Theremin<br>Basics2<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
 					<BasicControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
 				</div>
@@ -201,7 +201,7 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>This app celebrates the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone. <a href="https://glitch.com" target="blank">View on Github</a></p>
+				<p>This app celebrates the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone. <a href="https://github.com/yeemachine/theremix" target="blank">View on Github</a></p>
 				<p class="small sub">THEREMIX was made possible with the following platforms and open-source resources:</p>
 				<hr>
 				<ul>
