@@ -1,4 +1,4 @@
-const vn = "v1.0.01";
+const vn = "v1.0.03";
 const production = true;
 
 // files to cache
@@ -122,7 +122,7 @@ self.addEventListener('message', (event) => {
 });
 
   self.addEventListener('fetch', (e) => {
-
+        
     if(e.request.url.includes('/build/bundle.js')){
         console.log('%c%s',
         'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',

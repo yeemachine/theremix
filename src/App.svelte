@@ -15,7 +15,7 @@
 
 	// Register service worker
 	if ('serviceWorker' in navigator) {
-		
+
 		navigator.serviceWorker.register('/sw.js')
 			.then((reg) => {
 				// Check if an installed sw is waiting
