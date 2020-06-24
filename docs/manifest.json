@@ -4,7 +4,7 @@
   "background_color": "#000000",
   "display": "standalone",
   "Scope": "./",
-  "start_url": "index.html?utm_source=homescreen",
+  "start_url": "index.html#homescreen",
   "icons": [
     {
       "src": "https://theremin.app/assets/icons/icon-72x72.png",
