@@ -1,5 +1,5 @@
 dependencies:
-  '@beyonk/svelte-carousel': 2.5.0
+  '@beyonk/svelte-carousel': 2.6.1
   '@tensorflow-models/posenet': 2.2.1
   '@tensorflow/tfjs': 2.0.0
   '@tonejs/midi': 2.0.23
@@ -39,12 +39,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-8rMof+gVP8mxYZApLF/JgNDAkdKa+aJt3ZYxF8z6+j/hpeXL7iMsKCPHa2jNMHu/qqBwzQF4OHNoYi8dMA/rYg==
-  /@beyonk/svelte-carousel/2.5.0:
+  /@beyonk/svelte-carousel/2.6.1:
     dependencies:
       siema: 1.5.1
     dev: false
     resolution:
-      integrity: sha512-hxVfPrWF08IUiHbupf5SeW9iGQrdmduIVdx3VzyIXF3zk0PO7RITxYL+NdsClAzrfZe5BdmsCGSynA+vi/WZpw==
+      integrity: sha512-buQiWXD+gD8AMtz6swpMQrTqy6T15dTYrHegGtkkbVsIx14w2Rl11ObPptfjCFA1CXLO1KRogQlCaqHYns5Uvw==
   /@polka/url/0.5.0:
     dev: false
     resolution:
@@ -1582,7 +1582,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  '@beyonk/svelte-carousel': ^2.5.0
+  '@beyonk/svelte-carousel': ^2.6.1
   '@rollup/plugin-commonjs': ^12.0.0
   '@rollup/plugin-node-resolve': ^8.0.0
   '@tensorflow-models/posenet': ^2.2.1
