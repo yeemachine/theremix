@@ -60,7 +60,7 @@ $:{
 		<div class="slide-content {(currentSlide === 0 && $loaded) ? 'current' : ''}" >
 			<container>
 			<div class="graphic">
-				<h2>Theremin<br>Basics2<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
+				<h2>Theremin<br>Basics<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
 					<BasicControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
 				</div>
