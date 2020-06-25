@@ -92,10 +92,10 @@ $:{
 						<p>
 						Choose from 18 different oscillator waveforms to change the timbre of the theremin. Includes <span>Sine</span>, <span>Triangle</span>, <span>Sawtooth</span>, <span>Square</span>, <span>Pulse</span> oscillators as well as many other alternates. 
 						</p>
-						<p class="sub">
+						<p class="sub keyboard">
 						<span class="keycap">O</span> to cycle between oscillators. 
 						</p>
-						<p class="sub">
+						<p class="sub keyboard">
 						<span class="keycap">O</span> + Arrow Keys to switch back and forth.
 						</p>
 					</li>
@@ -104,7 +104,7 @@ $:{
 						<p>
 						Glide is how the theremin tone operates traditionally, <span>sliding smoothly</span> between pitches. This is on by default. Turning this off will snap the tone to a <span>perfect note</span>.  
 						</p> 
-						<p class="sub">
+						<p class="sub keyboard">
 						Hold/Release <span class="keycap">G</span> to toggle on/off glide.
 						</p>
 					</li>
@@ -113,10 +113,10 @@ $:{
 						<p>
 						Modifying this setting changes the freqency range of the theremin as well as the tones played when Glide is off. Choose between <span>12 different tonic keys</span> and <span>18 different scales types</span>. Octave range is also adjustable under Settings.
 						</p>
-						<p class="sub">
+						<p class="sub keyboard">
 						<span class="keycap">K</span> or <span class="keycap">S</span> to cycle between keys and scales.
 						</p>
-						<p class="sub">
+						<p class="sub keyboard">
 						Hold <span class="keycap">K</span> or <span class="keycap">S</span> + Arrow Keys to switch back and forth. 
 						</p>   
 					</li>
@@ -134,7 +134,7 @@ $:{
 			<div class="graphic">
 				<h2>Gesture<br>Controls<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
-					<img alt="Gesture controls" style="width:100%" src="https://theremin.app/assets/global/basic_controls.gif"/>
+					<img alt="Gesture controls" src="https://theremin.app/assets/global/basic_controls.gif"/>
 				</div>
 			</div>
 			<div class="description">
@@ -163,15 +163,16 @@ $:{
 			<div class="graphic">
 				<h2>Midi<br>Controls<span style="font-size:9px;margin-left: 8px">Beta<span></h2>
 				<div class="svg">
-					<img alt="MIDI controls" style="width:100%" src="https://theremin.app/assets/global/midi_controls.gif"/>
+					<img alt="MIDI controls" src="https://theremin.app/assets/global/midi_controls.gif"/>
 				</div>
 			</div>
 			<div class="description">
 
 				<p>A theremin can also be used as an <a href='https://www.youtube.com/watch?v=Hae0g-lDOqw' target="blank">alternative controller</a> for MIDI and other musical applications. This mode is currently in a beta and works best in Chrome. Movement towards X and Y axis modifies the timbre of the oscillators, changing variables such as <span>attack</span>, <span>sustain</span>, <span>decay</span>, and <span>release</span>. User uploaded MIDI to come in a future update.</p>
-				<p class="sub small">
+				<p class="sub small keyboard">
 				<span class="keycap">M</span> to toggle Midi on/off. Arrow Keys to switch between songs in queue. 
-				<br><br>
+				</p>
+				<p class="sub small">
 				List of the available MIDI demos. All credit for music, illustrations, and MIDI arranges go to their original creators.
 				</p>
 				<hr>
@@ -247,9 +248,9 @@ $:{
 		--cardColor: var(--offwhite);
 		--containerColor:var(--crimson);
 		--manualColor: 255, 211, 166;
-		--descriptionColor:var(--offwhitetint);
-		--cardGradient:linear-gradient(0deg, rgb(var(--descriptionColor)) 0%, rgba(var(--descriptionColor),0.920045518207283) 70%, rgba(var(--descriptionColor),0) 100%);
-		--containerGradient:linear-gradient(0deg, rgb(var(--descriptionColor)) 0%, rgb(var(--descriptionColor)) 26%, rgb(var(--cardColor)) 30%, rgb(var(--cardColor)) 32%, rgb(var(--cardColor)) 100%);
+		/* --descriptionColor:var(--offwhite); */
+		--cardGradient:linear-gradient(0deg, rgb(var(--cardColor)) 0%, rgba(var(--cardColor),0.920045518207283) 70%, rgba(var(--cardColor),0) 100%);
+		/* --containerGradient:linear-gradient(0deg, rgb(var(--descriptionColor)) 0%, rgb(var(--descriptionColor)) 26%, rgb(var(--cardColor)) 30%, rgb(var(--cardColor)) 32%, rgb(var(--cardColor)) 100%); */
 		--textColor1:var(--crimson);
 		--textColor2:var(--charcoal);
 		--spanColor: var(--crimson);
@@ -264,7 +265,7 @@ $:{
 		section{
 			--cardColor: 17,17,17;
 			--manualColor: 50,42,42;
-			--descriptionColor: 30,25,25;
+			/* --descriptionColor: var(--cardColor); */
 			--arrowColor:var(--crimson);
 			--textColor2:var(--offwhite);
 			--listColor:var(--crimson);
@@ -359,16 +360,14 @@ $:{
 		  display: flex;
 		flex-direction: row;
 	}
-	.fullscreen container{
-		overflow-y:scroll;
-	}
+
 	.graphic{
-		height:calc(100% - 64px);
-		flex:100;
-		margin: 24px 24px 40px 24px;
-		display: flex;
-		flex-direction: column;
-		pointer-events:none;
+		    height: calc(100% - 80px);
+    flex: 100;
+    margin: 40px 24px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
 	}
 	.svg{
 		width:100%;
@@ -379,8 +378,15 @@ $:{
 		align-content: center;
 		justify-content: center;
 	}
+	img{
+		object-fit: contain;
+		width:auto;
+		height:auto;
+		max-width:100%;
+		max-height:100%;
+	}
 	h2{
-		margin: 0;
+		margin: 0 0 24px 0;
 		min-height: 56px;
 		font-size: 40px;
 		font-weight: normal;
@@ -393,31 +399,19 @@ $:{
 		color:rgb(var(--textColor2))
 	}
 	.description{
-		width: calc(40% - 80px);
-		min-width:320px;
-		max-width:400px;
-		padding: 40px 40px 40px 40px;
-    	min-height: calc(100% - 80px);
-		margin: 0;
-		background:rgb(var(--descriptionColor));
-		overflow-y: scroll;
-		font-family: 'Nicholson Beta';
-		font-size:18px;
-		-webkit-backface-visibility: hidden;
-		-moz-backface-visibility: hidden;
-		-webkit-transform: translate3d(0, 0, 0);
-		-moz-transform: translate3d(0, 0, 0);
-	}
-
-	.fullscreen .description{
-		width:calc(100% - 80px);
-		column-count: 2;
-		column-fill: auto;
-		column-gap:40px;
-		padding: 40px;
-		max-width:none;
-		height:max-content;
-		/* overflow-y:scroll; */
+	   width: calc(40% - 56px);
+    min-width: 320px;
+    max-width: 400px;
+    padding: 72px 40px 56px 16px;
+    min-height: calc(100% - 128px);
+    margin: 0;
+    overflow-y: scroll;
+    font-family: 'Nicholson Beta';
+    font-size: 18px;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
 	}
 
 	.gradient{
@@ -436,9 +430,6 @@ $:{
 		-moz-transform: translate3d(0, 0, 0);
 	}
 
-	.fullscreen .gradient{
-		opacity:1
-	}
 	.description p{
 		margin:0 0 24px 0;
 		width:100%;
@@ -506,7 +497,7 @@ $:{
 	position: absolute;
     top: 0;
     content: counter(step-counter);
-    left: -68px;
+    left: -60px;
     font-size: 48px;
     color: rgb(var(--listColor));
     font-family: 'Whirly Birdie';
@@ -529,6 +520,9 @@ $:{
 	font-variation-settings: "wght" 90, "wdth" 110, "ital" 0;
 	color:rgb(var(--textColor1));
 	display:flex;
+	}
+	.keyboard{
+		display:none;
 	}
 	.keycap{
 		padding: 3px 4px 3px 4px;
@@ -607,10 +601,6 @@ $:{
 	  .slide-content{
 		  width:95vw;
 		  height: calc(80vh); 
-			background: var(--containerGradient)
-	  }
-	  .slide-content.fullscreen{
-		  background:rgb(var(--cardColor))
 	  }
 	  container{
     	flex-direction: column;
@@ -629,34 +619,28 @@ $:{
 		  height:auto;
 		  flex-grow: unset;
 		  display: block;
+		  margin-bottom:8px;
 	  }
-	  .fullscreen .svg{
-		  flex:100;
-		  display: flex;
-		  justify-content: center;
-		  align-items: center;
+	  img{
+		    margin-left: -24px;
+			max-width: calc(100% + 48px);
 	  }
 	  .description{
-		  margin: 24px 0px 0px 0px;
+		  margin: 0 0px 0px 0px;
 		  font-size:16px;
 		  min-width:0;
 		  min-height: max-content;
 		  flex:100;
 			-webkit-box-flex: 100;
     		-webkit-flex: 100;
-		  padding: 24px 24px 40px 24px;
+		  padding: 24px 24px 64px 24px;
     		width: calc(100% - 48px);
 	  }
-	  .fullscreen .description{
-		  margin:0;
-		  column-count:1;
-		  padding:24px 24px 40px 24px;
-		  width: calc(100% - 48px);
-		  background:rgb(var(--descriptionColor));
-	  }
+
 	  .description>p{
 		  margin:0px 0px 24px 0px;
 	  }
+	
 	  ol li::before {
 		  left: -64px;
 	  }
@@ -669,4 +653,19 @@ $:{
 		}
 	  
     }
+	@media screen and (max-width: 600px) {
+		ol{
+		  width: calc(100% - 56px);
+    		padding-inline-start: 56px;
+	  }
+	   ol li::before {
+		  left: -56px;
+	  }
+	}
+
+	@media (hover: hover) {
+	.keyboard{
+		display:block;
+	}
+	}
 </style>

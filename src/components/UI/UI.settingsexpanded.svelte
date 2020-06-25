@@ -220,11 +220,11 @@ h4{
 .keycap{
     padding: 6px 6px 6px 6px;
     /* background: rgba(var(--crimson),0.3); */
-    border:1px solid;
+    border:1px solid rgba(var(--offwhite),.3);
     font-size: 10px;
     border-radius: 2px;
     margin-left: 8px;
-    opacity: .7;
+    opacity: 0;
 }
 .toggle{
     width:100%;
@@ -399,5 +399,13 @@ input[type=range]::-moz-range-thumb {
         margin:0 0 0 -16px;
     }
 }
+
+@media (hover: hover) {
+  .keycap{
+      opacity: .7
+  }
+}
+
+
 
 </style>
