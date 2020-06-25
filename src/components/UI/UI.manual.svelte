@@ -66,7 +66,9 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>A theremin is an electic musical instrument played with the <span>movement of both hands in the space surrounding it</span>. THEREMIX's default controls translates these 2 movements into 1 fluid cursor movement on desktop or touch on mobile/tablet.</p>
+				<p>A theremin is an electic musical instrument <span>controlled without physical contact</span> by the player. A thereminist plays by moving their hands in the space surrounding the 2 antennas. Movement towards the left antenna increases the <span>volume(amplitude)</span> while movement towards the right antenna increases the <span>pitch(frequency)</span>. 
+				</p>
+				<p>THEREMIX's default controls translates these 2 movements into 1 fluid cursor movement on desktop or touch on mobile/tablet.</p>
 				<hr>
 				<ol>
 					<li>
@@ -255,6 +257,7 @@ $:{
 		--textColor2:var(--charcoal);
 		--spanColor: var(--crimson);
 		--listColor:var(--crimson);
+		--keyColor: var(--crimson);
 		--buttonColor:var(--crimson);
 		--iconColor:var(--offwhite);
 		--arrowColor:var(--offwhite);
@@ -263,7 +266,7 @@ $:{
 
 	@media (prefers-color-scheme: dark) {
 		section{
-			--cardColor: 17,17,17;
+			--cardColor: 12,12,12;
 			--manualColor: 50,42,42;
 			/* --descriptionColor: var(--cardColor); */
 			--arrowColor:var(--crimson);
@@ -271,6 +274,7 @@ $:{
 			--listColor:var(--crimson);
 			--hrImage:var(--waveRed);
 			--spanColor: var(--sun);
+			--keyColor: var(--white);
 		}
 	}
 	/* Colors */
@@ -313,7 +317,7 @@ $:{
 	:global(.slides:before){
 	content: '';
     background-size: auto 10px;
-    opacity: 0.05;
+    opacity: 0.1;
     position: absolute;
     border: none;
     height: 200%;
@@ -531,8 +535,8 @@ $:{
 		text-align: center;
 		width:14px;
 		font-variation-settings: "wght" 80, "wdth" 110, "ital" 0;
-		background: rgba(var(--crimson),.3);
-		color:rgb(var(--textColor2));
+		background: rgba(var(--crimson),.2);
+		color:rgb(var(--keyColor));
 		font-size: 12px;
 		border-radius: 2px;
 	}

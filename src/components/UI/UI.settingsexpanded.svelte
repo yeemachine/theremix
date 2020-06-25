@@ -181,11 +181,11 @@ section{
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    /* -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px); */
     
     transition: opacity .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
-    background: rgba(0,0,0, 0.85);
+    background: rgba(12,12,12,1);
     overflow-y:scroll;
     overflow-x:hidden;
     color:rgb(var(--offwhite));
