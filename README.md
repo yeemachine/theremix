@@ -2,9 +2,9 @@
 
 THEREMIX is a progressive web app that brings the interaction of a physical theremin into the virual space. The virtual theremin can be controlled either with mouse/touch inputs or with gestures through a webcam via human post tracking provided by PoseNet. This app celebrates the 100th anniversary of the theremin, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone.
 
-  <a href="https://theremin.app">
-    <img src="https://theremin.app/assets/global/markdownPlay.svg" alt="view source" height="33">
-  </a> 
+<a href="https://theremin.app">
+  <img src="https://theremin.app/assets/global/markdownPlay.svg" alt="view source" height="67">
+</a> 
 
 ## Basic Theremin
 
@@ -22,6 +22,7 @@ THEREMIX's MIDI controller mode uses the same input controls and maps them to mo
 
 * **Glitch**  
   <a href="https://glitch.com/" target="blank">Glitch.com</a> is a friendly platform for all your web project needs, from something as simple as a webpage to something more complex involving servers. All code written is hosted on Glitch's servers, making it easy to preview your work without needing to install packages or starting a web server. Remixing on Glitch also allows you to use projects from other creators as a starting template and explore their code.
+  
      <a href="https://glitch.com/edit/?utm_content=project_theremix&utm_source=view_source&utm_medium=button&utm_campaign=glitchButton#!/theremix">
     <img src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fview-source%402x.png?1513093958802" alt="view source" height="33">
   </a> <a href="https://glitch.com/edit/?utm_content=project_theremix&utm_source=remix_this&utm_medium=button&utm_campaign=glitchButton#!/remix/theremix">
