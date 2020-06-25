@@ -252,8 +252,8 @@ $:{
 		--containerGradient:linear-gradient(0deg, rgb(var(--descriptionColor)) 0%, rgb(var(--descriptionColor)) 26%, rgb(var(--cardColor)) 30%, rgb(var(--cardColor)) 32%, rgb(var(--cardColor)) 100%);
 		--textColor1:var(--crimson);
 		--textColor2:var(--charcoal);
-		--spanColor: var(--navy);
-		--listColor:var(--charcoal);
+		--spanColor: var(--crimson);
+		--listColor:var(--crimson);
 		--buttonColor:var(--crimson);
 		--iconColor:var(--offwhite);
 		--arrowColor:var(--offwhite);
