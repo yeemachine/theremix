@@ -66,13 +66,13 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>The theremin is an electic musical instrument played by the movement of both hands in the space surrounding it. THEREMIX's default controls translates these 2 movements into 1 fluid cursor movement.</p>
+				<p>A theremin is an electic musical instrument played with the <span>movement of both hands in the space surrounding it</span>. THEREMIX's default controls translates these 2 movements into 1 fluid cursor movement on desktop or touch on mobile/tablet.</p>
 				<hr>
 				<ol>
 					<li>
 						<h3>Volume Antenna</h3>
 						<p>
-						Movement towards this antenna <span>(y-axis)</span> increases the <span>volume</span> of the current oscillator. 
+						Movement towards this antenna <span>(y-axis)</span> increases the <span>volume (amplitude)</span> of the current oscillator. 
 						</p>
 					</li>
 					<li>
@@ -138,17 +138,17 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>Webcam motion capture allows you to experience the gestural movements of playing a physical theremin. Powered by <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a>, a machine learning model which allows for real-time human pose estimation in the browser.</p>
+				<p>By enabling your device's webcam, THEREMIX uses motion capture to simulate the gestural movements of playing a physical theremin. Powered by <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a>, a machine learning model which allows for real-time human pose estimation in the browser.</p>
 				<hr>
 				<ul>
 					<li>
-						<h3>2 Hands</h3>
+						<h3>2 Hands Detected</h3>
 						<p>
 						If 2 hands are detected, the <span>right hand controls pitch</span> while the <span>left hand controls volume</span>. These controls are mapped to how a physical theremin would operate. Movement towards the right antenna increases the frequency while movement towards the left antenna increases the amplitude of the waveform. 
 						</p>
 					</li>
 					<li>
-						<h3>1 Hand</h3>
+						<h3>1 Hand Detected</h3>
 						<p>
 						If only 1 hand is detected, <span>both volume and pitch are controlled by the dominate hand</span>. Mainly used when a user is viewing on mobile and needs one hand to hold the phone.
 						</p>
@@ -201,8 +201,9 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>This app celebrates the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone. <a href="https://github.com/yeemachine/theremix" target="blank">View on Github</a></p>
-				<p class="small sub">THEREMIX was made possible with the following platforms and open-source resources:</p>
+				<p>THEREMIX is a cross-platform virtual theremin created in celebration of the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. </p>
+				<p>Designed and developed by <a href="https://yee.gd" target="blank">@yeemachine</a>. The source code and illustrations created for this project can be found on <a href="https://github.com/yeemachine/theremix" target="blank">Github</a>.</p>
+				<p class="small sub">This app was made possible with the following platforms and open-source resources:</p>
 				<hr>
 				<ul>
 					<li>
