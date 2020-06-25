@@ -18,18 +18,18 @@ THEREMIX's MIDI controller mode uses the same input controls and maps them to mo
 
 ## Resources and Links
 
-* #### Glitch
+* **Glitch**
 
   <a href="https://glitch.com/" target="blank">Glitch.com</a> is a friendly platform for all your web project needs, from something as simple as a webpage to something more complex involving servers. All code written is hosted on Glitch's servers, making it easy to preview your work without needing to install packages or starting a web server. Remixing on Glitch also allows you to use projects from other creators as a starting template and explore their code. Feel free to <a href="https://glitch.com/~theremix" target="blank">Remix this Project</a> on Glitch.
 
-* #### Pixi.js
+* **Pixi.js**
 
   <a href="https://www.pixijs.com/" target="blank">Pixi.js</a> is a lightweight open source 2D WebGL renderer. This app is currently running on Pixi V4 with <a href="https://github.com/pixijs/pixi-lights" target="blank">Pixi Lights</a> and <a href="https://github.com/pixijs/pixi-particles" target="blank">Pixi Particles</a> plugins.	
 
-* #### Tone.js
+* **Tone.js**
 
   <a href="https://tonejs.github.io/" target="blank">Tone.js</a> is a framework for creating interactive music in the browser. It provides advanced scheduling capabilities, synths and effects, and intuitive musical abstractions built on top of the Web Audio API.
 
-* #### PoseNet
+* **PoseNet**
 
   <a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet" target="blank">PoseNet</a> is a machine learning model which allows for real-time human pose estimation in the browser.
