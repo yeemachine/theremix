@@ -194,6 +194,7 @@ section{
 section.hide{
     opacity:0;
     pointer-events: none;
+    transition:0s;
 }
 h3{
     margin: 12px 0 12px 0;
@@ -390,6 +391,8 @@ input[type=range]::-moz-range-thumb {
         height: 100%;
         max-height: 100%;
         border-radius: 0;
+    }
+    section.hide{
         transition:0s;
     }
     h3{
