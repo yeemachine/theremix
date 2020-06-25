@@ -201,7 +201,7 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>THEREMIX is a cross-platform virtual theremin created in celebration of the <span>100th anniversary of the theremin</span>, invented by Léon Theremin in 1920. </p>
+				<p>THEREMIX is a cross-platform virtual theremin created in celebration of the <span>100th anniversary</span> of the theremin, invented by Léon Theremin in 1920. </p>
 				<p>Designed and developed by <a href="https://yee.gd" target="blank">@yeemachine</a>. The source code and illustrations created for this project can be found on <a href="https://github.com/yeemachine/theremix" target="blank">Github</a>.</p>
 				<p class="small sub">This app was made possible with the following platforms and open-source resources:</p>
 				<hr>
