@@ -2,7 +2,7 @@
 import * as PIXI from 'pixi.js'
 import {videoReady,active,thereminPos,thereminMobilePos,poseNetRes,videoPos,WIDTH,toneOutput,bgPos,analyser,mouseOverride,gestures,enableMIDI,MIDITextSprite} from '../stores.js'
 import { tweened } from 'svelte/motion';
-import {constrain} from '../helpers.js';
+import {constrain,getDistance} from '../helpers.js';
 import {graphicsGroup} from '../pixiApp.js'
 import {sineInOut } from 'svelte/easing';
 
@@ -92,8 +92,9 @@ const createPose = (pose,graphics) => {
     pose.forEach((e,i)=>{
         if(i>4){
             let color = (i===9 || i===10) ? 0xE54646 : 0xE54646
-            let opacity = (i===9 || i===10) ? .7 : .3
-            let size = (i===9 || i===10) ? 16 : 8
+            let opacity = (i===9 || i===10) ? .85 : .3
+            let size = (i===9 || i===10) ? 
+                constrain(getDistance(pose[5].position,pose[6].position)*ratio*.15,{max:40,min:16}) : 8
             graphics2.beginFill(color,opacity)
             graphics2.lineStyle(0);
             if(e.score > .3){  
