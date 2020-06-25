@@ -1,4 +1,4 @@
-const vn = "v1.0.01";
+const vn = "v1.0.03";
 const production = true;
 
 // files to cache
@@ -87,16 +87,28 @@ const gifAssets = [
   'https://theremin.app/assets/global/midi_controls.gif'
 ]
 
-let stableContent = libraries.concat(pixiAssets).concat(gifAssets)
-let contentToCache = appShellFiles.concat(stableContent).concat(midiAssets)
+const icons = [
+  'https://theremin.app/assets/global/Favicon_Desktop.png',
+  'https://theremin.app/assets/global/Favicon.png',
+  'https://theremin.app/assets/global/cursor1.svg',
+  'https://theremin.app/assets/global/cursor4.svg',
+  'https://theremin.app/assets/global/grab.svg',
+  'https://theremin.app/assets/global/grabbed.svg',
+  'https://theremin.app/assets/global/h.svg',
+  'https://theremin.app/assets/global/hred.svg'
+]
+
+let staticContent = libraries.concat(pixiAssets).concat(gifAssets)
+let contentToCache = appShellFiles.concat(staticContent).concat(midiAssets).concat(icons)
 
 // install and save files to cache
 self.addEventListener('install', (e) => {
-    console.log('%c%s',
-        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
-        'THEREMIX '+vn+(production ? '' : ': Dev Build'))
     e.waitUntil(
         caches.open(vn).then((cache) => {
+            console.log('Installing...')
+            console.log('%c%s',
+        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+        'THEREMIX ~~~ '+vn+(production ? '' : ': Dev Build'))
             return cache.addAll(contentToCache);
         })
     );
@@ -116,7 +128,7 @@ self.addEventListener('message', (event) => {
                     }
                 })
             )).then(() => {
-                console.log('Old caches are cleared...');
+                console.log('Cache is reset.');
             })
         )
     }
@@ -131,44 +143,35 @@ self.addEventListener('message', (event) => {
     if(e.request.url.includes('/build/bundle.js')){
         console.log('%c%s',
         'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
-        'THEREMIX '+vn+(production ? '' : ': Dev Build'))
+        'THEREMIX ~~~ '+vn+(production ? '' : ': Dev Build'))
     }
 
     if(production){
-        if(!e.request.url.includes('googletagmanager')){
             e.respondWith(
                 caches.match(e.request).then((r) => {
-                    // console.log('[Service Worker] Fetching resource: '+e.request.url);
                     if(!navigator.onLine){
-                      return r || fetch(e.request).then((response) => {
-                          return caches.open(vn).then((cache) => {
-                              // console.log('[Service Worker] Caching new resource: '+e.request.url);
-                              cache.put(e.request, response.clone());
-
-                              return response;
-                          });
-                      });
+                      // Serve cache if offline
+                      // console.log('[Service Worker] Fetching resource: '+e.request.url);
+                      return r
                     }else{
-                      
-                      if(stableContent.includes(e.request.url)){
-
+                      if(staticContent.includes(e.request.url)){
+                        // Serve cache if online and is static content
                         // console.log('[Service Worker] Fetching resource: '+e.request.url);
                         return r || fetch(e.request).then((response) => {
                           return caches.open(vn).then((cache) => {
                               // console.log('[Service Worker] Caching new resource: '+e.request.url);
                               cache.put(e.request, response.clone());
-
                               return response;
                             });
                         });
-                        
                       }else{
-                        
+                        // Fetch new resources and cache them
                         return fetch(e.request).then((response) => {
                           return caches.open(vn).then((cache) => {
-                              // console.log('[Service Worker] Caching new resource: '+e.request.url);
-                              cache.put(e.request, response.clone());
-
+                              if(!e.request.url.includes('googletagmanager')){
+                                // console.log('[Service Worker] Caching new resource: '+e.request.url);
+                                cache.put(e.request, response.clone());
+                              }
                               return response;
                           });
                         });
@@ -177,7 +180,6 @@ self.addEventListener('message', (event) => {
                     }
                 })
             );
-        }
     }else{
         // console.log('Dev Mode')
     }
