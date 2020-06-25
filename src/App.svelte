@@ -46,7 +46,6 @@
 	}
 
 	const upSW = () => {
-		console.log('Initiating upgrade');
 		// Send message to new service worker
 		newSW.postMessage({ action: 'clearOld' });
 		newSW.postMessage({ action: 'skipWaiting' });
