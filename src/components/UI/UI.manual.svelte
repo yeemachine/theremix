@@ -60,7 +60,7 @@ $:{
 		<div class="slide-content {(currentSlide === 0 && $loaded) ? 'current' : ''}" >
 			<container>
 			<div class="graphic">
-				<h2>Basic<br>Theremin<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
+				<h2>Theremin<br>Controls<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
 					<BasicControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
 				</div>
@@ -140,7 +140,9 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>By enabling your device's webcam, THEREMIX uses motion capture to simulate the gestural movements of playing a physical theremin. Powered by <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a>, a machine learning model which allows for real-time human pose estimation in the browser.</p>
+				<p>By enabling your device's webcam, THEREMIX uses motion capture to simulate the gestural movements of playing a physical theremin. 
+				</p>
+				<p>Powered by <a href='https://github.com/tensorflow/tfjs-models/tree/master/posenet' target="blank">PoseNet</a>, a machine learning model which allows for real-time human pose estimation in the browser.</p>
 				<hr>
 				<ul>
 					<li>
@@ -170,7 +172,9 @@ $:{
 			</div>
 			<div class="description">
 
-				<p>A theremin can also be used as an <a href='https://www.youtube.com/watch?v=Hae0g-lDOqw' target="blank">alternative controller</a> for MIDI and other musical applications. This mode is currently in a beta and works best in Chrome. Movement towards X and Y axis modifies the timbre of the oscillators, changing variables such as <span>attack</span>, <span>sustain</span>, <span>decay</span>, and <span>release</span>. User uploaded MIDI to come in a future update.</p>
+				<p>A theremin can also be used as an <a href='https://www.youtube.com/watch?v=Hae0g-lDOqw' target="blank">alternative controller</a> for MIDI and other musical applications. This mode is currently in a beta and works best in Chrome. 
+				</p>
+				<p>Movement towards X and Y axis modifies the timbre of the oscillators, changing variables such as <span>attack</span>, <span>sustain</span>, <span>decay</span>, and <span>release</span>. User uploaded MIDI to come in a future update.</p>
 				<p class="sub small keyboard">
 				<span class="keycap">M</span> to toggle Midi on/off. Arrow Keys to switch between songs in queue. 
 				</p>

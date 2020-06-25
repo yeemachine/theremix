@@ -29,7 +29,7 @@ const updateVolume = (e) => {
 </script>
 
 <section class={($active && $expandSettings) ? '' : 'hide'}>
-<h3>Settings</h3>
+<h3>Controls</h3>
 <hr>
 <div class="setting">
     <h4>Volume</h4>
