@@ -6,13 +6,13 @@ THEREMIX is a progressive web app that brings the interaction of a physical ther
 
 ## Basic Theremin
 
-![THEREMIX Basic Theremin Mode](https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FGif1.mp4.gif?v=1592903208068)
+![THEREMIX Basic Theremin Mode](https://theremin.app/assets/global/basic_controls.gif)
 
 THEREMIX's basic theremin mode has mouse/touch input or gesture control options built in. Adjust the sound further by playin with the oscillator type, scale/key/octave range, and Glide toggles. 
 
 ## MIDI Controller (Beta)
 
-![THEREMIX MIDI Controller Mode](https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fgif2.mp4.gif?v=1592903207301)
+![THEREMIX MIDI Controller Mode](https://theremin.app/assets/global/midi_controls.gif)
 
 THEREMIX's MIDI controller mode uses the same input controls and maps them to modify the attack, sustain, delay, and release of the synths. This mode is still in beta and works most smoothly in Chrome at the moment. Features 14 demo track, with user uploaded MIDI/BG image to be a feature in the next release.
 
