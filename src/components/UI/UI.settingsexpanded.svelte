@@ -390,6 +390,7 @@ input[type=range]::-moz-range-thumb {
         height: 100%;
         max-height: 100%;
         border-radius: 0;
+        transition:0s;
     }
     h3{
         margin:16px 0 16px 0;
