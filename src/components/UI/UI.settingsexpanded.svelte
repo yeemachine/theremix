@@ -29,7 +29,7 @@ const updateVolume = (e) => {
 </script>
 
 <section class={($active && $expandSettings) ? '' : 'hide'}>
-<h3>Settings</h3>
+<h3>Controls</h3>
 <hr>
 <div class="setting">
     <h4>Volume</h4>
@@ -181,11 +181,11 @@ section{
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    /* -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px); */
     
     transition: opacity .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
-    background: rgba(0,0,0, 0.85);
+    background: rgba(12,12,12,1);
     overflow-y:scroll;
     overflow-x:hidden;
     color:rgb(var(--offwhite));
@@ -220,11 +220,11 @@ h4{
 .keycap{
     padding: 6px 6px 6px 6px;
     /* background: rgba(var(--crimson),0.3); */
-    border:1px solid;
+    border:1px solid rgba(var(--offwhite),.3);
     font-size: 10px;
     border-radius: 2px;
     margin-left: 8px;
-    opacity: .7;
+    opacity: 0;
 }
 .toggle{
     width:100%;
@@ -399,5 +399,13 @@ input[type=range]::-moz-range-thumb {
         margin:0 0 0 -16px;
     }
 }
+
+@media (hover: hover) {
+  .keycap{
+      opacity: .7
+  }
+}
+
+
 
 </style>
