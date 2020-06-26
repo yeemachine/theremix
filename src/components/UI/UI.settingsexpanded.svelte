@@ -152,19 +152,6 @@ const updateVolume = (e) => {
       --sliderPrimary: #FF9800;
       --sliderSecondary: rgba(0, 0, 0, 0.05);
 }
-/* section{
-    --padding:56px;
-    position:absolute;
-    top:0;left:0;
-    padding: calc(2 * var(--padding)) var(--padding) 0 var(--padding);
-    width:calc(100% - 2 * var(--padding));
-    height:calc(100% - 2 * var(--padding));
-    overflow-y:scroll;
-    background-color:rgba(0,0,0,0.5);
-    transition:opacity .4s;
-    display: flex;
-    flex-direction: column;
-} */
 section{
 	position: absolute;
     width: 80vw;
@@ -172,7 +159,6 @@ section{
     max-height: calc(100% - 120px);
     max-width: 320px;
     max-height: calc(100% - 24px);
-    /* margin: auto; */
     padding:0 24px 0 24px;
     top:12px;
     right: 12px;
@@ -181,9 +167,6 @@ section{
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    /* -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px); */
-    
     transition: opacity .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
     background: rgba(12,12,12,1);
     overflow-y:scroll;

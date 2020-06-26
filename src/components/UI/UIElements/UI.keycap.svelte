@@ -57,8 +57,6 @@ div.hide{
     transform:translate3d(0,4px,0) 
 }
  @media only screen and (max-width: 600px) {
-     /* div{
-         display: none;
-     } */
+
 }
 </style>

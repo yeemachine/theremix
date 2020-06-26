@@ -74,6 +74,9 @@ knob_left.on('pointerdown',()=>{
         id:'vol'
     })
     globalPointerUp.set(false)
+    if('vibrate' in navigator){
+        navigator.vibrate(50);
+    }
 })
 
 const knob_right = createSprite(
@@ -112,6 +115,9 @@ $: switchRight.children[1].texture = ($glide && $active) ? textures.switch_on_no
 
 switchRight.on('pointerup',()=>{
     glide.set(!$glide)
+    if('vibrate' in navigator){
+        navigator.vibrate(50);
+    }
 })
 switchRight.on('mouseover',()=>{
     hovered.set('switch')
@@ -302,7 +308,12 @@ $:{
             let inc = 1/oscillators.length
             let steppedPercent = constrain(Math.floor(percent/inc),{min:0,max:18})
             if(distance > 40){
-                oscillatorType.set(oscillators[steppedPercent])
+                if(oscillators[steppedPercent] !== $oscillatorType){
+                    if('vibrate' in navigator){
+                        navigator.vibrate(50);
+                    }
+                    oscillatorType.set(oscillators[steppedPercent])
+                }
             }
             knob_right.children[0].tint = 0xffffff
             if($tweenKnobRight === 0){

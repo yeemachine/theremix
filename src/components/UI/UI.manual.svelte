@@ -254,9 +254,7 @@ $:{
 		--cardColor: var(--offwhite);
 		--containerColor:var(--crimson);
 		--manualColor: 255, 211, 166;
-		/* --descriptionColor:var(--offwhite); */
 		--cardGradient:linear-gradient(0deg, rgb(var(--cardColor)) 0%, rgba(var(--cardColor),0.920045518207283) 70%, rgba(var(--cardColor),0) 100%);
-		/* --containerGradient:linear-gradient(0deg, rgb(var(--descriptionColor)) 0%, rgb(var(--descriptionColor)) 26%, rgb(var(--cardColor)) 30%, rgb(var(--cardColor)) 32%, rgb(var(--cardColor)) 100%); */
 		--textColor1:var(--crimson);
 		--textColor2:var(--charcoal);
 		--spanColor: var(--crimson);
@@ -272,7 +270,6 @@ $:{
 		section{
 			--cardColor: 12,12,12;
 			--manualColor: 50,42,42;
-			/* --descriptionColor: var(--cardColor); */
 			--arrowColor:var(--crimson);
 			--textColor2:var(--offwhite);
 			--listColor:var(--crimson);
@@ -401,7 +398,6 @@ $:{
 		font-family:'Whirly Birdie';
 		font-variation-settings: "wght" 100, "wdth" 140, "ital" 0;
 		line-height: 1.1;
-		/* font-feature-settings: 'ss01'; */
 	}
 	h2 span{
 		color:rgb(var(--textColor2))
@@ -443,12 +439,10 @@ $:{
 		width:100%;
 		color:rgba(var(--textColor2),1);
 		font-size:18px;
-		/* line-height:1.4; */
 	}
 	.description li p{
 		font-size:14px;
 		margin:0 0 16px 0;
-		/* line-height: 1.5; */
 	}
 	.description p.sub{
 		color:rgba(var(--textColor2),.75);
@@ -456,13 +450,11 @@ $:{
 	.description p.small{
 		margin:0 0 16px 0;
 		font-size:14px;
-		/* line-height:1.5; */
 	}
 
 
 	hr{
 		background-size: auto 4px;
-		/* opacity:0.6; */
 		border: none;
     	height: 8px;
         background-repeat: repeat-x;
@@ -474,7 +466,6 @@ $:{
 		color:rgb(var(--spanColor));
 		display: inline-block;
 		position: relative;
-		/* text-decoration: none; */
 		width: max-content;
 	}
 	ol{

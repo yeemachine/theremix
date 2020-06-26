@@ -46,7 +46,6 @@ const handleClick = () => {
 
     button:hover{
         background: rgb(var(--bgColor));
-        /* background: rgba(229,70,70,1); */
        cursor: url(https://theremin.app/assets/global/cursor4.svg) 21 20, pointer;
     }
 </style>

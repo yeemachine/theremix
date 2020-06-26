@@ -64,10 +64,6 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
         opacity:0;
         transition: opacity .5s 1s
     }
-    /* container.hide.load{
-        opacity: 1;
-        transition: opacity .5s 1s
-    } */
     h3{
         font-variation-settings: "wght" 100, "wdth" 140, "ital" 0;
     line-height: 1;
@@ -78,7 +74,6 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
     }
     h4{
         font-variation-settings: "wght" 70, "wdth" 70, "ital" 0;
-    /* opacity: 0.5; */
     font-size: calc(8px + 1vw + 2vh);
     margin: 16px 0 0 0;
     letter-spacing: .02em;

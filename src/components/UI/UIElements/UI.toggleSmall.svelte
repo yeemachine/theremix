@@ -57,7 +57,6 @@ container{
     border-radius: 32px;
     overflow: hidden;
     background: rgba(200,200,200,0.2);
-    /* border:1px solid rgb(var(--crimson)); */
     transition:background-color .25s, opacity .25s;
     pointer-events: all;
 }
