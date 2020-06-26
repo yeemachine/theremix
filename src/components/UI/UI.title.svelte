@@ -7,7 +7,6 @@ import Play from '../icons/play.svelte';
 let fontLoaded = false
 const playStart = ()=>{
     active.set(true)
-    // update.set(false)
 }
 
 const manualOpen = ()=>{
@@ -67,12 +66,8 @@ $:{
         left: 0;
         right: 0;
         bottom: 0;
-        /* width: max-content;
-        height: max-content; */
-        /* margin: auto; */
         width: 100%;
         height: 100%;
-        /* overflow: hidden; */
         text-align: center;
         white-space: nowrap;
         pointer-events: none;
@@ -92,18 +87,11 @@ $:{
         width:65vw;
         max-height: 15vh;
         max-width: 1000px;
-        /* padding:32px 0 30px 0; */
         margin: 16px 0 16px 0;
         position: relative
-        /* display: none; */
     }
    
     .play{
-       /* width: 20vh;
-        height: 20vh;
-        max-width: 20vh;
-        overflow: visible;
-        max-height: 40vw; */
         width:calc(120px + 5vw + 5vh);
         height:calc(120px + 5vw + 5vh);
         margin: 0 0 0 0;
@@ -124,7 +112,6 @@ $:{
         transition: 
             transform .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s
             , opacity 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1s;
-        /* display: none; */
     }
     h1 span{
         color: rgb(var(--sun))
@@ -153,12 +140,10 @@ $:{
     }
     .manual:hover, .manual:focus{
         background: rgba(var(--crimson),1);
-        /* color: rgb(var(--charcoal)) */
     }
     .manual.hide{
         opacity: 0;
         background: rgba(var(--crimson),.2);
-        /* color:rgb(var(--offwhite)); */
         pointer-events: none;
         transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s
     }
@@ -198,7 +183,6 @@ $:{
             width:calc(100vw - 64px);
             max-height: 10vh;
             max-width: 600px;
-            /* padding:24px 0 20px 0; */
             margin: 8px 0 16px 0;
         }
         .manual{

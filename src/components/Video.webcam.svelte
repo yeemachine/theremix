@@ -41,7 +41,6 @@ const handleStream = (stream) => {
   console.log("Webcam On");
   checkStream = setInterval(() => {
     if (videoObj.readyState >= 3) {
-      // alert(videoObj.videoWidth+','+videoObj.videoHeight)
       videoReady.set(videoObj)
       //stop checking every half second
       clearInterval(checkStream);

@@ -59,6 +59,9 @@ knob_left.on('pointerdown',()=>{
         id:'vol'
     })
     globalPointerUp.set(false)
+    if('vibrate' in navigator){
+        navigator.vibrate(50);
+    }
 })
 
 const knob_right = createSprite(
@@ -106,6 +109,9 @@ $: switchRight.children[1].texture = ($glide && $active) ? textures.switch_on_no
 $: switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
 switchRight.on('pointerdown',()=>{
     glide.set(!$glide)
+    if('vibrate' in navigator){
+        navigator.vibrate(50);
+    }
 })
 switchRight.on('mouseover',()=>{
     hovered.set('switch')
