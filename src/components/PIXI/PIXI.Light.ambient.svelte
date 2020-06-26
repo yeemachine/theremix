@@ -2,8 +2,8 @@
 import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
-import {active,thereminPos,WIDTH,SCALE} from '../stores.js'
-import {constrain} from '../helpers.js';
+import {active,thereminPos,WIDTH,SCALE} from '../../stores.js'
+import {constrain} from '../../helpers.js';
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
 export let stage = null

@@ -1,7 +1,7 @@
 <script>
 
-import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,currentMIDI} from '../stores.js'
-import {scales,oscillators,maxOctaves,tonicOrder,midiList} from '../config.js'
+import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,currentMIDI} from '../../stores.js'
+import {scales,oscillators,maxOctaves,tonicOrder,midiList} from '../../config.js'
 import Toggle from './UIElements/UI.toggleSmall.svelte'
 import Slider from './UIElements/SteppedSlider.svelte'
 

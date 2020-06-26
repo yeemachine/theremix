@@ -1,13 +1,3 @@
-let config = {
-    "smoothing": {
-        "jumpDetection": false,
-        "smoothing": 0.67,
-        "maxJumpRatio": 0.3,
-        "jumpResetTime": 1000,
-        "speedSmoothing": 0.8
-    }
-}
-  
 export function constrain(value, constraints) {
     return Math.max(Math.min(value, constraints.max), constraints.min);
   }
@@ -115,12 +105,22 @@ function getPoseFromKeypoints(keypoints) {
     return pose;
   }
 
+  let poseConfig = {
+    "smoothing": {
+        "jumpDetection": false,
+        "smoothing": 0.67,
+        "maxJumpRatio": 0.3,
+        "jumpResetTime": 1000,
+        "speedSmoothing": 0.8
+    }
+}
 
-  const smoothing = config.smoothing.smoothing;
+
+  const smoothing = poseConfig.smoothing.smoothing;
   let smoothPrevPose;  
 
 export function smooth(pose, armspan) {
-    if (config.smoothing.jumpDetection) pose = unjump(pose, armspan);
+    if (poseConfig.smoothing.jumpDetection) pose = unjump(pose, armspan);
     if (!smoothPrevPose) { smoothPrevPose = pose; return pose; }
     
     const keypoints = getKeypoints(pose);
@@ -154,7 +154,7 @@ export function smooth(pose, armspan) {
     }
   
     // Maximum valid movement distance (smaller = more agressive smoothing)
-    const maxDistance = config.smoothing.maxJumpRatio * armspan;
+    const maxDistance = poseConfig.smoothing.maxJumpRatio * armspan;
     const smoothedKeypoints = [];
   
     // Go over each keypoint, see if it's moved an unrealistic amount in one frame,
@@ -191,7 +191,7 @@ export function smooth(pose, armspan) {
   
   /* Sometimes the joints get stuck (legitimate fast movements,
      or where joints get lost). Reset every x seconds in case of this. */
-  if (config.smoothing.jumpDetection) setUnjumpInterval();
+  if (poseConfig.smoothing.jumpDetection) setUnjumpInterval();
   function setUnjumpInterval() {
     setInterval(() => {
       const prevPose = jumpResetPose;
@@ -209,7 +209,7 @@ export function smooth(pose, armspan) {
       }
   
       jumpResetPose = Object.assign({}, jumpPrevPose);
-    }, config.smoothing.jumpResetTime)
+    }, poseConfig.smoothing.jumpResetTime)
   }
 
   export function pointerEvents() {

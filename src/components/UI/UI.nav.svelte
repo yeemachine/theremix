@@ -7,7 +7,7 @@ import settingsIcon from '../icons/settings.svelte'
 import closeIcon from '../icons/close.svelte'
 import Settings from './UI.settingsexpanded.svelte'
 
-import {expandSettings,active,camera} from '../stores.js'
+import {expandSettings,active,camera} from '../../stores.js'
 </script>
 
 <nav>

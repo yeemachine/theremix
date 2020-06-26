@@ -5,7 +5,7 @@ export let top = 0
 export let left = 0
 export let styles=''
 export let hide = true;
-import {thereminPos,thereminMobilePos,HEIGHT,WIDTH,SCALE} from '../../stores.js'
+import {thereminPos,thereminMobilePos,HEIGHT,WIDTH,SCALE} from '../../../stores.js'
 let containerDom
 let containerWidth = 0
 let containerHeight = 0

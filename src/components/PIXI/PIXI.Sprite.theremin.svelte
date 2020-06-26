@@ -3,12 +3,12 @@ import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
   
-import {createSprite, calcRotation} from '../pixiApp.js';
+import {createSprite, calcRotation} from '../../pixiApp.js';
 import { tweened } from 'svelte/motion';
-import {constrain} from '../helpers.js';
+import {constrain} from '../../helpers.js';
 import { backOut, sineInOut } from 'svelte/easing';
-import { oscillators } from '../config.js';
-import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,glide, volumeVal,oscillatorType,dragged,hovered,SCALE} from '../stores.js';
+import { oscillators } from '../../config.js';
+import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,glide, volumeVal,oscillatorType,dragged,hovered,SCALE} from '../../stores.js';
 export let textures = null;
 export let stage = null;
 

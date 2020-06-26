@@ -2,10 +2,10 @@
 import { onMount } from 'svelte';
 import { tweened } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
-import {constrain,findNext} from './helpers.js'
-import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,currentMIDI} from './stores.js'
-import {oscillators,scales,tonicOrder,midiList} from './config.js'
-import {App,Stage,Resources} from './pixiApp.js'
+import {constrain,findNext} from '../helpers.js'
+import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,currentMIDI} from '../stores.js'
+import {oscillators,scales,tonicOrder,midiList} from '../config.js'
+import {App,Stage,Resources} from '../pixiApp.js'
 import BG from './PIXI/PIXI.Sprite.bg.svelte'
 import Table from './PIXI/PIXI.Sprite.table.svelte'
 import Video from './PIXI/PIXI.Sprite.video.svelte';

@@ -1,10 +1,10 @@
 <script>
 import * as PIXI from 'pixi.js'
-import { graphicsGroup} from '../pixiApp.js';
+import { graphicsGroup} from '../../pixiApp.js';
 import { tweened } from 'svelte/motion';
 import {sineInOut } from 'svelte/easing';
-import { oscillators, midiList } from '../config.js';
-import {active,WIDTH,HEIGHT, thereminPos,thereminMobilePos,glide,oscillatorType,toneOutput,enableMIDI,MIDITextSprite,currentMIDITitle} from '../stores.js';
+import { oscillators, midiList } from '../../config.js';
+import {active,WIDTH,HEIGHT, thereminPos,thereminMobilePos,glide,oscillatorType,toneOutput,enableMIDI,MIDITextSprite,currentMIDITitle} from '../../stores.js';
 export let stage = null;
 
 const sineInOut0_1 = tweened(0, {
