@@ -319,7 +319,6 @@ stage.addChild(cursorLight,particleContainer)
 $:{
   if($showGuides && gesturesCounter>1){
     showGuides.set(false)
-    console.log('hideguides')
   }
 }
 
