@@ -2,7 +2,7 @@
 import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
-import {hovered,glide,thereminPos,thereminMobilePos,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual} from '../../stores.js'
+import {hovered,glide,thereminPos,thereminMobilePos,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual,showGuides} from '../../stores.js'
 import {constrain} from '../../helpers.js'
 import { tweened,spring } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
@@ -197,6 +197,8 @@ let springRightPos = spring(
   damping: 0.8
 }); 
 
+
+let gesturesCounter = 0
 $: {
   //Handles toggling of gesture controls vs mouse controls
 
@@ -254,6 +256,7 @@ $: {
             x:rightWrist.audioX,
             y:leftWrist.audioY
           })
+          gesturesCounter+=.01
         }else if(leftWrist.pose.score > rightWrist.pose.score){
           //left hand
           emitterRight.emit = false
@@ -263,6 +266,7 @@ $: {
               x:leftWrist.audioX,
               y:leftWrist.audioY
             })
+            gesturesCounter+=.01
           }
         }else if(leftWrist.pose.score < rightWrist.pose.score){
           //right hand
@@ -272,7 +276,7 @@ $: {
               x:rightWrist.audioX,
               y:rightWrist.audioY
             })
-            
+            gesturesCounter+=.01
           }
           emitterLeft.emit = false
         }else{
@@ -307,11 +311,17 @@ $: {
         emitterLeft.emit = false
       }
 
-     
          
   }
 
 stage.addChild(cursorLight,particleContainer)
+
+$:{
+  if($showGuides && gesturesCounter>1){
+    showGuides.set(false)
+    console.log('hideguides')
+  }
+}
 
 </script>
 
