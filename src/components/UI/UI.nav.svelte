@@ -26,7 +26,7 @@ import {expandSettings,active,camera} from '../../stores.js'
         hide={
             (!$active) ? true
             :false}/>
-        <p class="label">{!$camera ? 'Enable Gestures' : 'Disable Gestures'}</p>
+        <p class="label">{!$camera ? 'Enable Camera Controls' : 'Disable Camera Controls'}</p>
     </div>
     <div class="settings">
         <ButtonCircle 
