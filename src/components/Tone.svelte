@@ -2,11 +2,16 @@
 import * as Tone from "tone"
 import * as Midi from '@tonejs/midi'
 import * as teoria from 'teoria'
-import {active,enableMIDI,volumeVal,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,analyser,audioControls,startOctave,endOctave,currentMIDITitle,currentMIDI} from '../stores.js'
+import {active,enableMIDI,volumeVal,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,analyser,audioControls,startOctave,endOctave,currentMIDITitle,currentMIDI,midiList} from '../stores.js'
 import {constrain, shuffle, jsUcfirst, findNext} from '../helpers.js'
-import {midiList,tonicOrder,scales} from '../config.js'
+import {tonicOrder,scales} from '../config.js'
 
-  
+// console.log($midiList)
+// delete $midiList['夜に駆ける']
+// console.log($midiList)
+// $midiList['夜に駆ける2'] = {}
+// console.log($midiList)
+
 const generateScale = (tonic,key,octaves)=>{
     let scale = teoria.scale(tonic,key)
     let newNotes = []
@@ -71,7 +76,7 @@ gain2.connect(Tone.Master)
 Tone.Master.chain(masterCompressor,masterVolume,masterAnalyser);
 
 let midiSynths = []
-let midiQueue = Object.keys(midiList)
+let midiQueue = Object.keys($midiList)
 let lastMIDI
 var checkSynthClear
 
@@ -122,7 +127,7 @@ const initMidi = (url)=>{
         })
 
         Tone.Transport.scheduleOnce(()=>{
-            let nextItem = findNext($currentMIDI,Object.keys(midiList))
+            let nextItem = findNext($currentMIDI,Object.keys($midiList))
             currentMIDI.set(nextItem)
         }, nowDelay+midi.duration)
 
@@ -172,7 +177,7 @@ $:{
             if(midiSynths.length>0){
                 cleanupSynths()
             }
-            initMidi(midiList[lastMIDI].url)
+            initMidi($midiList[lastMIDI].url)
         }
     }else{
         lastMIDI = null

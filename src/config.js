@@ -55,7 +55,7 @@ export const posenetOptions = {
         minPartConfidence: 0.1 
 }
 
-export const midiList =
+export let midiList =
     {
         "だから僕は音楽を辞めた":{
             url:"https://theremin.app/assets/midi/Thats_Why_I_Gave_Up_on_Music.mid",
