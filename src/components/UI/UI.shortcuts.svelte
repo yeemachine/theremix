@@ -1,6 +1,6 @@
 <script>
 import Keycap from './UIElements/UI.keycap.svelte'
-import {keydown_S,keydown_K,keydown_O,keydown_G,keydown_M,tonic,scaleType,thereminPos,HEIGHT,WIDTH,SCALE} from '../stores.js'
+import {keydown_S,keydown_K,keydown_O,keydown_G,keydown_M,tonic,scaleType,thereminPos,HEIGHT,WIDTH,SCALE} from '../../stores.js'
 
 let containerDom
 let containerWidth = 0

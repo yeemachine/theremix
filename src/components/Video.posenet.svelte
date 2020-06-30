@@ -1,9 +1,9 @@
 <script>
 import '@tensorflow/tfjs'
 import * as posenet from '@tensorflow-models/posenet'
-import {videoReady,poseNetRes} from './stores.js'
-import {smooth,getDistance} from './helpers.js'
-import {posenetOptions} from './config.js'
+import {videoReady,poseNetRes} from '../stores.js'
+import {smooth,getDistance} from '../helpers.js'
+import {posenetOptions} from '../config.js'
 
 let net;
 posenet.load().then(e=>{

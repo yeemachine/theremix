@@ -1,9 +1,13 @@
 <script>
 
-import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,currentMIDI} from '../stores.js'
-import {scales,oscillators,maxOctaves,tonicOrder,midiList} from '../config.js'
+import {active,enableMIDI,expandSettings,oscillatorType,scaleType,tonic,volumeVal,startOctave,endOctave,glide,currentMIDI,midiList} from '../../stores.js'
+import {scales,oscillators,maxOctaves,tonicOrder} from '../../config.js'
 import Toggle from './UIElements/UI.toggleSmall.svelte'
 import Slider from './UIElements/SteppedSlider.svelte'
+
+// $:{
+//     console.log($midiList)
+// }
 
 let selectedScale
 let selectedOsc
@@ -134,7 +138,7 @@ const updateVolume = (e) => {
             }
             }}>
 
-            {#each Object.keys(midiList) as midiTitle}
+            {#each Object.keys($midiList) as midiTitle}
                 <option value={midiTitle} selected={(midiTitle === $currentMIDI) ? true : false}>
                     {midiTitle}
                 </option>

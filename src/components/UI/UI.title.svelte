@@ -1,5 +1,5 @@
 <script>
-import {loaded,active,WIDTH,HEIGHT,manual,coverLoaded,update} from '../stores.js';
+import {loaded,active,WIDTH,HEIGHT,manual,coverLoaded,update} from '../../stores.js';
 import { onMount } from 'svelte';
 import Logo from '../icons/logo.svelte'; 
 import Play from '../icons/play.svelte'; 

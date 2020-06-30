@@ -1,5 +1,5 @@
 <script>
-import {active,camera,videoReady} from './stores.js'
+import {active,camera,videoReady} from '../stores.js'
 
 let Stream;
 let videoObj;

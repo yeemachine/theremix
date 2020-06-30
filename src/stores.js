@@ -1,62 +1,72 @@
-export const oscillators = [
-    "Oscillator Off",
-    'Sine', 'FM Sine', 'AM Sine', 'Fat Sine',
-    'Triangle', 'FM Triangle', 'AM Triangle', 'Fat Triangle',
-    'Sawtooth','FM Sawtooth','AM Sawtooth','Fat Sawtooth',
-    'Square', 'FM Square', 'AM Square', 'Fat Square',
-    'PWM', 'Pulse'
-]
-export const scales = [
-    'Major',
-    'Minor',
-    'Ionian',
-    'Dorian',
-    'Phrygian',
-    'Lydian',
-    'Mixolydian',
-    'Aeolian',
-    'Locrian',
-    'Majorpentatonic',
-    'Minorpentatonic',
-    'Chromatic',
-    'Harmonicchromatic',
-    'Blues',
-    'Doubleharmonic',
-    'Flamenco',
-    'Harmonicminor',
-    'Melodicminor'
-]
+import { writable } from 'svelte/store';
+export const pwa = writable(false);
+export const update = writable(false);
+export const updateNow = writable(false);
+export const version = writable(null);
+export const darkMode = writable(false);
+export const active = writable(false);
+export const loaded = writable(false);
+export const coverLoaded = writable(false);
+export const manual = writable(false);
+export const camera = writable(false);
+export const videoReady = writable(null);
+export const WIDTH = writable(2400/2);
+export const HEIGHT = writable(1350/2);
+export const SCALE = writable(1)
+export const CANVASWIDTH = writable(2400/2);
+export const CANVASHEIGHT = writable(1350/2);
+export const globalPointerUp = writable(true);
+export const mousePos = writable({x:0,y:0})
+export const gestures = writable(false)
+export const canvasMousePos = writable({x:0,y:0})
+export const keydown_O = writable(false)
+export const keydown_K = writable(false)
+export const keydown_S = writable(false)
+export const keydown_G = writable(false)
+export const keydown_M = writable(false)
 
-export const tonicOrder = [
-    'C',
-    'C#/Db',
-    'D',
-    'D#/Eb',
-    'E',
-    'F',
-    'F#/Gb',
-    'G',
-    'G#/Ab',
-    'A',
-    'A#/Bb',
-    'B'
-]
+export const keydown_left = writable(false)
+export const keydown_right = writable(false)
+export const keydown_up = writable(false)
+export const keydown_down = writable(false)
 
-export const maxOctaves = 8
+export const mouseOverride = writable(0)
+export const audioControls = writable({x:0,y:0})
+export const thereminPos = writable({x:0,y:0})
+export const bgPos = writable({x:0,y:0})
+export const thereminMobilePos = writable({x:0,y:0})
+export const tablePos = writable({x:0,y:0})
+export const videoPos = writable({x:0,y:0})
 
-export const posenetOptions = {
-        architecture: "MobileNetV1",
-        imageScaleFactor: 0.33,
-        outputStride: 16,
-        flipHorizontal: true,
-        maxPoseDetections: 1,
-        detectionType: "single",
-        minPoseConfidence: 0.2,
-        minPartConfidence: 0.1 
-}
+export const expandSettings = writable(false)
+export const volumeVal = writable(0)
+export const gain1Val = writable(0.1)
+export const FFT = writable([])
+export const glide = writable(true)
+export const toneOutput = writable({
+    glide:true,
+    freq:0,
+    note:'G4'
+})
+export const oscillatorType = writable('Sine')
+export const analyser = writable(null)
+export const tonic = writable('G')
+export const scaleType = writable('Major')
+export const scaleNotes = writable([])
+export const startOctave = writable(3)
+export const endOctave = writable(5)
+export const enableMIDI = writable(false);
+export const currentMIDITitle = writable(null);
+export const currentMIDIOffset = writable(.5);
+export const currentMIDI = writable('だから僕は音楽を辞めた');
+export const MIDI_tint = writable(null);
+export const MIDITextSprite = writable(null);
+export const poseNetRes = writable(null);
 
-export const midiList =
-    {
+export const dragged = writable(null)
+export const hovered = writable(null)
+
+export const midiList = writable({
         "だから僕は音楽を辞めた":{
             url:"https://theremin.app/assets/midi/Thats_Why_I_Gave_Up_on_Music.mid",
             artist:'ヨルシカ',
@@ -171,6 +181,5 @@ export const midiList =
             offset:.5,
             tint:0xC39E89
         }
-        
-        
-    }
+})
+

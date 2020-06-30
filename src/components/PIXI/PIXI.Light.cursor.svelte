@@ -2,12 +2,12 @@
 import * as PIXI from 'pixi.js'
 import 'pixi-layers'
 import 'pixi-lights'
-import {hovered,glide,thereminPos,thereminMobilePos,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual} from '../stores.js'
-import {constrain} from '../helpers.js'
+import {hovered,glide,thereminPos,thereminMobilePos,canvasMousePos,mousePos,poseNetRes,CANVASWIDTH,WIDTH,CANVASHEIGHT,videoReady,SCALE,dragged,audioControls,mouseOverride,gestures,manual} from '../../stores.js'
+import {constrain} from '../../helpers.js'
 import { tweened,spring } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
-import {createGradientTexture} from '../pixiApp.js'
-import {posenetOptions} from '../config.js'
+import {createGradientTexture} from '../../pixiApp.js'
+import {posenetOptions} from '../../config.js'
 
 export let stage = null
 export let app = null;

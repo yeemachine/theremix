@@ -1,6 +1,6 @@
 <script>
 import Carousel from '@beyonk/svelte-carousel'
-import {loaded,active,WIDTH,HEIGHT,SCALE,manual,pwa,version} from '../stores.js';
+import {loaded,active,WIDTH,HEIGHT,SCALE,manual,pwa,version} from '../../stores.js';
 import { onMount } from 'svelte';
 import Logo from '../icons/logo.svelte'; 
 import Play from '../icons/play.svelte'; 
@@ -9,7 +9,7 @@ import closeIcon from '../icons/close.svelte';
 import ButtonCircle from './UIElements/UI.buttoncircle.svelte';
 import BasicControls from '../icons/basicControls.svelte'
 import Arrow from '../icons/arrow.svelte'
-import {midiList} from '../config.js'
+import {midiList} from '../../config.js'
 
 let startSlide = 0
 let currentSlide = startSlide
