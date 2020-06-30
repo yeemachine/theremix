@@ -1,10 +1,10 @@
 <script>
 import * as PIXI from 'pixi.js'
-import {createSprite} from '../../pixiApp.js';
+import {createSprite, diffuseLayer} from '../../pixiApp.js';
 import { tweened } from 'svelte/motion';
 import { backInOut, sineInOut } from 'svelte/easing';
 import {constrain} from '../../helpers.js'
-import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady} from '../../stores.js';
+import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides} from '../../stores.js';
 export let textures = null;
 export let stage = null;
 
@@ -12,16 +12,28 @@ const sineInOut0_1 = tweened(0, {
     duration: 700,
     easing: sineInOut
 });
+
+const guides1_0 = tweened(1, {
+    duration: 700,
+    easing: sineInOut
+});
+
 const backOut0_1 = tweened(0, {
     duration: 1200,
     easing: backInOut
 });
 
 const wire1 = createSprite(textures.wire1.texture,textures.wire1_normal.texture)
+wire1.children[0].tint = 0x666666;
 const wire2 = createSprite(textures.wire2.texture,textures.wire2_normal.texture)
+wire2.children[0].tint = 0x666666;
 const wire3 = createSprite(textures.wire3.texture,textures.wire3_normal.texture)
+wire3.children[0].tint = 0x666666;
 
 const video = createSprite(textures.video.texture,textures.video_normal.texture)
+const guides = createSprite(textures.guides.texture)
+guides.parentGroup = PIXI.lights.diffuseGroup
+video.addChild(guides)
 
 const video_light = new PIXI.lights.PointLight(0xff7f00, 0);
 stage.addChild(wire1,wire2,wire3,video,video_light)
@@ -36,6 +48,8 @@ $:{
     video_light.x = margin*2*$SCALE + video.width*.5
     video_light.y = video.y
     video_light.brightness = (1+.8*constrain($CANVASWIDTH/1200, {min:0,max:1}))*$sineInOut0_1
+
+    guides.alpha = $guides1_0*1
 
     videoPos.set({
         x:video.x,
@@ -70,6 +84,15 @@ $:{
         if($backOut0_1 === 1){
             backOut0_1.set(0)
         } 
+    }
+}
+
+$:{
+    if(!$showGuides && $guides1_0 === 1){
+        guides.tint = 0x2CF27C
+        setTimeout(()=>{
+            guides1_0.set(0)
+        },1000)
     }
 }
 

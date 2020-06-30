@@ -112,6 +112,10 @@ export const Loader = PIXI.loader
         "https://theremin.app/assets/pixi/Video-Normal.png"
     )
     .add(
+        "guides",
+        "https://theremin.app/assets/pixi/Guides.png"
+    )
+    .add(
         "wire1",
         "https://theremin.app/assets/pixi/Wire-1.png"
     )

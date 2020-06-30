@@ -18,6 +18,7 @@ export const CANVASHEIGHT = writable(1350/2);
 export const globalPointerUp = writable(true);
 export const mousePos = writable({x:0,y:0})
 export const gestures = writable(false)
+export const showGuides = writable(true)
 export const canvasMousePos = writable({x:0,y:0})
 export const keydown_O = writable(false)
 export const keydown_K = writable(false)

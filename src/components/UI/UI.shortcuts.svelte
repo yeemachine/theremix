@@ -1,6 +1,6 @@
 <script>
 import Keycap from './UIElements/UI.keycap.svelte'
-import {keydown_S,keydown_K,keydown_O,keydown_G,keydown_M,tonic,scaleType,thereminPos,HEIGHT,WIDTH,SCALE} from '../../stores.js'
+import {keydown_S,keydown_K,keydown_O,keydown_G,keydown_M,tonic,scaleType,thereminPos,HEIGHT,WIDTH,SCALE,showGuides,videoReady} from '../../stores.js'
 
 let containerDom
 let containerWidth = 0
@@ -29,7 +29,7 @@ $:{
 
 </script>
 
-<container 
+<section 
 bind:this={containerDom} 
 bind:clientWidth={containerWidth} 
 bind:clientHeight={containerHeight} 
@@ -42,13 +42,15 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
         <Keycap hide={!$keydown_S} letter={'S'} styles={'margin-right:8px'}/>
         <Keycap hide={!$keydown_K} letter={'K'}/>
     </div>
-</container>
+</section>
 <Keycap hide={!$keydown_O} letter={'O'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .679 : .5095}/>
 <Keycap hide={!$keydown_G} letter={'G'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .7415 : .778}/>
 <Keycap hide={!$keydown_M} letter={'M'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .5005 : .5095}/>
+<p class="label {(!$showGuides || !$videoReady) ? 'hide' :''}"
+style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
 
 <style>
-    container{
+    section{
         position: absolute;
         width: max-content;
         height: max-content;
@@ -60,7 +62,7 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
         text-align: center;
         transition: 0s;
     }
-    container.hide{
+    section.hide{
         opacity:0;
         transition: opacity .5s 1s
     }
@@ -85,10 +87,50 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
         justify-content: center;
         align-items: center;
     }
+    .label.hide{
+        opacity: 0;
+        transition: opacity 1s;
+    }
+    .label{
+        position: absolute;
+        top: 312px;
+        left: 38px;
+        width: max-content;
+        line-break: normal;
+        font-size: 12px;
+        background: rgb(var(--crimson));
+        padding: 6px 12px 6px 12px;
+        border-radius: 16px;
+        color: rgb(var(--offwhite));
+        text-align: center;
+        text-shadow: 0 0 20px rgba(0,0,0,0.5);
+        transition: 0s;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+        transition: opacity .5s 1s
+    }
+    .label:before{
+        content: '';
+        position: absolute;
+        top: -6px;
+        margin: auto;
+        pointer-events: none;
+        border-style: solid;
+        border-width: 0px 4px 6px 4px;
+        border-color:  transparent transparent rgb(var(--crimson)) transparent;
+    }
 
     @media only screen and (max-width: 600px) {
-        container{
+        h3{
+            font-size: calc(10px + 3vw + 5vh);
+        }
+        section{
             padding-bottom: 30vh;
+        }
+        .label{
+            top: 262px;
+            left: 12px;
         }
     }
 
