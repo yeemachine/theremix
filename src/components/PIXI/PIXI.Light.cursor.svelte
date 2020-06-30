@@ -256,7 +256,7 @@ $: {
             x:rightWrist.audioX,
             y:leftWrist.audioY
           })
-          gesturesCounter+=.01
+          gesturesCounter += (gesturesCounter<1) ? .01 : 0
         }else if(leftWrist.pose.score > rightWrist.pose.score){
           //left hand
           emitterRight.emit = false
@@ -266,7 +266,7 @@ $: {
               x:leftWrist.audioX,
               y:leftWrist.audioY
             })
-            gesturesCounter+=.01
+            gesturesCounter += (gesturesCounter<1) ? .01 : 0
           }
         }else if(leftWrist.pose.score < rightWrist.pose.score){
           //right hand
@@ -276,7 +276,7 @@ $: {
               x:rightWrist.audioX,
               y:rightWrist.audioY
             })
-            gesturesCounter+=.01
+            gesturesCounter += (gesturesCounter<1) ? .01 : 0
           }
           emitterLeft.emit = false
         }else{
