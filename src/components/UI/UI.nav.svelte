@@ -117,7 +117,7 @@ import {expandSettings,active,camera} from '../../stores.js'
             width: calc(100% - 32px);
             height: calc(100% - 16px);
         }
-        div{
+        .settings{
             top:16px;
             right:16px;
         }
