@@ -66,7 +66,7 @@ $:{
 				</div>
 			</div>
 			<div class="description">
-				<p>A theremin is an electic musical instrument <span>controlled without physical contact</span> by the player. A thereminist plays by moving their hands in the space surrounding the 2 antennas. Movement towards the left antenna increases the <span>volume(amplitude)</span> while movement towards the right antenna increases the <span>pitch(frequency)</span>. 
+				<p>A theremin is an electronic musical instrument <span>controlled without physical touching it</span>. A thereminist plays by moving their hands in the space surrounding the 2 antennas. Movement towards the left antenna increases the <span>volume(amplitude)</span> while movement towards the right antenna increases the <span>pitch(frequency)</span>. 
 				</p>
 				<p>THEREMIX's default controls translates these 2 movements into 1 fluid cursor movement on desktop or touch on mobile/tablet.</p>
 				<hr>
