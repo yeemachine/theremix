@@ -16,6 +16,7 @@ import {expandSettings,active,camera} from '../../stores.js'
     icon={pauseIcon}
     settingState={false}  
     setting={active} 
+    reverse=true
     hide={
         (!$active) ? true
          :false}
