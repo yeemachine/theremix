@@ -3,6 +3,7 @@ export let icon //SVG icon
 export let setting //Pass in a store from prop
 export let hide = false
 export let styles = ''
+export let className = ''
 
 let toggleDom
 let circlePathValues
@@ -21,7 +22,7 @@ class='{
     {styles}'>
     <input type="checkbox" checked={$setting ? true : false} on:change={handleClick} 
 >
-    <container>
+    <container class={className}>
     <div class="track">
         <p>On</p>
         <div class="toggleButton">

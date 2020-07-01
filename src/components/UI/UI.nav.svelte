@@ -23,6 +23,7 @@ import {expandSettings,active,camera} from '../../stores.js'
         <Toggle 
         icon={gestureIcon} 
         setting={camera} 
+        className={'gestureTag'}
         hide={
             (!$active) ? true
             :false}/>
