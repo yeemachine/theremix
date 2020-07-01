@@ -90,6 +90,7 @@ $:{
 $:{
     if(!$showGuides && $guides1_0 === 1){
         guides.tint = 0x2CF27C
+        dataLayer.push({'event':'Pose-Registered'});
         setTimeout(()=>{
             guides1_0.set(0)
         },1000)
