@@ -3,6 +3,7 @@ export let icon
 export let setting
 export let hide = false
 export let styles = ''
+export let classes = ''
 export let selected = false
 export let tabindex = 0
 const handleClick = () => {
@@ -12,7 +13,7 @@ const handleClick = () => {
 
 <button 
     tabindex={tabindex} 
-    class="{hide ? 'hide':''} {selected?'selected':''}" 
+    class="{hide ? 'hide':''} {selected?'selected':''} {classes}" 
     style={styles} 
     on:click={handleClick}>
         {#if icon}

@@ -12,6 +12,7 @@ import {expandSettings,active,camera} from '../../stores.js'
 
 <nav class="{$active ? '':'hide'}">
     <ButtonCircle 
+    classes={'pauseTag'}
     icon={pauseIcon}
     settingState={false}  
     setting={active} 
@@ -23,7 +24,7 @@ import {expandSettings,active,camera} from '../../stores.js'
         <Toggle 
         icon={gestureIcon} 
         setting={camera} 
-        className={'gestureTag'}
+        classes={'gestureTag'}
         hide={
             (!$active) ? true
             :false}/>
@@ -31,6 +32,7 @@ import {expandSettings,active,camera} from '../../stores.js'
     </div>
     <div class="settings">
         <ButtonCircle 
+        classes={'controlsTag'}
         icon={
             $expandSettings ? closeIcon
             : settingsIcon
