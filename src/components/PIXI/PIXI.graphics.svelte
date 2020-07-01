@@ -217,11 +217,8 @@ let bgLights = [
      }     
     ]
 
-const fps = 14
 let audioArr = [0,0]
-let frameCount = 0
 let TIME = 0
-let frameInterval = 4 //how much to slow fps
 let marqueeTime = 0
 var before; 
 var delay = 1000/24;
@@ -230,9 +227,7 @@ const draw = (now) => {
     if ( !before ) before = now;
 
     if ( now - before > delay) {
-        //delays to 12 fps
-
-        //Draw Audio Analyser
+        //Draw Audio Analyser 24 FPS
         if(analyser){
             audioArr = createAudioPoints($analyser.getValue())  
             graphics.clear();

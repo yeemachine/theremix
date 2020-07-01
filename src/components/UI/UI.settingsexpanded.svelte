@@ -5,10 +5,6 @@ import {scales,oscillators,maxOctaves,tonicOrder} from '../../config.js'
 import Toggle from './UIElements/UI.toggleSmall.svelte'
 import Slider from './UIElements/SteppedSlider.svelte'
 
-// $:{
-//     console.log($midiList)
-// }
-
 let selectedScale
 let selectedOsc
 let selectedTonic

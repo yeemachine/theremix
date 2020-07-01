@@ -94,14 +94,15 @@ style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
     .label{
         position: absolute;
         top: 312px;
-        left: 38px;
+        left: 62px;
         width: max-content;
         line-break: normal;
-        font-size: 12px;
-        background: rgb(var(--crimson));
+        font-size: 14px;
+        font-family: 'Nicholson Beta';
+        background: rgb(var(--offwhite));
         padding: 6px 12px 6px 12px;
         border-radius: 16px;
-        color: rgb(var(--offwhite));
+        color: rgb(var(--darkcrimson));
         text-align: center;
         text-shadow: 0 0 20px rgba(0,0,0,0.5);
         transition: 0s;
@@ -118,7 +119,7 @@ style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
         pointer-events: none;
         border-style: solid;
         border-width: 0px 4px 6px 4px;
-        border-color:  transparent transparent rgb(var(--crimson)) transparent;
+        border-color:  transparent transparent rgb(var(--offwhite)) transparent;
     }
 
     @media only screen and (max-width: 600px) {
@@ -130,7 +131,7 @@ style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
         }
         .label{
             top: 262px;
-            left: 12px;
+            left: 35px;
         }
     }
 

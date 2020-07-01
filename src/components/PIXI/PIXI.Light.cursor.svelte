@@ -366,11 +366,12 @@ style='opacity:{mousePos ? 1 : 0};
     top:-32px;
     width: max-content;
     line-break: normal;
-    font-size: 12px;
-    background: rgb(var(--crimson));
+    font-size: 14px;
+    font-family: 'Nicholson Beta';
+    background: rgb(var(--offwhite));
     padding: 6px 12px 6px 12px;
     border-radius: 16px;
-    color: rgb(var(--offwhite));
+    color: rgb(var(--darkcharcoal));
     opacity: 0;
     text-align: center;
     text-shadow: 0 0 20px rgba(0,0,0,0.5);
@@ -386,7 +387,7 @@ style='opacity:{mousePos ? 1 : 0};
     pointer-events: none;
     border-style: solid;
     border-width: 6px 4px 0px 4px;
-    border-color: rgb(var(--crimson)) transparent transparent transparent;
+    border-color: rgb(var(--offwhite)) transparent transparent transparent;
   }
   .hovered span{
     opacity: 1;
