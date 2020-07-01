@@ -5,7 +5,7 @@ export let color = 'rgb(var(--crimson))'
 </script>
 
 <svg 
-class="{loaded ? 'loaded' : ''} {hide ? 'hide' : ''}"
+class="playSVG {loaded ? 'loaded' : ''} {hide ? 'hide' : ''}"
 preserveAspectRatio="xMidYMin slice"
 width="400" height="406" viewBox="0 0 400 406" fill="none" xmlns="http://www.w3.org/2000/svg">
 
@@ -35,8 +35,9 @@ svg{
     -o-user-select: none;
     user-select: none;
     overflow: visible;
+    pointer-events: none;
 }
-svg:hover{
+:global(.play:hover .playSVG){
         cursor: url(https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcursor4.svg?v=1587485456475) 21 20, pointer;
 }
 svg.hide{
@@ -73,7 +74,7 @@ svg.hide path:nth-child(1),svg.hide path:nth-child(2){
     opacity: 1;
 }
 
-svg.loaded:hover .triangle{
+:global(.play:hover .playSVG.loaded .triangle){
     transform:scale(1.3);
     fill: rgb(var(--sun));
 }
@@ -95,7 +96,7 @@ svg.loaded path:nth-child(1){
     transition: 
         fill-opacity .25s cubic-bezier(0.46, 0.03, 0.52, 0.96)
 }
-svg:hover path:nth-child(1){
+:global(.play:hover .playSVG.loaded path:nth-child(1)){
     fill-opacity: .5
 }
 

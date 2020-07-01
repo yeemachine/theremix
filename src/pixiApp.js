@@ -21,7 +21,7 @@ Stage.addChild(
     lightLayer,
     graphicsLayer,
     cursorLayer);
-
+    
 export const Loader = PIXI.loader
     .add(
         "table",
