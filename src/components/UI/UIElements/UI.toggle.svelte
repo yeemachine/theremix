@@ -22,7 +22,7 @@ class='{
     {styles}'>
     <input type="checkbox" checked={$setting ? true : false} on:change={handleClick} 
 >
-    <container class={classes}>
+    <container class={$setting ? '' : classes}>
     <div class="track">
         <p>On</p>
         <div class="toggleButton">
