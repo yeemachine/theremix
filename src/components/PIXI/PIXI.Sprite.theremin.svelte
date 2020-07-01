@@ -77,6 +77,7 @@ knob_left.on('pointerdown',()=>{
     if('vibrate' in navigator){
         navigator.vibrate(50);
     }
+    dataLayer.push({'event':'volume-pixi'});
 })
 
 const knob_right = createSprite(
@@ -118,6 +119,7 @@ switchRight.on('pointerup',()=>{
     if('vibrate' in navigator){
         navigator.vibrate(50);
     }
+    dataLayer.push({'event':'glide-pixi'});
 })
 switchRight.on('mouseover',()=>{
     hovered.set('switch')
@@ -313,6 +315,7 @@ $:{
                         navigator.vibrate(50);
                     }
                     oscillatorType.set(oscillators[steppedPercent])
+                    dataLayer.push({'event':'osc-pixi'});
                 }
             }
             knob_right.children[0].tint = 0xffffff
