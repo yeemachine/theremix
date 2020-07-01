@@ -104,25 +104,30 @@ const handleKeydown = e => {
         if(keyCode===71 && !$keydown_G){
             glide.set(false)
             keydown_G.set(true)
+            dataLayer.push({'event':'glide-key'});
         }
         if(keyCode===77 && !$keydown_M){
             enableMIDI.set(!$enableMIDI)
             keydown_M.set(true)
+            dataLayer.push({'event':'MIDI-key'});
         }
         if(keyCode===79 && !$keydown_O){
             let nextItem = findNext($oscillatorType,oscillators)
             oscillatorType.set(nextItem)
             keydown_O.set(true)
+            dataLayer.push({'event':'osc-key'});
         }
         if(keyCode===83 && !$keydown_S){
             let nextItem = findNext($scaleType,scales)
             scaleType.set(nextItem)
             keydown_S.set(true)
+            dataLayer.push({'event':'scales-key'});
         }
         if(keyCode===75 && !$keydown_K){
             let nextItem = findNext($tonic,tonicOrder)
             tonic.set(nextItem)
             keydown_K.set(true)
+            dataLayer.push({'event':'keys-key'});
         }
 
         if(keyCode===37 && !$keydown_left){
@@ -130,16 +135,20 @@ const handleKeydown = e => {
             if($keydown_O){
                 let nextItem = findNext($oscillatorType,oscillators,'reverse')
                 oscillatorType.set(nextItem)
+                dataLayer.push({'event':'osc-key'});
             }else if($keydown_K){
                 let nextItem = findNext($tonic,tonicOrder,'reverse')
                 tonic.set(nextItem)
+                dataLayer.push({'event':'keys-key'});
             }else if($keydown_S){
                 let nextItem = findNext($scaleType,scales,'reverse')
                 scaleType.set(nextItem)
+                dataLayer.push({'event':'scales-key'});
             }else{
                  if($enableMIDI){
                      let nextItem = findNext($currentMIDI,Object.keys(midiList),'reverse')
                      currentMIDI.set(nextItem)
+                     dataLayer.push({'event':'MIDI-key'});
                 }
             }
         }
@@ -148,16 +157,20 @@ const handleKeydown = e => {
             if($keydown_O){
                 let nextItem = findNext($oscillatorType,oscillators)
                 oscillatorType.set(nextItem)
+                dataLayer.push({'event':'osc-key'});
             }else if($keydown_K){
                 let nextItem = findNext($tonic,tonicOrder)
                 tonic.set(nextItem)
+                dataLayer.push({'event':'keys-key'});
             }else if($keydown_S){
                 let nextItem = findNext($scaleType,scales)
                 scaleType.set(nextItem)
+                dataLayer.push({'event':'scales-key'});
             }else{
                  if($enableMIDI){
                      let nextItem = findNext($currentMIDI,Object.keys(midiList))
                      currentMIDI.set(nextItem)
+                     dataLayer.push({'event':'MIDI-key'});
                 }
             }
         }
