@@ -38,6 +38,7 @@ const updateVolume = (e) => {
 <div class="setting">
     <h4>Volume</h4>
     <input
+    class="volumeTag"
     on:input={(e)=>updateVolume(e)}
     type="range" min={-48} max={0} value={$volumeVal} style='background-size:{ ($volumeVal - (-48)) * 100 / (0 - (-48))}% 100%'>
 </div>
@@ -66,7 +67,9 @@ const updateVolume = (e) => {
     <h4>Key/Scale<span class="keycap">K</span><span class="keycap">S</span></h4>
     <container>
         <div class="select key">
-            <select bind:value={selectedTonic} 
+            <select
+            class="keyTag"
+             bind:value={selectedTonic} 
             on:change={()=>{
                 if(selectedTonic){
                     tonic.set(selectedTonic)
@@ -82,7 +85,9 @@ const updateVolume = (e) => {
             <div class="select_arrow"></div>
         </div>
         <div class="select scale">
-            <select bind:value={selectedScale} 
+            <select 
+            class="scaleTag"
+            bind:value={selectedScale} 
             on:change={()=>scaleType.set(selectedScale)}
             >
                 {#each scales as scaleName}
@@ -112,6 +117,7 @@ const updateVolume = (e) => {
         <h4 style="margin:0;">Glide<span class="keycap">G</span>
         </h4>
         <Toggle 
+            classes="glide"
             setting={glide} 
             hide={(!$expandSettings) ? true :false}/>
     </div>
@@ -127,6 +133,7 @@ const updateVolume = (e) => {
             <span style="font-size:9px;margin-left: 8px;color:rgb(var(--crimson))">Beta</span>
         </h4>
         <Toggle 
+            classes="MIDITag"
             setting={enableMIDI} 
             hide={(!$expandSettings) ? true :false}/>
     </div>
