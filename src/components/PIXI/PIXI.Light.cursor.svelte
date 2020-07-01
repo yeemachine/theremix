@@ -371,7 +371,7 @@ style='opacity:{mousePos ? 1 : 0};
     background: rgb(var(--offwhite));
     padding: 6px 12px 6px 12px;
     border-radius: 16px;
-    color: rgb(var(--darkcharcoal));
+    color: black;
     opacity: 0;
     text-align: center;
     text-shadow: 0 0 20px rgba(0,0,0,0.5);

@@ -102,7 +102,7 @@ style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
         background: rgb(var(--offwhite));
         padding: 6px 12px 6px 12px;
         border-radius: 16px;
-        color: rgb(var(--darkcrimson));
+        color: black;
         text-align: center;
         text-shadow: 0 0 20px rgba(0,0,0,0.5);
         transition: 0s;
