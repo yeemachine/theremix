@@ -62,8 +62,8 @@ svg.svelte-1izrwp9.svelte-1izrwp9{height:95%;width:95%;transition:.5s cubic-bezi
         svelte-1izrwp9-drawforward 2s cubic-bezier(0.46, 0.03, 0.52, 0.96);animation-fill-mode:forwards;animation-play-state:start;transition:fill-opacity .25s cubic-bezier(0.46, 0.03, 0.52, 0.96)
 }.play:hover .playSVG.loaded path:nth-child(1){fill-opacity:.5
 }@keyframes svelte-1izrwp9-rotate{0%{transform:rotate(-180deg) }100%{transform:rotate(179deg) }}@keyframes svelte-1izrwp9-drawforward{to{stroke-dashoffset:1}}@keyframes svelte-1izrwp9-drawback{to{stroke-dashoffset:-1000}}
-svg.svelte-1e9m5xi{height:auto;width:100%;pointer-events:none}path.svelte-1e9m5xi{--color:var(--offwhite);--hoverColor:var(--charcoal);fill:rgb(var(--svgColor))
-}button:hover .settingSVG path{fill:rgb(var(--svgColorHover))
+svg.svelte-p3r5e7{height:auto;width:100%;pointer-events:none}path.svelte-p3r5e7{--color:var(--offwhite);--hoverColor:var(--charcoal);fill:rgb(var(--svgColor))
+}button:hover .settingsSVG path{fill:rgb(var(--svgColorHover))
 }
 .carousel.svelte-1ppqxio.svelte-1ppqxio{position:relative;width:100%;justify-content:center;align-items:center}button.svelte-1ppqxio.svelte-1ppqxio{position:absolute;width:40px;height:40px;top:50%;z-index:50;margin-top:-20px;border:none;background-color:transparent}button.svelte-1ppqxio.svelte-1ppqxio:focus{outline:none}.left.svelte-1ppqxio.svelte-1ppqxio{left:2vw}.right.svelte-1ppqxio.svelte-1ppqxio{right:2vw}ul.svelte-1ppqxio.svelte-1ppqxio{list-style-type:none;position:absolute;display:flex;justify-content:center;width:100%;margin-top:-30px;padding:0}ul.svelte-1ppqxio li.svelte-1ppqxio{margin:6px;border-radius:100%;background-color:rgba(255,255,255,0.5);height:8px;width:8px}ul.svelte-1ppqxio li.svelte-1ppqxio:hover{background-color:rgba(255,255,255,0.85)}ul.svelte-1ppqxio li.active.svelte-1ppqxio{background-color:rgba(255,255,255,1)}
 

@@ -20,7 +20,7 @@ path{
     fill:rgb(var(--svgColor))
 }
 
-:global(button:hover .settingSVG path){
+:global(button:hover .settingsSVG path){
     fill:rgb(var(--svgColorHover))
 }
 </style>
