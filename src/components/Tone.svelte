@@ -6,12 +6,6 @@ import {active,enableMIDI,volumeVal,glide,toneOutput,scaleType,scaleNotes,tonic,
 import {constrain, shuffle, jsUcfirst, findNext} from '../helpers.js'
 import {tonicOrder,scales} from '../config.js'
 
-// console.log($midiList)
-// delete $midiList['夜に駆ける']
-// console.log($midiList)
-// $midiList['夜に駆ける2'] = {}
-// console.log($midiList)
-
 const generateScale = (tonic,key,octaves)=>{
     let scale = teoria.scale(tonic,key)
     let newNotes = []
@@ -25,6 +19,7 @@ const generateScale = (tonic,key,octaves)=>{
     }
     return newNotes
 }
+
 $:  {
     let tonicNote = ($tonic.includes('/')) ? $tonic.substring(0, $tonic.lastIndexOf("/")) : $tonic
     let arr = generateScale(
@@ -76,9 +71,7 @@ gain2.connect(Tone.Master)
 Tone.Master.chain(masterCompressor,masterVolume,masterAnalyser);
 
 let midiSynths = []
-let midiQueue = Object.keys($midiList)
 let lastMIDI
-var checkSynthClear
 
 let monoSynth = new Tone.Synth()
 const initMidi = (url)=>{
@@ -112,8 +105,6 @@ const initMidi = (url)=>{
                     release: 1
                 }
             }).connect(gain2)
-            
-        
             
             midiSynths.push(synth)
             //scheduleOnce all of the events
@@ -189,14 +180,6 @@ $:{
 }
 
 $:{
-    // if($active){
-    //     Tone.Transport.start();
-    // }else{
-    //     Tone.Transport.pause();
-    // }
-}
-
-$:{
     if($active){
         let maxFreq = Tone.Frequency($scaleNotes[$scaleNotes.length-1])
         let minFreq = Tone.Frequency($scaleNotes[0])
@@ -205,7 +188,6 @@ $:{
             mainOsc.start()
         }
         if(Tone.context.state !== 'running'){  
-            // Tone.context.resume();
             Tone.start()
         }
 
