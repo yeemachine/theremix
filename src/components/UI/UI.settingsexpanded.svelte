@@ -100,7 +100,7 @@ const updateVolume = (e) => {
 <hr>
 
 <div class="setting">
-    <h4>Octave Range</h4>
+    <h4>Octaves</h4>
     <Slider 
     on:change={(e) => handleSlider(e.detail)} 
     hide={!$expandSettings}
@@ -125,7 +125,7 @@ const updateVolume = (e) => {
 <div class="setting">
     <div class="toggle" style="margin-bottom: 16px;">
         <h4 style="margin:0;display: flex;align-items: flex-start;">
-            MIDI Controller
+            MIDI
             <span style="font-size:9px;margin-left: 8px;color:rgb(var(--crimson))">Beta</span>
         </h4>
         <Toggle 
