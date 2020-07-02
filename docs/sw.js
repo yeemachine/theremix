@@ -1,4 +1,4 @@
-const vn = "v1.0.03";
+const vn = "v1.0.04";
 const production = true;
 
 // files to cache
@@ -98,7 +98,7 @@ const icons = [
   'https://theremin.app/assets/global/hred.svg'
 ]
 
-let staticContent = libraries.concat(pixiAssets).concat(gifAssets)
+let staticContent = libraries.concat(pixiAssets)
 let contentToCache = appShellFiles.concat(staticContent).concat(midiAssets).concat(icons)
 
 // install and save files to cache

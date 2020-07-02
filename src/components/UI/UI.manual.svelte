@@ -136,7 +136,10 @@ $:{
 			<div class="graphic">
 				<h2>Gesture<br>Controls<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
-					<img alt="Gesture controls" src="https://theremin.app/assets/global/basic_controls.gif"/>
+					<video alt="Gesture controls" autoplay loop muted playsinline>  
+						<source src="https://theremin.app/assets/global/basic_controls_S.webm" type="video/webm">  
+						<source src="https://theremin.app/assets/global/basic_controls_S.mp4" type="video/mp4">  
+					</video>  
 				</div>
 			</div>
 			<div class="description">
@@ -167,7 +170,10 @@ $:{
 			<div class="graphic">
 				<h2>Midi<br>Controls<span style="font-size:9px;margin-left: 8px">Beta<span></h2>
 				<div class="svg">
-					<img alt="MIDI controls" src="https://theremin.app/assets/global/midi_controls.gif"/>
+					<video alt="MIDI controls" autoplay loop muted playsinline>  
+						<source src="https://theremin.app/assets/global/midi_controls_S.webm" type="video/webm">  
+						<source src="https://theremin.app/assets/global/midi_controls_S.mp4" type="video/mp4">  
+					</video> 
 				</div>
 			</div>
 			<div class="description">
@@ -383,7 +389,7 @@ $:{
 		align-content: center;
 		justify-content: center;
 	}
-	img{
+	img,video{
 		object-fit: contain;
 		width:auto;
 		height:auto;
@@ -516,7 +522,7 @@ $:{
     margin: 0 0px 8px 0px;
     padding-top: 12px;
     font-weight: normal;
-	font-variation-settings: "wght" 90, "wdth" 110, "ital" 0;
+	font-variation-settings: "wght" 90, "wdth" 120, "ital" 0;
 	color:rgb(var(--textColor1));
 	display:flex;
 	}
@@ -529,7 +535,7 @@ $:{
 		display:inline-block;
 		text-align: center;
 		width:14px;
-		font-variation-settings: "wght" 80, "wdth" 110, "ital" 0;
+		font-variation-settings: "wght" 80, "wdth" 120, "ital" 0;
 		background: rgba(var(--crimson),.2);
 		color:rgb(var(--keyColor));
 		font-size: 12px;
@@ -620,7 +626,7 @@ $:{
 		  display: block;
 		  margin-bottom:8px;
 	  }
-	  img{
+	  img,video{
 		    margin-left: -24px;
 			max-width: calc(100% + 48px);
 	  }
