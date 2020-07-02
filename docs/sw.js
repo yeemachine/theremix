@@ -83,8 +83,10 @@ const midiAssets = [
 ]
 
 const gifAssets = [
-  'https://theremin.app/assets/global/basic_controls.gif',
-  'https://theremin.app/assets/global/midi_controls.gif'
+  'https://theremin.app/assets/global/basic_controls_S.webm',
+  'https://theremin.app/assets/global/basic_controls_S.mp4',
+  'https://theremin.app/assets/global/midi_controls_S.webm',
+  'https://theremin.app/assets/global/midi_controls_S.mp4'
 ]
 
 const icons = [
@@ -98,7 +100,7 @@ const icons = [
   'https://theremin.app/assets/global/hred.svg'
 ]
 
-let staticContent = libraries.concat(pixiAssets)
+let staticContent = libraries.concat(pixiAssets).concat(gifAssets)
 let contentToCache = appShellFiles.concat(staticContent).concat(midiAssets).concat(icons)
 
 // install and save files to cache
