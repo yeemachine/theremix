@@ -61,8 +61,8 @@
 
   @font-face {
     font-family: "Whirly Birdie";
-    src: url("https://theremin.app/assets/fonts/WhirlyBirdieGX.ttf")
-      format("truetype");
+    src: url("https://theremin.app/assets/fonts/WhirlyBirdieGX.woff2")
+      format("woff2");
   }
 
   @font-face {

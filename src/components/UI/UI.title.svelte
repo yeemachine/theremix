@@ -105,7 +105,7 @@ $:{
         font-weight: normal;
         color:rgb(var(--offwhite));
         width:max-content;
-        font-variation-settings: "wght" 70, "wdth" 118, "ital" 0;
+        font-variation-settings: "wght" 70, "wdth" 120, "ital" 0;
         margin: 0 0 0 0;
         pointer-events: all;
         transform-origin: center;
