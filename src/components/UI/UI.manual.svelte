@@ -136,8 +136,7 @@ $:{
 			<div class="graphic">
 				<h2>Gesture<br>Controls<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
-					<!-- <img alt="Gesture controls" src="https://theremin.app/assets/global/basic_controls.gif"/> -->
-					<video autoplay loop muted playsinline>  
+					<video alt="Gesture controls" autoplay loop muted playsinline>  
 						<source src="https://theremin.app/assets/global/basic_controls_S.webm" type="video/webm">  
 						<source src="https://theremin.app/assets/global/basic_controls_S.mp4" type="video/mp4">  
 					</video>  
@@ -171,8 +170,7 @@ $:{
 			<div class="graphic">
 				<h2>Midi<br>Controls<span style="font-size:9px;margin-left: 8px">Beta<span></h2>
 				<div class="svg">
-					<!-- <img alt="MIDI controls" src="https://theremin.app/assets/global/midi_controls.gif"/> -->
-					<video autoplay loop muted playsinline>  
+					<video alt="MIDI controls" autoplay loop muted playsinline>  
 						<source src="https://theremin.app/assets/global/midi_controls_S.webm" type="video/webm">  
 						<source src="https://theremin.app/assets/global/midi_controls_S.mp4" type="video/mp4">  
 					</video> 
