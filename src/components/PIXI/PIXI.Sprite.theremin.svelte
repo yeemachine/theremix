@@ -102,6 +102,7 @@ knob_right.on('pointerdown',()=>{
         id:'osc'
     })
     globalPointerUp.set(false)
+    dataLayer.push({'event':'osc-pixi'});
 })
 
 const switchRight = createSprite(
@@ -315,7 +316,6 @@ $:{
                         navigator.vibrate(50);
                     }
                     oscillatorType.set(oscillators[steppedPercent])
-                    dataLayer.push({'event':'osc-pixi'});
                 }
             }
             knob_right.children[0].tint = 0xffffff
