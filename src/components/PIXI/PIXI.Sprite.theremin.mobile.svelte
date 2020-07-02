@@ -87,6 +87,7 @@ knob_right.on('pointerdown',()=>{
         id:'osc'
     })
     globalPointerUp.set(false)
+    dataLayer.push({'event':'osc-pixi'});
 })
 const symbols = createSprite(
     textures.symbols.texture,
