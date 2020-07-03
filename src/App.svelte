@@ -1,5 +1,5 @@
 <script>
-	import {mousePos, loaded, darkMode, pwa, update,version } from './stores.js';
+	import {mousePos, loaded, toneLoaded,darkMode, pwa, update,version } from './stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import Nav from './components/UI/UI.nav.svelte'
 	import Shortcuts from './components/UI/UI.shortcuts.svelte'
@@ -55,18 +55,18 @@
 		pwa.set(true);
 	}
 
-let tfLoaded = false,posenetLoaded = false,toneLoaded = false,midiLoaded = false
+let tfLoaded = false,posenetLoaded = false,toneJSLoaded = false,toneMIDILoaded = false
 
 </script>
 
 <svelte:head>
 	{#if $loaded}
-		<script src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{toneLoaded=true}}></script>
-		{#if toneLoaded}
-			<script src="https://unpkg.com/@tonejs/midi" on:load={()=>{midiLoaded=true}}></script>
+		<script src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{toneJSLoaded=true}}></script>
+		{#if toneJSLoaded}
+			<script src="https://unpkg.com/@tonejs/midi" on:load={()=>{toneMIDILoaded=true}}></script>
 		{/if}
 		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
-		{#if tfLoaded}
+		{#if tfLoaded && $toneLoaded}
 			<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{posenetLoaded=true}}></script>
 		{/if}
 	{/if}
@@ -77,7 +77,7 @@ let tfLoaded = false,posenetLoaded = false,toneLoaded = false,midiLoaded = false
 	<Shortcuts/>
 	<Nav/>
 	
-	{#if toneLoaded && midiLoaded}
+	{#if toneLoaded && toneMIDILoaded}
 		<Tone/>
 	{/if}
 
@@ -144,8 +144,8 @@ let tfLoaded = false,posenetLoaded = false,toneLoaded = false,midiLoaded = false
 		
 	main {
 		position: fixed;
-		display:grid;
-		grid-template-columns: repeat(12, 1fr);
+		/* display:grid;
+		grid-template-columns: repeat(12, 1fr); */
 		column-gap: 16px;
 		margin: 0 0 0 0;
 		width:100%;

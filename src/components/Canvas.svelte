@@ -3,7 +3,7 @@ import { onMount } from 'svelte';
 import { tweened } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
 import {constrain,findNext} from '../helpers.js'
-import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,currentMIDI} from '../stores.js'
+import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,currentMIDI,pwa} from '../stores.js'
 import {oscillators,scales,tonicOrder,midiList} from '../config.js'
 import Title from './UI/UI.title.svelte'
 import Manual from './UI/UI.manual.svelte'
@@ -229,7 +229,7 @@ class="canvasContainer {
     $hovered==='switch'?'hovered'
     : ($hovered==='knob right' || $hovered==='knob left') ? 'grab'
     :''
-} {$dragged ? 'grabbing' : ''}"
+} {$dragged ? 'grabbing' : ''} {$pwa ? 'pwa':''}"
 >
     <Title/>
     <Manual/>

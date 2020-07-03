@@ -17,6 +17,7 @@ const sineInOut0_1_2 = tweened(0, {
     easing: sineInOut
 });
 
+  
 const bgContainer = new PIXI.Container();
 const BGMContainer = new PIXI.Container();
 $:{

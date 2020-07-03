@@ -2,11 +2,14 @@ import { writable } from 'svelte/store';
 export const pwa = writable(false);
 export const update = writable(false);
 export const updateNow = writable(false);
+
 export const version = writable(null);
+
 export const darkMode = writable(false);
 export const active = writable(false);
 export const loaded = writable(false);
 export const coverLoaded = writable(false);
+export const toneLoaded = writable(false);
 export const manual = writable(false);
 export const camera = writable(false);
 export const videoReady = writable(null);
@@ -40,22 +43,58 @@ export const tablePos = writable({x:0,y:0})
 export const videoPos = writable({x:0,y:0})
 
 export const expandSettings = writable(false)
-export const volumeVal = writable(0)
-export const gain1Val = writable(0.1)
 export const FFT = writable([])
-export const glide = writable(true)
+export const analyser = writable(null)
 export const toneOutput = writable({
     glide:true,
     freq:0,
     note:'G4'
 })
-export const oscillatorType = writable('Sine')
-export const analyser = writable(null)
-export const tonic = writable('G')
-export const scaleType = writable('Major')
+
+const storedVol = localStorage.getItem("volumeVal") || -15;
+export const volumeVal = writable(storedVol)
+volumeVal.subscribe(value => {
+    localStorage.setItem("volumeVal", value ? value : -15);
+});
+
+const storedGlide = localStorage.getItem("glide") || true;
+export const glide = writable(storedGlide)
+glide.subscribe(value => {
+    localStorage.setItem("glide", value ? value : true);
+});
+
+const storedOsc = localStorage.getItem("oscillator") || 'Sine';
+export const oscillatorType = writable(storedOsc)
+oscillatorType.subscribe(value => {
+    localStorage.setItem("oscillator", value ? value : 'Sine');
+});
+
+const storedTonic = localStorage.getItem("tonic") || 'G';
+export const tonic = writable(storedTonic)
+tonic.subscribe(value => {
+    localStorage.setItem("tonic", value ? value : 'G');
+});
+
+const storedScale = localStorage.getItem("scaleType") || 'Major';
+export const scaleType = writable(storedScale)
+scaleType.subscribe(value => {
+    localStorage.setItem("scaleType", value ? value : 'Major');
+});
+
 export const scaleNotes = writable([])
-export const startOctave = writable(3)
-export const endOctave = writable(5)
+
+const storedStartOctave = localStorage.getItem("startOctave") || 2;
+export const startOctave = writable(storedStartOctave)
+startOctave.subscribe(value => {
+    localStorage.setItem("startOctave", value ? value : 2);
+});
+
+const storedEndOctave = localStorage.getItem("endOctave") || 5;
+export const endOctave = writable(storedEndOctave)
+endOctave.subscribe(value => {
+    localStorage.setItem("endOctave", value ? value : 5);
+});
+
 export const enableMIDI = writable(false);
 export const currentMIDITitle = writable(null);
 export const currentMIDIOffset = writable(.5);

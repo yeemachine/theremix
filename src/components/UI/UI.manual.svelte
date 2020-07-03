@@ -302,14 +302,14 @@ $:{
 		-webkit-transform: translate3d(0, 0, 0);
 		-moz-transform: translate3d(0, 0, 0);
 		transform:translate3d(0, 0, 0);
-		transition: transform .7s cubic-bezier(0.55, 1.32, 0.51, 0.97);
+		transition: transform .7s cubic-bezier(0.54, 0.92, 0.51, 0.97)
 		
 	}
 
 	section.hide{
-		-moz-transform: translate3d(111vw, 8vh, 0) rotate(10deg);
-		-webkit-transform: translate3d(111vw, 8vh, 0) rotate(10deg);
-		transform: translate3d(111vw, 8vh, 0) rotate(10deg);
+		-moz-transform: translate3d(0, 100vh, 0) scale3D(1,1,1);
+		-webkit-transform: translate3d(0, 100vh, 0) scale3D(1,1,1);
+		transform: translate3d(0, 100vh, 0) scale3D(1,1,1);
 		pointer-events: none;
 	}
 	:global(.slides){
