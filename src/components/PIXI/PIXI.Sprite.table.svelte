@@ -1,6 +1,4 @@
 <script>
-// import * as PIXI from 'pixi.js'
-// import {createSprite} from '../../pixiApp.svelte';
 import { tweened } from 'svelte/motion';
 import { sineInOut } from 'svelte/easing';
 import { lerpColor } from '../../helpers.js';

@@ -1,6 +1,6 @@
     <script>
     import { onMount } from 'svelte';
-    // import {App,Stage,Resources} from '../pixiApp.svelte'
+    import {constrain,getDistance} from '../helpers.js';
     import BG from './PIXI/PIXI.Sprite.bg.svelte'
     import Table from './PIXI/PIXI.Sprite.table.svelte'
     import Video from './PIXI/PIXI.Sprite.video.svelte';
@@ -11,7 +11,6 @@
     import PIXIGraphics from './PIXI/PIXI.graphics.svelte';
     import Text from './PIXI/PIXI.text.svelte'
     import {CANVASWIDTH,CANVASHEIGHT} from '../stores.js'
-
 
     const App = new PIXI.Application()
     const Stage = (App.stage = new PIXI.display.Stage());

@@ -1,6 +1,4 @@
 <script>
-// import * as PIXI from 'pixi.js'
-// import { graphicsGroup} from '../../pixiApp.svelte';
 import { tweened } from 'svelte/motion';
 import {sineInOut } from 'svelte/easing';
 import { oscillators, midiList } from '../../config.js';

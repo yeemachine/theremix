@@ -1,9 +1,7 @@
 <script>
-// import * as PIXI from 'pixi.js'
 import {videoReady,active,thereminPos,thereminMobilePos,poseNetRes,videoPos,WIDTH,toneOutput,bgPos,analyser,mouseOverride,gestures,enableMIDI,MIDITextSprite} from '../../stores.js'
 import { tweened } from 'svelte/motion';
 import {constrain,getDistance} from '../../helpers.js';
-// import {graphicsGroup} from '../../pixiApp.svelte'
 import {sineInOut } from 'svelte/easing';
 
 export let stage = null
