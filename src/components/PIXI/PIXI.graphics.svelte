@@ -227,7 +227,7 @@ const draw = (now) => {
 
     if ( now - before > delay) {
         //Draw Audio Analyser 24 FPS
-        if(analyser){
+        if($analyser){
             audioArr = createAudioPoints($analyser.getValue())  
             graphics.clear();
             graphics.lineStyle(2,0xE54646);
