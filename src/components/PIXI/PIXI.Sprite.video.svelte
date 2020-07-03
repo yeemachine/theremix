@@ -1,12 +1,14 @@
 <script>
-import * as PIXI from 'pixi.js'
-import {createSprite, diffuseLayer} from '../../pixiApp.js';
+// import * as PIXI from 'pixi.js'
+// import {createSprite, diffuseLayer} from '../../pixiApp.svelte';
 import { tweened } from 'svelte/motion';
 import { backInOut, sineInOut } from 'svelte/easing';
 import {constrain} from '../../helpers.js'
 import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides} from '../../stores.js';
 export let textures = null;
 export let stage = null;
+export let createSprite = null;
+export let diffuseLayer = null;
 
 const sineInOut0_1 = tweened(0, {
     duration: 700,

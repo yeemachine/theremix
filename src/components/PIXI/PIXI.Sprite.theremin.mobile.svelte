@@ -1,15 +1,16 @@
 <script>
-import * as PIXI from 'pixi.js'
-import 'pixi-layers'
-import 'pixi-lights'
+// import * as PIXI from 'pixi.js'
+// import 'pixi-layers'
+// import 'pixi-lights'
 
-import {createSprite} from '../../pixiApp.js';
+// import {createSprite} from '../../pixiApp.svelte';
 import { tweened } from 'svelte/motion';
 import { backOut, sineInOut } from 'svelte/easing';
 import { oscillators } from '../../config.js';
 import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,globalPointerUp, thereminPos,glide, volumeVal,oscillatorType,thereminMobilePos,hovered,dragged} from '../../stores.js';
 export let textures = null;
 export let stage = null;
+export let createSprite = null;
 
 const backOut0_1 = tweened(0, {
     duration: 1400,

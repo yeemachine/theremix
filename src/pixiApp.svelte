@@ -1,10 +1,11 @@
+<!-- <script context="module">
 import {constrain,getDistance} from './helpers.js';
-import * as PIXI from 'pixi.js'
-import 'pixi-layers'
-import 'pixi-lights'
+// import * as PIXI from 'pixi.js'
+// import 'pixi-layers'
+// import 'pixi-lights'
 
-export const App = new PIXI.Application()
-export const Stage = (App.stage = new PIXI.display.Stage());
+export const App = new PIXI.Application() || null
+export const Stage = (App.stage = new PIXI.display.Stage()) || null;
 
 export const diffuseLayer = new PIXI.display.Layer(PIXI.lights.diffuseGroup)
 export const normalLayer = new PIXI.display.Layer(PIXI.lights.normalGroup)
@@ -13,7 +14,6 @@ export const graphicsGroup = new PIXI.display.Group(1,true)
 export const graphicsLayer = new PIXI.display.Layer(graphicsGroup)
 export const cursorGroup = new PIXI.display.Group(2,true)
 export const cursorLayer = new PIXI.display.Layer(cursorGroup)
-
 
 Stage.addChild(
     diffuseLayer,
@@ -301,3 +301,4 @@ export const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
     }
 
 }
+</script> -->

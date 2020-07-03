@@ -17,6 +17,7 @@ width="1763" height="214" viewBox="0 0 1763 214" fill="none" xmlns="http://www.w
     <path d="M1173.09 0H951.463V9.83456H1173.09V0Z" fill={color}/>
 </svg>
 
+
 <style>
 svg{
     width:100%;

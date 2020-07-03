@@ -5,21 +5,10 @@ import { backOut } from 'svelte/easing';
 import {constrain,findNext} from '../helpers.js'
 import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,currentMIDI} from '../stores.js'
 import {oscillators,scales,tonicOrder,midiList} from '../config.js'
-import {App,Stage,Resources} from '../pixiApp.js'
-import BG from './PIXI/PIXI.Sprite.bg.svelte'
-import Table from './PIXI/PIXI.Sprite.table.svelte'
-import Video from './PIXI/PIXI.Sprite.video.svelte';
-import Theremin from './PIXI/PIXI.Sprite.theremin.svelte'
-import ThereminMobile from './PIXI/PIXI.Sprite.theremin.mobile.svelte'
-import AmbientLights from './PIXI/PIXI.Light.ambient.svelte'
-import CursorLight from './PIXI/PIXI.Light.cursor.svelte'
-import PIXIGraphics from './PIXI/PIXI.graphics.svelte';
-import Text from './PIXI/PIXI.text.svelte'
 import Title from './UI/UI.title.svelte'
 import Manual from './UI/UI.manual.svelte'
+import PixiApp from './PIXI.svelte'
 
-  
-  
 let containerWidth,
 canvasContainer, containerHeight;
 let scale
@@ -42,12 +31,6 @@ $: {
 
     CANVASWIDTH.set(containerWidth*$SCALE)
     CANVASHEIGHT.set(containerHeight*$SCALE)
-
-    App.view.width = $CANVASWIDTH;
-    App.view.height = $CANVASHEIGHT;
-    App.renderer.resize($CANVASWIDTH,$CANVASHEIGHT)  
-    App.render()
-
 }
 $: {
     if($active && $active0_1 === 0){
@@ -91,8 +74,8 @@ let updateMouseTouch = e => {
 }
 
 const handleOrientation = e => {
-    containerWidth = window.innerWidth;
-    containerHeight = window.innerHeight;
+    containerWidth = canvasContainer.clientWidth;
+    containerHeight = canvasContainer.clientHeight;
     WIDTH.set(containerWidth)
     HEIGHT.set(containerHeight)
 }
@@ -207,32 +190,44 @@ const handleKeyup = e => {
 }
 
 onMount(async () => {
-    canvasContainer.appendChild(App.view);
-    containerWidth = document.documentElement.clientWidth;;
-    containerHeight = document.documentElement.clientHeight;
+    containerWidth = canvasContainer.clientWidth;
+    containerHeight = canvasContainer.clientHeight;
     WIDTH.set(containerWidth)
     HEIGHT.set(containerHeight)
 });
 
-
+let pixiLoaded = false, pixiLayers = false, pixiLights = false
 </script>
 
+<svelte:head>
+    <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js" on:load={()=>{console.log('toneloaded')
+	pixiLoaded=true}}></script>
+    {#if pixiLoaded}
+        <script defer src="/libraries/pixi.layers.js" on:load={()=>{console.log('toneloaded')
+        pixiLayers=true}}></script>
+    {/if}
+    {#if pixiLayers}
+        <script defer src="/libraries/pixi-lights.js" on:load={()=>{console.log('toneloaded')
+        pixiLights=true}}></script>
+    {/if}
+</svelte:head>
+
+
 <svelte:window 
-bind:innerWidth = {containerWidth} 
-bind:innerHeight = {containerHeight} 
 on:orientationchange={handleOrientation}
 on:keydown={handleKeydown}
 on:keyup={handleKeyup}
 /> 
 
 <div 
+bind:clientWidth = {containerWidth} 
+bind:clientHeight = {containerHeight} 
 on:touchstart={(e)=>{updateMouse(e)}}
 on:touchend={()=>{globalPointerUp.set(true)}}
 on:mouseup={(e)=>{globalPointerUp.set(true)}}
 on:touchmove={(e)=>{updateMouse(e)}}
 on:mousemove={(e)=>{updateMouse(e)}}
 bind:this={canvasContainer} 
-style="width:{containerWidth}px;height:{containerHeight}px"
 class="canvasContainer {
     $hovered==='switch'?'hovered'
     : ($hovered==='knob right' || $hovered==='knob left') ? 'grab'
@@ -241,32 +236,12 @@ class="canvasContainer {
 >
     <Title/>
     <Manual/>
-    
-    {#await Resources}
 
-        <!-- Loading -->
+    {#if pixiLoaded && pixiLayers && pixiLights}
+        <PixiApp/>
+    {/if}
 
-    {:then value}
-        
-        <!-- Sprites -->
-        <BG stage={Stage} textures={value}/>
-        <PIXIGraphics stage={Stage}/>
-        <Table stage={Stage} textures={value}/>
-        <Theremin stage={Stage} textures={value}/> 
-        <ThereminMobile stage={Stage} textures={value}/> 
-        <Text stage={Stage}/>
-        <Video stage={Stage} textures={value}/>
-        <!-- Lights -->
-        <AmbientLights stage={Stage}/>
-        <CursorLight app={App} stage={Stage}/>
-
-    {:catch err}
-
-        <!-- Error -->
-
-    {/await}
 </div>
-
 
 <style>
 .canvasContainer{
@@ -290,5 +265,7 @@ class="canvasContainer {
 :global(canvas){
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>
