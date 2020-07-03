@@ -48,7 +48,21 @@ const pixiAssets = [
     "https://theremin.app/assets/pixi/Wire-2-Normal.png",
     "https://theremin.app/assets/pixi/Wire-3.png",
     "https://theremin.app/assets/pixi/Symbols-Normal.png",
-    "https://theremin.app/assets/pixi/BGM-Normal.jpg"
+    "https://theremin.app/assets/pixi/BGM-Normal.jpg",
+    "https://theremin.app/assets/pixi/BGM3.jpg",
+    "https://theremin.app/assets/pixi/BGM4.jpg",
+    "https://theremin.app/assets/pixi/BGM5.jpg",
+    "https://theremin.app/assets/pixi/BGM6.jpg",
+    "https://theremin.app/assets/pixi/BGM16.jpg",
+    "https://theremin.app/assets/pixi/BGM2.jpg",
+    "https://theremin.app/assets/pixi/BGM9.jpg",
+    "https://theremin.app/assets/pixi/BGM12.jpg",
+    "https://theremin.app/assets/pixi/BGM11.jpg",
+    "https://theremin.app/assets/pixi/BGM8.jpg",
+    "https://theremin.app/assets/pixi/BGM1.jpg",
+    "https://theremin.app/assets/pixi/BGM15.jpg",
+    "https://theremin.app/assets/pixi/BGM14.jpg",
+    "https://theremin.app/assets/pixi/BGM10.jpg"
 ]
 
 const midiAssets = [
