@@ -100,7 +100,7 @@ const icons = [
   'https://theremin.app/assets/global/hred.svg'
 ]
 
-let staticContent = libraries
+let staticContent = libraries.concat(pixiAssets)
 let contentToCache = appShellFiles.concat(staticContent).concat(midiAssets).concat(icons)
 
 // install and save files to cache
