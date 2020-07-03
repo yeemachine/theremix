@@ -137,8 +137,8 @@ $:{
 				<h2>Gesture<br>Controls<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
 				<div class="svg">
 					<video alt="Gesture controls" autoplay loop muted playsinline>  
-						<source src="https://theremin.app/assets/global/basic_controls_S.webm" type="video/webm">  
-						<source src="https://theremin.app/assets/global/basic_controls_S.mp4" type="video/mp4">  
+						<source src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.webm?v=1593735584224" type="video/webm">  
+						<source src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.mp4?v=1593735583334" type="video/mp4">  
 					</video>  
 				</div>
 			</div>
@@ -171,8 +171,8 @@ $:{
 				<h2>Midi<br>Controls<span style="font-size:9px;margin-left: 8px">Beta<span></h2>
 				<div class="svg">
 					<video alt="MIDI controls" autoplay loop muted playsinline>  
-						<source src="https://theremin.app/assets/global/midi_controls_S.webm" type="video/webm">  
-						<source src="https://theremin.app/assets/global/midi_controls_S.mp4" type="video/mp4">  
+						<source src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.webm?v=1593735585669" type="video/webm">  
+						<source src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.mp4?v=1593735842103" type="video/mp4">  
 					</video> 
 				</div>
 			</div>
