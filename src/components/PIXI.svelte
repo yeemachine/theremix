@@ -10,7 +10,7 @@
     import CursorLight from './PIXI/PIXI.Light.cursor.svelte'
     import PIXIGraphics from './PIXI/PIXI.graphics.svelte';
     import Text from './PIXI/PIXI.text.svelte'
-    import {CANVASWIDTH,CANVASHEIGHT} from '../stores.js'
+    import {CANVASWIDTH,CANVASHEIGHT,loaded} from '../stores.js'
 
     const App = new PIXI.Application()
     const Stage = (App.stage = new PIXI.display.Stage());
@@ -314,7 +314,9 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
     </script>
 
     <svelte:head>
-        <script src="https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js" on:load={()=>{pixiParticles=true}}></script>
+        {#if $loaded}
+            <script src="https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js" on:load={()=>{pixiParticles=true}}></script>
+        {/if}
     </svelte:head>
 
     {#await Resources}
