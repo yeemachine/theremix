@@ -53,47 +53,57 @@ export const toneOutput = writable({
 
 const storedVol = localStorage.getItem("volumeVal") || -15;
 export const volumeVal = writable(storedVol)
-volumeVal.subscribe(value => {
-    localStorage.setItem("volumeVal", value ? value : -15);
-});
+
 
 const storedGlide = localStorage.getItem("glide") || true;
 export const glide = writable(storedGlide)
-glide.subscribe(value => {
-    localStorage.setItem("glide", value ? value : true);
-});
+
 
 const storedOsc = localStorage.getItem("oscillator") || 'Sine';
 export const oscillatorType = writable(storedOsc)
-oscillatorType.subscribe(value => {
-    localStorage.setItem("oscillator", value ? value : 'Sine');
-});
+
 
 const storedTonic = localStorage.getItem("tonic") || 'G';
 export const tonic = writable(storedTonic)
-tonic.subscribe(value => {
-    localStorage.setItem("tonic", value ? value : 'G');
-});
+
 
 const storedScale = localStorage.getItem("scaleType") || 'Major';
 export const scaleType = writable(storedScale)
-scaleType.subscribe(value => {
-    localStorage.setItem("scaleType", value ? value : 'Major');
-});
 
-export const scaleNotes = writable([])
 
 const storedStartOctave = localStorage.getItem("startOctave") || 2;
 export const startOctave = writable(storedStartOctave)
-startOctave.subscribe(value => {
-    localStorage.setItem("startOctave", value ? value : 2);
-});
+
 
 const storedEndOctave = localStorage.getItem("endOctave") || 5;
 export const endOctave = writable(storedEndOctave)
-endOctave.subscribe(value => {
-    localStorage.setItem("endOctave", value ? value : 5);
-});
+
+if (typeof(Storage) !== "undefined") {
+    volumeVal.subscribe(value => {
+        localStorage.setItem("volumeVal", value ? value : -15);
+    });
+    glide.subscribe(value => {
+        localStorage.setItem("glide", value ? value : true);
+    });
+    oscillatorType.subscribe(value => {
+        localStorage.setItem("oscillator", value ? value : 'Sine');
+    });
+    tonic.subscribe(value => {
+        localStorage.setItem("tonic", value ? value : 'G');
+    });
+    scaleType.subscribe(value => {
+        localStorage.setItem("scaleType", value ? value : 'Major');
+    });
+    startOctave.subscribe(value => {
+        localStorage.setItem("startOctave", value ? value : 2);
+    });
+    endOctave.subscribe(value => {
+        localStorage.setItem("endOctave", value ? value : 5);
+    });
+}
+
+export const scaleNotes = writable([])
+
 
 export const enableMIDI = writable(false);
 export const currentMIDITitle = writable(null);
