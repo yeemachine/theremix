@@ -2,7 +2,7 @@
 // import * as Tone from "tone"
 // import * as Midi from '@tonejs/midi'
 import * as teoria from 'teoria'
-import {active,enableMIDI,volumeVal,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,analyser,audioControls,startOctave,endOctave,currentMIDITitle,currentMIDI,midiList} from '../stores.js'
+import {active,toneLoaded,enableMIDI,volumeVal,glide,toneOutput,scaleType,scaleNotes,tonic,oscillatorType,analyser,audioControls,startOctave,endOctave,currentMIDITitle,currentMIDI,midiList} from '../stores.js'
 import {constrain, shuffle, jsUcfirst, findNext} from '../helpers.js'
 import {tonicOrder,scales} from '../config.js'
 
@@ -275,4 +275,7 @@ $:{
         }
     }
 }
+
+toneLoaded.set(true)
+
 </script>
