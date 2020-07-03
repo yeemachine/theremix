@@ -156,6 +156,7 @@ self.addEventListener('message', (event) => {
                       // console.log('[Service Worker] Fetching resource: '+e.request.url);
                       return r
                     }else{
+                      
                       if(staticContent.includes(e.request.url)){
                         // Serve cache if online and is static content
                         // console.log('[Service Worker] Fetching resource: '+e.request.url);

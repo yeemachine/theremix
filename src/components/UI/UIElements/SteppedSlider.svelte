@@ -61,14 +61,19 @@ const dispatchChange = ()=>{
 </script>
 
 <span class="multi-range {hide ? 'hide' : ''}">
+    <label>
     <input bind:this={lowerSlider} 
     on:input={updateLower}
     type="range" min={min} max={max} value={initVal[0]} 
     id="lower">
+    </label>
+    <label>
     <input bind:this={upperSlider} 
     on:input={updateUpper} 
     
     type="range" min={min} max={max} value={initVal[1]} id="upper">
+    </label>
+
     <div class="progress"
     style="width:calc((100% - 18px) * {difference/(max-min)});left:calc(9px + (100% - 18px) * {(lower-1)/(max-min)})"></div>
     <div class="tick-track">
@@ -223,7 +228,7 @@ input[type=range]::-webkit-slider-runnable-track {
     background: rgb(var(--crimson));
     z-index: -1;
 }
-label{
+.tick label{
   font-family: 'Nicholson Beta';
   position: absolute;
   top: 24px;

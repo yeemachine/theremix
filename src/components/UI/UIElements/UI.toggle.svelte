@@ -22,7 +22,7 @@ class='{
     ($setting) ? 'toggled' : ''} 
     {hide ?'hide':''} 
     {styles}'>
-    <input type="checkbox" checked={$setting ? true : false} on:change={handleClick} 
+    <input aria-label={name} type="checkbox" checked={$setting ? true : false} on:change={handleClick} 
 >
     <container class={$setting ? '' : classes}>
     <div class="track">

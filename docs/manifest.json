@@ -2,9 +2,10 @@
   "name": "Theremix - Virtual Theremin",
   "short_name": "Theremix",
   "background_color": "#000000",
+  "theme_color":"#e54646",
   "display": "standalone",
   "Scope": "./",
-  "start_url": "index.html#homescreen",
+  "start_url": "/index.html",
   "icons": [
     {
       "src": "https://theremin.app/assets/icons/icon-72x72.png",

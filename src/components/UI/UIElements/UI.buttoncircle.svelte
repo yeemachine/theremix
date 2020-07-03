@@ -15,6 +15,7 @@ const handleClick = () => {
 
 <button 
     name={name}
+    aria-label={name}
     tabindex={tabindex} 
     class="{hide ? 'hide':''} {selected?'selected':''} 
     {$setting && !reverse ? '' 

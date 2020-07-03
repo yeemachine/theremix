@@ -4,10 +4,13 @@
     <meta charset="utf-8" />
 
     <title>Theremix - Virtual Theremin</title>
+    <meta name="Description" content="An app that celebrates the 100th anniversary of the theremin.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href="https://theremin.app"/>
+    <meta name="theme-color" content="#e54646"/>
 
     <link
       rel="shortcut icon"
@@ -135,7 +138,10 @@
       padding:0;
       width:100%;
       height:100%;
+      max-width: 100%;
+      max-height: 100%;
       overflow:hidden;
+      position: absolute;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       }
@@ -147,7 +153,7 @@
       .cover {
         width: 120%;
         height: 110%;
-        position: absolute;
+        position: fixed;
         top: -5%;
         left: -10%;
         background: rgb(229, 70, 70);
@@ -193,26 +199,8 @@
       }
     </style>
 
-    <link rel="stylesheet" href="/build/bundle.css" />
+    <link defer rel="stylesheet" href="/build/bundle.css" />
     
-    <script defer src="/build/bundle.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js"></script>
-    <script src="/libraries/pixi.layers.js"></script>
-    <script src="/libraries/pixi-lights.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/tone@13.8.27/build/Tone.js"
-    ></script>
-    <!--     <script type="text/javascript" src="https://unpkg.com/tone@14.7.3/build/Tone.js"></script> -->
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/@tonejs/midi"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
-
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -294,5 +282,9 @@
         </svg>
       </div>
     </div>
+    <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js"></script>
+    <script defer src="/libraries/pixi.layers.js"></script>
+    <!-- <script defer src="/libraries/pixi-lights.js"></script> -->
+    <script defer src="/build/bundle.js"></script>
   </body>
 </html>

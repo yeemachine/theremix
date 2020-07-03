@@ -45,6 +45,7 @@ $:{
 
 <section class={$manual ? '' : 'hide'}>
 	<ButtonCircle 
+	name="Close Manual"
     icon={closeIcon} 
     setting={manual}
 	settingState={false} 

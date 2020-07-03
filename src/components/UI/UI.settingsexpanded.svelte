@@ -34,6 +34,7 @@ const updateVolume = (e) => {
 <div class="setting">
     <h4>Volume</h4>
     <input
+    aria-label="Change Master Volume"
     name="mastervolume"
     class="volumeTag"
     on:input={(e)=>updateVolume(e)}
@@ -46,6 +47,7 @@ const updateVolume = (e) => {
     <h4>Oscillator<span class="keycap">O</span></h4>
     <div class="select">
     <select 
+    aria-label="Change Oscillator Type"
     name="oscillators"
     bind:value={selectedOsc} class="oscillators" 
     on:change={()=>oscillatorType.set(selectedOsc)}
@@ -67,6 +69,7 @@ const updateVolume = (e) => {
     <container>
         <div class="select key">
             <select
+            aria-label="Change Key"
             name="keytype"
             class="keyTag"
              bind:value={selectedTonic} 
@@ -86,6 +89,7 @@ const updateVolume = (e) => {
         </div>
         <div class="select scale">
             <select 
+            aria-label="Change Scale Type"
             name="scaletype"
             class="scaleTag"
             bind:value={selectedScale} 
@@ -141,7 +145,9 @@ const updateVolume = (e) => {
             hide={(!$expandSettings) ? true :false}/>
     </div>
     <div class="select {$enableMIDI ? '' : 'hide'}">
-        <select bind:value={selectedMIDI} class="midi" 
+        <select 
+        aria-label="Change MIDI track"
+        bind:value={selectedMIDI} class="midi" 
         on:change={()=>{
             if(selectedMIDI){
                 currentMIDI.set(selectedMIDI)

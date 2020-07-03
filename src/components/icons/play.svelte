@@ -115,5 +115,4 @@ svg.loaded path:nth-child(1){
         }
     }
 
-
 </style>

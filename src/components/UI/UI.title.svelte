@@ -33,25 +33,30 @@ $:{
         <Logo hide={(!$coverLoaded || $active) ? true : false}/>
     </div>
 
-    <button 
-    class="play"
-    name="start-theremin"
-    on:click={playStart}
-    on:touchend={playStart}
-    tabindex={!$active?1:-1}
-    >
-        <Play loaded={$coverLoaded} hide={$active}/>
-    </button>
+    <label>
+        <button 
+        class="play"
+        aria-label="Start Theremin"
+        name="start-theremin"
+        on:click={playStart}
+        on:touchend={playStart}
+        tabindex={!$active?0:-1}
+        >
+            <Play loaded={$coverLoaded} hide={$active}/>
+        </button>
+    </label>
 
 </section>
 <button 
     name="open-manual"
+    aria-label="Open Manual"
     on:click={manualOpen} 
     class="manual {(!$coverLoaded || $active || $manual) ? 'hide' : ''}">
 		Operation Manual
 </button>
 <button
     name="refresh-updates"
+    aria-label="Refresh to Update"
     on:click={()=>{window.location.reload()}}
     class="update {(!$update || !$coverLoaded || $active || $manual) ? 'hide': ''}"
 >

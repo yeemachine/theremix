@@ -35,6 +35,7 @@ import {expandSettings,active,camera} from '../../stores.js'
     </div>
     <div class="settings">
         <ButtonCircle 
+        name={ $expandSettings ? 'Close Controls' : 'Open Controls'}
         classes={'controlsTag'}
         icon={
             $expandSettings ? closeIcon

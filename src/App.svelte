@@ -55,26 +55,61 @@
 		pwa.set(true);
 	}
 
+let tfLoaded = false,posenetLoaded = false,toneLoaded = false,midiLoaded = false
+
 </script>
 
-<style>
+<svelte:head>
+	<script src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{console.log('toneloaded')
+	toneLoaded=true}}></script>
+	{#if toneLoaded}
+    	<script src="https://unpkg.com/@tonejs/midi" on:load={()=>{console.log('midiloaded')
+		midiLoaded=true}}></script>
+	{/if}
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" on:load={()=>{console.log('tfloaded')
+	tfLoaded=true}}></script>
+	{#if tfLoaded}
+    	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{console.log('posenetLoaded')
+		posenetLoaded=true}}></script>
+	{/if}
+</svelte:head>
+    
+<main>
+	<Canvas/>
+	<Shortcuts/>
+	<Nav/>
+	
+	{#if toneLoaded && midiLoaded}
+		<Tone/>
+	{/if}
 
+	{#if tfLoaded && posenetLoaded}
+		<Webcam/>
+		<PoseNet/>
+	{/if}
+</main>
+
+<style>
+  
   @font-face {
     font-family: "Whirly Birdie";
     src: url("https://theremin.app/assets/fonts/WhirlyBirdieGX.woff2")
       format("woff2");
+	font-display: swap;
   }
 
   @font-face {
       font-family: "Whirly Birdie Regular";
       src: url("https://theremin.app/assets/fonts/WhirlyBirdie-Regular.woff")
           format("woff");
+		font-display: swap;
   }
 
 	@font-face {
 	font-family: "Nicholson Beta";
 	src: url("https://theremin.app/assets/fonts/nicholsonbeta-webfont.woff2")
 		format("woff2");
+		font-display: swap;
 	}
 
   :root {
@@ -154,15 +189,4 @@
 	cursor: url(https://theremin.app/assets/global/cursor4.svg) 21 20, pointer;
 	}
 </style>
-
-
-
-<main>
-	<Canvas/>
-	<Shortcuts/>
-	<Nav/>
-	<Tone/>
-	<Webcam/>
-	<PoseNet/>
-</main>
 
