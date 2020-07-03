@@ -34,6 +34,7 @@ const updateVolume = (e) => {
 <div class="setting">
     <h4>Volume</h4>
     <input
+    name="mastervolume"
     class="volumeTag"
     on:input={(e)=>updateVolume(e)}
     type="range" min={-48} max={0} value={$volumeVal} style='background-size:{ ($volumeVal - (-48)) * 100 / (0 - (-48))}% 100%'>
@@ -44,7 +45,9 @@ const updateVolume = (e) => {
 <div class="setting">
     <h4>Oscillator<span class="keycap">O</span></h4>
     <div class="select">
-    <select bind:value={selectedOsc} class="oscillators" 
+    <select 
+    name="oscillators"
+    bind:value={selectedOsc} class="oscillators" 
     on:change={()=>oscillatorType.set(selectedOsc)}
     >
         {#each oscillators as oscName}
@@ -64,6 +67,7 @@ const updateVolume = (e) => {
     <container>
         <div class="select key">
             <select
+            name="keytype"
             class="keyTag"
              bind:value={selectedTonic} 
             on:change={()=>{
@@ -82,6 +86,7 @@ const updateVolume = (e) => {
         </div>
         <div class="select scale">
             <select 
+            name="scaletype"
             class="scaleTag"
             bind:value={selectedScale} 
             on:change={()=>scaleType.set(selectedScale)}
@@ -113,6 +118,7 @@ const updateVolume = (e) => {
         <h4 style="margin:0;">Glide<span class="keycap">G</span>
         </h4>
         <Toggle 
+            name={$glide ? 'disable-glide' : 'enable-glide'}
             classes="glide"
             setting={glide} 
             hide={(!$expandSettings) ? true :false}/>
@@ -129,6 +135,7 @@ const updateVolume = (e) => {
             <span style="font-size:9px;margin-left: 8px;color:rgb(var(--crimson))">Beta</span>
         </h4>
         <Toggle 
+            name={$enableMIDI ? 'disable-midi' : 'enable-midi'}
             classes="MIDITag"
             setting={enableMIDI} 
             hide={(!$expandSettings) ? true :false}/>

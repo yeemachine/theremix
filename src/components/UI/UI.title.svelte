@@ -35,6 +35,7 @@ $:{
 
     <button 
     class="play"
+    name="start-theremin"
     on:click={playStart}
     on:touchend={playStart}
     tabindex={!$active?1:-1}
@@ -44,11 +45,13 @@ $:{
 
 </section>
 <button 
+    name="open-manual"
     on:click={manualOpen} 
     class="manual {(!$coverLoaded || $active || $manual) ? 'hide' : ''}">
 		Operation Manual
 </button>
 <button
+    name="refresh-updates"
     on:click={()=>{window.location.reload()}}
     class="update {(!$update || !$coverLoaded || $active || $manual) ? 'hide': ''}"
 >

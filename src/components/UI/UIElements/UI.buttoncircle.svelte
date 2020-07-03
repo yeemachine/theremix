@@ -7,12 +7,14 @@ export let classes = ''
 export let reverse = false
 export let selected = false
 export let tabindex = 0
+export let name = ''
 const handleClick = () => {
      setting.set(!$setting)
 }
 </script>
 
 <button 
+    name={name}
     tabindex={tabindex} 
     class="{hide ? 'hide':''} {selected?'selected':''} 
     {$setting && !reverse ? '' 

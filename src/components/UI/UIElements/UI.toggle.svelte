@@ -4,6 +4,7 @@ export let setting //Pass in a store from prop
 export let hide = false
 export let styles = ''
 export let classes = ''
+export let name = ''
 
 let toggleDom
 let circlePathValues
@@ -15,6 +16,7 @@ const handleClick = () => {
 </script>
 
 <label 
+name={name}
 bind:this={toggleDom} 
 class='{
     ($setting) ? 'toggled' : ''} 
