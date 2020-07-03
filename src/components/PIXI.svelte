@@ -315,8 +315,7 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
     </script>
 
     <svelte:head>
-        <script src="https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js" on:load={()=>{console.log('particlesLoaded')
-        pixiParticles=true}}></script>
+        <script src="https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js" on:load={()=>{pixiParticles=true}}></script>
     </svelte:head>
 
     {#await Resources}
