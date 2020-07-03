@@ -33,7 +33,7 @@
     const Loader = PIXI.loader
     .add(
         "table",
-        "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Froundtable.jpg?v=1593791961330"
+        "https://theremin.app/assets/pixi/roundtable.png"
     )
     .add(
         "table_normal",

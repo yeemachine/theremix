@@ -144,7 +144,6 @@ let tfLoaded = false,posenetLoaded = false,toneLoaded = false,midiLoaded = false
 		
 	main {
 		position: fixed;
-		display:flex;
 		margin: 0 0 0 0;
 		width:100%;
 		height:100%;

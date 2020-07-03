@@ -29,7 +29,10 @@ const bgRatio = textures.bg_machine.texture.width/textures.bg_machine.texture.he
 const BGM_bg = createSprite(PIXI.Texture.from(midiList[Object.keys(midiList)[0]].img),textures.bgm_normal.texture)
 BGM_bg.children[0].tint = 0x80797F
 $:{
-BGM_bg.children[0].texture = PIXI.Texture.from(midiList[$currentMIDI].img);
+let texture = PIXI.Texture.from(midiList[$currentMIDI].img);
+if(texture.valid){
+  BGM_bg.children[0].texture = texture
+}
 BGM_bg.alpha = 1-$sineInOut0_1_2
 }
 
