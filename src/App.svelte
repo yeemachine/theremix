@@ -60,17 +60,13 @@ let tfLoaded = false,posenetLoaded = false,toneLoaded = false,midiLoaded = false
 </script>
 
 <svelte:head>
-	<script src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{console.log('toneloaded')
-	toneLoaded=true}}></script>
+	<script src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{toneLoaded=true}}></script>
 	{#if toneLoaded}
-    	<script src="https://unpkg.com/@tonejs/midi" on:load={()=>{console.log('midiloaded')
-		midiLoaded=true}}></script>
+    	<script src="https://unpkg.com/@tonejs/midi" on:load={()=>{midiLoaded=true}}></script>
 	{/if}
-	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" on:load={()=>{console.log('tfloaded')
-	tfLoaded=true}}></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
 	{#if tfLoaded}
-    	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{console.log('posenetLoaded')
-		posenetLoaded=true}}></script>
+    	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{posenetLoaded=true}}></script>
 	{/if}
 </svelte:head>
     
