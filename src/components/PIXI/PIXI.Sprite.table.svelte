@@ -18,7 +18,8 @@ const tableRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Mac
 
 let maskGraphic = new PIXI.Graphics();
 maskGraphic.lineStyle(0)
-table.children[0].mask = maskGraphic
+maskGraphic.parentGroup = PIXI.lights.diffuseGroup;
+table.children[0].mask = maskGraphic;
 
 stage.addChild(table,maskGraphic)
 
@@ -32,7 +33,7 @@ $:{
     }
     table.x = ($CANVASWIDTH - table.width)*.5
     table.y = $thereminPos.y + $thereminPos.height*.9;
-    table.children[0].tint = lerpColor(0xeeccec,0x80797F,$sineInOut0_1)
+    table.children[0].tint = lerpColor(0x5A4E59,0x3C2914,$sineInOut0_1)
 
     tablePos.set({
         x:table.x,

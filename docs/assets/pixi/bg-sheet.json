@@ -1,6 +1,6 @@
 {
   "meta": {
-    "image": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbg-sheet.jpg?v=1593863105405",
+    "image": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbg-sheet.jpg?v=1593865188466",
     "format": "RGBA8888",
     "size": { "w": 2400, "h": 3660 },
     "scale": "1"
@@ -23,7 +23,7 @@
       "anchor": { "x": 0, "y": 0 }
     },
     "BG-Normal-Table.jpg": {
-      "frame": { "x": 0, "y": 1350, "w": 2400, "h": 960 },
+      "frame": { "x": 0, "y": 1450, "w": 2400, "h": 960 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 2400, "h": 960 },

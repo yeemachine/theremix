@@ -43,7 +43,6 @@ BGM_bg.alpha = 1-$sineInOut0_1_2
 //     )
 }
 
-
 $: {
     if($CANVASWIDTH/$CANVASHEIGHT > bgRatio){
         bg.width = $CANVASWIDTH
