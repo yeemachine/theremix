@@ -4,6 +4,7 @@ import { sineInOut } from 'svelte/easing';
 // import {midiList} from '../../config.js';
 import {WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,thereminPos,bgPos,enableMIDI,currentMIDI,midiList} from '../../stores.js'
 export let textures = null;
+export let sheet = null;
 export let stage = null;
 export let createSprite = null;
 
@@ -22,11 +23,11 @@ const BGMContainer = new PIXI.Container();
 $:{
     BGMContainer.alpha = $sineInOut0_1
 }
-const bg = createSprite(textures.bg_machine.texture,textures.bg_normal.texture)
+const bg = createSprite(sheet.textures['BG-Machine.jpg'],sheet.textures['BG-Normal.jpg'])
 bg.children[0].tint = 0x444444;
-const bgRatio = textures.bg_machine.texture.width/textures.bg_machine.texture.height
+const bgRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Machine.jpg'].height
 
-const BGM_bg = createSprite(textures[Object.keys($midiList)[0]].texture,textures.bgm_normal.texture)
+const BGM_bg = createSprite(textures[Object.keys($midiList)[0]].texture,sheet.textures['BG-Normal-BGM.jpg'])
 BGM_bg.children[0].tint = 0x80797F
 $:{
 BGM_bg.children[0].texture = textures[$currentMIDI].texture;
