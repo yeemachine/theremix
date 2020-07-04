@@ -32,7 +32,7 @@ $:{
         table.scale.x = table.scale.y
     }
     table.x = ($CANVASWIDTH - table.width)*.5
-    table.y = $thereminPos.y + $thereminPos.height*.925;
+    table.y = $thereminPos.y + $thereminPos.height*.91;
     table.children[0].tint = lerpColor(0x5A4E59,0x3C2914,$sineInOut0_1)
 
     tablePos.set({
