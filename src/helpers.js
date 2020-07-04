@@ -7,7 +7,7 @@ export function getDistance(a, b) {
     const distY = a.y - b.y;
     return Math.sqrt(distX**2 + distY**2);
   }
-  
+
 export function getMidpoint(a, b, axis) {
     const x1 = a.position[axis];
     const x2 = b.position[axis];

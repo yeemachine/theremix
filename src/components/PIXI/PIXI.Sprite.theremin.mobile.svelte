@@ -30,13 +30,13 @@ const tweenKnobRight = tweened(0, {
 const thereminMobile = new PIXI.Container();
 
 const base = createSprite(
-    sheet.textures['Mobile-Controls.png'],
-    sheet.textures['Mobile-Controls-Normal.png']
+    sheet.textures['Mobile-Controls'],
+    sheet.textures['Mobile-Controls-Normal']
 )
 
 const knob_left = createSprite(
-    sheet.textures['Knob.png'],
-    sheet.textures['Knob-Normal.png']
+    sheet.textures['Knob'],
+    sheet.textures['Knob-Normal']
 )
 knob_left.children[0].anchor.set(0.5, 0.5);
 knob_left.children[1].anchor.set(0.5, 0.5);
@@ -62,8 +62,8 @@ knob_left.on('pointerdown',()=>{
 })
 
 const knob_right = createSprite(
-    sheet.textures['Knob.png'],
-    sheet.textures['Knob-Normal.png']
+    sheet.textures['Knob'],
+    sheet.textures['Knob-Normal']
 )
 knob_right.children[0].anchor.set(0.5, 0.5);
 knob_right.children[1].anchor.set(0.5, 0.5);
@@ -86,7 +86,7 @@ knob_right.on('pointerdown',()=>{
     dataLayer.push({'event':'osc-pixi'});
 })
 const symbols = createSprite(
-    sheet.textures['Symbols.png']
+    sheet.textures['Symbols']
 )
 symbols.anchor.set(0.5, 0.5);
 symbols.tint = 0xE54646;
@@ -95,14 +95,14 @@ symbols.tint = 0xE54646;
 const knob_light = new PIXI.lights.PointLight(0xffffff, 0);
 
 const switchRight = createSprite(
-    sheet.textures['Switch-Off.png'],
-    sheet.textures['Switch-Off-Normal.png']
+    sheet.textures['Switch-Off'],
+    sheet.textures['Switch-Off-Normal']
 )
 switchRight.children[0].anchor.set(0.5, 0.5);
 switchRight.children[1].anchor.set(0.5, 0.5);
 $: switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
-$: switchRight.children[0].texture = ($glide && $active) ? sheet.textures['Switch-On.png'] : sheet.textures['Switch-Off.png']
-$: switchRight.children[1].texture = ($glide && $active) ? sheet.textures['Switch-On-Normal.png'] : sheet.textures['Switch-Off-Normal.png']
+$: switchRight.children[0].texture = ($glide && $active) ? sheet.textures['Switch-On'] : sheet.textures['Switch-Off']
+$: switchRight.children[1].texture = ($glide && $active) ? sheet.textures['Switch-On-Normal'] : sheet.textures['Switch-Off-Normal']
 
 switchRight.on('pointerdown',()=>{
     glide.set(!$glide)
@@ -143,8 +143,8 @@ $:{
     x:1+.4*$tweenKnobLeft,
     y:1+.4*$tweenKnobLeft
     }
-    knob_left.x = base.width*.2355
-    knob_left.y = base.height*.226
+    knob_left.x = base.width*.2352
+    knob_left.y = base.height*.229
     knob_left.interactive = ($active) ? true : false
 
     knob_light.x = base.x + base.width*.5
@@ -157,7 +157,7 @@ $:{
         y:1+.4*$tweenKnobRight
     }
     knob_right.x = base.width*.5095
-    knob_right.y = base.height*.226
+    knob_right.y = base.height*.229
     knob_right.interactive = ($active) ? true : false
     symbols.scale = {
         x:.5+.6*$tweenKnobRight,
@@ -170,7 +170,7 @@ $:{
     }
 
     //Switch Right Positioning
-    switchRight.x = base.width*.775
+    switchRight.x = base.width*.77
     switchRight.y = base.height*.226
     switchRight.interactive = ($active) ? true : false
 

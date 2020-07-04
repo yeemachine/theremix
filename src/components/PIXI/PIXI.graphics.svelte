@@ -102,7 +102,8 @@ const createPose = (pose,graphics) => {
         } 
     }) 
 
-    //Head
+   
+   //Head
     graphics2add.beginFill(0xE54646,.3)
     graphics2add.drawEllipse(
         0,
