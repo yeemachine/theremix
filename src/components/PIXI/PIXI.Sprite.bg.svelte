@@ -25,16 +25,16 @@ $:{
 }
 const bg = createSprite(sheet.textures['BG-Machine'],sheet.textures['BG Normal'])
 bg.children[0].tint = 0x444444;
-bg.children[1].tint = 0x470BBFF;
+bg.children[1].tint = 0x8056F8;
 const bgRatio = sheet.textures['BG-Machine'].width/sheet.textures['BG-Machine'].height
 
 const BGM_bg = createSprite(PIXI.Texture.from(Object.keys($midiList)[0].img),sheet.textures['BG-Normal-BGM'])
 BGM_bg.children[0].tint = 0x80797F
-BGM_bg.children[1].tint = 0x470BBFF;
+BGM_bg.children[1].tint = 0x8056F8;
 $:{
 BGM_bg.alpha = 1-$sineInOut0_1_2
 }
-
+  
 currentMIDI.subscribe(value=>{
     if(Object.keys(PIXI.loader.resources).includes(value)){
         BGM_bg.children[0].texture = PIXI.loader.resources[value].texture
