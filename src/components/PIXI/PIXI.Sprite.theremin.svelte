@@ -200,8 +200,8 @@ $: {
         x:.5+.2*$tweenKnobLeft,
         y:.5+.2*$tweenKnobLeft
     }
-    knob_left.x = theremin_null.width*.33035
-    knob_left.y = theremin_null.height*.8476
+    knob_left.x = theremin_null.width*.33025
+    knob_left.y = theremin_null.height*.8478
     knob_left.interactive = ($active) ? true : false
     knob_left.visible = ($WIDTH > 600) ? true : false
 
@@ -210,7 +210,7 @@ $: {
         y:.5+.2*$tweenKnobRight
     }
     knob_right.x = theremin_null.width*.679
-    knob_right.y = theremin_null.height*.8476
+    knob_right.y = theremin_null.height*.8478
     knob_right.interactive = ($active) ? true : false
     knob_right.visible = ($WIDTH > 600) ? true : false
     symbols.scale = {
