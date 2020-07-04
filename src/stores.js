@@ -54,26 +54,20 @@ export const toneOutput = writable({
 const storedVol = localStorage.getItem("volumeVal") || -15;
 export const volumeVal = writable(storedVol)
 
-
-const storedGlide = localStorage.getItem("glide") || true;
+const storedGlide = localStorage.getItem("glide") === null ? true : (localStorage.getItem("glide") === 'true');
 export const glide = writable(storedGlide)
-
 
 const storedOsc = localStorage.getItem("oscillator") || 'Sine';
 export const oscillatorType = writable(storedOsc)
 
-
 const storedTonic = localStorage.getItem("tonic") || 'G';
 export const tonic = writable(storedTonic)
-
 
 const storedScale = localStorage.getItem("scaleType") || 'Major';
 export const scaleType = writable(storedScale)
 
-
 const storedStartOctave = localStorage.getItem("startOctave") || 2;
 export const startOctave = writable(storedStartOctave)
-
 
 const storedEndOctave = localStorage.getItem("endOctave") || 5;
 export const endOctave = writable(storedEndOctave)
@@ -83,7 +77,7 @@ if (typeof(Storage) !== "undefined") {
         localStorage.setItem("volumeVal", value ? value : -15);
     });
     glide.subscribe(value => {
-        localStorage.setItem("glide", value ? value : true);
+        localStorage.setItem("glide", value);
     });
     oscillatorType.subscribe(value => {
         localStorage.setItem("oscillator", value ? value : 'Sine');
