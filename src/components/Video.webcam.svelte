@@ -72,6 +72,7 @@ $:{
 <style>
 video {
         opacity: 0;
+        top:0;left:0;
         pointer-events: none;
         position: fixed;
 }

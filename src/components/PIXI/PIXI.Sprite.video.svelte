@@ -3,7 +3,7 @@ import { tweened } from 'svelte/motion';
 import { backInOut, sineInOut } from 'svelte/easing';
 import {constrain} from '../../helpers.js'
 import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides} from '../../stores.js';
-export let textures = null;
+export let sheet = null;
 export let stage = null;
 export let createSprite = null;
 export let diffuseLayer = null;
@@ -23,15 +23,15 @@ const backOut0_1 = tweened(0, {
     easing: backInOut
 });
 
-const wire1 = createSprite(textures.wire1.texture,textures.wire1_normal.texture)
+const wire1 = createSprite(sheet.textures['Wire-1.png'],sheet.textures['Wire-1-Normal.png'])
 wire1.children[0].tint = 0x666666;
-const wire2 = createSprite(textures.wire2.texture,textures.wire2_normal.texture)
+const wire2 = createSprite(sheet.textures['Wire-2.png'],sheet.textures['Wire-2-Normal.png'])
 wire2.children[0].tint = 0x666666;
-const wire3 = createSprite(textures.wire3.texture,textures.wire3_normal.texture)
+const wire3 = createSprite(sheet.textures['Wire-3.png'],sheet.textures['Wire-3-Normal.png'])
 wire3.children[0].tint = 0x666666;
 
-const video = createSprite(textures.video.texture,textures.video_normal.texture)
-const guides = createSprite(textures.guides.texture)
+const video = createSprite(sheet.textures['Video.png'],sheet.textures['Video-Normal.png'])
+const guides = createSprite(sheet.textures['Guides.png'])
 guides.parentGroup = PIXI.lights.diffuseGroup
 video.addChild(guides)
 

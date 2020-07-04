@@ -8,11 +8,9 @@ import {posenetOptions} from '../config.js'
 let net;
 
 
-        posenet.load().then(e=>{
-            net = e
-        });
-    
-
+posenet.load().then(e=>{
+    net = e
+});
 
 async function estimatePoseOnImage() {
     if($videoReady){
@@ -20,13 +18,12 @@ async function estimatePoseOnImage() {
         if(pose.length>0){
             if(pose[0].score>posenetOptions.minPoseConfidence){
                 let armspan = getDistance(pose[0].keypoints[9].position,pose[0].keypoints[10].position)
-                let smoothPose = smooth(pose[0],armspan)
+                let smoothPose = smooth(pose[0],armspan)                
                 poseNetRes.set(smoothPose.keypoints)
             }else{
                 poseNetRes.set(null)
             }
         }
-        
         requestAnimationFrame(estimatePoseOnImage);
     }else{
         poseNetRes.set(null)

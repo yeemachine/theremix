@@ -3,8 +3,8 @@ import { tweened } from 'svelte/motion';
 import { backOut, sineInOut } from 'svelte/easing';
 import { oscillators } from '../../config.js';
 import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,globalPointerUp, thereminPos,glide, volumeVal,oscillatorType,thereminMobilePos,hovered,dragged} from '../../stores.js';
-export let textures = null;
 export let stage = null;
+export let sheet = null;
 export let createSprite = null;
 
 const backOut0_1 = tweened(0, {
@@ -30,13 +30,13 @@ const tweenKnobRight = tweened(0, {
 const thereminMobile = new PIXI.Container();
 
 const base = createSprite(
-    textures.theremin_mobile.texture,
-    textures.theremin_mobile_normal.texture
+    sheet.textures['Mobile-Controls.png'],
+    sheet.textures['Mobile-Controls-Normal.png']
 )
 
 const knob_left = createSprite(
-    textures.knob.texture,
-    textures.knob_normal.texture
+    sheet.textures['Knob.png'],
+    sheet.textures['Knob-Normal.png']
 )
 knob_left.children[0].anchor.set(0.5, 0.5);
 knob_left.children[1].anchor.set(0.5, 0.5);
@@ -62,8 +62,8 @@ knob_left.on('pointerdown',()=>{
 })
 
 const knob_right = createSprite(
-    textures.knob.texture,
-    textures.knob_normal.texture
+    sheet.textures['Knob.png'],
+    sheet.textures['Knob-Normal.png']
 )
 knob_right.children[0].anchor.set(0.5, 0.5);
 knob_right.children[1].anchor.set(0.5, 0.5);
@@ -86,25 +86,24 @@ knob_right.on('pointerdown',()=>{
     dataLayer.push({'event':'osc-pixi'});
 })
 const symbols = createSprite(
-    textures.symbols.texture,
-    textures.symbols_normal.texture
+    sheet.textures['Symbols.png']
 )
-symbols.children[0].anchor.set(0.5, 0.5);
-symbols.children[1].anchor.set(0.5, 0.5);
-symbols.children[0].tint = 0xE54646;
+symbols.anchor.set(0.5, 0.5);
+symbols.tint = 0xE54646;
 
 
 const knob_light = new PIXI.lights.PointLight(0xffffff, 0);
 
 const switchRight = createSprite(
-    textures.switch_off.texture,
-    textures.switch_off_normal.texture
+    sheet.textures['Switch-Off.png'],
+    sheet.textures['Switch-Off-Normal.png']
 )
 switchRight.children[0].anchor.set(0.5, 0.5);
 switchRight.children[1].anchor.set(0.5, 0.5);
-$: switchRight.children[0].texture = ($glide && $active) ? textures.switch_on.texture : textures.switch_off.texture
-$: switchRight.children[1].texture = ($glide && $active) ? textures.switch_on_normal.texture : textures.switch_off_normal.texture
 $: switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
+$: switchRight.children[0].texture = ($glide && $active) ? sheet.textures['Switch-On.png'] : sheet.textures['Switch-Off.png']
+$: switchRight.children[1].texture = ($glide && $active) ? sheet.textures['Switch-On-Normal.png'] : sheet.textures['Switch-Off-Normal.png']
+
 switchRight.on('pointerdown',()=>{
     glide.set(!$glide)
     if('vibrate' in navigator){
@@ -112,10 +111,12 @@ switchRight.on('pointerdown',()=>{
     }
     dataLayer.push({'event':'glide-pixi'});
 })
+
 switchRight.on('mouseover',()=>{
     hovered.set('switch')
     switchRight.children[0].tint = 0xffffff
 })
+
 switchRight.on('mouseout',()=>{
     hovered.set(null)
     switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
