@@ -1,11 +1,9 @@
 {
   "meta": {
-    "version": "1.0",
     "image": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcore-sheet.png?v=1593854274613",
     "format": "RGBA8888",
     "size": { "w": 3990, "h": 3810 },
-    "scale": "1",
-    "smartupdate": "$TexturePacker:SmartUpdate:ed3799b343ef0434bb577b8dc78580a8:2406c53f77ef6cdbd1b4a599c3ddc623:608639ae7244f04290606c6e2b16a58e$"
+    "scale": "1"
   },
   "frames": {
     "Guides.png": {

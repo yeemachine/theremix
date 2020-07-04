@@ -4,6 +4,7 @@ import { sineInOut } from 'svelte/easing';
 import { lerpColor } from '../../helpers.js';
 import {WIDTH,CANVASWIDTH,CANVASHEIGHT,thereminPos,tablePos,enableMIDI} from '../../stores.js';
 export let textures = null;
+export let sheet = null;
 export let stage = null;
 export let createSprite = null;
 
@@ -12,8 +13,8 @@ const sineInOut0_1 = tweened(1, {
     easing: sineInOut
 });
 
-const table = createSprite(textures.table.texture,textures.table_normal.texture)
-const tableRatio = textures.bg_machine.texture.width/textures.bg_machine.texture.height
+const table = createSprite(textures.table.texture,sheet.textures['BG-Normal-Table.jpg'])
+const tableRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Machine.jpg'].height
 stage.addChild(table)
 
 

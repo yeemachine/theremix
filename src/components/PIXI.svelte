@@ -37,24 +37,13 @@
         {crossOrigin:true}
     )
     .add(
+        "bg-sheet",
+        "/assets/pixi/bg-sheet.json",
+        {crossOrigin:true}
+    )
+    .add(
         "table",
         "https://theremin.app/assets/pixi/roundtable.png"
-    )
-    .add(
-        "table_normal",
-        "https://theremin.app/assets/pixi/roundtable_normal.jpg"
-    )
-    .add(
-        "bg_machine",
-        "https://theremin.app/assets/pixi/BG-Machine.jpg"
-    )
-    .add(
-        "bg_normal",
-        "https://theremin.app/assets/pixi/BG-Normal.jpg"
-    )
-    .add(
-        "bgm_normal",
-        "https://theremin.app/assets/pixi/BGM-Normal.jpg"
     )
     .add(
         "DAYBREAK FRONTLINE",
@@ -223,9 +212,9 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
     {:then value}
         
         <!-- Sprites -->
-        <BG stage={Stage} textures={value} createSprite={createSprite}/>
+        <BG sheet={value['bg-sheet']} stage={Stage} textures={value} createSprite={createSprite}/>
         <PIXIGraphics stage={Stage} graphicsGroup={graphicsGroup}/>
-        <Table stage={Stage} textures={value} createSprite={createSprite}/>
+        <Table sheet={value['bg-sheet']} stage={Stage} textures={value} createSprite={createSprite}/>
         <Theremin stage={Stage} sheet={value['core-sheet']} createSprite={createSprite} calcRotation={calcRotation}/> 
         <ThereminMobile sheet={value['core-sheet']} stage={Stage} createSprite={createSprite}/> 
         <Text stage={Stage} graphicsGroup={graphicsGroup}/>
