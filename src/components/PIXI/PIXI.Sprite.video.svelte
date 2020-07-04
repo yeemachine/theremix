@@ -6,7 +6,6 @@ import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGu
 export let sheet = null;
 export let stage = null;
 export let createSprite = null;
-export let diffuseLayer = null;
 
 const sineInOut0_1 = tweened(0, {
     duration: 700,
