@@ -27,21 +27,26 @@ const bg = createSprite(sheet.textures['BG-Machine.jpg'],sheet.textures['BG-Norm
 bg.children[0].tint = 0x444444;
 const bgRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Machine.jpg'].height
 
-const BGM_bg = createSprite(textures[Object.keys($midiList)[0]].texture,sheet.textures['BG-Normal-BGM.jpg'])
+const BGM_bg = createSprite(PIXI.Texture.from(Object.keys($midiList)[0].img),sheet.textures['BG-Normal-BGM.jpg'])
 BGM_bg.children[0].tint = 0x80797F
 $:{
-BGM_bg.children[0].texture = textures[$currentMIDI].texture;
 BGM_bg.alpha = 1-$sineInOut0_1_2
-// PIXI.loader
-//     .add(
-//         "test",
-//         $midiList[$currentMIDI].img
-//     ).load(
-//         (loader, resources) => {
-//             console.log(resources)
-//         }
-//     )
 }
+
+currentMIDI.subscribe(value=>{
+    if(Object.keys(PIXI.loader.resources).includes(value)){
+        BGM_bg.children[0].texture = PIXI.loader.resources[value].texture
+    }else{
+        PIXI.loader.add(
+            value,
+            $midiList[value].img
+        ).load(
+            (loader, resources) => {
+                BGM_bg.children[0].texture = resources[value].texture
+            }
+        )
+    }
+})
 
 $: {
     if($CANVASWIDTH/$CANVASHEIGHT > bgRatio){
