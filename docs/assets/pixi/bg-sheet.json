@@ -1,50 +1,39 @@
 {
-  "meta": {
-    "image": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbg-sheet.jpg?v=1593865188466",
-    "format": "RGBA8888",
-    "size": { "w": 2400, "h": 3660 },
-    "scale": "1"
-  },
   "frames": {
-    "BG-Machine.jpg": {
+    "BG-Machine": {
       "frame": { "x": 0, "y": 0, "w": 2400, "h": 1350 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 2400, "h": 1350 },
-      "sourceSize": { "w": 2400, "h": 1350 },
-      "anchor": { "x": 0, "y": 0 }
+      "sourceSize": { "w": 2400, "h": 1350 }
     },
-    "BG-Normal.jpg": {
-      "frame": { "x": 0, "y": 1350, "w": 2400, "h": 1350 },
+    "BG Normal": {
+      "frame": { "x": 0, "y": 1351, "w": 2400, "h": 1350 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 2400, "h": 1350 },
-      "sourceSize": { "w": 2400, "h": 1350 },
-      "anchor": { "x": 0, "y": 0 }
+      "sourceSize": { "w": 2400, "h": 1350 }
     },
-    "BG-Normal-Table.jpg": {
-      "frame": { "x": 0, "y": 1350, "w": 2400, "h": 960 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 2400, "h": 960 },
-      "sourceSize": { "w": 2400, "h": 960 },
-      "anchor": { "x": 0, "y": 0 }
-    },
-    "BG-Normal-BGM.jpg": {
-      "frame": { "x": 0, "y": 1350, "w": 1280, "h": 720 },
+    "BG-Normal-BGM": {
+      "frame": { "x": 0, "y": 1351, "w": 1280, "h": 720 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 1280, "h": 720 },
-      "sourceSize": { "w": 1280, "h": 720 },
-      "anchor": { "x": 0, "y": 0 }
+      "sourceSize": { "w": 1280, "h": 720 }
     },
-    "roundtable.jpg": {
-      "frame": { "x": 0, "y": 2700, "w": 2400, "h": 960 },
+    "Table": {
+      "frame": { "x": 0, "y": 1351, "w": 2400, "h": 960 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 2400, "h": 960 },
-      "sourceSize": { "w": 2400, "h": 960 },
-      "anchor": { "x": 0, "y": 0 }
+      "sourceSize": { "w": 2400, "h": 1350 }
     }
+  },
+  "meta": {
+    "app": "https://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
+    "image": "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fspritesheet-comp.png?v=1593894249490",
+    "size": { "w": 2400, "h": 2701 },
+    "scale": 1
   }
 }

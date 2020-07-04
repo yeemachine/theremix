@@ -13,8 +13,9 @@ const sineInOut0_1 = tweened(1, {
     easing: sineInOut
 });
 
-const table = createSprite(sheet.textures['roundtable.jpg'],sheet.textures['BG-Normal-Table.jpg'])
-const tableRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Machine.jpg'].height
+const table = createSprite(sheet.textures['Table'],sheet.textures['Table'])
+const tableRatio = sheet.textures['BG-Machine'].width/sheet.textures['BG-Machine'].height
+table.children[1].tint = 0x470BBFF
 
 // let maskGraphic = new PIXI.Graphics();
 // maskGraphic.lineStyle(0)
@@ -33,7 +34,7 @@ $:{
     }
     table.x = ($CANVASWIDTH - table.width)*.5
     table.y = $thereminPos.y + $thereminPos.height*.91;
-    table.children[0].tint = lerpColor(0x5A4E59,0x3C2914,$sineInOut0_1)
+    table.children[0].tint = lerpColor(0x363029,0x291E21,$sineInOut0_1)
 
     tablePos.set({
         x:table.x,

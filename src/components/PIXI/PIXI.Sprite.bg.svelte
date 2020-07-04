@@ -23,12 +23,14 @@ const BGMContainer = new PIXI.Container();
 $:{
     BGMContainer.alpha = $sineInOut0_1
 }
-const bg = createSprite(sheet.textures['BG-Machine.jpg'],sheet.textures['BG-Normal.jpg'])
+const bg = createSprite(sheet.textures['BG-Machine'],sheet.textures['BG Normal'])
 bg.children[0].tint = 0x444444;
-const bgRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Machine.jpg'].height
+bg.children[1].tint = 0x470BBFF;
+const bgRatio = sheet.textures['BG-Machine'].width/sheet.textures['BG-Machine'].height
 
-const BGM_bg = createSprite(PIXI.Texture.from(Object.keys($midiList)[0].img),sheet.textures['BG-Normal-BGM.jpg'])
+const BGM_bg = createSprite(PIXI.Texture.from(Object.keys($midiList)[0].img),sheet.textures['BG-Normal-BGM'])
 BGM_bg.children[0].tint = 0x80797F
+BGM_bg.children[1].tint = 0x470BBFF;
 $:{
 BGM_bg.alpha = 1-$sineInOut0_1_2
 }
