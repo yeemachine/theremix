@@ -16,12 +16,12 @@ const sineInOut0_1 = tweened(1, {
 const table = createSprite(sheet.textures['roundtable.jpg'],sheet.textures['BG-Normal-Table.jpg'])
 const tableRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Machine.jpg'].height
 
-let maskGraphic = new PIXI.Graphics();
-maskGraphic.lineStyle(0)
-maskGraphic.parentGroup = PIXI.lights.diffuseGroup;
-table.children[0].mask = maskGraphic;
+// let maskGraphic = new PIXI.Graphics();
+// maskGraphic.lineStyle(0)
+// maskGraphic.parentGroup = PIXI.lights.diffuseGroup;
+// table.children[0].mask = maskGraphic;
 
-stage.addChild(table,maskGraphic)
+stage.addChild(table)
 
 $:{
     if($CANVASWIDTH/$CANVASHEIGHT > tableRatio){
@@ -32,7 +32,7 @@ $:{
         table.scale.x = table.scale.y
     }
     table.x = ($CANVASWIDTH - table.width)*.5
-    table.y = $thereminPos.y + $thereminPos.height*.9;
+    table.y = $thereminPos.y + $thereminPos.height*.925;
     table.children[0].tint = lerpColor(0x5A4E59,0x3C2914,$sineInOut0_1)
 
     tablePos.set({
@@ -42,14 +42,14 @@ $:{
         width:table.width
     })
 
-    maskGraphic.clear()
-    maskGraphic.beginFill(0xffffff,1)
-    maskGraphic.drawEllipse(
-        table.x+table.width/2,
-        table.y+table.height/2+1,
-        table.width*1,
-        table.height/2
-    )
+    // maskGraphic.clear()
+    // maskGraphic.beginFill(0xffffff,1)
+    // maskGraphic.drawEllipse(
+    //     table.x+table.width/2,
+    //     table.y+table.height/2+1,
+    //     table.width*1,
+    //     table.height/2
+    // )
 }
 
 
