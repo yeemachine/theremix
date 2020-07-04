@@ -13,10 +13,14 @@ const sineInOut0_1 = tweened(1, {
     easing: sineInOut
 });
 
-const table = createSprite(textures.table.texture,sheet.textures['BG-Normal-Table.jpg'])
+const table = createSprite(sheet.textures['roundtable.jpg'],sheet.textures['BG-Normal-Table.jpg'])
 const tableRatio = sheet.textures['BG-Machine.jpg'].width/sheet.textures['BG-Machine.jpg'].height
-stage.addChild(table)
 
+let maskGraphic = new PIXI.Graphics();
+maskGraphic.lineStyle(0)
+table.children[0].mask = maskGraphic
+
+stage.addChild(table,maskGraphic)
 
 $:{
     if($CANVASWIDTH/$CANVASHEIGHT > tableRatio){
@@ -36,6 +40,15 @@ $:{
         height:table.height,
         width:table.width
     })
+
+    maskGraphic.clear()
+    maskGraphic.beginFill(0xffffff,1)
+    maskGraphic.drawEllipse(
+        table.x+table.width/2,
+        table.y+table.height/2+1,
+        table.width*1,
+        table.height/2
+    )
 }
 
 

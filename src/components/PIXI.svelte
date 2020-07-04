@@ -12,7 +12,7 @@
     import Text from './PIXI/PIXI.text.svelte'
     import {CANVASWIDTH,CANVASHEIGHT,loaded} from '../stores.js'
 
-    const App = new PIXI.Application()
+    const App = new PIXI.Application({antialias:true})
     const Stage = (App.stage = new PIXI.display.Stage());
 
     const diffuseLayer = new PIXI.display.Layer(PIXI.lights.diffuseGroup)
@@ -40,10 +40,6 @@
         "bg-sheet",
         "/assets/pixi/bg-sheet.json",
         {crossOrigin:true}
-    )
-    .add(
-        "table",
-        "https://theremin.app/assets/pixi/roundtable.png"
     )
     .add(
         "DAYBREAK FRONTLINE",
