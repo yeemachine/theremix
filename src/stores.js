@@ -117,7 +117,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=KTZ-y85Erus',
             midi:'https://www.youtube.com/watch?v=AimJ-EWDK1I',
             offset:.35,
-            tint:0xAFA69B
+            tint:0xAFA69B,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM8.jpg?v=1593790573806"
         },
         '夜に駆ける':{
             url:'https://theremin.app/assets/midi/Racing_Into_The_Night.mid',
@@ -125,7 +126,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=x8VYWazR5mE',
             midi:'https://www.youtube.com/watch?v=Rq60NW2TxbM',
             offset:.5,
-            tint:0xFFD4D4
+            tint:0xFFD4D4,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM5.jpg?v=1593790575857"
         },
         "秒針を噛む":{
             url:"https://theremin.app/assets/midi/Byoushinwo_Kamu.mid",
@@ -133,7 +135,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=GJI4Gv7NbmE',
             midi:'https://musescore.com/user/28172954/scores/5926366',
             offset:.5,
-            tint:0xC39E89
+            tint:0xC39E89,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM12.jpg?v=1593790573705"
         },
         "シャルル":{
             url:"https://theremin.app/assets/midi/Charles.mid",
@@ -141,7 +144,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=TA5OFS_xX0c',
             midi:'https://twitter.com/kakimuki2011?lang=en',
             offset:.5,
-            tint:0xC39E89
+            tint:0xC39E89,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM1.jpg?v=1593790573277"
         },
         "金木犀":{
             url:"https://theremin.app/assets/midi/Kinmokusei.mid",
@@ -149,7 +153,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=Baw-cAvS5xc',
             midi:'https://www.youtube.com/watch?v=KdO8bM29Q8A',
             offset:.5,
-            tint:0xDBBF9F
+            tint:0xDBBF9F,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM11.jpg?v=1593790575215"
         },
         '快晴':{
             url:'https://theremin.app/assets/midi/Kaisei.mid',
@@ -157,7 +162,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=BwGpXK3W6tE',
             midi:'https://www.youtube.com/watch?v=UXxYtzUxRF4',
             offset:.5,
-            tint:0xAFA69B
+            tint:0xAFA69B,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM6.jpg?v=1593790576148"
         },
        
         'Alice in 冷凍庫':{
@@ -166,7 +172,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=jQmYZWjLwzw',
             midi:'https://musescore.com/user/7739981/scores/1793556',
             offset:.45,
-            tint:0x89AEC3
+            tint:0x89AEC3,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM2.jpg?v=1593790576044"
         },
         "DAYBREAK FRONTLINE":{
             url:"https://theremin.app/assets/midi/DAYBREAK_FRONTLINE__cover_piano_score.mid",
@@ -174,7 +181,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=emrt46SRyYs',
             midi:'https://musescore.com/user/31847617/scores/5660409',
             offset:.5,
-            tint:0xAFA69B
+            tint:0xAFA69B,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM3.jpg?v=1593790571119"
         },
         '青春なんていらないわ':{
             url:'https://theremin.app/assets/midi/I_Dont_Need_Youth.mid',
@@ -182,7 +190,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=Uhjws9V9PMo',
             midi:'https://musescore.com/neko_rare/scores/5506440',
             offset:.5,
-            tint:0x89C3C3
+            tint:0x89C3C3,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM16.jpg?v=1593790570801"
         },
         'アスノヨゾラ哨戒班':{
             url:"https://theremin.app/assets/midi/Orangestar_-_Asu_no_yozora_shoukaihan_feat.IA.mid",
@@ -190,7 +199,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=XogSflwXgpw',
             midi:'https://musescore.com/enochng/asu-no-yozora-shoukaihan',
             offset:.5,
-            tint:0x89AEC3
+            tint:0x89AEC3,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM9.jpg?v=1593790573339"
         },
         "眩しいDNAだけ":{
             url:"https://theremin.app/assets/midi/DNA.mid",
@@ -198,7 +208,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=VJy8qZ77bpE',
             midi:'https://musescore.com/user/14598701/scores/5805051',
             offset:.5,
-            tint:0xC39E89
+            tint:0xC39E89,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM15.jpg?v=1593790570615"
         }
         ,
         '雨き声残響':{
@@ -207,7 +218,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=0KK5vQlCVYo',
             midi:'https://musescore.com/user/4460506/scores/4906055',
             offset:.7,
-            tint:0xAFA69B
+            tint:0xAFA69B,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM10.jpg?v=1593790575173"
         },
         '濫觴生命':{
             url:"https://theremin.app/assets/midi/lanshangshengming_Ranshou_Seimei.mid",
@@ -215,7 +227,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=rc8vrHd0T_4',
             midi:'https://musescore.com/user/7739981/scores/2450661',
             offset:.5,
-            tint:0x89AEC3
+            tint:0x89AEC3,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM4.jpg?v=1593790571291"
         },
         "脳裏上のクラッカー":{
             url:"https://theremin.app/assets/midi/Nouriueno_Cracker.mid",
@@ -223,7 +236,8 @@ export const midiList = writable({
             original:'https://www.youtube.com/watch?v=3iAXclHlTTg',
             midi:'https://www.youtube.com/watch?v=F0xGjqhVglQ',
             offset:.5,
-            tint:0xC39E89
+            tint:0xC39E89,
+            img:"https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM14.jpg?v=1593790573512"
         }
 })
 

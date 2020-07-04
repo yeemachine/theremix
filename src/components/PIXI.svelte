@@ -41,63 +41,6 @@
         "/assets/pixi/bg-sheet.json",
         {crossOrigin:true}
     )
-    .add(
-        "DAYBREAK FRONTLINE",
-        "https://theremin.app/assets/pixi/BGM3.jpg"
-    )
-    .add(
-        "濫觴生命",
-        "https://theremin.app/assets/pixi/BGM4.jpg"
-    )
-    .add(
-        "夜に駆ける",
-        "https://theremin.app/assets/pixi/BGM5.jpg"
-    )
-    .add(
-        "快晴",
-        "https://theremin.app/assets/pixi/BGM6.jpg"
-    )
-    .add(
-        "青春なんていらないわ",
-        "https://theremin.app/assets/pixi/BGM16.jpg"
-    )
-    .add(
-        "Alice in 冷凍庫",
-        "https://theremin.app/assets/pixi/BGM2.jpg"
-    )
-    .add(
-        "アスノヨゾラ哨戒班",
-        "https://theremin.app/assets/pixi/BGM9.jpg"
-    )
-    .add(
-        "秒針を噛む",
-        "https://theremin.app/assets/pixi/BGM12.jpg"
-    )
-    .add(
-        "金木犀",
-        "https://theremin.app/assets/pixi/BGM11.jpg"
-    )
-    .add(
-        "だから僕は音楽を辞めた",
-        "https://theremin.app/assets/pixi/BGM8.jpg"
-    )
-    .add(
-        "シャルル",
-        "https://theremin.app/assets/pixi/BGM1.jpg"
-    )
-    .add(
-        "眩しいDNAだけ",
-        "https://theremin.app/assets/pixi/BGM15.jpg"
-    )
-    .add(
-        "脳裏上のクラッカー",
-        "https://theremin.app/assets/pixi/BGM14.jpg"
-    )
-    .add(
-        "雨き声残響",
-        "https://theremin.app/assets/pixi/BGM10.jpg"
-    )
-    
 
     const Resources = new Promise(
         (resolve, reject)=>
