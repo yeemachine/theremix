@@ -22,15 +22,15 @@ const backOut0_1 = tweened(0, {
     easing: backInOut
 });
 
-const wire1 = createSprite(sheet.textures['Wire-1.png'],sheet.textures['Wire-1-Normal.png'])
+const wire1 = createSprite(sheet.textures['Wire-1'],sheet.textures['Wire-1-Normal'])
 wire1.children[0].tint = 0x666666;
-const wire2 = createSprite(sheet.textures['Wire-2.png'],sheet.textures['Wire-2-Normal.png'])
+const wire2 = createSprite(sheet.textures['Wire-2'],sheet.textures['Wire-2-Normal'])
 wire2.children[0].tint = 0x666666;
-const wire3 = createSprite(sheet.textures['Wire-3.png'],sheet.textures['Wire-3-Normal.png'])
+const wire3 = createSprite(sheet.textures['Wire-3'],sheet.textures['Wire-3-Normal'])
 wire3.children[0].tint = 0x666666;
 
-const video = createSprite(sheet.textures['Video.png'],sheet.textures['Video-Normal.png'])
-const guides = createSprite(sheet.textures['Guides.png'])
+const video = createSprite(sheet.textures['Video'],sheet.textures['Video-Normal'])
+const guides = createSprite(sheet.textures['Guides'])
 guides.parentGroup = PIXI.lights.diffuseGroup
 video.addChild(guides)
 

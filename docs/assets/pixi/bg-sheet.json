@@ -23,7 +23,7 @@
       "anchor": { "x": 0, "y": 0 }
     },
     "BG-Normal-Table.jpg": {
-      "frame": { "x": 0, "y": 1450, "w": 2400, "h": 960 },
+      "frame": { "x": 0, "y": 1350, "w": 2400, "h": 960 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 2400, "h": 960 },
