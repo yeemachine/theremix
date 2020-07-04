@@ -34,7 +34,7 @@ BGM_bg.children[1].tint = 0x470BBFF;
 $:{
 BGM_bg.alpha = 1-$sineInOut0_1_2
 }
-
+  
 currentMIDI.subscribe(value=>{
     if(Object.keys(PIXI.loader.resources).includes(value)){
         BGM_bg.children[0].texture = PIXI.loader.resources[value].texture
