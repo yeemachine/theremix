@@ -15,9 +15,9 @@ const sineInOut0_1 = tweened(1, {
 
 const table = createSprite(sheet.textures['Table'],sheet.textures['Table'])
 const tableRatio = sheet.textures['BG-Machine'].width/sheet.textures['BG-Machine'].height
-table.children[1].tint = 0x470BBFF
+table.children[1].tint = 0x8056F8
 
-let maskGraphic = new PIXI.Graphics();
+let maskGraphic = new PIXI.Graphics({antialias:true});
 maskGraphic.lineStyle(0)
 maskGraphic.parentGroup = PIXI.lights.diffuseGroup;
 table.children[0].mask = maskGraphic;
