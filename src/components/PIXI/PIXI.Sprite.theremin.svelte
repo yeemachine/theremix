@@ -4,7 +4,7 @@ import {constrain} from '../../helpers.js';
 import { backOut, sineInOut } from 'svelte/easing';
 import { oscillators } from '../../config.js';
 import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,glide, volumeVal,oscillatorType,dragged,hovered,SCALE} from '../../stores.js';
-export let textures = null;
+export let sheet = null
 export let stage = null;
 export let createSprite = null;
 export let calcRotation = null;
@@ -36,23 +36,23 @@ const tweenKnobRight = tweened(0, {
 
 const theremin = new PIXI.Container();
 
-const theremin_null = createSprite(textures.theremin_null.texture)
+const theremin_null = createSprite(sheet.textures['theremin_null.png'])
 theremin_null.alpha = 0
 
 const theremin_body_top = createSprite(
-    textures.theremin_body_top.texture,
-    textures.theremin_body_top_normal.texture
+    sheet.textures['Theremin Body Mobile.png'],
+    sheet.textures['Theremin Body Normal.png']
 )
 
-const theremin_screen = createSprite(textures.screen.texture)
+const theremin_screen = createSprite(sheet.textures['Screen.jpg'])
 theremin_screen.parentGroup = PIXI.lights.diffuseGroup;
 $:{
     theremin_screen.visible = ($WIDTH > 600) ? true : false
 }
 
 const knob_left = createSprite(
-    textures.knob.texture,
-    textures.knob_normal.texture
+    sheet.textures['Knob.png'],
+    sheet.textures['Knob-Normal.png']
 )
 knob_left.children[0].anchor.set(0.5, 0.5);
 knob_left.children[1].anchor.set(0.5, 0.5);
@@ -78,8 +78,8 @@ knob_left.on('pointerdown',()=>{
 })
 
 const knob_right = createSprite(
-    textures.knob.texture,
-    textures.knob_normal.texture
+    sheet.textures['Knob.png'],
+    sheet.textures['Knob-Normal.png']
 )
 knob_right.children[0].anchor.set(0.5, 0.5);
 knob_right.children[1].anchor.set(0.5, 0.5);
@@ -103,14 +103,14 @@ knob_right.on('pointerdown',()=>{
 })
 
 const switchRight = createSprite(
-    textures.switch_off.texture,
-    textures.switch_off_normal.texture
+    sheet.textures['Switch-Off.png'],
+    sheet.textures['Switch-Off-Normal.png']
 )
 switchRight.children[0].anchor.set(0.5, 0.5);
 switchRight.children[1].anchor.set(0.5, 0.5);
 $: switchRight.children[0].tint = ($glide) ? 0xffffff : 0x999999
-$: switchRight.children[0].texture = ($glide && $active) ? textures.switch_on.texture : textures.switch_off.texture
-$: switchRight.children[1].texture = ($glide && $active) ? textures.switch_on_normal.texture : textures.switch_off_normal.texture
+$: switchRight.children[0].texture = ($glide && $active) ? sheet.textures['Switch-On.png'] : sheet.textures['Switch-Off.png']
+$: switchRight.children[1].texture = ($glide && $active) ? sheet.textures['Switch-On-Normal.png'] : sheet.textures['Switch-Off-Normal.png']
 
 switchRight.on('pointerup',()=>{
     glide.set(!$glide)
@@ -129,20 +129,20 @@ switchRight.on('mouseout',()=>{
 })
 
 const right_antenna = createSprite(
-    textures.right_antenna.texture,
-    textures.right_antenna_normal.texture
+    sheet.textures['Right-Antenna.png'],
+    sheet.textures['Right-Antenna-Normal.png']
 )
 const right_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
 right_antenna_light.falloff = [0.75, 4, 10]
 
 const left_antenna2 = createSprite(
-    textures.left_antenna2.texture,
-    textures.left_antenna2_normal.texture
+    sheet.textures['Left-Antenna.png'],
+    sheet.textures['Left-Antenna-Normal.png']
 )
 const left_antenna_light = new PIXI.lights.PointLight(0xff7f00, 1.2);
 left_antenna_light.falloff = [0.75, 4, 10]
 
-const symbols = createSprite(textures.symbols.texture)
+const symbols = createSprite(sheet.textures['Symbols.png'])
 symbols.anchor.set(0.5, 0.5);
 symbols.tint = 0xE54646;
 
@@ -229,7 +229,7 @@ $: {
     switchRight.interactive = ($active) ? true : false
     switchRight.visible = ($WIDTH > 600) ? true : false
     
-    if(textures.theremin_null.texture.width/textures.theremin_null.texture.height > $CANVASWIDTH/$CANVASHEIGHT){
+    if(sheet.textures['theremin_null.png'].width/sheet.textures['theremin_null.png'].height > $CANVASWIDTH/$CANVASHEIGHT){
         theremin.width = $CANVASWIDTH*.9
         theremin.scale.y = theremin.scale.x
     }else{

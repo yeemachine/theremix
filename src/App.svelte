@@ -12,7 +12,7 @@
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
 		update.set(true)
 	});
-
+  
 	// Register service worker
 	if ('serviceWorker' in navigator) {
 
@@ -60,7 +60,6 @@ let tfLoaded = false,posenetLoaded = false,toneJSLoaded = false,toneMIDILoaded =
 </script>
 
 <svelte:head>
-	{#if $loaded}
 		<script src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{toneJSLoaded=true}}></script>
 		{#if toneJSLoaded}
 			<script src="https://unpkg.com/@tonejs/midi" on:load={()=>{toneMIDILoaded=true}}></script>
@@ -69,9 +68,9 @@ let tfLoaded = false,posenetLoaded = false,toneJSLoaded = false,toneMIDILoaded =
 		{#if tfLoaded && $toneLoaded}
 			<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{posenetLoaded=true}}></script>
 		{/if}
-	{/if}
+
 </svelte:head>
-    
+ 
 <main>
 	<Canvas/>
 	<Shortcuts/>
@@ -81,8 +80,8 @@ let tfLoaded = false,posenetLoaded = false,toneJSLoaded = false,toneMIDILoaded =
 		<Tone/>
 	{/if}
 
+	<Webcam/>
 	{#if tfLoaded && posenetLoaded}
-		<Webcam/>
 		<PoseNet/>
 	{/if}
 </main>

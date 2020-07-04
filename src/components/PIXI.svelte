@@ -32,6 +32,11 @@
 
     const Loader = PIXI.loader
     .add(
+        "core-sheet",
+        "/assets/pixi/core-sheet.json",
+        {crossOrigin:true}
+    )
+    .add(
         "table",
         "https://theremin.app/assets/pixi/roundtable.png"
     )
@@ -47,62 +52,62 @@
         "bg_normal",
         "https://theremin.app/assets/pixi/BG-Normal.jpg"
     )
-    .add(
-        "theremin_null",
-        "https://theremin.app/assets/pixi/theremin_null.png"
-    )
-    .add(
-        "theremin_body_top",
-        "https://theremin.app/assets/pixi/Theremin%20Body%20Mobile.png"
-    )
-    .add(
-        "theremin_body_top_normal",
-        "https://theremin.app/assets/pixi/Theremin%20Body%20Normal.png"
-    )
-    .add(
-      "screen",
-      "https://theremin.app/assets/pixi/Screen.jpg"
-    )
-    .add(
-        "right_antenna",
-        "https://theremin.app/assets/pixi/Right-Antenna.png"
-    )
-    .add(
-        "right_antenna_normal",
-        "https://theremin.app/assets/pixi/Right-Antenna-Normal.png"
-    )
-    .add(
-        "left_antenna2",
-        "https://theremin.app/assets/pixi/Left-Antenna.png"
-    )
-    .add(
-        "left_antenna2_normal",
-        "https://theremin.app/assets/pixi/Left-Antenna-Normal.png"
-    )
-    .add(
-        "knob",
-        "https://theremin.app/assets/pixi/Knob.png"
-    )
-    .add(
-        "knob_normal",
-        "https://theremin.app/assets/pixi/Knob-Normal.png"
-    )
-    .add(
-        "switch_on",
-        "https://theremin.app/assets/pixi/Switch-On.png"
-    )
-    .add(
-        "switch_on_normal",
-        "https://theremin.app/assets/pixi/Switch-On-Normal.png"
-    )
-    .add(
-        "switch_off",
-        "https://theremin.app/assets/pixi/Switch-Off.png"
-    )
-    .add(
-        "switch_off_normal",
-        "https://theremin.app/assets/pixi/Switch-Off-Normal.png"
-    )
+    // .add(
+    //     "theremin_null",
+    //     "https://theremin.app/assets/pixi/theremin_null.png"
+    // )
+    // .add(
+    //     "theremin_body_top",
+    //     "https://theremin.app/assets/pixi/Theremin%20Body%20Mobile.png"
+    // )
+    // .add(
+    //     "theremin_body_top_normal",
+    //     "https://theremin.app/assets/pixi/Theremin%20Body%20Normal.png"
+    // )
+    // .add(
+    //   "screen",
+    //   "https://theremin.app/assets/pixi/Screen.jpg"
+    // )
+    // .add(
+    //     "right_antenna",
+    //     "https://theremin.app/assets/pixi/Right-Antenna.png"
+    // )
+    // .add(
+    //     "right_antenna_normal",
+    //     "https://theremin.app/assets/pixi/Right-Antenna-Normal.png"
+    // )
+    // .add(
+    //     "left_antenna2",
+    //     "https://theremin.app/assets/pixi/Left-Antenna.png"
+    // )
+    // .add(
+    //     "left_antenna2_normal",
+    //     "https://theremin.app/assets/pixi/Left-Antenna-Normal.png"
+    // )
+    // .add(
+    //     "knob",
+    //     "https://theremin.app/assets/pixi/Knob.png"
+    // )
+    // .add(
+    //     "knob_normal",
+    //     "https://theremin.app/assets/pixi/Knob-Normal.png"
+    // )
+    // .add(
+    //     "switch_on",
+    //     "https://theremin.app/assets/pixi/Switch-On.png"
+    // )
+    // .add(
+    //     "switch_on_normal",
+    //     "https://theremin.app/assets/pixi/Switch-On-Normal.png"
+    // )
+    // .add(
+    //     "switch_off",
+    //     "https://theremin.app/assets/pixi/Switch-Off.png"
+    // )
+    // .add(
+    //     "switch_off_normal",
+    //     "https://theremin.app/assets/pixi/Switch-Off-Normal.png"
+    // )
     .add(
         "theremin_mobile",
         "https://theremin.app/assets/pixi/Mobile-Controls.png"
@@ -147,14 +152,14 @@
         "wire3_normal",
         "https://theremin.app/assets/pixi/Wire-3-Normal.png"
     )
-    .add(
-        "symbols",
-        "https://theremin.app/assets/pixi/Symbols.png"
-    )
-    .add(
-        "symbols_normal",
-        "https://theremin.app/assets/pixi/Symbols-Normal.png"
-    )
+    // .add(
+    //     "symbols",
+    //     "https://theremin.app/assets/pixi/Symbols.png"
+    // )
+    // .add(
+    //     "symbols_normal",
+    //     "https://theremin.app/assets/pixi/Symbols-Normal.png"
+    // )
     .add(
         "bgm_normal",
         "https://theremin.app/assets/pixi/BGM-Normal.jpg"
@@ -312,7 +317,7 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
 
     let pixiParticles = false
     </script>
-
+    
     <svelte:head>
         {#if $loaded}
             <script src="https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js" on:load={()=>{pixiParticles=true}}></script>
@@ -329,10 +334,10 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
         <BG stage={Stage} textures={value} createSprite={createSprite}/>
         <PIXIGraphics stage={Stage} graphicsGroup={graphicsGroup}/>
         <Table stage={Stage} textures={value} createSprite={createSprite}/>
-        <Theremin stage={Stage} textures={value} createSprite={createSprite} calcRotation={calcRotation}/> 
-        <ThereminMobile stage={Stage} textures={value} createSprite={createSprite}/> 
+        <Theremin stage={Stage} sheet={value['core-sheet']} createSprite={createSprite} calcRotation={calcRotation}/> 
+        <ThereminMobile sheet={value['core-sheet']} stage={Stage} createSprite={createSprite}/> 
         <Text stage={Stage} graphicsGroup={graphicsGroup}/>
-        <Video stage={Stage} textures={value} createSprite={createSprite} diffuseLayer={diffuseLayer}/>
+        <Video stage={Stage} sheet={value['core-sheet']} createSprite={createSprite} diffuseLayer={diffuseLayer}/>
         <!-- Lights -->
         <AmbientLights stage={Stage}/>
         {#if pixiParticles}
