@@ -1,9 +1,8 @@
-const vn = "v1.0.10";
+const vn = "v1.0.08";
 const production = true;
 
 // files to cache
 const appShellFiles = [
-  '/',
   '/index.html',
   '/build/bundle.js',
   '/build/bundle.css'
@@ -21,8 +20,8 @@ const libraries = [
 ]
 
 const pixiAssets = [
-    '/assets/pixi/core-sheet.json',
-    "/assets/pixi/bg-sheet.json",
+    'https://theremin.app/assets/pixi/core-sheet.json',
+    "https://theremin.app/assets/pixi/bg-sheet.json",
     "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob.png?v=1593921823767",
     "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob-Normal.png?v=1593921823860",
     "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fcore-sheet.png?v=1593863882839",
@@ -48,7 +47,7 @@ const midiAssets = [
 
 const gifAssets = [
   'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.mp4?v=1593735583334',
-  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.webm?v=1593735584224',
+  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.mp4?v=1593735583334',
   'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.webm?v=1593735585669',
   'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.mp4?v=1593735842103'
 ]
@@ -103,22 +102,50 @@ self.addEventListener('message', (event) => {
     }
 });
 
+
   self.addEventListener('fetch', (e) => {
+        
+    // if(e.request.url.includes('/build/bundle.js')){
+    //     console.log('%c%s',
+    //     'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+    //     'THEREMIX ~~~ '+vn+(production ? '' : ': Dev Build'))
+    // }
+
     if(production){
             e.respondWith(
                 caches.match(e.request).then((r) => {
-                    // console.log('[Service Worker] Caching new resource: '+e.request.url);
-                    return r || fetch(e.request).then((response) => {
-                      return caches.open(vn).then((cache) => {
-                          // console.log('[Service Worker] Caching new resource: '+e.request.url);
-                          if(!e.request.url.includes('googletagmanager')){
-                          cache.put(e.request, response.clone());
-                          }
-                          return response;
+                  
+                    if(!navigator.onLine){
+                      // Serve cache if offline
+                      // console.log('[Service Worker] Fetching resource: '+e.request.url);
+                      return r
+                    }else{
+                      
+                      if(staticContent.includes(e.request.url)){
+                        // Serve cache if online and is static content
+                        // console.log('[Service Worker] Fetching resource: '+e.request.url);
+                        return r || fetch(e.request).then((response) => {
+                          return caches.open(vn).then((cache) => {
+                              // console.log('[Service Worker] Caching new resource: '+e.request.url);
+                              cache.put(e.request, response.clone());
+                              return response;
+                            });
                         });
-                    });
-                  } 
-                )
+                      }else{
+                        // Fetch new resources and cache them
+                        return fetch(e.request).then((response) => {
+                          return caches.open(vn).then((cache) => {
+                              if(!e.request.url.includes('googletagmanager')){
+                                // console.log('[Service Worker] Caching new resource: '+e.request.url);
+                                cache.put(e.request, response.clone());
+                              }
+                              return response;
+                          });
+                        });
+                      }
+                      
+                    }
+                })
             );
     }else{
         // console.log('Dev Mode')
