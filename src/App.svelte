@@ -69,18 +69,22 @@ $:{
 </script>
 
 <svelte:head>
-		<script src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{toneJSLoaded=true}}></script>
-		{#if toneJSLoaded}
-			<script src="https://unpkg.com/@tonejs/midi" on:load={()=>{toneMIDILoaded=true}}></script>
-		{/if}
+
+	{#if $loaded}
+	<script defer src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{toneJSLoaded=true}}></script>
+	{/if}
+
+	{#if toneJSLoaded}
+		<script defer src="https://unpkg.com/@tonejs/midi" on:load={()=>{toneMIDILoaded=true}}></script>
+	{/if}
     
     {#if cameraTriggered}
-		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
     {/if}
   
-		{#if tfLoaded}
-			<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{posenetLoaded.set(true)}}></script>
-		{/if}
+	{#if tfLoaded}
+		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{posenetLoaded.set(true)}}></script>
+	{/if}
 </svelte:head>
  
 <main>
