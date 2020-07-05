@@ -146,7 +146,7 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
 
     <svelte:head>
         {#if $loaded}
-            <script src="https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js" on:load={()=>{pixiParticles=true}}></script>
+            <script src="https://cdn.jsdelivr.net/npm/pixi-particles@3.2.0/dist/pixi-particles.min.js" on:load={()=>{pixiParticles=true}}></script>
         {/if}
     </svelte:head>
 
