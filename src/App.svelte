@@ -10,7 +10,7 @@
 	var newSW;
 
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		// update.set(true)
+		update.set(true)
 	});
   
 	// Register service worker
