@@ -44,7 +44,7 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
     </div>
 </section>
 <Keycap hide={!$keydown_O} letter={'O'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .679 : .5095}/>
-<Keycap hide={!$keydown_G} letter={'G'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .7415 : .778}/>
+<Keycap hide={!$keydown_G} letter={'G'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .7415 : .7685}/>
 <Keycap hide={!$keydown_M} letter={'M'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .5005 : .5095}/>
 <p class="label {(!$showGuides || !$videoReady) ? 'hide' :''}"
 style="{!$showGuides ? '' : ''}">Fit your body in frame</p>

@@ -58,7 +58,7 @@
 		pwa.set(true);
 	}
 
-let tfLoaded = false,toneJSLoaded = false,toneMIDILoaded = false
+let tfLoaded = false,toneJSLoaded = false,teoriaLoaded = false,toneMIDILoaded = false
 let cameraTriggered = false
 $:{
   if($camera){
@@ -71,19 +71,23 @@ $:{
 <svelte:head>
 
 	{#if $loaded}
-	<script defer src="https://unpkg.com/tone@13.8.27/build/Tone.js" on:load={()=>{toneJSLoaded=true}}></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/tone@13.8.34/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script>
 	{/if}
 
 	{#if toneJSLoaded}
-		<script defer src="https://unpkg.com/@tonejs/midi" on:load={()=>{toneMIDILoaded=true}}></script>
+	<script defer src="/libraries/teoria.min.js" on:load={()=>{teoriaLoaded=true}}></script>
+	{/if}
+
+	{#if teoriaLoaded}
+		<script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.23/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script>
 	{/if}
     
     {#if cameraTriggered}
-		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.1/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
     {/if}
   
 	{#if tfLoaded}
-		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet" on:load={()=>{posenetLoaded.set(true)}}></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.1/dist/posenet.min.js" on:load={()=>{posenetLoaded.set(true)}}></script>
 	{/if}
 </svelte:head>
  

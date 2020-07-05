@@ -9,14 +9,15 @@ const appShellFiles = [
 ];
 
 const libraries = [
-  'https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js',
-  '/libraries/pixi.layers.js',
-  '/libraries/pixi-lights.js',
-  'https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js',
-  'https://unpkg.com/tone@13.8.27/build/Tone.js',
-  'https://unpkg.com/@tonejs/midi',
-  'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs',
-  'https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet'
+  'https://cdn.jsdelivr.net/npm/pixi.js@4.8.9/dist/pixi.min.js',
+  '/libraries/pixi.layers.min.js',
+  '/libraries/teoria.min.js',
+  'https://cdn.jsdelivr.net/npm/pixi-lights@2.0.3/lib/pixi-lights.min.js',
+  'https://cdn.jsdelivr.net/npm/pixi-particles@3.2.0/dist/pixi-particles.min.js',
+  'https://cdn.jsdelivr.net/npm/tone@13.8.34/build/Tone.min.js',
+  'https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.23/build/Midi.min.js',
+  'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.1/dist/tf.min.js',
+  'https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.1/dist/posenet.min.js'
 ]
 
 const pixiAssets = [

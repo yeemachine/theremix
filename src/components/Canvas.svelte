@@ -199,15 +199,16 @@ onMount(async () => {
 let pixiLoaded = false, pixiLayers = false, pixiLights = false
 </script>
 
+
 <svelte:head>
-    <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js" on:load={()=>{pixiLoaded=true}}></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.9/dist/pixi.min.js" on:load={()=>{pixiLoaded=true}}></script>
   
     {#if pixiLoaded}
-        <script defer src="/libraries/pixi.layers.js" on:load={()=>{pixiLayers=true}}></script>
+        <script defer src="/libraries/pixi.layers.min.js" on:load={()=>{pixiLayers=true}}></script>
     {/if}
   
     {#if pixiLayers}
-        <script defer src="/libraries/pixi-lights.js" on:load={()=>{pixiLights=true}}></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/pixi-lights@2.0.3/lib/pixi-lights.min.js" on:load={()=>{pixiLights=true}}></script>
     {/if}
 </svelte:head>
 
