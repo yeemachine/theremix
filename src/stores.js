@@ -13,6 +13,7 @@ export const toneLoaded = writable(false);
 export const manual = writable(false);
 export const camera = writable(false);
 export const videoReady = writable(null);
+export const posenetLoaded = writable(null);
 export const WIDTH = writable(2400/2);
 export const HEIGHT = writable(1350/2);
 export const SCALE = writable(1)

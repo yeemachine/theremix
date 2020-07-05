@@ -38,7 +38,7 @@ const getStream = () => {
 let checkStream
 const handleStream = (stream) => {
   videoObj.srcObject = stream;
-  console.log("Webcam On");
+  // console.log("Webcam On");
   checkStream = setInterval(() => {
     if (videoObj.readyState >= 3) {
       videoReady.set(videoObj)
@@ -51,7 +51,7 @@ const handleStream = (stream) => {
 const stopStream = () => {
   if (Stream) {
     Stream.getTracks().forEach(track => track.stop());
-    console.log("Webcam Off");
+    // console.log("Webcam Off");
   }
   videoReady.set(null)
   clearInterval(checkStream)
