@@ -38,7 +38,10 @@
 
 		navigator.serviceWorker.addEventListener('message', event => {
 			version.set(event.data)
-		});
+      console.log('%c%s',
+        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+        'THEREMIX ~~~ '+event.data)
+		  });
 
 		navigator.serviceWorker.ready.then( registration => {
 			registration.active.postMessage({ action: 'version' });
