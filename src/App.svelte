@@ -12,46 +12,26 @@
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
 		update.set(true)
 	});
+	navigator.serviceWorker.addEventListener('message', event => {
+			version.set(event.data)
+      console.log('%c%s',
+        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+        'THEREMIX ~~~ '+event.data)
+	});
   
 	// Register service worker
 	if ('serviceWorker' in navigator) {
 
 		navigator.serviceWorker.register('/sw.js')
 			.then((reg) => {
-				// Check if an installed sw is waiting
-				// if(newSW = reg.waiting) {
-				// 	update.set(true)
-				// }
-				reg.addEventListener('updatefound', () => {
-					// Copy reference of new worker being installed
-					newSW = reg.installing;
-					newSW.addEventListener('statechange', () => {
-						// service worker state changed except initial one
-						if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-							upSW()
-						}
-					})
-				})
+				reg.active.postMessage({ action: 'version' });
 			}).catch((e) => {
 				console.log(e);
 			});
 
-		navigator.serviceWorker.addEventListener('message', event => {
-			version.set(event.data)
-      console.log('%c%s',
-        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
-        'THEREMIX ~~~ '+event.data)
-		  });
-
-		navigator.serviceWorker.ready.then( registration => {
-			registration.active.postMessage({ action: 'version' });
-		});
-	}
-
-	const upSW = () => {
-		// Send message to new service worker
-		newSW.postMessage({ action: 'clearOld' });
-		newSW.postMessage({ action: 'skipWaiting' });
+		// navigator.serviceWorker.ready.then( registration => {
+		// 	registration.active.postMessage({ action: 'version' });
+		// });
 	}
 
 	if (window.matchMedia('(display-mode: standalone)').matches) {  
