@@ -1,4 +1,4 @@
-const vn = "v1.00.00";
+const vn = "v1.00.02";
 const production = true;
 
 // files to cache
@@ -46,10 +46,8 @@ const midiAssets = [
 ]
 
 const gifAssets = [
-  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.mp4?v=1593735583334',
-  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.webm?v=1593735584224',
-  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.webm?v=1593735585669',
-  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.mp4?v=1593735842103'
+  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.mp4?v=1593936184314',
+  'https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.mp4?v=1593936184001'
 ]
 
 const icons = [
