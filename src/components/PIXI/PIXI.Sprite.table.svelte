@@ -17,12 +17,12 @@ const table = createSprite(sheet.textures['Table'],sheet.textures['Table'])
 const tableRatio = sheet.textures['BG-Machine'].width/sheet.textures['BG-Machine'].height
 table.children[1].tint = 0x8056F8
 
-let maskGraphic = new PIXI.Graphics({antialias:true});
-maskGraphic.lineStyle(0)
-maskGraphic.parentGroup = PIXI.lights.diffuseGroup;
-table.children[0].mask = maskGraphic;
+// let maskGraphic = new PIXI.Graphics({antialias:true});
+// maskGraphic.lineStyle(0)
+// maskGraphic.parentGroup = PIXI.lights.diffuseGroup;
+// table.children[0].mask = maskGraphic;
 
-stage.addChild(table,maskGraphic)
+stage.addChild(table)
 
 $:{
     if($CANVASWIDTH/$CANVASHEIGHT > tableRatio){
@@ -43,14 +43,14 @@ $:{
         width:table.width
     })
 
-    maskGraphic.clear()
-    maskGraphic.beginFill(0xffffff,1)
-    maskGraphic.drawEllipse(
-        table.x+table.width/2,
-        table.y+table.height/2+1,
-        table.width*1,
-        table.height/2
-    )
+    // maskGraphic.clear()
+    // maskGraphic.beginFill(0xffffff,1)
+    // maskGraphic.drawEllipse(
+    //     table.x+table.width/2,
+    //     table.y+table.height/2+1,
+    //     table.width*1,
+    //     table.height/2
+    // )
 }
 
 
