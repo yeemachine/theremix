@@ -1,9 +1,8 @@
-const vn = "v1.0.10";
+const vn = "v1.00.05";
 const production = true;
 
 // files to cache
 const appShellFiles = [
-  '/',
   '/index.html',
   '/build/bundle.js',
   '/build/bundle.css'
@@ -15,9 +14,7 @@ const libraries = [
   '/libraries/pixi-lights.js',
   'https://cdn.jsdelivr.net/npm/pixi-particles-latest@3.2.0/dist/pixi-particles.min.js',
   'https://unpkg.com/tone@13.8.27/build/Tone.js',
-  'https://unpkg.com/@tonejs/midi',
-  'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs',
-  'https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet'
+  'https://unpkg.com/@tonejs/midi'
 ]
 
 const pixiAssets = [

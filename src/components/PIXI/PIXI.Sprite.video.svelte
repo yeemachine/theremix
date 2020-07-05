@@ -2,7 +2,7 @@
 import { tweened } from 'svelte/motion';
 import { backInOut, sineInOut } from 'svelte/easing';
 import {constrain} from '../../helpers.js'
-import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides} from '../../stores.js';
+import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides,poseNetRes} from '../../stores.js';
 export let sheet = null;
 export let stage = null;
 export let createSprite = null;
@@ -69,7 +69,7 @@ $:{
     wire3.x = video.x - margin*2.9 - margin*1*(1-$backOut0_1)
     wire3.y = video.y + video.height*.95
 
-    if($videoReady){
+    if($videoReady && $poseNetRes){
         if($sineInOut0_1 === 0){
             sineInOut0_1.set(1)
         } 
