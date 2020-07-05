@@ -134,20 +134,20 @@
       "sourceSize": { "w": 140, "h": 200 }
     },
     "Knob-Normal": {
-      "frame": { "x": 2832, "y": 2384, "w": 140, "h": 140 },
+      "frame": { "x": 2830, "y": 2382, "w": 144, "h": 144 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 140, "h": 140 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
       "sourceSize": { "w": 140, "h": 140 },
-      "anchor": { "x": 0, "y": 0 }
+      "anchor": { "x": 0.5, "y": 0.5 }
     },
     "Knob": {
-      "frame": { "x": 2976, "y": 2384, "w": 140, "h": 140 },
+      "frame": { "x": 2974, "y": 2382, "w": 144, "h": 144 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 140, "h": 140 },
-      "sourceSize": { "w": 140, "h": 140 },
-      "anchor": { "x": 0, "y": 0 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
+      "sourceSize": { "w": 144, "h": 144 },
+      "anchor": { "x": 0.5, "y": 0.5 }
     },
     "Left-Antenna-Normal": {
       "frame": { "x": 1490, "y": 1382, "w": 1498, "h": 222 },
