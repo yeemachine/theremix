@@ -10,6 +10,7 @@ export const active = writable(false);
 export const loaded = writable(false);
 export const coverLoaded = writable(false);
 export const toneLoaded = writable(false);
+
 export const manual = writable(false);
 export const camera = writable(false);
 export const videoReady = writable(null);
@@ -32,8 +33,6 @@ export const keydown_M = writable(false)
 
 export const keydown_left = writable(false)
 export const keydown_right = writable(false)
-export const keydown_up = writable(false)
-export const keydown_down = writable(false)
 
 export const mouseOverride = writable(0)
 export const audioControls = writable({x:0,y:0})
