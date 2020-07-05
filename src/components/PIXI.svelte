@@ -40,6 +40,12 @@
         "bg-sheet",
         "/assets/pixi/bg-sheet.json",
         {crossOrigin:true}
+    ).add(
+      "knob",
+      "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob.png?v=1593921823767"
+    ).add(
+      "knob-normal",
+      "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FKnob-Normal.png?v=1593921823860"
     )
 
     const Resources = new Promise(
@@ -154,8 +160,8 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
         <BG sheet={value['bg-sheet']} stage={Stage} textures={value} createSprite={createSprite}/>
         <PIXIGraphics stage={Stage} graphicsGroup={graphicsGroup}/>
         <Table sheet={value['bg-sheet']} stage={Stage} textures={value} createSprite={createSprite}/>
-        <Theremin stage={Stage} sheet={value['core-sheet']} createSprite={createSprite} calcRotation={calcRotation}/> 
-        <ThereminMobile sheet={value['core-sheet']} stage={Stage} createSprite={createSprite}/> 
+        <Theremin stage={Stage} sheet={value['core-sheet']} textures={value} createSprite={createSprite} calcRotation={calcRotation}/> 
+        <ThereminMobile sheet={value['core-sheet']} stage={Stage} textures={value} createSprite={createSprite}/> 
         <Text stage={Stage} graphicsGroup={graphicsGroup}/>
         <Video stage={Stage} sheet={value['core-sheet']} createSprite={createSprite} diffuseLayer={diffuseLayer}/>
         <!-- Lights -->

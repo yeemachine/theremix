@@ -5,6 +5,7 @@ import { backOut, sineInOut } from 'svelte/easing';
 import { oscillators } from '../../config.js';
 import {loaded,active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,canvasMousePos,mousePos,globalPointerUp, thereminPos,glide, volumeVal,oscillatorType,dragged,hovered,SCALE} from '../../stores.js';
 export let sheet = null
+export let textures = null;
 export let stage = null;
 export let createSprite = null;
 export let calcRotation = null;
@@ -52,8 +53,8 @@ $:{
 }
 
 const knob_left = createSprite(
-    sheet.textures['Knob'],
-    sheet.textures['Knob-Normal']
+    textures['knob'].texture,
+    textures['knob-normal'].texture
 )
 knob_left.children[0].anchor.set(0.5, 0.5);
 knob_left.children[1].anchor.set(0.5, 0.5);
@@ -79,8 +80,8 @@ knob_left.on('pointerdown',()=>{
 })
 
 const knob_right = createSprite(
-    sheet.textures['Knob'],
-    sheet.textures['Knob-Normal']
+    textures['knob'].texture,
+    textures['knob-normal'].texture
 )
 knob_right.children[0].anchor.set(0.5, 0.5);
 knob_right.children[1].anchor.set(0.5, 0.5);
