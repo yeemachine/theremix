@@ -138,14 +138,16 @@
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 140, "h": 140 },
-      "sourceSize": { "w": 140, "h": 140 }
+      "sourceSize": { "w": 140, "h": 140 },
+      "anchor": { "x": 0, "y": 0 }
     },
     "Knob": {
       "frame": { "x": 2976, "y": 2384, "w": 140, "h": 140 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 140, "h": 140 },
-      "sourceSize": { "w": 140, "h": 140 }
+      "sourceSize": { "w": 140, "h": 140 },
+      "anchor": { "x": 0, "y": 0 }
     },
     "Left-Antenna-Normal": {
       "frame": { "x": 1490, "y": 1382, "w": 1498, "h": 222 },
