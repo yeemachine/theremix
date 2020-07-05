@@ -3,7 +3,7 @@ import { onMount } from 'svelte';
 import { tweened } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
 import {constrain,findNext} from '../helpers.js'
-import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,keydown_down,keydown_up,enableMIDI,currentMIDI,pwa} from '../stores.js'
+import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,enableMIDI,currentMIDI,pwa} from '../stores.js'
 import {oscillators,scales,tonicOrder,midiList} from '../config.js'
 import Title from './UI/UI.title.svelte'
 import Manual from './UI/UI.manual.svelte'
@@ -200,12 +200,14 @@ let pixiLoaded = false, pixiLayers = false, pixiLights = false
 </script>
 
 <svelte:head>
-    <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js" on:load={()=>{pixiLoaded=true}}></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.8/dist/pixi.min.js" on:load={()=>{pixiLoaded=true}}></script>
+  
     {#if pixiLoaded}
-        <script defer src="/libraries/pixi.layers.js" on:load={()=>{pixiLayers=true}}></script>
+        <script src="/libraries/pixi.layers.js" on:load={()=>{pixiLayers=true}}></script>
     {/if}
+  
     {#if pixiLayers}
-        <script defer src="/libraries/pixi-lights.js" on:load={()=>{pixiLights=true}}></script>
+        <script src="/libraries/pixi-lights.js" on:load={()=>{pixiLights=true}}></script>
     {/if}
 </svelte:head>
 
