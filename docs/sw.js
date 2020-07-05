@@ -1,4 +1,4 @@
-const vn = "v1.0.07";
+const vn = "v1.0.08";
 const production = true;
 
 // files to cache
@@ -107,10 +107,10 @@ let contentToCache = appShellFiles.concat(staticContent).concat(midiAssets).conc
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(vn).then((cache) => {
-            console.log('Installing...')
-            console.log('%c%s',
-        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
-        'THEREMIX ~~~ '+vn+(production ? '' : ': Dev Build'))
+            console.log('Installing Service Worker...')
+        //     console.log('%c%s',
+        // 'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+        // 'THEREMIX ~~~ '+vn+(production ? '' : ': Dev Build'))
             return cache.addAll(contentToCache);
         })
     );
@@ -142,11 +142,11 @@ self.addEventListener('message', (event) => {
 
   self.addEventListener('fetch', (e) => {
         
-    if(e.request.url.includes('/build/bundle.js')){
-        console.log('%c%s',
-        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
-        'THEREMIX ~~~ '+vn+(production ? '' : ': Dev Build'))
-    }
+    // if(e.request.url.includes('/build/bundle.js')){
+    //     console.log('%c%s',
+    //     'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+    //     'THEREMIX ~~~ '+vn+(production ? '' : ': Dev Build'))
+    // }
 
     if(production){
             e.respondWith(

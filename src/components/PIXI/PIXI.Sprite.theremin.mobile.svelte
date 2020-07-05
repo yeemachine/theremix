@@ -144,8 +144,8 @@ $:{
     x:1+.4*$tweenKnobLeft,
     y:1+.4*$tweenKnobLeft
     }
-    knob_left.x = base.width*.2355
-    knob_left.y = base.height*.226
+    knob_left.x = base.width*.236
+    knob_left.y = base.height*.227
     knob_left.interactive = ($active) ? true : false
 
     knob_light.x = base.x + base.width*.5
@@ -158,7 +158,7 @@ $:{
         y:1+.4*$tweenKnobRight
     }
     knob_right.x = base.width*.5095
-    knob_right.y = base.height*.226
+    knob_right.y = base.height*.227
     knob_right.interactive = ($active) ? true : false
     symbols.scale = {
         x:.5+.6*$tweenKnobRight,
