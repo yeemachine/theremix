@@ -61,7 +61,7 @@ $:{
 		<div class="slide-content {(currentSlide === 0 && $loaded) ? 'current' : ''}" >
 			<container>
 			<div class="graphic">
-				<h2>Theremin<br>Controls<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
+				<h2>Theremin<br>Controls<span style="font-size:9px;margin-left: 8px">{($version) ? $version : ''}<span></h2>
 				<div class="svg">
 					<BasicControls color="rgb(var(--textColor1))" bgColor="rgb(var(--cardColor))"/>
 				</div>
@@ -135,7 +135,7 @@ $:{
 		<div class="slide-content {(currentSlide === 1 && $loaded) ? 'current' : ''}">
 			<container>
 			<div class="graphic">
-				<h2>Gesture<br>Controls<span style="font-size:9px;margin-left: 8px">{$version}<span></h2>
+				<h2>Gesture<br>Controls<span style="font-size:9px;margin-left: 8px"><span></h2>
 				<div class="svg">
 					<video alt="Gesture controls" autoplay loop muted playsinline>  
 						<source src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.mp4?v=1593936184314" type="video/mp4">  

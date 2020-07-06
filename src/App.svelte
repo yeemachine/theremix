@@ -24,14 +24,13 @@
 
 		navigator.serviceWorker.register('/sw.js')
 			.then((reg) => {
-				reg.active.postMessage({ action: 'version' });
 			}).catch((e) => {
 				console.log(e);
 			});
 
-		// navigator.serviceWorker.ready.then( registration => {
-		// 	registration.active.postMessage({ action: 'version' });
-		// });
+		navigator.serviceWorker.ready.then( registration => {
+			registration.active.postMessage({ action: 'version' });
+		});
 	}
 
 	if (window.matchMedia('(display-mode: standalone)').matches) {  
