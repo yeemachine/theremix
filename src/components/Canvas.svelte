@@ -196,12 +196,15 @@ onMount(async () => {
     HEIGHT.set(containerHeight)
 });
 
+let windowLoaded = false
 let pixiLoaded = false, pixiLayers = false, pixiLights = false
 </script>
 
 
 <svelte:head>
-    <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.9/dist/pixi.min.js" on:load={()=>{pixiLoaded=true}}></script>
+    {#if windowLoaded}
+        <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@4.8.9/dist/pixi.min.js" on:load={()=>{pixiLoaded=true}}></script>
+    {/if}
   
     {#if pixiLoaded}
         <script defer src="/libraries/pixi.layers.min.js" on:load={()=>{pixiLayers=true}}></script>
@@ -217,6 +220,7 @@ let pixiLoaded = false, pixiLayers = false, pixiLights = false
 on:orientationchange={handleOrientation}
 on:keydown={handleKeydown}
 on:keyup={handleKeyup}
+on:load={()=>{windowLoaded=true}}
 /> 
 
 <div 
