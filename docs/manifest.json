@@ -5,7 +5,7 @@
   "theme_color":"#e54646",
   "display": "standalone",
   "Scope": "./",
-  "start_url": "/index.html",
+  "start_url": "/index.html?utm_source=homescreen",
   "icons": [
     {
       "src": "https://theremin.app/assets/icons/icon-72x72.png",
