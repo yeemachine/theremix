@@ -35,6 +35,7 @@
 
 	if (window.matchMedia('(display-mode: standalone)').matches) {  
 		pwa.set(true);
+    dataLayer.push({'event':'standalone'});
 	}
 
 let tfLoaded = false,toneJSLoaded = false,teoriaLoaded = false,toneMIDILoaded = false
