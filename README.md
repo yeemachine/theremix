@@ -1,6 +1,6 @@
 # THEREMIX - Virtual Theremin
 
-THEREMIX is a progressive web app that brings the interaction of a physical theremin into the virual space. The virtual theremin can be controlled either with mouse/touch inputs or with gestures through a webcam via human post tracking provided by PoseNet. This app celebrates the 100th anniversary of the theremin, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone.
+THEREMIX is a progressive web app that brings the interaction of a physical theremin into the virtual space. The virtual theremin can be controlled either with mouse/touch inputs or with gestures through a webcam via human post tracking provided by PoseNet. This app celebrates the 100th anniversary of the theremin, invented by Léon Theremin in 1920. A century after its conception, the theremin continues to be a flexible electronic instrument with an ethereal tone.
 
 <a href="https://theremin.app">
   <img src="https://theremin.app/assets/global/markdownPlay.svg" alt="view source" height="56">
