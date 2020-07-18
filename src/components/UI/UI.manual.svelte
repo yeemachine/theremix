@@ -241,7 +241,7 @@ $:{
 					</li>
 				</ul>
 				<hr>
-				<p class="small sub">This project is typeset in <span>Whirly Birdie</span> and <span>Nicholson Gothic</span>.</p>
+				<p class="small sub">This project is typeset in <a href="http://whirlybirdie.com/" target="blank">Whirly Birdie</a> and <span>Nicholson Gothic</span>.</p>
 			</div>
 			</container>
 			<div class="gradient"></div>
