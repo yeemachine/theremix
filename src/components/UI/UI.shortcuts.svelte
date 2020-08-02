@@ -47,7 +47,7 @@ class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || 
 <Keycap hide={!$keydown_G} letter={'G'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .7415 : .7685}/>
 <Keycap hide={!$keydown_M} letter={'M'} position={'absolute'} top={$WIDTH>600 ? .7676 : 0} left={$WIDTH>600 ? .5005 : .5095}/>
 <p class="label {(!$showGuides || !$videoReady) ? 'hide' :''}"
-style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
+style="{!$showGuides ? '' : ''}">Move back and wave your hands</p>
 
 <style>
     section{
@@ -94,7 +94,7 @@ style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
     .label{
         position: absolute;
         top: 312px;
-        left: 62px;
+        left: 34px;
         width: max-content;
         line-break: normal;
         font-size: 14px;
@@ -131,7 +131,7 @@ style="{!$showGuides ? '' : ''}">Fit your body in frame</p>
         }
         .label{
             top: 262px;
-            left: 35px;
+            left: 8px;
         }
     }
 

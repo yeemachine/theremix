@@ -328,10 +328,10 @@ style='opacity:{mousePos ? 1 : 0};
   transform:translate({$mousePos.x-26}px, {$mousePos.y-26}px)'>
   <div>
     <span>{
-      ($hovered === 'switch' && !$glide) ?  'Enable Glide' 
-      : ($hovered === 'switch' && $glide) ? 'Disable Glide'
+      ($hovered === 'switch' && !$glide) ?  'Enable Glide (G)' 
+      : ($hovered === 'switch' && $glide) ? 'Disable Glide (G)'
       : ($hovered === 'knob left') ? 'Adjust Volume'
-      : ($hovered === 'knob right') ? 'Change Oscillator'
+      : ($hovered === 'knob right') ? 'Change Oscillator (O)'
       : ''
       }</span>
   </div>
