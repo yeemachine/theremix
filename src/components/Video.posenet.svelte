@@ -10,7 +10,6 @@ let net;
 
 posenet.load().then(e=>{
     net = e
-    modelLoaded.set(true)
 });
 
 async function estimatePoseOnImage() {
@@ -24,6 +23,9 @@ async function estimatePoseOnImage() {
             }else{
                 poseNetRes.set(null)
             }
+        }
+        if(!$modelLoaded){
+          modelLoaded.set(true)
         }
         requestAnimationFrame(estimatePoseOnImage);
     }else{

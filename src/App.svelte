@@ -8,19 +8,20 @@
 	import PoseNet from './components/Video.posenet.svelte'
 
 	var newSW;
-
-	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		update.set(true)
-	});
-	navigator.serviceWorker.addEventListener('message', event => {
-			version.set(event.data)
-      console.log('%c%s',
-        'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
-        'THEREMIX ~~~ '+event.data)
-	});
   
 	// Register service worker
 	if ('serviceWorker' in navigator) {
+    
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      update.set(true)
+    });
+    
+    navigator.serviceWorker.addEventListener('message', event => {
+        version.set(event.data)
+        console.log('%c%s',
+          'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+          'THEREMIX ~~~ '+event.data)
+    });
 
 		navigator.serviceWorker.register('/sw.js')
 			.then((reg) => {
@@ -37,6 +38,17 @@
 		pwa.set(true);
     dataLayer.push({'event':'standalone'});
 	}
+  if (window.matchMedia('prefers-color-scheme: dark').matches){
+    dataLayer.push({
+      'event':'theme',
+      'eventAction' : 'dark'
+    })
+  }else{
+    dataLayer.push({
+      'event':'theme',
+      'eventAction' : 'light'
+    })
+  }
 
 let tfLoaded = false,toneJSLoaded = false,teoriaLoaded = false,toneMIDILoaded = false
 let cameraTriggered = false
