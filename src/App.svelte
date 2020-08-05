@@ -38,7 +38,7 @@
 		pwa.set(true);
     dataLayer.push({'event':'standalone'});
 	}
-  if (window.matchMedia('prefers-color-scheme: dark').matches){
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches){
     dataLayer.push({
       'event':'theme',
       'eventAction' : 'dark'
