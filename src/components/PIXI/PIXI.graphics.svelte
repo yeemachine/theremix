@@ -1,5 +1,5 @@
 <script>
-import {videoReady,active,thereminPos,thereminMobilePos,poseNetRes,videoPos,WIDTH,toneOutput,bgPos,analyser,mouseOverride,gestures,enableMIDI,MIDITextSprite} from '../../stores.js'
+import {videoReady,active,thereminPos,thereminMobilePos,poseNetRes,videoPos,WIDTH,toneOutput,bgPos,analyser,mouseOverride,gestures,enableMIDI,MIDITextSprite,videoMask} from '../../stores.js'
 import { tweened } from 'svelte/motion';
 import {constrain,getDistance} from '../../helpers.js';
 import {sineInOut } from 'svelte/easing';
@@ -36,7 +36,8 @@ graphics2add.alpha = 0.7
 let maskGraphic = new PIXI.Graphics();
 maskGraphic.parentGroup = graphicsGroup
 maskGraphic.lineStyle(0)
-
+videoMask.set(maskGraphic)
+  
 graphics2.mask = maskGraphic
 graphics2add.mask = maskGraphic
 

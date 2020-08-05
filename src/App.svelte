@@ -72,6 +72,7 @@ $:{
 </svelte:head>
  
 <main>
+  <Webcam/>
 	<Canvas/>
 	<Shortcuts/>
 	<Nav/>
@@ -79,8 +80,6 @@ $:{
 	{#if toneLoaded && toneMIDILoaded}
 		<Tone/>
 	{/if}
-
-	<Webcam/>
 	{#if $posenetLoaded}
 		<PoseNet/>
 	{/if}
