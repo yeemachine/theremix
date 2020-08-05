@@ -1,8 +1,9 @@
 <script>
 import { tweened } from 'svelte/motion';
+import {onMount} from 'svelte';
 import { backInOut, sineInOut } from 'svelte/easing';
 import {constrain} from '../../helpers.js'
-import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides,modelLoaded} from '../../stores.js';
+import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides,modelLoaded,videoMask} from '../../stores.js';
 export let sheet = null;
 export let stage = null;
 export let createSprite = null;
@@ -35,7 +36,22 @@ guides.parentGroup = PIXI.lights.diffuseGroup
 video.addChild(guides)
 
 const video_light = new PIXI.lights.PointLight(0xff7f00, 0);
-stage.addChild(wire1,wire2,wire3,video,video_light)
+  
+var feedTexture = PIXI.Texture.from(document.querySelector('video'));
+var feedSprite = new PIXI.Sprite(feedTexture);
+let colorMatrix = new PIXI.filters.ColorMatrixFilter();
+colorMatrix.desaturate()
+feedSprite.filters = [colorMatrix]
+  
+feedSprite.anchor.set(0.5)
+feedSprite.alpha = 0.2;
+$:{
+  if($videoMask){
+    feedSprite.mask = $videoMask
+  }
+}
+  
+stage.addChild(wire1,wire2,wire3,video,feedSprite,video_light)
 
 $:{
     video.width = ($WIDTH>600) ? 240*$SCALE : 200*$SCALE
@@ -47,6 +63,12 @@ $:{
     video_light.x = margin*2*$SCALE + video.width*.5
     video_light.y = video.y
     video_light.brightness = (1+.8*constrain($CANVASWIDTH/1200, {min:0,max:1}))*$sineInOut0_1
+  
+    feedSprite.width = ($WIDTH>600) ? -240*$SCALE*.99 : -200*$SCALE*.99 //flip horizontal video
+    feedSprite.scale.y = Math.abs(feedSprite.scale.x)
+    feedSprite.scale.x = -1 * Math.abs(feedSprite.scale.x) 
+    feedSprite.x = video.x + video.width/2
+    feedSprite.y = video.y + video.height/2;
 
     guides.alpha = $guides1_0*1
 

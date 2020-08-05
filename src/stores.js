@@ -43,6 +43,7 @@ export const bgPos = writable({x:0,y:0})
 export const thereminMobilePos = writable({x:0,y:0})
 export const tablePos = writable({x:0,y:0})
 export const videoPos = writable({x:0,y:0})
+export const videoMask = writable(null);
 
 export const expandSettings = writable(false)
 export const FFT = writable([])
