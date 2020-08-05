@@ -3,7 +3,7 @@ import { tweened } from 'svelte/motion';
 import {onMount} from 'svelte';
 import { backInOut, sineInOut } from 'svelte/easing';
 import {constrain} from '../../helpers.js'
-import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides,modelLoaded,videoMask} from '../../stores.js';
+import {CANVASWIDTH,CANVASHEIGHT,WIDTH,SCALE,videoPos,videoReady,gestures,showGuides,modelLoaded,videoMask,poseNetRes} from '../../stores.js';
 export let sheet = null;
 export let stage = null;
 export let createSprite = null;
@@ -43,13 +43,8 @@ let colorMatrix = new PIXI.filters.ColorMatrixFilter();
 colorMatrix.desaturate()
 feedSprite.filters = [colorMatrix]
 feedSprite.anchor.set(0.5)
-$:{
-  if($videoReady){
-    feedSprite.alpha = 0.2;
-  }else{
-    feedSprite.alpha = 0;
-  }
-}
+feedSprite.alpha = 0.2;
+
 $:{
   if($videoMask){
     feedSprite.mask = $videoMask
