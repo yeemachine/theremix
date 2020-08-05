@@ -70,7 +70,7 @@ $:{
 		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.1/dist/posenet.min.js" on:load={()=>{posenetLoaded.set(true)}}></script>
 	{/if}
 </svelte:head>
- 
+
 <main>
   <Webcam/>
 	<Canvas/>
