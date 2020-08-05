@@ -42,9 +42,14 @@ var feedSprite = new PIXI.Sprite(feedTexture);
 let colorMatrix = new PIXI.filters.ColorMatrixFilter();
 colorMatrix.desaturate()
 feedSprite.filters = [colorMatrix]
-  
 feedSprite.anchor.set(0.5)
-feedSprite.alpha = 0.2;
+$:{
+  if($videoReady){
+    feedSprite.alpha = 0.2;
+  }else{
+    feedSprite.alpha = 0;
+  }
+}
 $:{
   if($videoMask){
     feedSprite.mask = $videoMask

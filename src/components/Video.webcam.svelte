@@ -42,6 +42,7 @@ const handleStream = (stream) => {
   checkStream = setInterval(() => {
     if (videoObj.readyState >= 3) {
       videoReady.set(videoObj)
+      videoObj.play();
       //stop checking every half second
       clearInterval(checkStream);
     }
