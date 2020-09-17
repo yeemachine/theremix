@@ -38,6 +38,8 @@ video.addChild(guides)
 const video_light = new PIXI.lights.PointLight(0xff7f00, 0);
   
 var feedTexture = PIXI.Texture.from(document.querySelector('video'));
+feedTexture.rotate = 12
+console.log(feedTexture)
 var feedSprite = new PIXI.Sprite(feedTexture);
 let colorMatrix = new PIXI.filters.ColorMatrixFilter();
 colorMatrix.desaturate()
@@ -48,6 +50,13 @@ feedSprite.alpha = 0.2;
 $:{
   if($videoMask){
     feedSprite.mask = $videoMask
+  }
+}
+
+let ratio = 1/1
+$:{
+  if($videoReady){
+    ratio = $videoReady.width/$videoReady.height
   }
 }
   
@@ -64,9 +73,10 @@ $:{
     video_light.y = video.y
     video_light.brightness = (1+.8*constrain($CANVASWIDTH/1200, {min:0,max:1}))*$sineInOut0_1
   
-    feedSprite.width = ($WIDTH>600) ? -240*$SCALE*.99 : -200*$SCALE*.99 //flip horizontal video
-    feedSprite.scale.y = Math.abs(feedSprite.scale.x)
-    feedSprite.scale.x = -1 * Math.abs(feedSprite.scale.x) 
+    feedSprite.height = ($WIDTH>600) ? 240*$SCALE*.99 : 200*$SCALE*.99 //flip horizontal video
+    feedSprite.width = feedSprite.height * ratio
+    // feedSprite.scale.x = feedSprite.scale.y
+    // feedSprite.scale.x = -1 * Math.abs(feedSprite.scale.x) 
     feedSprite.x = video.x + video.width/2
     feedSprite.y = video.y + video.height/2;
 
