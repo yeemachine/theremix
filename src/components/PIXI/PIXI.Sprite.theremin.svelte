@@ -11,7 +11,7 @@ export let createSprite = null;
 export let calcRotation = null;
 
 const backOut0_1 = tweened(0, {
-    delay:600,
+    delay:300,
     duration: 1000,
     easing: backOut
 });

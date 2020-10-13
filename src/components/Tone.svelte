@@ -133,13 +133,14 @@ const initMidi = (url)=>{
               }
             }).connect(gain2)
             
-            // synth.maxPolyphony = 12;
+            // synth.maxPolyphony = 64;
             
             midiSynths.push(synth)
             //scheduleOnce all of the events
             track.notes.forEach(note => {
+                let duration = (note.duration <= 0) ? 0.1 : note.duration
                 Tone.Transport.scheduleOnce((time)=>{
-                    synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
+                    synth.triggerAttackRelease(note.name, duration, time, note.velocity)
                 }, note.time + now)
 
             })
@@ -182,15 +183,16 @@ const initMidi = (url)=>{
 
 
 const cleanupSynths = () => {
-    Tone.Transport.cancel(0)
     Tone.Transport.stop()
     // midiSynths[0].dispose()
     // midiSynths = []
-    // while (midiSynths.length) {
-    //     const synth = midiSynths.shift()
-    //     synth.dispose()
-    //     console.log(synth)
-    // }
+    while (midiSynths.length) {
+        const synth = midiSynths.shift()
+        synth.disconnect()
+        console.log(synth)
+    }
+    Tone.Transport.cancel(0)
+
 }
 
 $:{
@@ -218,9 +220,6 @@ $:{
         
         if(mainOsc.state === 'stopped'){
             mainOsc.start()
-            if($enableMIDI){
-              Tone.Transport.start()
-            }
         }
         if(Tone.context.state !== 'running'){  
             Tone.start()
@@ -305,8 +304,11 @@ $:{
     }else{
         if(mainOsc.state === 'started'){
             mainOsc.stop()
-            Tone.Transport.pause()
         }
+        if(Tone.context.state === 'running'){
+            Tone.getContext().rawContext.suspend()
+        }
+      
     }
 }
 
