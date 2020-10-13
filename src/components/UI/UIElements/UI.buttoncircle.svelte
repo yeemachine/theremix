@@ -36,8 +36,8 @@ const handleClick = () => {
         --bgColor:var(--offwhite);
         --svgColor:var(--offwhite);
         --svgColorHover:var(--charcoal);
-        width:56px;
-        height:56px;
+        width:48px;
+        height:48px;
         border-radius: 50%;
         transition:opacity .25s;
         display: flex;
@@ -45,6 +45,7 @@ const handleClick = () => {
         justify-content: center;
         pointer-events: all;
         background:rgba(var(--bgColor),.2);
+        backdrop-filter: blur(10px);
     }
     button.selected{
         background: rgb(var(--bgColor));

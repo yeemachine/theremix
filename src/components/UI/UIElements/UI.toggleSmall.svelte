@@ -52,15 +52,15 @@ label:hover{
     pointer-events:none;
 }    
 container{
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: flex-start;
-    height:40px;
-    width:64px;
+    height: 11px;
+    width: 48px;
     border-radius: 32px;
-    overflow: hidden;
+    overflow: visible;
     background: rgba(200,200,200,0.2);
-    transition:background-color .25s, opacity .25s;
+    transition: background-color .25s, opacity .25s;
     pointer-events: all;
 }
 .toggled container{
@@ -71,19 +71,19 @@ container{
     display:flex;
     flex-direction: row;
     align-items: center;
-    transform: translate(5px,0px);
+    transform: translate(0px,0px);
     transition: transform .25s;
 }
 .toggled container .track{
-    transform: translate(27px,0px)
+    transform: translate(25px,0px)
 }
 .toggleButton{
     display: inline-block;
-    position:relative;
-    width:32px;
-    height:32px;
-    border-radius:50%;
-    background: rgba(255,255,255,.4)
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgb(143 143 143);
 }
 .toggled .toggleButton{
     background: rgb(var(--offwhite))
