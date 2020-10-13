@@ -6,7 +6,7 @@
     "start": "rollup -c && sirv docs"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.3",
+    "sirv-cli": "^1.0.6",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "@beyonk/svelte-carousel": "^2.8.0",

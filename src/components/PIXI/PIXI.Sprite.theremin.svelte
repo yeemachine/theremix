@@ -11,7 +11,8 @@ export let createSprite = null;
 export let calcRotation = null;
 
 const backOut0_1 = tweened(0, {
-    duration: 700,
+    delay:600,
+    duration: 1000,
     easing: backOut
 });
 
@@ -233,10 +234,10 @@ $: {
     switchRight.visible = ($WIDTH > 600) ? true : false
     
     if(sheet.textures['theremin_null'].width/sheet.textures['theremin_null'].height > $CANVASWIDTH/$CANVASHEIGHT){
-        theremin.width = $CANVASWIDTH*.9
+        theremin.width = $CANVASWIDTH * (.95 - .1 * (1-$sineInOut0_1))
         theremin.scale.y = theremin.scale.x
     }else{
-        theremin.height = $CANVASHEIGHT*.9
+        theremin.height = $CANVASHEIGHT * (.95 - .1 * (1-$sineInOut0_1))
         theremin.scale.x = theremin.scale.y
     }
 

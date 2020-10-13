@@ -66,9 +66,9 @@ let vibrato = new Tone.Vibrato({
   type: "sine"
 });
 
-mainOsc.chain(vibrato,gain1,Tone.Master);
-gain2.connect(Tone.Master)
-Tone.Master.chain(masterCompressor,masterVolume,masterAnalyser);
+mainOsc.chain(gain1,Tone.Destination);
+gain2.connect(Tone.Destination)
+Tone.Destination.chain(masterCompressor,masterVolume,masterAnalyser);
 
 let midiSynths = []
 let lastMIDI
@@ -81,7 +81,33 @@ const initMidi = (url)=>{
 
         midi.tracks.forEach((track,i) => {
             //create a synth for each track
-            const synth = new Tone.PolySynth(8, Tone.Synth, {
+            // const synth = new Tone.PolySynth(8, Tone.Synth, {
+            //     oscillator:{
+            //             type:($oscillatorType === 'Fat Sine') ? 'sine' 
+            //             : ($oscillatorType === 'Fat Triangle') ? 'triangle'
+            //             : ($oscillatorType === 'Fat Sawtooth') ? 'sawtooth'
+            //             : ($oscillatorType === 'Fat Square') ? 'square'
+            //             : ($oscillatorType === 'PWM') ? 'pwm'
+            //             : ($oscillatorType === 'Pulse') ? 'pulse'
+            //             : ($oscillatorType === 'Oscillator Off') ? 'triangle'
+            //             : $oscillatorType.toLowerCase().replace(/\s/g, ''),
+            //             spread:($oscillatorType.includes('Fat')) ? 20 : 0,
+            //             count:($oscillatorType.includes('Fat')) ? 3 : 0,
+            //             modulationFrequency : ($oscillatorType === 'PWM') ? 0.4 : 0,
+            //             width : ($oscillatorType === 'Pulse') ? 0.2 : 0
+            //     },
+            //     envelope: {
+            //         attackCurve:'exponential',
+            //         attack: 0.02,
+            //         decayCurve:'exponential',
+            //         decay: 0.1,
+            //         sustain: 0.3,
+            //         release: 1
+            //     }
+            // }).connect(gain2)
+            
+            const synth = new Tone.PolySynth({
+              options:{
                 oscillator:{
                         type:($oscillatorType === 'Fat Sine') ? 'sine' 
                         : ($oscillatorType === 'Fat Triangle') ? 'triangle'
@@ -104,7 +130,10 @@ const initMidi = (url)=>{
                     sustain: 0.3,
                     release: 1
                 }
+              }
             }).connect(gain2)
+            
+            // synth.maxPolyphony = 12;
             
             midiSynths.push(synth)
             //scheduleOnce all of the events
@@ -155,10 +184,13 @@ const initMidi = (url)=>{
 const cleanupSynths = () => {
     Tone.Transport.cancel(0)
     Tone.Transport.stop()
-    while (midiSynths.length) {
-        const synth = midiSynths.shift()
-        synth.dispose()
-    }
+    // midiSynths[0].dispose()
+    // midiSynths = []
+    // while (midiSynths.length) {
+    //     const synth = midiSynths.shift()
+    //     synth.dispose()
+    //     console.log(synth)
+    // }
 }
 
 $:{
@@ -186,6 +218,9 @@ $:{
         
         if(mainOsc.state === 'stopped'){
             mainOsc.start()
+            if($enableMIDI){
+              Tone.Transport.start()
+            }
         }
         if(Tone.context.state !== 'running'){  
             Tone.start()
@@ -221,10 +256,11 @@ $:{
             y:Math.min(~~($audioControls.y / (1/$scaleNotes.length)),($scaleNotes.length-1))
         }
         let glideFreq = ($audioControls.x * (maxFreq - minFreq) + minFreq)
-        let calcFreq = ($glide) ? glideFreq : Tone.Frequency($scaleNotes[steps.x]);
+        let calcFreq = ($glide) ? Math.floor(glideFreq) : Math.floor(Tone.Frequency($scaleNotes[steps.x]).toFrequency());
 
         mainOsc.frequency.value = (mainOsc.frequency.value !== calcFreq) ? calcFreq : mainOsc.frequency.value
 
+      
         let envelopeControl = {
             x:($enableMIDI) ? steps.x/$scaleNotes.length : $audioControls.x,
             y:($enableMIDI) ? steps.y/$scaleNotes.length : $audioControls.y
@@ -269,9 +305,7 @@ $:{
     }else{
         if(mainOsc.state === 'started'){
             mainOsc.stop()
-        }
-        if(Tone.context.state === 'running'){
-            Tone.context.suspend();
+            Tone.Transport.pause()
         }
     }
 }

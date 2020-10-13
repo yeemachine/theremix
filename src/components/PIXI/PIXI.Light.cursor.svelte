@@ -19,8 +19,8 @@ let htmlCursor
 const cursorLight = new PIXI.lights.PointLight(0xff7f00,2);
 cursorLight.falloff = [0.75, 3, 10]
 
-const gradientTexture = createGradientTexture(0, 12*$SCALE, app.renderer.resolution);
-const gradientTexture2 = createGradientTexture(0, 24*$SCALE, app.renderer.resolution);
+const gradientTexture = createGradientTexture(0, 12*$SCALE, 1);
+const gradientTexture2 = createGradientTexture(0, 24*$SCALE, 1);
 
 const particleContainer = new PIXI.particles.ParticleContainer(5000, {
   scale: true,
@@ -71,7 +71,7 @@ const emitter = new PIXI.particles.Emitter(particleContainer, [gradientTexture],
   blendMode: "normal",
   frequency: 0.0008,
   emitterLifetime: -1,
-  maxParticles: 3000,
+  maxParticles: 2000,
   pos: {x:0,y:0},
   addAtBack: false,
   spawnType: "point"
@@ -91,7 +91,7 @@ const emitterRight = new PIXI.particles.Emitter(particleContainer, [gradientText
     minimumScaleMultiplier: 1
   },
   color: {
-    start: "#E54646",
+    start: "#FFFF33",
     end: "#8D1A6D"
   },
   speed: {
@@ -120,7 +120,7 @@ const emitterRight = new PIXI.particles.Emitter(particleContainer, [gradientText
   blendMode: "normal",
   frequency: 0.0008,
   emitterLifetime: -1,
-  maxParticles: 2500,
+  maxParticles: 2000,
   pos: {x:0,y:0},
   addAtBack: false,
   spawnType: "point"
@@ -139,7 +139,7 @@ const emitterLeft = new PIXI.particles.Emitter(particleContainer, [gradientTextu
     minimumScaleMultiplier: 1
   },
   color: {
-    start: "#E54646",
+    start: "#FFFF33",
     end: "#8D1A6D"
   },
   speed: {
@@ -168,7 +168,7 @@ const emitterLeft = new PIXI.particles.Emitter(particleContainer, [gradientTextu
   blendMode: "normal",
   frequency: 0.0008,
   emitterLifetime: -1,
-  maxParticles: 2500,
+  maxParticles: 2000,
   pos: {x:0,y:0},
   addAtBack: false,
   spawnType: "point"

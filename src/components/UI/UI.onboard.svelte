@@ -1,57 +1,12 @@
 <script>
-import Toggle from './UIElements/UI.toggle.svelte'
-import ButtonCircle from './UIElements/UI.buttoncircle.svelte'
-import gestureIcon from '../icons/gesture.svelte'
-import pauseIcon from '../icons/pause.svelte'
-import settingsIcon from '../icons/settings.svelte'
-import closeIcon from '../icons/close.svelte'
-import Settings from './UI.settingsexpanded.svelte'
-
 import {expandSettings,active,camera} from '../../stores.js'
+  
+let state = 0
+
 </script>
 
 <nav class="{$active ? '':'hide'}">
-    <ButtonCircle 
-    name="pause-theremin"
-    classes={'pauseTag'}
-    icon={pauseIcon}
-    settingState={false}  
-    setting={active} 
-    reverse=true
-    hide={
-        (!$active) ? true
-         :false}
-    styles={'margin-right:16px'}/>
-    <div class="gestures">
-        <Toggle 
-        name={$camera ? 'disable-camera-gestures' : 'enable-camera-gestures'}
-        icon={gestureIcon} 
-        setting={camera} 
-        classes={'gestureTag'}
-        hide={
-            (!$active) ? true
-            :false}/>
-        <p class="label">{!$camera ? 'Enable Camera Controls' : 'Disable Camera Controls'}</p>
-    </div>
-    <div class="settings">
-        <ButtonCircle 
-        name={ $expandSettings ? 'Close Controls' : 'Open Controls'}
-        classes={'controlsTag'}
-        icon={
-            $expandSettings ? closeIcon
-            : settingsIcon
-        } 
-        selected= {
-            $expandSettings ? true
-            : false
-        }
-        setting={expandSettings} 
-        settingState={null}  
-        hide={$active ? false : true}
-        />
-    </div>
-    <Settings/>
-  
+
 </nav>
 
 

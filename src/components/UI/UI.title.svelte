@@ -32,7 +32,8 @@ $:{
     <div class="title {(!$coverLoaded || $active) ? 'hide' : ''}">
         <Logo hide={(!$coverLoaded || $active) ? true : false}/>
     </div>
-
+<!--     <p class="{(!$coverLoaded || $active) ? 'hide' : ''}">Play with your mouse or webcam!</p>
+ -->
     <label>
         <button 
         class="play"
@@ -45,7 +46,7 @@ $:{
             <Play loaded={$coverLoaded} hide={$active}/>
         </button>
     </label>
-
+    
 </section>
 <button 
     name="open-manual"
@@ -134,24 +135,44 @@ $:{
  
     .manual{
 		position:absolute;
-        bottom:32px;
-        left:32px;
-        height: 56px;
-		padding:0 24px 0 24px;
-		background: rgba(var(--crimson),.2);
-        border-radius: 8px;
+     left: 40px;
+    bottom: 0;
+    padding: 12px 0 16px 0;
+    border-bottom: 2px solid rgba(var(--crimson),.5);
 		color:rgb(var(--offwhite));
 		font-family: 'Whirly Birdie';
 		font-variation-settings: "wght" 90, "wdth" 120, "ital" 0;
         transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) .4s;
         font-size:12px;
+      z-index:0;
+      overflow:visible;
     }
+  .manual:before{
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 200%;
+    bottom: -2px;
+    left: -25%;
+    z-index: -1;
+    opacity: 0;
+    transition:.25s;
+    background:-webkit-radial-gradient(ellipse farthest-side at bottom center, rgba(var(--crimson),1) 0%, rgba(var(--crimson),0) 100%);
+    background:-o-radial-gradient(ellipse farthest-side at bottom center, rgba(var(--crimson),1) 0%, rgba(var(--crimson),0) 100%);
+    background:-moz-radial-gradient(ellipse farthest-side at bottom center, rgba(var(--crimson),1) 0%, rgba(var(--crimson),0) 100%);
+    background:radial-gradient(ellipse farthest-side at bottom center, rgba(var(--crimson),1) 0%, rgba(var(--crimson),0) 100%);
+    
+  }
+  
     .manual:hover, .manual:focus{
-        background: rgba(var(--crimson),1);
+      border-bottom: 2px solid rgba(var(--crimson),1);
+    }
+    .manual:hover:before, .manual:focus:before{
+      opacity:.8;
     }
     .manual.hide{
         opacity: 0;
-        background: rgba(var(--crimson),.2);
+/*         background: rgba(var(--crimson),.2); */
         pointer-events: none;
         transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s
     }
@@ -177,6 +198,22 @@ $:{
         pointer-events: none;
         transition: opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s
     }
+  p{
+    color: rgb(var(--offwhite));
+    font-family: 'Nicholson Beta';
+    position:absolute;
+    bottom:24px;
+    margin: 0;
+    transition: 
+    transform .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s
+    , opacity 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1s;
+  }
+  p.hide{
+    opacity:0;
+    transition: 
+            transform .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s
+            , opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
+  }
 
      @media screen and (max-width: 600px) {
         h1{
@@ -195,6 +232,7 @@ $:{
         }
         .manual{
           width:calc(100% - 64px);
+              left: unset;
 	  }
       
     

@@ -4,7 +4,8 @@ import { tweened } from 'svelte/motion';
 import {constrain,getDistance} from '../../helpers.js';
 import {sineInOut } from 'svelte/easing';
 
-export let stage = null
+export let app = null;
+export let stage = null;
 export let graphicsGroup = null;
 
 let ratio = 0
@@ -220,11 +221,10 @@ let bgLights = [
 
 let audioArr = [0,0]
 let TIME = 0
-let marqueeTime = 0
 var before; 
 var delay = 1000/24;
 
-const draw = (now) => {
+const drawAudio = (now=performance.now()) => {
     if ( !before ) before = now;
 
     if ( now - before > delay) {
@@ -244,117 +244,106 @@ const draw = (now) => {
             }
         }
 
-        //Text Marquee
-        if($MIDITextSprite){
-            if($MIDITextSprite.text !== "Loading..."){
-                marqueeTime = 
-                    (!$active) ? marqueeTime
-                    :(marqueeTime<=1) ? marqueeTime+.001 
-                    : 0
-                $MIDITextSprite.x = ($WIDTH > 600) 
-                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width*1/4) 
-                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width*2/4-(marqueeTime*$MIDITextSprite.width/4) 
-            }else{
-                marqueeTime = 0
-                $MIDITextSprite.x = ($WIDTH > 600) 
-                    ? $thereminPos.x+$thereminPos.width*.50-$MIDITextSprite.width/2 
-                    : $thereminMobilePos.x + $thereminMobilePos.width*.48-$MIDITextSprite.width/2
-            }
-        }
-
         before = now;
     }
-
-    TIME+=.01
-
-        //Draw Pose
-        if($poseNetRes && $videoReady){
-            mouseOverride.set($mouseOverride+.01)
-            graphics2.clear()
-            graphics2add.clear()
-            ratio = $videoPos.width*.99/$videoReady.videoWidth
-            createPose($poseNetRes,graphics2)
-            graphics2.x = $videoPos.x;
-            graphics2.y = $videoPos.y
-        }else{
-            graphics2.clear()
-            graphics2add.clear()
-        }
-
-        //Draw Glide Guides
-        if($toneOutput){
-            graphics3.clear()
-            if(!$toneOutput.glide){
-                for(let i=0; i<$toneOutput.total+1;i++){
-                    graphics3.lineStyle(2,0xffffff);
-                    graphics3.moveTo(
-                        $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
-                        0)
-                    graphics3.lineTo(
-                        $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
-                        ($thereminPos.y+$thereminPos.height))
-                }
-                let currentColor = ($gestures) ? 0xFF5555 : 0xFFFF33
-                graphics3.lineStyle(2,currentColor);
-                graphics3.beginFill(currentColor,1)
-
-                if($enableMIDI){
-                    graphics3.drawRect(
-                        $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
-                        (($thereminPos.y+$thereminPos.height))*($toneOutput.index.y)/$toneOutput.total,
-                        $thereminPos.width/$toneOutput.total,
-                        (($thereminPos.y+$thereminPos.height))/$toneOutput.total
-                    )
-                }else{
-                    graphics3.drawRect(
-                        $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
-                        0,
-                        $thereminPos.width/$toneOutput.total,
-                        ($thereminPos.y+$thereminPos.height)
-                    )
-                }
-                
-            }
-        }
-
-        //Draw Machine Lights
-        if($bgPos){
-            bgGraphics.clear()
-                bgLights.forEach((e,i)=>{
-
-                    let opacity = (e.pause) ? constrain((Math.sin(TIME*e.speed)),{min:0,max:1})
-                        : Math.abs(Math.sin(TIME*e.speed))
-                    let opacityStepped = (opacity>e.step) ? .7 : 0
-                        
-                    bgGraphics.beginFill(e.color,opacityStepped*$hideLights0_1)
-
-                    if(e.r){
-                        bgGraphics.drawEllipse(
-                            $bgPos.x+$bgPos.width*e.x,
-                            $bgPos.y+$bgPos.height*e.y,
-                            $bgPos.width*e.r,
-                            $bgPos.width*e.r
-                        )
-                    }
-                    if(e.w){
-                        bgGraphics.drawRoundedRect(
-                            $bgPos.x+$bgPos.width*e.x,
-                            $bgPos.y+$bgPos.height*e.y,
-                            $bgPos.width*e.w,
-                            $bgPos.width*e.w,
-                            $bgPos.width*e.w*.3
-                        )
-                    }
-
-
-                })  
-           
-        }
-        
-    requestAnimationFrame(draw);
 }
 
-draw()
+
+const drawPose = ()=>{
+    if($poseNetRes && $videoReady){
+      mouseOverride.set($mouseOverride+.01)
+      graphics2.clear()
+      graphics2add.clear()
+      ratio = $videoPos.width*.99/$videoReady.videoWidth
+      createPose($poseNetRes,graphics2)
+      graphics2.x = $videoPos.x;
+      graphics2.y = $videoPos.y
+  }else{
+      graphics2.clear()
+      graphics2add.clear()
+  }
+}
+
+const drawLights = () => {
+   if($bgPos){
+        bgGraphics.clear()
+        bgLights.forEach((e,i)=>{
+
+            let opacity = (e.pause) ? constrain((Math.sin(TIME*e.speed)),{min:0,max:1})
+                : Math.abs(Math.sin(TIME*e.speed))
+            let opacityStepped = (opacity>e.step) ? .7 : 0
+
+            bgGraphics.beginFill(e.color,opacityStepped*$hideLights0_1)
+
+            if(e.r){
+                bgGraphics.drawEllipse(
+                    $bgPos.x+$bgPos.width*e.x,
+                    $bgPos.y+$bgPos.height*e.y,
+                    $bgPos.width*e.r,
+                    $bgPos.width*e.r
+                )
+            }
+            if(e.w){
+                bgGraphics.drawRoundedRect(
+                    $bgPos.x+$bgPos.width*e.x,
+                    $bgPos.y+$bgPos.height*e.y,
+                    $bgPos.width*e.w,
+                    $bgPos.width*e.w,
+                    $bgPos.width*e.w*.3
+                )
+            }
+        })  
+    }
+}
+
+const drawGuides = () => {
+    if(!$toneOutput){
+      return
+    }else{
+        graphics3.clear()
+        if(!$toneOutput.glide){
+            for(let i=0; i<$toneOutput.total+1;i++){
+                graphics3.lineStyle(2,0xffffff);
+                graphics3.moveTo(
+                    $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
+                    0)
+                graphics3.lineTo(
+                    $thereminPos.x + $thereminPos.width*i/$toneOutput.total,
+                    ($thereminPos.y+$thereminPos.height))
+            }
+            let currentColor = ($gestures) ? 0xFF5555 : 0xFFFF33
+            graphics3.lineStyle(2,currentColor);
+            graphics3.beginFill(currentColor,1)
+
+            if($enableMIDI){
+                graphics3.drawRect(
+                    $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
+                    (($thereminPos.y+$thereminPos.height))*($toneOutput.index.y)/$toneOutput.total,
+                    $thereminPos.width/$toneOutput.total,
+                    (($thereminPos.y+$thereminPos.height))/$toneOutput.total
+                )
+            }else{
+                graphics3.drawRect(
+                    $thereminPos.x + $thereminPos.width*$toneOutput.index.x/$toneOutput.total,
+                    0,
+                    $thereminPos.width/$toneOutput.total,
+                    ($thereminPos.y+$thereminPos.height)
+                )
+            }
+
+        }
+    }
+}
+
+app.ticker.add(()=>{
+  drawAudio();
+  drawGuides();
+  drawLights();
+  drawPose();
+  TIME+=.01
+})
+
+
 
 
 $:{
