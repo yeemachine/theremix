@@ -4,6 +4,7 @@ import {sineInOut } from 'svelte/easing';
 import { oscillators, midiList } from '../../config.js';
 import {active,WIDTH,HEIGHT, thereminPos,thereminMobilePos,glide,oscillatorType,toneOutput,enableMIDI,MIDITextSprite,currentMIDITitle} from '../../stores.js';
 export let stage = null;
+export let app = null;
 export let graphicsGroup = null;
 
 const sineInOut0_1 = tweened(0, {
@@ -16,6 +17,7 @@ maskGraphic.parentGroup = graphicsGroup
 maskGraphic.lineStyle(0)
 
 let oscText, freqText, noteText, midiText
+let marqueeTime = 0
 
 document.fonts.load('10pt "Whirly Birdie Regular"').then(() => {
     oscText = new PIXI.Text($oscillatorType, {
@@ -62,8 +64,24 @@ document.fonts.load('10pt "Whirly Birdie Regular"').then(() => {
     stage.addChild(midiText)
 
     MIDITextSprite.set(midiText)
-})
+  
+    app.ticker.add(()=>{
+      if(!enableMIDI){
+        return
+      }else{
+        if(midiText.text !== 'Loading...'){
+            marqueeTime = 
+                    (!$active) ? marqueeTime + 0
+                    :(marqueeTime<=1) ? marqueeTime+.001 
+                    : 0
+        }else{
+            marqueeTime=0
+        }
+      }
 
+    })
+})
+  
 
 $:{
     if(oscText){
@@ -90,7 +108,10 @@ $:{
         noteText.y = ($WIDTH > 600) ? $thereminPos.y + $thereminPos.height*.79 : $thereminMobilePos.y + $thereminMobilePos.height*.52
         noteText.alpha = ($toneOutput.glide) ? .15+.15*$sineInOut0_1 : .15+.55*$sineInOut0_1
     }
-    if(midiText){
+}
+    
+$:{  
+  if(midiText){
         let text = ($currentMIDITitle) ? '♫ '+$currentMIDITitle+' / '+midiList[$currentMIDITitle].artist : null;
         midiText.text = 
             ($enableMIDI && !text) ? "Loading..."
@@ -99,17 +120,24 @@ $:{
         midiText.style.fontSize = ($WIDTH > 600) ? $thereminPos.width*.0100 : $thereminMobilePos.width*.035
         midiText.style.padding = ($WIDTH > 600) ? $thereminPos.width*.0100 : $thereminMobilePos.width*.035
         midiText.y = ($WIDTH > 600) ? $thereminPos.y + $thereminPos.height*.888 : $thereminMobilePos.y + $thereminMobilePos.height*.82
+        midiText.x = ($WIDTH > 600) 
+                ? $thereminPos.x+$thereminPos.width*.50-midiText.width*2/4-(marqueeTime*midiText.width*1/4) 
+                : $thereminMobilePos.x + $thereminMobilePos.width*.48-midiText.width*2/4-(marqueeTime*midiText.width/4) 
         midiText.alpha = .15+0.55*$sineInOut0_1
     }
+}
 
-    if($active && $sineInOut0_1===0){
+$:{
+  if($active && $sineInOut0_1===0){
         sineInOut0_1.set(1)
     }
     if(!$active && $sineInOut0_1===1){
         sineInOut0_1.set(0)
     }
-
-    maskGraphic.clear()
+}
+  
+$:{
+  maskGraphic.clear()
     maskGraphic.beginFill(0xffffff,1)
     if($WIDTH>600){
         maskGraphic.drawRoundedRect(
@@ -128,9 +156,6 @@ $:{
             $thereminMobilePos.width*.058
         ) 
     }
-     
-    
-
 }
 </script>
 <div>

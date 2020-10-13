@@ -299,17 +299,19 @@ $:{
 		align-items: center;
 		justify-content: center;
 		transform-origin: bottom;
-		-webkit-transform: translate3d(0, 0, 0);
-		-moz-transform: translate3d(0, 0, 0);
-		transform:translate3d(0, 0, 0);
-		transition: transform .7s cubic-bezier(0.54, 0.92, 0.51, 0.97)
-		
+		-webkit-transform: translate3d(0, 0, 0) scale3D(1,1,1);
+		-moz-transform: translate3d(0, 0, 0) scale3D(1,1,1);
+		transform:translate3d(0, 0, 0) scale3D(1,1,1);
+		transition: transform .6s cubic-bezier(0.49, 0.24, 0.51, 0.97), opacity 0s;
+		opacity:1;
 	}
 
 	section.hide{
+    opacity:0;
 		-moz-transform: translate3d(0, 100vh, 0) scale3D(1,1,1);
 		-webkit-transform: translate3d(0, 100vh, 0) scale3D(1,1,1);
 		transform: translate3d(0, 100vh, 0) scale3D(1,1,1);
+    transition: transform .6s cubic-bezier(0.49, 0.24, 0.51, 0.97), opacity 0s .6s;
 		pointer-events: none;
 	}
 	:global(.slides){
@@ -660,6 +662,11 @@ $:{
 	  
     }
 	@media screen and (max-width: 600px) {
+    section.hide{
+		-moz-transform: translate3d(-100vw, 0, 0) scale3D(1,1,1);
+		-webkit-transform: translate3d(-100vw, 0, 0) scale3D(1,1,1);
+		transform: translate3d(-100vw, 0, 0) scale3D(1,1,1);
+	}
 		ol{
 		  width: calc(100% - 56px);
     		padding-inline-start: 56px;

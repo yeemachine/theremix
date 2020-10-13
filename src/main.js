@@ -12,7 +12,7 @@ function handleFirstTab(e) {
 	  window.addEventListener('mousedown', handleMouseDownOnce);
 	}
   }
-  
+
   function handleMouseDownOnce() {
 	document.body.classList.remove('user-is-tabbing');
 	

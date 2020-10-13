@@ -36,19 +36,19 @@
 
 	if (window.matchMedia('(display-mode: standalone)').matches) {  
 		pwa.set(true);
-    dataLayer.push({'event':'standalone'});
+	dataLayer.push({'event':'standalone'});
 	}
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches){
-    dataLayer.push({
-      'event':'theme',
-      'eventAction' : 'dark'
-    })
-  }else{
-    dataLayer.push({
-      'event':'theme',
-      'eventAction' : 'light'
-    })
-  }
+	if (window.matchMedia('(prefers-color-scheme: dark)').matches){
+	dataLayer.push({
+	'event':'theme',
+	'eventAction' : 'dark'
+	})
+	}else{
+	dataLayer.push({
+	'event':'theme',
+	'eventAction' : 'light'
+	})
+	}
 
 let tfLoaded = false,toneJSLoaded = false,teoriaLoaded = false,toneMIDILoaded = false
 let cameraTriggered = false
@@ -63,7 +63,7 @@ $:{
 <svelte:head>
 
 	{#if $loaded}
-	<script defer src="https://cdn.jsdelivr.net/npm/tone@13.8.34/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script>
 	{/if}
 
 	{#if toneJSLoaded}
