@@ -1,4 +1,4 @@
-const vn = "v1.00.22";
+const vn = "v1.00.23";
 const production = true;
 
 // files to cache
@@ -10,7 +10,7 @@ const libraries = [
   "/libraries/teoria.min.js",
   "https://cdn.jsdelivr.net/npm/pixi-lights@2.0.3/lib/pixi-lights.min.js",
   "https://cdn.jsdelivr.net/npm/pixi-particles@3.2.0/dist/pixi-particles.min.js",
-  "https://cdn.jsdelivr.net/npm/tone@13.8.34/build/Tone.min.js",
+  "https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js",
   "https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.23/build/Midi.min.js",
   "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.1/dist/tf.min.js",
   "https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.1/dist/posenet.min.js"
