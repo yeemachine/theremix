@@ -21,7 +21,6 @@ width="400" height="406" viewBox="0 0 400 406" fill="none" xmlns="http://www.w3.
 
 </svg>
 
-
 <style>
 svg{
     height:95%;

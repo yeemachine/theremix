@@ -71,7 +71,7 @@ $:{
 	{/if}
 
 	{#if teoriaLoaded}
-		<script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.23/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.25/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script>
 	{/if}
     
     {#if cameraTriggered}
