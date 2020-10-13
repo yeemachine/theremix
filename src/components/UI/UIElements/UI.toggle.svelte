@@ -60,38 +60,39 @@ label:hover{
     pointer-events:none;
 }    
 container{
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: flex-start;
-    height:56px;
-    width:112px;
+    height: 48px;
+    width: 90px;
     border-radius: 32px;
     overflow: hidden;
     background: rgba(200,200,200,0.2);
-    transition:background-color .25s, opacity .25s;
+    transition: background-color .25s, opacity .25s;
     pointer-events: all;
+    backdrop-filter: blur(10px);
 }
 .toggled container{
     background:#E54646;
 }
 .track{
     pointer-events: none;
-    display:flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    transform: translate(-33px,0px);
+    transform: translate(-26px,0px);
     transition: transform .25s;
 }
 .toggled container .track{
-    transform: translate(21px,0px)
+    transform: translate(15px,0px)
 }
 .toggleButton{
     display: inline-block;
-    position:relative;
-    width:46px;
-    height:46px;
-    border-radius:50%;
-    background: rgba(255,255,255,.4)
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.2);
 }
 .toggled .toggleButton{
     background: rgb(var(--offwhite))
@@ -99,14 +100,14 @@ container{
 p{
     display:inline-block;
     color:#FFF8E4;
-    font-size:12px;
+    font-size:10px;
 }
 p:first-child{
-    margin-right: 16px;
+    margin-right: 12px;
 }
 p:last-child{
-    margin-left: 10px;
-    opacity:0.5;
+    margin-left: 7px;
+    opacity:1;
 }
 .icon{
     position:absolute;

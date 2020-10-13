@@ -25,7 +25,7 @@ $: {
     SCALE.set(
         constrain(
             maxWidth/containerWidth,
-            {min:1,max:1.5}
+            {min:1.35,max:1.6}
         )
     )
 
