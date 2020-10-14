@@ -282,7 +282,10 @@
   };
 
   const drawPose = () => {
-    if ($poseNetRes && $videoReady) {
+    if(!$videoReady){
+      return
+    }
+    if ($poseNetRes) {
       mouseOverride.set($mouseOverride + 0.01);
       graphics2.clear();
       graphics2add.clear();

@@ -2,8 +2,6 @@
   import {
     loaded,
     active,
-    WIDTH,
-    HEIGHT,
     manual,
     coverLoaded,
     update,

@@ -47,7 +47,7 @@
   const gradientTexture = createGradientTexture(0, 12 * $SCALE, 1);
   const gradientTexture2 = createGradientTexture(0, 24 * $SCALE, 1);
 
-  const particleContainer = new PIXI.particles.ParticleContainer(5000, {
+  const particleContainer = new PIXI.particles.ParticleContainer(2000, {
     scale: true,
     position: true,
     rotation: false,
@@ -93,13 +93,13 @@
         max: 0,
       },
       lifetime: {
-        min: 0.6,
-        max: 0.6,
+        min: 0.3,
+        max: 0.3,
       },
       blendMode: "normal",
       frequency: 0.0008,
       emitterLifetime: -1,
-      maxParticles: 2000,
+      maxParticles: 400,
       pos: { x: 0, y: 0 },
       addAtBack: false,
       spawnType: "point",
@@ -145,13 +145,13 @@
         max: 0,
       },
       lifetime: {
-        min: 0.6,
-        max: 0.6,
+        min: 0.3,
+        max: 0.3,
       },
       blendMode: "normal",
       frequency: 0.0008,
       emitterLifetime: -1,
-      maxParticles: 2000,
+      maxParticles: 400,
       pos: { x: 0, y: 0 },
       addAtBack: false,
       spawnType: "point",
@@ -197,13 +197,13 @@
         max: 0,
       },
       lifetime: {
-        min: 0.6,
-        max: 0.6,
+        min: 0.3,
+        max: 0.3,
       },
       blendMode: "normal",
       frequency: 0.0008,
       emitterLifetime: -1,
-      maxParticles: 2000,
+      maxParticles: 400,
       pos: { x: 0, y: 0 },
       addAtBack: false,
       spawnType: "point",

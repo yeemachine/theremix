@@ -21,10 +21,8 @@
   let selectedOsc;
   let selectedTonic;
   let selectedMIDI;
-  let selectedTonicOctave = 4;
   let selectedStartOctave = 4;
   let selectedEndOctave = maxOctaves;
-  let octaveDifference = selectedEndOctave - selectedStartOctave;
 
   const handleSlider = (e) => {
     selectedStartOctave = e.lower;
