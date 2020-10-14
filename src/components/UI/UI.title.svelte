@@ -8,6 +8,7 @@
   } from "../../stores.js";
   import Logo from "../icons/logo.svelte";
   import Play from "../icons/play.svelte";
+  import videoIcon from "../icons/video.svelte";
 
   let fontLoaded = false;
   const playStart = () => {
@@ -41,8 +42,16 @@
   <div class="title {!$coverLoaded || $active ? 'hide' : ''}">
     <Logo hide="{!$coverLoaded || $active ? true : false}" />
   </div>
-  <!--     <p class="{(!$coverLoaded || $active) ? 'hide' : ''}">Play with your mouse or webcam!</p>
- -->
+      <p class="{(!$coverLoaded || $active) ? 'hide' : ''}">Play the theremin using your Cursor or
+        <span 
+          style="width: 40px;
+          display: inline-block;
+          transform: translate3d(0px, 14px, 0px);
+          margin: -24px -3px 0px -9px">
+          <svelte:component this={videoIcon} color={'var(--offwhite)'} hoverColor={'var(--offwhite)'}/>
+        </span>Webcam!
+      </p>
+
   <label>
         <button 
         class="play"
@@ -64,16 +73,18 @@
 >
   Operation Manual
 </button>
-<button
-  name="refresh-updates"
-  aria-label="Refresh to Update"
-  on:click="{() => {
-    window.location.reload();
-  }}"
-  class="update {!$update || !$coverLoaded || $active || $manual ? 'hide' : ''}"
->
-  New Version Available
-</button>
+{#if $update}
+  <button
+    name="refresh-updates"
+    aria-label="Refresh to Update"
+    on:click="{() => {
+      window.location.reload();
+    }}"
+    class="update {!$update || !$coverLoaded || $active || $manual ? 'hide' : ''}"
+  >
+    New Version Available
+  </button>
+{/if}
 
 <style>
   section {
@@ -121,7 +132,7 @@
     pointer-events: none;
   }
   h1 {
-    font-size: calc(12px + 0.2vw);
+    font-size: calc(8px + 1vw);
     font-weight: normal;
     color: rgb(var(--offwhite));
     width: max-content;
@@ -134,6 +145,7 @@
   }
   h1 span {
     color: rgb(var(--sun));
+/*     font-variation-settings:"wght" 100, "wdth" 75, "ital" 0 */
   }
   h1.hide {
     opacity: 0;
@@ -144,9 +156,9 @@
 
   .manual {
     position: fixed;
-    left: 32px;
-    bottom: 0;
-    padding: 12px 0 16px 0;
+    left: 24px;
+    bottom: 24px;
+    padding: 12px 18px 12px 18px;
 /*     border-bottom: 2px solid rgba(var(--offwhite), 0); */
     color: rgb(var(--offwhite));
     font-family: "Whirly Birdie";
@@ -158,12 +170,13 @@
   }
   .manual:before {
     content: "";
+    pointer-events:none;
     position: absolute;
     width: 200%;
-    height: 200%;
-    bottom: -2px;
+    height: 330%;
+    bottom: -24px;
     left: -50%;
-    z-index: -1;
+    z-index: -2;
     opacity: 0.4;
     transition: 0.25s;
     background: -webkit-radial-gradient(
@@ -187,10 +200,29 @@
       rgba(var(--crimson), 0) 100%
     );
   }
+  .manual:after {
+    content: "";
+    pointer-events:none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:rgb(var(--offwhite));
+    border-radius:32px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.2;
+    transition: 0.25s;
+    backdrop-filter: blur(10px);
+  }
 
   .manual:hover,
   .manual:focus {
-/*     border-bottom: 2px solid rgba(var(--offwhite), 1); */
+    color:rgb(var(--charcoal));
+  }
+  .manual:hover:after,
+  .manual:focus:after {
+    opacity:1
   }
   .manual:hover:before,
   .manual:focus:before {
@@ -208,17 +240,19 @@
     top: 24px;
     height: 40px;
     padding: 0 24px 0 24px;
-    background: rgba(var(--offwhite), 0.05);
+    background: rgba(var(--offwhite), 0.2);
     border-radius: 32px;
     color: rgb(var(--offwhite));
     font-family: "Whirly Birdie";
     font-variation-settings: "wght" 80, "wdth" 120, "ital" 0;
     transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0.4s;
     font-size: 10px;
+    backdrop-filter: blur(10px);
   }
   .update:hover,
   .update:focus {
-    background: rgba(var(--offwhite), 0.15);
+    background-color: rgb(var(--offwhite));
+    color:rgb(var(--charcoal));
   }
   .update.hide {
     opacity: 0;
@@ -228,8 +262,10 @@
   p {
     color: rgb(var(--offwhite));
     font-family: "Nicholson Beta";
-    position: absolute;
-    bottom: 24px;
+    position: fixed;
+    word-break: break-word;
+    white-space: normal;
+    bottom: 32px;
     margin: 0;
     transition: transform 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s,
       opacity 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1s;
@@ -239,7 +275,13 @@
     transition: transform 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s,
       opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
   }
-
+  @media screen and (max-width: 900px) {
+    p{
+    bottom: 94px;
+    max-width: calc(100vw - 60px);
+    height: auto;
+    }
+  }
   @media screen and (max-width: 600px) {
     h1 {
       font-size: 16px;
@@ -248,6 +290,7 @@
       width: max-content;
       font-variation-settings: "wght" 70, "wdth" 90, "ital" 0;
     }
+
     .title {
       height: auto;
       width: calc(100vw - 64px);

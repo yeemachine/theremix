@@ -19,6 +19,8 @@
   export let sheet = null;
   export let stage = null;
   export let createSprite = null;
+  let pos = {x:0.5,y:0.5}
+  let dragging = false
 
   const sineInOut0_1 = tweened(0, {
     duration: 700,
@@ -55,6 +57,7 @@
     sheet.textures["Video"],
     sheet.textures["Video-Normal"]
   );
+  
   const guides = createSprite(sheet.textures["Guides"]);
   guides.parentGroup = PIXI.lights.diffuseGroup;
   video.addChild(guides);
@@ -83,23 +86,27 @@
     }
   }
 
-  stage.addChild(wire1, wire2, wire3, video, feedSprite, video_light);
+  stage.addChild(video, feedSprite);
 
   $: {
-    video.width = $WIDTH > 600 ? 240 * $SCALE : 200 * $SCALE;
+    // video.width = $WIDTH > 600 ? 240 * $SCALE : 200 * $SCALE;
+    video.width = $WIDTH > 600 ? Math.min($CANVASWIDTH,$CANVASHEIGHT) * .3 : 200 * $SCALE;
+
     video.scale.y = video.scale.x;
 
     let margin = $WIDTH > 600 ? 24 : 16;
     video.x = margin * $SCALE - video.width * 2 * (1 - $sineInOut0_1);
     video.y = (margin * 2 + 48) * $SCALE;
-    video_light.x = margin * 2 * $SCALE + video.width * 0.5;
-    video_light.y = video.y;
-    video_light.brightness =
-      (1 + 0.8 * constrain($CANVASWIDTH / 1200, { min: 0, max: 1 })) *
-      $sineInOut0_1;
+    // let distance = $WIDTH > 600 ? .4 : .3;
+    // video.x = $CANVASWIDTH/2 - video.width/2;
+    // video.y = $CANVASHEIGHT*distance - video.height/2 - $CANVASHEIGHT * (1 - $sineInOut0_1);
+    // video_light.x = margin * 2 * $SCALE + video.width * 0.5;
+    // video_light.y = video.y;
+    // video_light.brightness =
+    //   (1 + 0.8 * constrain($CANVASWIDTH / 1200, { min: 0, max: 1 })) *
+    //   $sineInOut0_1;
 
-    feedSprite.height =
-      $WIDTH > 600 ? 240 * $SCALE * 0.99 : 200 * $SCALE * 0.99; //flip horizontal video
+    feedSprite.height = video.height; //flip horizontal video
     feedSprite.width = feedSprite.height * ratio;
     // feedSprite.scale.x = feedSprite.scale.y
     // feedSprite.scale.x = -1 * Math.abs(feedSprite.scale.x)

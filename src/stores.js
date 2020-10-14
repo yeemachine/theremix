@@ -79,6 +79,7 @@ const storedEndOctave = localStorage.getItem("endOctave") || 5;
 export const endOctave = writable(storedEndOctave);
 
 if (typeof Storage !== "undefined") {
+  
   volumeVal.subscribe((value) => {
     localStorage.setItem("volumeVal", value ? value : -15);
   });

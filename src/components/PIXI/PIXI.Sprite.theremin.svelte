@@ -265,10 +265,10 @@
         sheet.textures["theremin_null"].height >
       $CANVASWIDTH / $CANVASHEIGHT
     ) {
-      theremin.width = $CANVASWIDTH * (0.95 - 0.1 * (1 - $sineInOut0_1));
+      theremin.width = $CANVASWIDTH * (0.95 - 0.15 * (1 - $sineInOut0_1));
       theremin.scale.y = theremin.scale.x;
     } else {
-      theremin.height = $CANVASHEIGHT * (0.95 - 0.1 * (1 - $sineInOut0_1));
+      theremin.height = $CANVASHEIGHT * (0.95 - 0.15 * (1 - $sineInOut0_1));
       theremin.scale.x = theremin.scale.y;
     }
 
@@ -281,7 +281,7 @@
       theremin.scale.y = theremin.scale.x;
       theremin.y =
         ($CANVASHEIGHT -
-          theremin.width * 0.635 * (0.2 + 0.8 * $sineInOut0_1) -
+          theremin.width * 0.635 * (0.4 + 0.6 * $sineInOut0_1) -
           theremin.height) *
         0.8;
     }

@@ -194,7 +194,7 @@
       thereminBottomY +
       ($CANVASHEIGHT - thereminBottomY - thereminMobile.height) * 0.4 +
       (($CANVASHEIGHT - thereminBottomY - thereminMobile.height) * 0.25 +
-        thereminMobile.height * 0.9) *
+        thereminMobile.height * 1) *
         (1 - $sineInOut0_1);
     thereminMobile.visible = $WIDTH < 600 ? true : false;
     thereminMobilePos.set({
