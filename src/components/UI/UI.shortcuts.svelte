@@ -82,12 +82,12 @@
   top="{$WIDTH > 600 ? 0.7676 : 0}"
   left="{$WIDTH > 600 ? 0.5005 : 0.5095}"
 />
-<p
+<!-- <p
   class="label {!$showGuides || !$videoReady ? 'hide' : ''}"
   style="{!$showGuides ? '' : ''}"
 >
   Move back and wave your hands
-</p>
+</p> -->
 
 <style>
   section {
