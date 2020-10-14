@@ -1,7 +1,4 @@
 <script>
-  // import * as Tone from "tone"
-  // import * as Midi from '@tonejs/midi'
-  // import * as teoria from 'teoria'
   import {
     active,
     toneLoaded,
@@ -21,7 +18,7 @@
     currentMIDI,
     midiList,
   } from "../stores.js";
-  import { constrain, shuffle, jsUcfirst, findNext } from "../helpers.js";
+  import { jsUcfirst, findNext } from "../helpers.js";
   import { tonicOrder, scales } from "../config.js";
 
   const generateScale = (tonic, key, octaves) => {
@@ -96,39 +93,12 @@
   let midiSynths = [];
   let lastMIDI;
 
-  let monoSynth = new Tone.Synth();
   const initMidi = (url) => {
     Midi.fromUrl(url).then((midi) => {
       const now = 1;
       const nowDelay = 2;
 
       midi.tracks.forEach((track, i) => {
-        //create a synth for each track
-        // const synth = new Tone.PolySynth(8, Tone.Synth, {
-        //     oscillator:{
-        //             type:($oscillatorType === 'Fat Sine') ? 'sine'
-        //             : ($oscillatorType === 'Fat Triangle') ? 'triangle'
-        //             : ($oscillatorType === 'Fat Sawtooth') ? 'sawtooth'
-        //             : ($oscillatorType === 'Fat Square') ? 'square'
-        //             : ($oscillatorType === 'PWM') ? 'pwm'
-        //             : ($oscillatorType === 'Pulse') ? 'pulse'
-        //             : ($oscillatorType === 'Oscillator Off') ? 'triangle'
-        //             : $oscillatorType.toLowerCase().replace(/\s/g, ''),
-        //             spread:($oscillatorType.includes('Fat')) ? 20 : 0,
-        //             count:($oscillatorType.includes('Fat')) ? 3 : 0,
-        //             modulationFrequency : ($oscillatorType === 'PWM') ? 0.4 : 0,
-        //             width : ($oscillatorType === 'Pulse') ? 0.2 : 0
-        //     },
-        //     envelope: {
-        //         attackCurve:'exponential',
-        //         attack: 0.02,
-        //         decayCurve:'exponential',
-        //         decay: 0.1,
-        //         sustain: 0.3,
-        //         release: 1
-        //     }
-        // }).connect(gain2)
-
         const synth = new Tone.PolySynth({
           options: {
             oscillator: {
@@ -163,8 +133,6 @@
             },
           },
         }).connect(gain2);
-
-        // synth.maxPolyphony = 64;
 
         midiSynths.push(synth);
         //scheduleOnce all of the events
@@ -219,7 +187,6 @@
     while (midiSynths.length) {
       const synth = midiSynths.shift();
       synth.disconnect();
-      console.log(synth);
     }
     Tone.Transport.cancel(0);
   };

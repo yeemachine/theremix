@@ -102,14 +102,14 @@
   }
 
   svg.loaded path:nth-child(2) {
-    animation: rotate 10s linear infinite,
+    animation: rotate 2s ease-in-out,
       drawforward 2s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     animation-fill-mode: forwards;
     animation-play-state: start;
     /* transition:stroke-dashoffset 2s cubic-bezier(0.46, 0.03, 0.52, 0.96); */
   }
   svg.loaded path:nth-child(1) {
-    animation: rotate 20s linear infinite,
+    animation: rotate 2s ease-in-out ,
       drawforward 2s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     animation-fill-mode: forwards;
     animation-play-state: start;
@@ -124,7 +124,7 @@
       transform: rotate(-180deg);
     }
     100% {
-      transform: rotate(179deg);
+      transform: rotate(-140deg);
     }
   }
   @keyframes drawforward {

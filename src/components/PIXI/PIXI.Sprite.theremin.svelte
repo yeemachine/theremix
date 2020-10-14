@@ -28,7 +28,7 @@
   export let calcRotation = null;
 
   const backOut0_1 = tweened(0, {
-    delay: 300,
+    delay: 400,
     duration: 1000,
     easing: backOut,
   });

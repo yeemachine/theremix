@@ -1,7 +1,6 @@
 <script>
   import Toggle from "./UIElements/UI.toggle.svelte";
   import ButtonCircle from "./UIElements/UI.buttoncircle.svelte";
-  // import gestureIcon from "../icons/gesture.svelte";
   import videoIcon from "../icons/video.svelte";
   import pauseIcon from "../icons/pause.svelte";
   import settingsIcon from "../icons/settings.svelte";

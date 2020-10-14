@@ -11,8 +11,6 @@
     version,
   } from "../../stores.js";
   import { onMount } from "svelte";
-  import Logo from "../icons/logo.svelte";
-  import Play from "../icons/play.svelte";
   import About from "../icons/about.svelte";
   import closeIcon from "../icons/close.svelte";
   import ButtonCircle from "./UIElements/UI.buttoncircle.svelte";
