@@ -7,9 +7,9 @@
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
 
-	if(typeof dataLayer === 'undefined'){
-		window.dataLayer = []
-	}
+	// if(typeof dataLayer === 'undefined'){
+	// 	window.dataLayer = []
+	// }
 
 	const initSW = () => {
 		if ('serviceWorker' in navigator) {
