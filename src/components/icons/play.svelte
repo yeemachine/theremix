@@ -96,9 +96,9 @@
     opacity: 1;
   }
 
-  :global(.play:hover .playSVG.loaded .triangle) {
+  :global(.play:hover .playSVG.loaded .triangle,.play .playSVG.loaded.hide .triangle) {
     transform: scale(1.3);
-    fill: rgb(var(--sun));
+    fill: rgb(var(--offwhite));
   }
 
   svg.loaded path:nth-child(2) {

@@ -273,7 +273,7 @@
     }
 
     theremin.x = ($CANVASWIDTH - theremin.width) * 0.48;
-    theremin.y = ($CANVASHEIGHT - theremin.height) * 0.65;
+    theremin.y = ($CANVASHEIGHT - theremin.height) * 0.6;
 
     if ($WIDTH < 600) {
       theremin.width = $CANVASWIDTH - 32;
@@ -281,7 +281,7 @@
       theremin.scale.y = theremin.scale.x;
       theremin.y =
         ($CANVASHEIGHT -
-          theremin.width * 0.635 * (0.4 + 0.6 * $sineInOut0_1) -
+          theremin.width * 0.635 * (0.4 + .6 * $sineInOut0_1) -
           theremin.height) *
         0.8;
     }

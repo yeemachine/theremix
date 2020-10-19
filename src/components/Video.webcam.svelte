@@ -7,7 +7,7 @@
     const constraints = {
       video: {
         facingMode: "user",
-        width: { min: 480, ideal: 480, max: 1920 },
+        width: { min: 480, ideal: 640, max: 1920 },
         height: { min: 400, ideal: 480 },
       },
       audio: false,
@@ -23,7 +23,7 @@
             handleStream(stream);
           })
           .catch((err) => {
-            alert("Please allow camera to use gesture controls.");
+            alert("Please allow camera to use hand-tracking controls.");
             setTimeout(() => {
               camera.set(false);
               videoReady.set(null);
@@ -65,6 +65,7 @@
       stopStream();
     }
   }
+  
 </script>
 
 <video
@@ -72,8 +73,8 @@
   autoplay
   muted
   playsinline
-  width="{$videoReady ? $videoReady.videoWidth : 0}"
-  height="{$videoReady ? $videoReady.videoHeight : 0}"
+  width="{$videoReady ? $videoReady.videoWidth : 640}"
+  height="{$videoReady ? $videoReady.videoHeight : 480}"
 ></video>
 
 <style>

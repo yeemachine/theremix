@@ -157,13 +157,13 @@ const calcRotation = (element,mousePos,min=-.9,max=.9) =>{
     {:then value}
         
         <!-- Sprites -->
-        <BG sheet={value['bg-sheet']} stage={Stage} textures={value} createSprite={createSprite}/>
+        <BG sheet={value['bg-sheet']} stage={Stage} textures={value} createSprite={createSprite} createGradientTexture={createGradientTexture}/>
         <PIXIGraphics app={App} stage={Stage} graphicsGroup={graphicsGroup}/>
         <Table sheet={value['bg-sheet']} stage={Stage} textures={value} createSprite={createSprite}/>
         <Theremin stage={Stage} sheet={value['core-sheet']} textures={value} createSprite={createSprite} calcRotation={calcRotation}/> 
         <ThereminMobile sheet={value['core-sheet']} stage={Stage} textures={value} createSprite={createSprite}/> 
         <Text app={App} stage={Stage} graphicsGroup={graphicsGroup}/>
-        <Video stage={Stage} sheet={value['core-sheet']} createSprite={createSprite} diffuseLayer={diffuseLayer}/>
+        <Video app={App} stage={Stage} sheet={value['core-sheet']} createSprite={createSprite} diffuseLayer={diffuseLayer} graphicsGroup={graphicsGroup}/>
         <!-- Lights -->
         <AmbientLights stage={Stage}/>
         {#if pixiParticles}

@@ -5,12 +5,15 @@
     manual,
     coverLoaded,
     update,
+    hasHover
   } from "../../stores.js";
   import Logo from "../icons/logo.svelte";
   import Play from "../icons/play.svelte";
-  import videoIcon from "../icons/video.svelte";
+  import webcamIcon from "../icons/webcam.svelte";
+  import touchIcon from "../icons/touch.svelte";
+  import cursorIcon from "../icons/cursor.svelte";
 
-  let fontLoaded = false;
+  // let fontLoaded = false;
   const playStart = () => {
     active.set(true);
   };
@@ -19,9 +22,9 @@
     manual.set(true);
   };
 
-  document.fonts.ready.then(function () {
-    fontLoaded = true;
-  });
+  // document.fonts.ready.then(function () {
+  //   fontLoaded = true;
+  // });
 
   $: {
     if ($loaded) {
@@ -42,15 +45,6 @@
   <div class="title {!$coverLoaded || $active ? 'hide' : ''}">
     <Logo hide="{!$coverLoaded || $active ? true : false}" />
   </div>
-      <p class="{(!$coverLoaded || $active) ? 'hide' : ''}">Play the theremin using your Cursor or
-        <span 
-          style="width: 40px;
-          display: inline-block;
-          transform: translate3d(0px, 14px, 0px);
-          margin: -24px -3px 0px -9px">
-          <svelte:component this={videoIcon} color={'var(--offwhite)'} hoverColor={'var(--offwhite)'}/>
-        </span>Webcam!
-      </p>
 
   <label>
         <button 
@@ -65,14 +59,49 @@
         </button>
     </label>
 </section>
-<button
-  name="open-manual"
-  aria-label="Open Manual"
-  on:click="{manualOpen}"
-  class="manual {!$coverLoaded || $active || $manual ? 'hide' : ''}"
->
-  Operation Manual
-</button>
+
+<div class="info">
+  
+  <p class="{(!$coverLoaded || $active || $manual) ? 'hide' : ''}">
+    {#if $hasHover}
+      Use your mouse   
+      <span 
+      style="height: 18px;
+      display: inline-block;
+      transform:translate3d(0,3px,0)">
+        <svelte:component this={cursorIcon}/>
+    </span>
+    {:else}
+      Touch and drag
+      <span 
+      style="height: 18px;
+      display: inline-block;
+      transform:translate3d(0,3px,0)">
+        <svelte:component this={touchIcon}/>
+      </span>
+    {/if}
+    or turn on webcam
+    <span 
+      style="height: 18px;
+      display: inline-block;
+      transform:translate3d(0,3px,0)">
+      <svelte:component this={webcamIcon}/>
+    </span> to play this virtual theremin with hand-tracked gestures!
+  </p>
+
+  <button
+    name="open-manual"
+    aria-label="Open Manual"
+    on:click="{manualOpen}"
+    class="manual {!$coverLoaded || $active || $manual ? 'hide' : ''}"
+  >
+    Operation Manual
+  </button>
+  
+</div>
+
+
+
 {#if $update}
   <button
     name="refresh-updates"
@@ -98,7 +127,7 @@
     right: 0;
     bottom: 0;
     width: 100%;
-    height: 100%;
+    height: 90%;
     text-align: center;
     white-space: nowrap;
     pointer-events: none;
@@ -123,8 +152,8 @@
   }
 
   .play {
-    width: calc(120px + 5vw + 5vh);
-    height: calc(120px + 5vw + 5vh);
+    width: calc(120px + 2vw + 2vh);
+    height: calc(120px + 2vw + 2vh);
     margin: 0 0 0 0;
     pointer-events: all;
   }
@@ -132,7 +161,7 @@
     pointer-events: none;
   }
   h1 {
-    font-size: calc(8px + 1vw);
+    font-size: 16px;
     font-weight: normal;
     color: rgb(var(--offwhite));
     width: max-content;
@@ -153,20 +182,37 @@
     transition: transform 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s,
       opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
   }
-
-  .manual {
+  
+  
+  .info{
+    width: calc(100% - 24px);
+    pointer-events: none;
+    display: flex;
+    flex-direction: row;
+    height: max-content;
+    justify-content: space-between;
+    align-items:flex-end;
     position: fixed;
-    left: 24px;
-    bottom: 24px;
-    padding: 12px 18px 12px 18px;
+    bottom: 0;
+    left: 0;
+    margin: 0 0px 0px 24px;
+    
+  }
+  .manual {
+    position: relative;
+    padding: 0 18px 0 18px;
+    height:48px;
 /*     border-bottom: 2px solid rgba(var(--offwhite), 0); */
     color: rgb(var(--offwhite));
     font-family: "Whirly Birdie";
     font-variation-settings: "wght" 90, "wdth" 120, "ital" 0;
-    transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0.4s;
+    transition: opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0.4s,
+    transform 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0.4s;
     font-size: 12px;
     z-index: 0;
     overflow: visible;
+    pointer-events:all;
+    transform:translate3d(0,0,0);
   }
   .manual:before {
     content: "";
@@ -202,18 +248,20 @@
   }
   .manual:after {
     content: "";
-    pointer-events:none;
+    pointer-events: none;
     position: absolute;
     width: 100%;
     height: 100%;
-    background:rgb(var(--offwhite));
-    border-radius:32px;
+    background: rgb(var(--offwhite));
+    border-radius: 16px;
     bottom: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
     left: 0;
     z-index: -1;
-    opacity: 0.2;
+    opacity: 0.05;
     transition: 0.25s;
-    backdrop-filter: blur(10px);
   }
 
   .manual:hover,
@@ -232,7 +280,9 @@
     opacity: 0;
     /*         background: rgba(var(--crimson),.2); */
     pointer-events: none;
-    transition: opacity 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
+    transition: opacity 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s,
+    transform .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
+    transform:translate3d(0,80px,0);
   }
 
   .update {
@@ -261,28 +311,41 @@
   }
   p {
     color: rgb(var(--offwhite));
+    font-size:16px;
     font-family: "Nicholson Beta";
-    position: fixed;
+    position: relative;
     word-break: break-word;
     white-space: normal;
-    bottom: 32px;
     margin: 0;
-    transition: transform 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s,
-      opacity 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1s;
+    text-align: left;
+    line-height: 1.6;
+    max-width: 400px;
+    transition: transform 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s, opacity 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1s;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    -webkit-text-size-adjust: 100%;
   }
   p.hide {
     opacity: 0;
     transition: transform 0.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.4s,
-      opacity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
+      opacity .6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s;
   }
-  @media screen and (max-width: 900px) {
-    p{
-    bottom: 94px;
-    max-width: calc(100vw - 60px);
-    height: auto;
+  @media screen and (max-width: 690px) {
+    .info{
+      flex-direction: column;
+      width: 95vw;
+      margin: 0 2.5vw 0 2.5vw;
     }
-  }
-  @media screen and (max-width: 600px) {
+    p{
+    height: auto;
+    max-width: unset;
+    width:100%;
+    padding-bottom:0;
+    margin-bottom: 24px;
+    text-align:center;
+/*     padding-top: 16px;
+    border-top: 1px solid rgba(var(--offwhite),0.2); */
+    }
     h1 {
       font-size: 16px;
       font-weight: normal;
@@ -293,14 +356,21 @@
 
     .title {
       height: auto;
-      width: calc(100vw - 64px);
+      width: calc(100vw - 48px);
       max-height: 10vh;
       max-width: 600px;
       margin: 8px 0 16px 0;
     }
     .manual {
-      width: calc(100% - 64px);
-      left: unset;
+      /* width: calc(100% - 64px); */
+      width:100%;
+      right: unset;
+      padding-bottom: 8px;
+      height: 56px;
+    }
+    .manual:after{
+      border-top-right-radius: 16px;
     }
   }
+  
 </style>

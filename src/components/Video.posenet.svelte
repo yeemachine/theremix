@@ -11,6 +11,12 @@
 
   async function estimatePoseOnImage() {
     if ($videoReady) {
+      
+      if($videoReady.width!==$videoReady.videoWidth || $videoReady.height!==$videoReady.videoHeight){
+        $videoReady.width = $videoReady.videoWidth
+        $videoReady.height = $videoReady.videoHeight
+      }
+      
       const pose = await net.estimateMultiplePoses($videoReady, posenetOptions);
       if (pose.length > 0) {
         if (pose[0].score > posenetOptions.minPoseConfidence) {

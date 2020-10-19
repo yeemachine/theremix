@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 export const pwa = writable(false);
 export const update = writable(false);
 export const updateNow = writable(false);
+export const hasHover = writable(false);
 
 export const version = writable(null);
 
@@ -10,6 +11,8 @@ export const active = writable(false);
 export const loaded = writable(false);
 export const coverLoaded = writable(false);
 export const toneLoaded = writable(false);
+export const hasMediaRecording = writable(false);
+export const recording = writable(false);
 
 export const manual = writable(false);
 export const camera = writable(false);
@@ -54,54 +57,74 @@ export const toneOutput = writable({
   note: "G4",
 });
 
-const storedVol = localStorage.getItem("volumeVal") || -15;
+let storedVol = -15
+let storedGlide = true
+let storedOsc = "Sine"
+let storedTonic = "G"
+let storedScale = "Major"
+let storedStartOctave = 2
+let storedEndOctave = 5
+
+const getLocalStorage = ()=>{
+  if (typeof Storage !== "undefined") {
+    storedVol = localStorage.getItem("volumeVal") || -15;
+    storedGlide =
+      localStorage.getItem("glide") === null
+        ? true
+        : localStorage.getItem("glide");
+    storedOsc = localStorage.getItem("oscillator") || "Sine";
+    storedTonic = localStorage.getItem("tonic") || "G";
+    storedScale = localStorage.getItem("scaleType") || "Major";
+    storedStartOctave = localStorage.getItem("startOctave") || 2;
+    storedEndOctave = localStorage.getItem("endOctave") || 5;
+  }
+}
+
+getLocalStorage()
+
 export const volumeVal = writable(storedVol);
-
-const storedGlide =
-  localStorage.getItem("glide") === null
-    ? true
-    : localStorage.getItem("glide") === "true";
 export const glide = writable(storedGlide);
-
-const storedOsc = localStorage.getItem("oscillator") || "Sine";
 export const oscillatorType = writable(storedOsc);
-
-const storedTonic = localStorage.getItem("tonic") || "G";
 export const tonic = writable(storedTonic);
-
-const storedScale = localStorage.getItem("scaleType") || "Major";
 export const scaleType = writable(storedScale);
-
-const storedStartOctave = localStorage.getItem("startOctave") || 2;
 export const startOctave = writable(storedStartOctave);
-
-const storedEndOctave = localStorage.getItem("endOctave") || 5;
 export const endOctave = writable(storedEndOctave);
 
-if (typeof Storage !== "undefined") {
-  
-  volumeVal.subscribe((value) => {
-    localStorage.setItem("volumeVal", value ? value : -15);
-  });
-  glide.subscribe((value) => {
-    localStorage.setItem("glide", value);
-  });
-  oscillatorType.subscribe((value) => {
-    localStorage.setItem("oscillator", value ? value : "Sine");
-  });
-  tonic.subscribe((value) => {
-    localStorage.setItem("tonic", value ? value : "G");
-  });
-  scaleType.subscribe((value) => {
-    localStorage.setItem("scaleType", value ? value : "Major");
-  });
-  startOctave.subscribe((value) => {
-    localStorage.setItem("startOctave", value ? value : 2);
-  });
-  endOctave.subscribe((value) => {
-    localStorage.setItem("endOctave", value ? value : 5);
-  });
+const subLocalStorage = ()=>{
+  if (typeof Storage !== "undefined") {
+    
+    volumeVal.subscribe((value) => {
+      localStorage.setItem("volumeVal", value ? value : -15);
+    });
+    
+    glide.subscribe((value) => {
+      localStorage.setItem("glide", value);
+    });
+    
+    oscillatorType.subscribe((value) => {
+      localStorage.setItem("oscillator", value ? value : "Sine");
+    });
+    
+    tonic.subscribe((value) => {
+      localStorage.setItem("tonic", value ? value : "G");
+    });
+    
+    scaleType.subscribe((value) => {
+      localStorage.setItem("scaleType", value ? value : "Major");
+    });
+    
+    startOctave.subscribe((value) => {
+      localStorage.setItem("startOctave", value ? value : 2);
+    });
+    
+    endOctave.subscribe((value) => {
+      localStorage.setItem("endOctave", value ? value : 5);
+    });
+  }
 }
+
+subLocalStorage()
+
 
 export const scaleNotes = writable([]);
 

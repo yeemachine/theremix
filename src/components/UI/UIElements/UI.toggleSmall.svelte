@@ -96,4 +96,10 @@ container{
     width:100%;
     height:auto;
 }
+
+@media (hover:hover){
+    container:hover .toggleButton{
+        background: rgb(var(--offwhite))
+    }
+}
 </style>
