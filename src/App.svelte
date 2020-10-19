@@ -9,6 +9,7 @@
 
 	if(typeof dataLayer === 'undefined'){
 		window.dataLayer = []
+    console.log('dataLayer not available')
 	}
 
 	const initSW = () => {
