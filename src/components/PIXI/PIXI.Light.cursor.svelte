@@ -44,8 +44,8 @@
   const cursorLight = new PIXI.lights.PointLight(0xff7f00, 2);
   cursorLight.falloff = [0.75, 3, 10];
 
-  const gradientTexture = createGradientTexture(0, 12 * $SCALE, 1);
-  const gradientTexture2 = createGradientTexture(0, 24 * $SCALE, 1);
+  const gradientTexture = createGradientTexture(0, 12, $SCALE);
+  const gradientTexture2 = createGradientTexture(0, 24, $SCALE);
 
   const particleContainer = new PIXI.particles.ParticleContainer(2000, {
     scale: true,
@@ -346,6 +346,7 @@
         //no hands
         emitterRight.emit = false;
         emitterLeft.emit = false;
+        gesturesCounter -= gesturesCounter >= 0 ? 0.01 : 0;
       }
     } else {
       emitter.emit = true;
@@ -392,7 +393,7 @@
 
 <container
   bind:this="{htmlCursor}"
-  class="{$hovered ? 'hovered' : ''}"
+  class="{($hovered==='knob right' || $hovered==='knob left' || $hovered==='switch') ? 'hovered' : ''}"
   style="opacity:{mousePos ? 1 : 0};
   transform:translate({$mousePos.x - 26}px, {$mousePos.y - 26}px)"
 >

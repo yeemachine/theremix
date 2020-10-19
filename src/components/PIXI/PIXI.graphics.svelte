@@ -42,21 +42,7 @@
   bgGraphics.parentGroup = PIXI.lights.diffuseGroup;
   bgGraphics.alpha = 0.7;
 
-  let graphics2 = new PIXI.Graphics();
-  graphics2.parentGroup = graphicsGroup;
-  graphics2.alpha = 0.7;
 
-  let graphics2add = new PIXI.Graphics();
-  graphics2add.parentGroup = graphicsGroup;
-  graphics2add.alpha = 0.7;
-
-  let maskGraphic = new PIXI.Graphics();
-  maskGraphic.parentGroup = graphicsGroup;
-  maskGraphic.lineStyle(0);
-  videoMask.set(maskGraphic);
-
-  graphics2.mask = maskGraphic;
-  graphics2add.mask = maskGraphic;
 
   let graphics3 = new PIXI.Graphics();
   graphics3.parentGroup = PIXI.lights.diffuseGroup;
@@ -64,9 +50,6 @@
   stage.addChild(
     graphics,
     bgGraphics,
-    graphics2,
-    graphics2add,
-    maskGraphic,
     graphics3
   );
 
@@ -87,77 +70,7 @@
     return newArr;
   };
 
-  let headPos = {
-    rotation: 0,
-    x: 0,
-    y: 0,
-  };
-  const createPose = (pose, graphics) => {
-    graphics2.lineStyle(2, 0xe54646);
 
-    //Torso
-    createLine(pose[5], pose[6], graphics2);
-    createLine(pose[11], pose[12], graphics2);
-    createLine(pose[6], pose[12], graphics2);
-    createLine(pose[5], pose[11], graphics2);
-
-    createLine(pose[5], pose[7], graphics2);
-    createLine(pose[7], pose[9], graphics2);
-    createLine(pose[6], pose[8], graphics2);
-    createLine(pose[8], pose[10], graphics2);
-
-    // Legs
-    createLine(pose[11], pose[13], graphics2);
-    createLine(pose[13], pose[15], graphics2);
-    createLine(pose[12], pose[14], graphics2);
-    createLine(pose[14], pose[16], graphics2);
-
-    //Keypoints
-    pose.forEach((e, i) => {
-      if (i > 4) {
-        let color = i === 9 || i === 10 ? 0xe54646 : 0xe54646;
-        let opacity = i === 9 || i === 10 ? 0.85 : 0.3;
-        let size =
-          i === 9 || i === 10
-            ? constrain(
-                getDistance(pose[5].position, pose[6].position) * ratio * 0.15,
-                { max: 40, min: 16 }
-              )
-            : 8;
-        graphics2.beginFill(color, opacity);
-        graphics2.lineStyle(0);
-        if (e.score > 0.3) {
-          graphics2.drawCircle(
-            e.position.x * ratio,
-            e.position.y * ratio,
-            size
-          );
-        }
-      }
-    });
-
-    //Head
-    graphics2add.beginFill(0xe54646, 0.3);
-    graphics2add.drawEllipse(
-      0,
-      0,
-      Math.abs(pose[5].position.x - pose[6].position.x) * ratio * 0.35,
-      Math.abs(pose[5].position.x - pose[6].position.x) * ratio * 0.45
-    );
-    (headPos.x = pose[0].position.x * ratio),
-      (headPos.y = ((pose[0].position.y + pose[1].position.y) / 2) * ratio);
-    headPos.rotation =
-      (pose[1].position.y - pose[2].position.y) /
-      (pose[1].position.x - pose[2].position.x);
-    graphics2add.rotation = headPos.rotation;
-    graphics2add.x = $videoPos.x + headPos.x;
-    graphics2add.y = $videoPos.y + headPos.y;
-  };
-
-  const createLine = (point1, point2, graphics) => {
-    graphics.moveTo(point1.position.x * ratio, point1.position.y * ratio);
-    graphics.lineTo(point2.position.x * ratio, point2.position.y * ratio);
-  };
   let bgLights = [
     {
       x: 0.398,
@@ -281,23 +194,7 @@
     }
   };
 
-  const drawPose = () => {
-    if(!$videoReady){
-      return
-    }
-    if ($poseNetRes) {
-      mouseOverride.set($mouseOverride + 0.01);
-      graphics2.clear();
-      graphics2add.clear();
-      ratio = ($videoPos.width * 0.99) / $videoReady.videoWidth;
-      createPose($poseNetRes, graphics2);
-      graphics2.x = $videoPos.x;
-      graphics2.y = $videoPos.y;
-    } else {
-      graphics2.clear();
-      graphics2add.clear();
-    }
-  };
+
 
   const drawLights = () => {
     if ($bgPos) {
@@ -348,7 +245,7 @@
             $thereminPos.y + $thereminPos.height
           );
         }
-        let currentColor = $gestures ? 0xff5555 : 0xffff33;
+        let currentColor = $gestures ? 0xffff33 : 0xffff33;
         graphics3.lineStyle(2, currentColor);
         graphics3.beginFill(currentColor, 1);
 
@@ -378,7 +275,6 @@
     drawAudio();
     drawGuides();
     drawLights();
-    drawPose();
     TIME += 0.01;
   });
 
@@ -392,29 +288,29 @@
         ? $thereminPos.y + $thereminPos.height * 0.852
         : $thereminMobilePos.y + $thereminMobilePos.height * 0.71 + 0;
 
-    graphics2.x = $videoPos.x;
-    graphics2.y = $videoPos.y;
+    // graphics2.x = $videoPos.x;
+    // graphics2.y = $videoPos.y;
 
-    maskGraphic.clear();
-    maskGraphic.beginFill(0xffffff, 1);
+    // maskGraphic.clear();
+    // maskGraphic.beginFill(0xffffff, 1);
 
     graphics3.x = 0;
     graphics3.y = 0;
     graphics3.alpha = 0.3 * $sineInOut0_1;
 
-    if ($videoReady) {
-      let offset = {
-        x: $videoPos.width * 0.08,
-        y: $videoPos.width * 0.035,
-      };
-      maskGraphic.drawRoundedRect(
-        $videoPos.x + offset.x,
-        $videoPos.y + offset.y,
-        $videoPos.width - offset.x * 2,
-        $videoPos.height - offset.y * 2,
-        $videoPos.width * 0.25
-      );
-    }
+    // if ($videoReady) {
+    //   let offset = {
+    //     x: $videoPos.width * 0.08,
+    //     y: $videoPos.width * 0.035,
+    //   };
+    //   maskGraphic.drawRoundedRect(
+    //     $videoPos.x + offset.x,
+    //     $videoPos.y + offset.y,
+    //     $videoPos.width - offset.x * 2,
+    //     $videoPos.height - offset.y * 2,
+    //     $videoPos.width * 0.25
+    //   );
+    // }
 
     if ($active && $sineInOut0_1 === 0) {
       sineInOut0_1.set(1);

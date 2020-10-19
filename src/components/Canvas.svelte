@@ -234,7 +234,7 @@ on:mousemove={(e)=>{updateMouse(e)}}
 bind:this={canvasContainer} 
 class="canvasContainer {
     $hovered==='switch'?'hovered'
-    : ($hovered==='knob right' || $hovered==='knob left') ? 'grab'
+    : ($hovered==='knob right' || $hovered==='knob left' || $hovered==='video') ? 'grab'
     :''
 } {$dragged ? 'grabbing' : ''} {$pwa ? 'pwa':''}"
 >

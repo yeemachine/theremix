@@ -1,5 +1,23 @@
+export function getTimeString() {
+    var today = new Date();
+    var y = today.getFullYear();
+    // JavaScript months are 0-based.
+    var m = ('0'+(today.getMonth() + 1)).slice(-2);
+    var d = ('0'+today.getDate()).slice(-2);
+    var h = today.getHours();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = ('0'+(h % 12)).slice(-2);
+    var mi = ('0'+today.getMinutes()).slice(-2);
+    var s = ('0'+today.getSeconds()).slice(-2);
+    return y + "-" + m + "-" + d + " at " + h + "." + mi + "." + s + " " + ampm;
+}
+
 export function constrain(value, constraints) {
   return Math.max(Math.min(value, constraints.max), constraints.min);
+}
+
+export const getTween = (b,e,i) => {
+  return b + (i * (e - b))
 }
 
 export function getDistance(a, b) {

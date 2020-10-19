@@ -27,7 +27,7 @@ const handleClick = () => {
     style={styles} 
     on:click={handleClick}>
         {#if icon}
-            <svelte:component this={icon} color={(selected)?'var(--svgColorHover)':'var(--svgColor)'} hoverColor={'var(--svgColorHover)'}/>
+            <svelte:component this={icon} selected={selected} color={(selected)?'var(--selectedSVGColor)':'var(--svgColor)'} hoverColor={selected ? 'var(--selectedSVGColor)' : 'var(--svgColorHover)'}/>
         {/if}
 </button>
 
@@ -36,6 +36,8 @@ const handleClick = () => {
         --bgColor:var(--offwhite);
         --svgColor:var(--offwhite);
         --svgColorHover:var(--charcoal);
+        --selectedBGColor:var(--offwhite);
+        --selectedSVGColor:var(--charcoal);
         width:48px;
         height:48px;
         border-radius: 50%;
@@ -44,11 +46,11 @@ const handleClick = () => {
         align-items: center;
         justify-content: center;
         pointer-events: all;
-        background:rgba(var(--bgColor),.2);
+        background:rgba(var(--bgColor),.05);
         backdrop-filter: blur(10px);
     }
-    button.selected{
-        background: rgb(var(--bgColor));
+    button.selected,button.selected:hover{
+        background: rgb(var(--selectedBGColor));
     }
 
     button.hide{

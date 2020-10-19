@@ -1,163 +1,459 @@
 <script>
+  import { fade,fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
-  import { onMount } from "svelte";
-  import { backInOut, sineInOut } from "svelte/easing";
-  import { constrain } from "../../helpers.js";
+  import { sineInOut } from "svelte/easing";
+  import { constrain, getDistance, getTween } from "../../helpers.js";
   import {
     CANVASWIDTH,
     CANVASHEIGHT,
     WIDTH,
+    HEIGHT,
     SCALE,
-    videoPos,
     videoReady,
-    gestures,
     showGuides,
     modelLoaded,
-    videoMask,
     poseNetRes,
+    mouseOverride,
+    hovered,
+    dragged,
+    globalPointerUp
   } from "../../stores.js";
+  export let app = null;
   export let sheet = null;
   export let stage = null;
   export let createSprite = null;
-  let pos = {x:0.5,y:0.5}
-  let dragging = false
+  export let graphicsGroup = null;
+
+  let pos = { x: 0.5, y: 0.5 };
+  let locked = true;
+  let dragging = false;
+  let firstDrag = false;
+  let ratio = 1;
+  let feedRatio = 1;
+  let graphicsColor = 0xffffff
+  $: graphicsColor = $showGuides ? 0xe54646 : 0xe54646; 
+  //global video sprite setting
+  //x and y coordinates are percentage of canvas size
+  let videoContainer = {
+    x: 0.5,
+    y: 0.5,
+    w: 250,
+    h: 225,
+    maxW:250,
+    maxH:225,
+    minX: 0,
+    maxX: 0,
+    minY: 0,
+    maxY: 0
+  };
+  $:{
+    videoContainer.maxW =
+      $WIDTH > 600
+        ? Math.min($CANVASWIDTH, $CANVASHEIGHT) * 0.5
+        : Math.min($CANVASWIDTH, $CANVASHEIGHT) * 0.8;
+    videoContainer.maxH = videoContainer.maxW * 0.9;
+    videoContainer.w = getTween(videoContainer.maxW, 250, $slide0_1);
+    videoContainer.h = getTween(videoContainer.maxH, 250 * 0.9, $slide0_1);
+
+    let marginTop = $WIDTH > 600 ? 96 * $SCALE : 80 * $SCALE;
+    let marginBottom = $WIDTH > 600 ? 24 * $SCALE : 16 * $SCALE;
+    let marginLeft = $WIDTH > 600 ? 24 * $SCALE : 16 * $SCALE;
+    videoContainer.minX = (marginLeft + videoContainer.w / 2) / $CANVASWIDTH;
+    videoContainer.maxX =
+      ($CANVASWIDTH - marginLeft - videoContainer.w / 2) / $CANVASWIDTH;
+    videoContainer.minY = (marginTop + videoContainer.h / 2) / $CANVASHEIGHT;
+    videoContainer.maxY =
+      ($CANVASHEIGHT - marginBottom - videoContainer.h / 2) / $CANVASHEIGHT;
+
+    if (!firstDrag) {
+      videoContainer.x = getTween(0.5, videoContainer.minX, $slide0_1);
+      videoContainer.y = getTween(0.44, videoContainer.minY, $slide0_1);
+    }
+  }
 
   const sineInOut0_1 = tweened(0, {
-    duration: 700,
-    easing: sineInOut,
+    duration: 300,
+    easing: sineInOut
   });
 
   const guides1_0 = tweened(1, {
-    duration: 700,
-    easing: sineInOut,
+    duration: 300,
+    easing: sineInOut
   });
 
-  const backOut0_1 = tweened(0, {
-    duration: 1200,
-    easing: backInOut,
+  const slide0_1 = tweened(0, {
+    duration: 400,
+    easing: sineInOut
   });
 
-  const wire1 = createSprite(
-    sheet.textures["Wire-1"],
-    sheet.textures["Wire-1-Normal"]
-  );
-  wire1.children[0].tint = 0x666666;
-  const wire2 = createSprite(
-    sheet.textures["Wire-2"],
-    sheet.textures["Wire-2-Normal"]
-  );
-  wire2.children[0].tint = 0x666666;
-  const wire3 = createSprite(
-    sheet.textures["Wire-3"],
-    sheet.textures["Wire-3-Normal"]
-  );
-  wire3.children[0].tint = 0x666666;
+  const flash0_1 = tweened(0, {
+    delay: 300,
+    duraton: 300,
+    easing: sineInOut
+  });
 
-  const video = createSprite(
-    sheet.textures["Video"],
-    sheet.textures["Video-Normal"]
-  );
-  
+  let maskGraphic = new PIXI.Graphics();
+  maskGraphic.lineStyle(0);
+  $: maskGraphic.interactive = $videoReady && !locked ? true : false;
+  $: maskGraphic.alpha = $sineInOut0_1;
+  maskGraphic.on("pointerdown", () => {
+    firstDrag = true;
+    dragging = true;
+    dragged.set({
+      element: maskGraphic,
+      id: "video"
+    });
+    globalPointerUp.set(false);
+  });
+  maskGraphic.on("pointerup", () => {
+    dragging = false;
+  });
+  maskGraphic.on("pointermove", e => {
+    if (dragging) {
+      let x = e.data.global.x / $CANVASWIDTH;
+      let y = e.data.global.y / $CANVASHEIGHT;
+      videoContainer.x =
+        x > videoContainer.maxX
+          ? videoContainer.maxX
+          : x < videoContainer.minX
+          ? videoContainer.minX
+          : x;
+      videoContainer.y =
+        y > videoContainer.maxY
+          ? videoContainer.maxY
+          : y < videoContainer.minY
+          ? videoContainer.minY
+          : y;
+    }
+  });
+  maskGraphic.on("mouseover", () => {
+    hovered.set("video");
+    maskGraphic.tint = 0x999999;
+  });
+  maskGraphic.on("mouseout", () => {
+    hovered.set(null);
+    maskGraphic.tint = 0xffffff;
+  });
+  $:{
+    let blinkY = (videoContainer.h / 2) * (1 - $sineInOut0_1);
+
+    maskGraphic.clear();
+    maskGraphic.beginFill(0xffffff, 1);
+    maskGraphic.drawRoundedRect(
+      0,
+      blinkY,
+      videoContainer.w,
+      videoContainer.h * $sineInOut0_1,
+      videoContainer.w * 0.125 * $sineInOut0_1
+    );
+    maskGraphic.x = videoContainer.x * $CANVASWIDTH - videoContainer.w / 2;
+    maskGraphic.y = videoContainer.y * $CANVASHEIGHT - videoContainer.h / 2;
+  }
+
+  let graphicsPose = new PIXI.Graphics();
+  graphicsPose.alpha = 1;
+  graphicsPose.mask = maskGraphic;
+
+  let graphicsHead = new PIXI.Graphics();
+  graphicsHead.alpha = 1;
+  graphicsHead.mask = maskGraphic;
+
+  let graphicsScrim = new PIXI.Graphics();
+  graphicsScrim.mask = maskGraphic;
+  // graphicsScrim.blendMode = PIXI.BLEND_MODES.SCREEN
+  graphicsScrim.alpha = .6
+  // $:{
+  //   graphicsScrim.alpha = .6+.25*($slide0_1)
+  // }
+  $:{
+    graphicsScrim.clear();
+    graphicsScrim.beginFill(0x4a4343, 1);
+    graphicsScrim.drawRect(
+      0,
+      0,
+      videoContainer.w,
+      videoContainer.h
+    );
+    graphicsScrim.x = videoContainer.x * $CANVASWIDTH - videoContainer.w / 2
+    graphicsScrim.y = videoContainer.y * $CANVASHEIGHT - videoContainer.h / 2
+  }
+
+  let graphicsDimmer = new PIXI.Graphics();
+  $:{
+    graphicsDimmer.alpha = .9*$sineInOut0_1 * (1-$slide0_1)
+  }
+  $:{
+    graphicsDimmer.clear();
+    graphicsDimmer.beginFill(0x000000, 1);
+    graphicsDimmer.drawRect(
+      0,
+      0,
+      $CANVASWIDTH,
+      $CANVASHEIGHT
+    );
+  }
+
   const guides = createSprite(sheet.textures["Guides"]);
-  guides.parentGroup = PIXI.lights.diffuseGroup;
-  video.addChild(guides);
-
-  const video_light = new PIXI.lights.PointLight(0xff7f00, 0);
+  guides.mask = maskGraphic;
+  guides.anchor.set(0.5, 0.5);
+  $:{
+    guides.height = videoContainer.h;
+    guides.scale.x = guides.scale.y;
+    guides.x = videoContainer.x * $CANVASWIDTH;
+    guides.y = videoContainer.y * $CANVASHEIGHT;
+    guides.alpha = $guides1_0;
+  }
 
   var feedTexture = PIXI.Texture.from(document.querySelector("video"));
   feedTexture.rotate = 12;
   var feedSprite = new PIXI.Sprite(feedTexture);
   let colorMatrix = new PIXI.filters.ColorMatrixFilter();
   colorMatrix.desaturate();
+  feedSprite.mask = maskGraphic;
   feedSprite.filters = [colorMatrix];
-  feedSprite.anchor.set(0.5);
-  feedSprite.alpha = 0.2;
-
-  $: {
-    if ($videoMask) {
-      feedSprite.mask = $videoMask;
-    }
+  feedSprite.anchor.set(0.5, 0.5);
+  $:{
+    feedSprite.x = videoContainer.x * $CANVASWIDTH;
+    feedSprite.y = videoContainer.y * $CANVASHEIGHT;
   }
 
-  let ratio = 1 / 1;
+  stage.addChild(
+    graphicsDimmer,
+    feedSprite, 
+    graphicsScrim,
+    graphicsPose, 
+    graphicsHead, 
+    maskGraphic, 
+    guides
+    );
+
   $: {
-    if ($videoReady) {
-      ratio = $videoReady.width / $videoReady.height;
-    }
-  }
-
-  stage.addChild(video, feedSprite);
-
-  $: {
-    // video.width = $WIDTH > 600 ? 240 * $SCALE : 200 * $SCALE;
-    video.width = $WIDTH > 600 ? Math.min($CANVASWIDTH,$CANVASHEIGHT) * .3 : 200 * $SCALE;
-
-    video.scale.y = video.scale.x;
-
-    let margin = $WIDTH > 600 ? 24 : 16;
-    video.x = margin * $SCALE - video.width * 2 * (1 - $sineInOut0_1);
-    video.y = (margin * 2 + 48) * $SCALE;
-    // let distance = $WIDTH > 600 ? .4 : .3;
-    // video.x = $CANVASWIDTH/2 - video.width/2;
-    // video.y = $CANVASHEIGHT*distance - video.height/2 - $CANVASHEIGHT * (1 - $sineInOut0_1);
-    // video_light.x = margin * 2 * $SCALE + video.width * 0.5;
-    // video_light.y = video.y;
-    // video_light.brightness =
-    //   (1 + 0.8 * constrain($CANVASWIDTH / 1200, { min: 0, max: 1 })) *
-    //   $sineInOut0_1;
-
-    feedSprite.height = video.height; //flip horizontal video
-    feedSprite.width = feedSprite.height * ratio;
-    // feedSprite.scale.x = feedSprite.scale.y
-    // feedSprite.scale.x = -1 * Math.abs(feedSprite.scale.x)
-    feedSprite.x = video.x + video.width / 2;
-    feedSprite.y = video.y + video.height / 2;
-
-    guides.alpha = $guides1_0 * 1;
-
-    videoPos.set({
-      x: video.x,
-      y: video.y,
-      width: video.width,
-      height: video.height,
-    });
-
-    wire1.scale = { x: video.scale.x, y: video.scale.x };
-    wire1.x = video.x - margin - margin * 2 * (1 - $backOut0_1);
-    wire1.y = 0 - margin;
-
-    wire2.scale = { x: video.scale.x, y: video.scale.x };
-    wire2.x = video.x - margin * 2.2 - margin * 2 * (1 - $backOut0_1);
-    wire2.y = video.y + video.height * 0.95;
-
-    wire3.scale = { x: video.scale.x, y: video.scale.x };
-    wire3.x = video.x - margin * 2.9 - margin * 1 * (1 - $backOut0_1);
-    wire3.y = video.y + video.height * 0.95;
-
     if ($videoReady && $modelLoaded) {
       if ($sineInOut0_1 === 0) {
         sineInOut0_1.set(1);
       }
-      if ($backOut0_1 === 0) {
-        backOut0_1.set(1);
+      if ($flash0_1 === 0) {
+        flash0_1.set(1);
       }
     } else {
       if ($sineInOut0_1 === 1) {
         sineInOut0_1.set(0);
       }
-      if ($backOut0_1 === 1) {
-        backOut0_1.set(0);
+      if ($flash0_1 === 1) {
+        flash0_1.set(0);
       }
     }
   }
 
+  //Handle initial capture and resize video
   $: {
     if (!$showGuides && $guides1_0 === 1) {
       guides.tint = 0x2cf27c;
       dataLayer.push({ event: "Pose-Registered" });
       setTimeout(() => {
         guides1_0.set(0);
-      }, 1000);
+      }, 500);
+    }
+    if ($guides1_0 === 0 && $slide0_1 === 0) {
+      slide0_1.set(1);
+      console.log($slide0_1);
+    }
+    if ($slide0_1 === 1) {
+      locked = false;
     }
   }
+
+  app.ticker.add(() => {
+    if ($videoReady) {
+      //Add to ticker since Svelte doesn't detect video orientation change well
+      updateFeed();
+    }
+    drawPose();
+  });
+
+  const updateFeed = () => {
+    feedRatio = $videoReady.videoWidth / $videoReady.videoHeight;
+    ratio = feedSprite.width / $videoReady.videoWidth;
+
+    if (feedRatio > 1) {
+      feedSprite.height = videoContainer.h;
+      feedSprite.width = feedSprite.height * feedRatio;
+    } else {
+      feedSprite.width = videoContainer.w;
+      feedSprite.height = feedSprite.width / feedRatio;
+    }
+  };
+
+  const drawPose = () => {
+    if (!$videoReady) {
+      return;
+    }
+    if ($poseNetRes) {
+      mouseOverride.set($mouseOverride + 0.01);
+      graphicsPose.clear();
+      graphicsHead.clear();
+      createPose($poseNetRes, graphicsPose);
+      graphicsPose.x = feedSprite.x - feedSprite.width / 2;
+      graphicsPose.y = feedSprite.y - feedSprite.height / 2;
+    } else {
+      graphicsPose.clear();
+      graphicsHead.clear();
+    }
+  };
+
+  let headPos = {
+    rotation: 0,
+    x: 0,
+    y: 0
+  };
+
+  const createPose = (pose, graphics) => {
+    graphicsPose.lineStyle(2, graphicsColor);
+
+    //Torso
+    createLine(pose[5], pose[6], graphicsPose);
+    createLine(pose[11], pose[12], graphicsPose);
+    createLine(pose[6], pose[12], graphicsPose);
+    createLine(pose[5], pose[11], graphicsPose);
+
+    createLine(pose[5], pose[7], graphicsPose);
+    createLine(pose[7], pose[9], graphicsPose);
+    createLine(pose[6], pose[8], graphicsPose);
+    createLine(pose[8], pose[10], graphicsPose);
+
+    // Legs
+    createLine(pose[11], pose[13], graphicsPose);
+    createLine(pose[13], pose[15], graphicsPose);
+    createLine(pose[12], pose[14], graphicsPose);
+    createLine(pose[14], pose[16], graphicsPose);
+
+    //Keypoints
+    // pose.forEach((e, i) => {
+    //   if (i > -1) {
+    //     let color = i === 9 || i === 10 ? graphicsColor : graphicsColor;
+    //     let opacity = i === 9 || i === 10 ? 0.85 : 0;
+    //     let size =
+    //       i === 9 || i === 10
+    //         ? constrain(
+    //             getDistance(pose[5].position, pose[6].position) * ratio * 0.15,
+    //             { max: 40, min: 16 }
+    //           )
+    //         : 8;
+    //     graphicsPose.beginFill(color, opacity);
+    //     graphicsPose.lineStyle(0);
+    //     if (e.score > 0.3) {
+    //       graphicsPose.drawCircle(
+    //         e.position.x * ratio,
+    //         e.position.y * ratio,
+    //         size
+    //       );
+    //     }
+    //   }
+    // });
+
+    //Hands
+    let size = constrain(
+            getDistance(pose[5].position, pose[6].position) * ratio * 0.15,
+            { max: 40, min: 16 }
+          )
+    graphicsPose.beginFill(graphicsColor, 1)
+    graphicsPose.lineStyle(0)
+    if(pose[9].score>.3){
+      graphicsPose.drawCircle(
+              pose[9].position.x * ratio,
+              pose[9].position.y * ratio,
+              size
+            );
+    }
+    if(pose[10].score>.3){
+      graphicsPose.drawCircle(
+        pose[10].position.x * ratio,
+        pose[10].position.y * ratio,
+        size
+      );
+    }
+
+    //Head
+    graphicsHead.lineStyle(2, graphicsColor);
+    graphicsHead.drawEllipse(
+      0,
+      0,
+      Math.abs(pose[5].position.x - pose[6].position.x) * ratio * 0.35,
+      Math.abs(pose[5].position.x - pose[6].position.x) * ratio * 0.45
+    );
+    (headPos.x = pose[0].position.x * ratio),
+      (headPos.y = ((pose[0].position.y + pose[1].position.y) / 2) * ratio);
+    headPos.rotation =
+      (pose[1].position.y - pose[2].position.y) /
+      (pose[1].position.x - pose[2].position.x);
+    graphicsHead.rotation = headPos.rotation;
+    graphicsHead.x = graphicsPose.x + headPos.x;
+    graphicsHead.y = graphicsPose.y + headPos.y;
+
+  };
+
+  const createLine = (point1, point2, graphics) => {
+    graphics.moveTo(point1.position.x * ratio, point1.position.y * ratio);
+    graphics.lineTo(point2.position.x * ratio, point2.position.y * ratio);
+  };
 </script>
+
+{#if $videoReady && $showGuides}
+<div
+style="top:{+videoContainer.y*$HEIGHT + videoContainer.h/2/$SCALE}px"
+in:fly="{{ duration: 400, y: 20, easing: sineInOut }}"
+out:fade="{{ duration: 300, easing: sineInOut}}"
+>
+<h2>
+  Bring your hands into frame.
+</h2>
+<p>
+  Left hand adjusts <span>volume</span>. Right hand controls <span>pitch</span>.
+</p>
+</div>
+{/if}
+
+<style>
+  div{
+    position:absolute;
+    width:100%;
+    max-width:800px;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+  }
+  h2{
+    color:rgb(var(--offwhite));
+    font-variation-settings:"wght" 80, "wdth"90, "ital"0;
+    font-size:28px;
+    font-weight:normal;
+    text-align:center;
+    width:max-content;
+    max-width:100%;
+    margin-top:40px;
+    margin-bottom:0;
+    word-break: break-word;
+    white-space: normal;
+  }
+  p{
+    font-size:16px;
+    font-family: "Nicholson Beta";
+    text-align:center;
+    width:max-content;
+    color:rgb(var(--offwhite));
+    word-break: break-word;
+    max-width:100%;
+    white-space: normal;
+  }
+  span{
+    color:rgb(var(--sun));
+  }
+  @media screen and (max-width: 600px) {
+    h2{
+      font-size:18px;
+     }
+     div{
+       width:calc(100% - 32px);
+     }
+  }
+</style>

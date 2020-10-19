@@ -1,5 +1,5 @@
 <script>
-	import {mousePos, loaded, toneLoaded,darkMode, pwa, update, version,camera,posenetLoaded } from './stores.js';
+	import {mousePos, loaded, toneLoaded,darkMode, pwa, update, version,camera,posenetLoaded,hasHover } from './stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import Nav from './components/UI/UI.nav.svelte'
 	import Shortcuts from './components/UI/UI.shortcuts.svelte'
@@ -7,60 +7,75 @@
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
 
-	var newSW;
-  
-	// Register service worker
-	if ('serviceWorker' in navigator) {
-    
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      update.set(true)
-    });
-    
-    navigator.serviceWorker.addEventListener('message', event => {
-        version.set(event.data)
-        console.log('%c%s',
-          'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
-          'THEREMIX ~~~ '+event.data)
-    });
+	if(typeof dataLayer === 'undefined'){
+		window.dataLayer = []
+	}
 
-		navigator.serviceWorker.register('/sw.js')
-			.then((reg) => {
-			}).catch((e) => {
-				console.log(e);
+	const initSW = () => {
+		if ('serviceWorker' in navigator) {
+			//Version Control Prompt User Refresh
+			navigator.serviceWorker.addEventListener('controllerchange', () => {
+				update.set(true)
 			});
-
-		navigator.serviceWorker.ready.then( registration => {
-			registration.active.postMessage({ action: 'version' });
-		});
+			//Received Messges from SW
+			navigator.serviceWorker.addEventListener('message', event => {
+				version.set(event.data)
+				console.log('%c%s',
+				'color: rgb(229,70,70); background: rgb(25,25,25);padding:4px 8px 4px 8px;border-radius:4px',
+				'THEREMIX ~~~ '+event.data)
+			});
+			// Register service worker
+			navigator.serviceWorker.register('/sw.js')
+				.then((reg) => {
+				}).catch((e) => {
+					console.log(e);
+			});
+			// Get version from service worker
+			navigator.serviceWorker.ready.then( registration => {
+				registration.active.postMessage({ action: 'version' });
+			});
+		}
 	}
 
-	if (window.matchMedia('(display-mode: standalone)').matches) {  
-		pwa.set(true);
-	dataLayer.push({'event':'standalone'});
-	}
-	if (window.matchMedia('(prefers-color-scheme: dark)').matches){
-	dataLayer.push({
-	'event':'theme',
-	'eventAction' : 'dark'
-	})
-	}else{
-	dataLayer.push({
-	'event':'theme',
-	'eventAction' : 'light'
-	})
+	const getDeviceInfo = () => {
+		if (window.matchMedia('(display-mode: standalone)').matches) {  
+			pwa.set(true);
+			dataLayer.push({'event':'standalone'});
+		}
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches){
+			dataLayer.push({
+			'event':'theme',
+			'eventAction' : 'dark'
+			})
+		}else{
+			dataLayer.push({
+			'event':'theme',
+			'eventAction' : 'light'
+			})
+		}
+		hasHover.set(window.matchMedia( "(hover: hover)" ).matches)
 	}
 
-let tfLoaded = false,toneJSLoaded = false,teoriaLoaded = false,toneMIDILoaded = false
-let cameraTriggered = false
-$:{
-  if($camera){
-    cameraTriggered = true
-  }
-}
+	initSW()
+	getDeviceInfo()
+
+	let tfLoaded = false,
+	toneJSLoaded = false,
+	teoriaLoaded = false,
+	toneMIDILoaded = false
+	let cameraTriggered = false
+	$:{
+		if($camera){
+			cameraTriggered = true
+		}
+	}
 
 </script>
 
 <svelte:head>
+  {#if !window.MediaRecorder}
+  <script defer src="/libraries/polyfill.js"></script>
+  {/if}
 
 	{#if $loaded}
 	<script defer src="https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script>

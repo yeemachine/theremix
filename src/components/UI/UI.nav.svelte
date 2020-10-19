@@ -4,10 +4,11 @@
   import videoIcon from "../icons/video.svelte";
   import pauseIcon from "../icons/pause.svelte";
   import settingsIcon from "../icons/settings.svelte";
+  import recordIcon from "../icons/record.svelte";
   import closeIcon from "../icons/close.svelte";
   import Settings from "./UI.settingsexpanded.svelte";
 
-  import { expandSettings, active, camera } from "../../stores.js";
+  import { expandSettings, active, camera,recording,hasMediaRecording } from "../../stores.js";
 </script>
 
 <nav class="{$active ? '' : 'hide'}">
@@ -15,13 +16,12 @@
     name="pause-theremin"
     classes="{'pauseTag'}"
     icon="{pauseIcon}"
-    settingState="{false}"
     setting="{active}"
     reverse="true"
     hide="{!$active ? true : false}"
     styles="{'margin-right:12px'}"
   />
-  <div class="gestures">
+  <div class="gestures" style="margin-right:12px">
     <Toggle
       name="{$camera ? 'disable-camera-gestures' : 'enable-camera-gestures'}"
       icon="{videoIcon}"
@@ -30,9 +30,26 @@
       hide="{!$active ? true : false}"
     />
     <p class="label">
-      {!$camera ? 'Enable Motion Capture' : 'Disable Camera'}
+      {!$camera ? 'Enable Hand-Tracking' : 'Disable Camera'}
     </p>
   </div>
+  {#if $hasMediaRecording}
+  <div class="recording">
+    <ButtonCircle
+      name="record-audio"
+      classes="{'recordTag'}"
+      icon="{recordIcon}"
+      setting="{recording}"
+      reverse="true"
+      hide="{!$active ? true : false}"
+      selected="{$recording ? true : false}"
+      styles="--selectedBGColor:var(--crimson);--selectedSVGColor:var(--offwhite)"
+    />
+    <p class="label">
+      {!$recording ? 'Record Audio' : 'Stop Recording'}
+    </p>
+  </div>
+  {/if}
   <div class="settings">
     <ButtonCircle
       name="{$expandSettings ? 'Close Controls' : 'Open Controls'}"
@@ -40,7 +57,6 @@
       icon="{$expandSettings ? closeIcon : settingsIcon}"
       selected="{$expandSettings ? true : false}"
       setting="{expandSettings}"
-      settingState="{null}"
       hide="{$active ? false : true}"
     />
   </div>
@@ -65,6 +81,14 @@
     transition: opacity 0.25s;
   }
   .gestures {
+    display: flex;
+    position: relative;
+    width: max-content;
+    height: max-content;
+    align-items: center;
+    flex-direction: column;
+  }
+  .recording{
     display: flex;
     position: relative;
     width: max-content;
@@ -124,7 +148,7 @@
   }
 
   @media (hover: hover) {
-    .gestures:hover .label {
+    .gestures:hover .label,.recording:hover .label  {
       opacity: 1;
     }
   }

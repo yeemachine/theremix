@@ -20,6 +20,7 @@
   } from "../stores.js";
   import { jsUcfirst, findNext } from "../helpers.js";
   import { tonicOrder, scales } from "../config.js";
+  import Recorder from './Recorder.svelte';
 
   const generateScale = (tonic, key, octaves) => {
     let scale = teoria.scale(tonic, key);
@@ -344,3 +345,7 @@
 
   toneLoaded.set(true);
 </script>
+
+{#if Tone && window.MediaRecorder}
+<Recorder/>
+{/if}

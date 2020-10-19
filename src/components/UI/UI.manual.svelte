@@ -53,9 +53,8 @@
     name="Close Manual"
     icon="{closeIcon}"
     setting="{manual}"
-    settingState="{false}"
     selected="{true}"
-    styles="{'--bgColor:var(--buttonColor);--svgColor:var(--iconColor);--svgColorHover:var(--iconColor);position:absolute;top:0px;right:0px;border-radius:0;border-top-right-radius: 16px;border-bottom-left-radius: 16px;z-index:2'}"
+    styles="{'--selectedBGColor:var(--crimson);--selectedSVGColor:var(--offwhite);--bgColor:var(--buttonColor);--svgColor:var(--iconColor);--svgColorHover:var(--iconColor);position:absolute;top:0px;right:0px;border-radius:0;border-top-right-radius: 16px;border-bottom-left-radius: 16px;z-index:2'}"
     tabindex="{$manual ? 0 : -1}"
   />
   <Carousel
@@ -454,9 +453,9 @@
 <style>
   /* Colors */
   section {
-    --cardColor: var(--offwhite);
+    /* --cardColor: var(--offwhite); */
     --containerColor: var(--crimson);
-    --manualColor: 255, 211, 166;
+    /* --manualColor: 255, 211, 166; */
     --cardGradient: linear-gradient(
       0deg,
       rgb(var(--cardColor)) 0%,
@@ -464,17 +463,27 @@
       rgba(var(--cardColor), 0) 100%
     );
     --textColor1: var(--crimson);
-    --textColor2: var(--charcoal);
-    --spanColor: var(--crimson);
-    --listColor: var(--crimson);
-    --keyColor: var(--crimson);
+    /* --textColor2: var(--charcoal); */
+    /* --spanColor: var(--crimson); */
+    /* --listColor: var(--crimson); */
+    /* --keyColor: var(--crimson); */
     --buttonColor: var(--crimson);
     --iconColor: var(--offwhite);
-    --arrowColor: var(--offwhite);
+    /* --arrowColor: var(--offwhite); */
     --hrImage: var(--wave);
   }
+  section {
+      --cardColor: 12, 12, 12;
+      --manualColor: 50, 42, 42;
+      --arrowColor: var(--offwhite);
+      --textColor2: var(--offwhite);
+      --listColor: var(--crimson);
+      --hrImage: var(--waveRed);
+      --spanColor: var(--sun);
+      --keyColor: var(--white);
+    }
 
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     section {
       --cardColor: 12, 12, 12;
       --manualColor: 50, 42, 42;
@@ -485,7 +494,7 @@
       --spanColor: var(--sun);
       --keyColor: var(--white);
     }
-  }
+  } */
   /* Colors */
 
   section {
@@ -865,11 +874,11 @@
     }
   }
   @media screen and (max-width: 600px) {
-    section.hide {
+    /* section.hide {
       -moz-transform: translate3d(-100vw, 0, 0) scale3D(1, 1, 1);
       -webkit-transform: translate3d(-100vw, 0, 0) scale3D(1, 1, 1);
       transform: translate3d(-100vw, 0, 0) scale3D(1, 1, 1);
-    }
+    } */
     ol {
       width: calc(100% - 56px);
       padding-inline-start: 56px;

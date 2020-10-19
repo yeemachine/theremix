@@ -3,8 +3,10 @@
   import { sineInOut } from "svelte/easing";
   // import {midiList} from '../../config.js';
   import {
+    active,
     WIDTH,
     HEIGHT,
+    SCALE,
     CANVASWIDTH,
     CANVASHEIGHT,
     thereminPos,
@@ -17,6 +19,7 @@
   export let sheet = null;
   export let stage = null;
   export let createSprite = null;
+  export let createGradientTexture = null;
 
   const sineInOut0_1 = tweened(0, {
     duration: 1000,
@@ -24,7 +27,7 @@
   });
 
   const sineInOut0_1_2 = tweened(0, {
-    duration: 1000,
+    duration: 600,
     easing: sineInOut,
   });
 
@@ -48,9 +51,9 @@
   );
   BGM_bg.children[0].tint = 0x80797f;
   BGM_bg.children[1].tint = 0x8056f8;
-  $: {
-    BGM_bg.alpha = 1 - $sineInOut0_1_2;
-  }
+  // $: {
+  //   BGM_bg.alpha = 1 - $sineInOut0_1_2;
+  // }
 
   currentMIDI.subscribe((value) => {
     if (Object.keys(PIXI.loader.resources).includes(value)) {
@@ -73,7 +76,10 @@
           : $CANVASHEIGHT - $thereminPos.height * 0.5;
       bg.scale.x = bg.scale.y;
     }
-
+    
+    bg.scale.x = bg.scale.x * (1 + .05*$sineInOut0_1_2)
+    bg.scale.y = bg.scale.x
+    
     BGM_bg.width = bg.width;
     BGM_bg.scale.y = BGM_bg.scale.x;
     BGM_bg.x = $CANVASWIDTH * 0.5;
@@ -112,8 +118,30 @@
       }
     }
   }
+  
+    $: {
+    if ($active) {
+      if ($sineInOut0_1_2 === 0) {
+        sineInOut0_1_2.set(1);
+      }
+    } else {
+      if ($sineInOut0_1_2 === 1) {
+        sineInOut0_1_2.set(0);
+      }
+    }
+  }
 
   bgContainer.addChild(bg);
   BGMContainer.addChild(BGM_bg);
+
+
+  const gradientTexture = createGradientTexture(0, 800, 2);
+  const gradSprite = createSprite(gradientTexture);
+  gradSprite.height = $CANVASHEIGHT;
+  gradSprite.width = 300;
+  gradSprite.x = $CANVASWIDTH - 40;
+  gradSprite.y = 0
+  gradSprite.tint = 0xff0000
+
   stage.addChild(bgContainer, BGMContainer);
 </script>
