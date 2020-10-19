@@ -59,7 +59,7 @@
     transform-box: fill-box;
   }
   svg.selected g{
-    animation: rotate 2s ease-in-out infinite;
+    animation: rotate 2s linear infinite;
   }
   @keyframes rotate {
     0% {
