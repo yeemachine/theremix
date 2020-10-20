@@ -1,4 +1,5 @@
 <script>
+  import { fade,fly } from "svelte/transition";
   import Keycap from "./UIElements/UI.keycap.svelte";
   import {
     keydown_S,
@@ -14,6 +15,8 @@
     SCALE,
     showGuides,
     videoReady,
+    recording,
+    recordingTime
   } from "../../stores.js";
 
   let containerDom;
@@ -52,15 +55,21 @@
   bind:this="{containerDom}"
   bind:clientWidth="{containerWidth}"
   bind:clientHeight="{containerHeight}"
-  class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || $keydown_K ? '' : 'hide'}"
+  class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || $keydown_K || $recording ? '' : 'hide'}"
 >
-  <h3>{$tonic}</h3>
-  <h4>{$scaleType}</h4>
+  {#if $recordingTime}
+    <h3>{$recordingTime}</h3>
+    <h4 style="width:max-width">Sound Only</h4>
+  {:else}
+    <h3>{$tonic}</h3>
+    <h4>{$scaleType}</h4>
+  {/if}
   <div>
     <Keycap hide="{!$keydown_S}" letter="{'S'}" styles="{'margin-right:8px'}" />
     <Keycap hide="{!$keydown_K}" letter="{'K'}" />
   </div>
 </section>
+
 <Keycap
   hide="{!$keydown_O}"
   letter="{'O'}"
@@ -82,12 +91,6 @@
   top="{$WIDTH > 600 ? 0.7676 : 0}"
   left="{$WIDTH > 600 ? 0.5005 : 0.5095}"
 />
-<!-- <p
-  class="label {!$showGuides || !$videoReady ? 'hide' : ''}"
-  style="{!$showGuides ? '' : ''}"
->
-  Move back and wave your hands
-</p> -->
 
 <style>
   section {
@@ -104,6 +107,9 @@
     pointer-events: none;
     text-align: center;
     transition: 0s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   section.hide {
     opacity: 0;
@@ -114,15 +120,18 @@
     line-height: 1;
     font-size: calc(12px + 4vw + 6vh);
     margin: 0;
-    padding: 0 0 16px 0;
-    border-bottom: 1px solid rgb(var(--offwhite));
+    padding: 0 0 24px 0;
+    font-weight: normal;
   }
   h4 {
-    font-variation-settings: "wght" 70, "wdth" 70, "ital" 0;
+    border-top: 1px solid rgb(var(--offwhite));
+    font-variation-settings: "wght" 80, "wdth" 70, "ital" 0;
     font-size: calc(8px + 1vw + 2vh);
-    margin: 16px 0 0 0;
-    letter-spacing: 0.02em;
+    padding: 8px 0 0 0;
+    margin: 0;
+    letter-spacing: 0.01em;
     color: rgb(var(--offwhite));
+    font-weight: normal;
   }
   div {
     margin: 16px 0 0 0;
@@ -170,7 +179,7 @@
       font-size: calc(10px + 3vw + 5vh);
     }
     section {
-      padding-bottom: 30vh;
+      padding-bottom: 25vh;
     }
     .label {
       top: 262px;
