@@ -46,7 +46,7 @@
       styles="--selectedBGColor:var(--crimson);--selectedSVGColor:var(--offwhite)"
     />
     <p class="label">
-      {!$recording ? 'Record Audio' : 'Stop Recording'}
+      {!$recording ? 'Record Sound' : 'Stop Recording'}
     </p>
   </div>
   {/if}

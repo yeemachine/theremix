@@ -1,4 +1,5 @@
 <script>
+  
   import {
     active,
     enableMIDI,
@@ -11,7 +12,7 @@
     endOctave,
     glide,
     currentMIDI,
-    midiList,
+    midiList
   } from "../../stores.js";
   import { scales, oscillators, maxOctaves, tonicOrder } from "../../config.js";
   import Toggle from "./UIElements/UI.toggleSmall.svelte";

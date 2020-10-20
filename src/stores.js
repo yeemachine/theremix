@@ -13,6 +13,7 @@ export const coverLoaded = writable(false);
 export const toneLoaded = writable(false);
 export const hasMediaRecording = writable(false);
 export const recording = writable(false);
+export const recordingTime = writable(null);
 
 export const manual = writable(false);
 export const camera = writable(false);
