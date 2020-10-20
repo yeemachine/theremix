@@ -217,6 +217,23 @@
     feedSprite.y = videoContainer.y * $CANVASHEIGHT;
   }
 
+  let graphicsOutline = new PIXI.Graphics();
+  $: graphicsOutline.alpha = dragging ? 1 : 0
+  $:{
+    graphicsOutline.clear();
+    graphicsOutline.lineStyle(2, 0xffffff);
+    graphicsOutline.drawRoundedRect(
+      0,
+      0,
+      videoContainer.w,
+      videoContainer.h,
+      videoContainer.w * 0.125
+    );
+    graphicsOutline.x = videoContainer.x * $CANVASWIDTH - videoContainer.w / 2
+    graphicsOutline.y = videoContainer.y * $CANVASHEIGHT - videoContainer.h / 2
+  }
+
+
   stage.addChild(
     graphicsDimmer,
     feedSprite, 
@@ -224,7 +241,8 @@
     graphicsPose, 
     graphicsHead, 
     maskGraphic, 
-    guides
+    guides,
+    graphicsOutline
     );
 
   $: {
