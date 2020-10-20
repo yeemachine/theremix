@@ -23,7 +23,6 @@ onMount(async()=>{
   recorder.addEventListener('stop', e => {
     let blob = new Blob(chunks, { 'type' : 'audio/wav; codecs=MS_PCM' });
     let url = URL.createObjectURL(blob)
-    // console.log(url)
     linkEl.href = url;
     linkEl.download = 'Theremix Recording '+getTimeString()+'.wav';        
     linkEl.click();

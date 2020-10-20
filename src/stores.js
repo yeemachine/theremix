@@ -65,6 +65,7 @@ let storedTonic = "G"
 let storedScale = "Major"
 let storedStartOctave = 2
 let storedEndOctave = 5
+let storedFTUE = true
 
 const getLocalStorage = ()=>{
   if (typeof Storage !== "undefined") {
@@ -78,10 +79,18 @@ const getLocalStorage = ()=>{
     storedScale = localStorage.getItem("scaleType") || "Major";
     storedStartOctave = localStorage.getItem("startOctave") || 2;
     storedEndOctave = localStorage.getItem("endOctave") || 5;
+    storedFTUE = 
+      localStorage.getItem("FTUE") === null
+      ? true
+      : localStorage.getItem("FTUE");
   }
 }
 
+
 getLocalStorage()
+
+console.log(storedFTUE)
+
 
 export const volumeVal = writable(storedVol);
 export const glide = writable(storedGlide);
@@ -90,9 +99,13 @@ export const tonic = writable(storedTonic);
 export const scaleType = writable(storedScale);
 export const startOctave = writable(storedStartOctave);
 export const endOctave = writable(storedEndOctave);
+export const FTUE = writable(storedFTUE);
 
 const subLocalStorage = ()=>{
   if (typeof Storage !== "undefined") {
+    FTUE.subscribe(value=>{
+      localStorage.setItem("FTUE",value)
+    })
     
     volumeVal.subscribe((value) => {
       localStorage.setItem("volumeVal", value ? value : -15);

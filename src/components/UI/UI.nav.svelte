@@ -7,8 +7,7 @@
   import recordIcon from "../icons/record.svelte";
   import closeIcon from "../icons/close.svelte";
   import Settings from "./UI.settingsexpanded.svelte";
-
-  import { expandSettings, active, camera,recording,hasMediaRecording } from "../../stores.js";
+  import { expandSettings, active, camera,recording,hasMediaRecording,FTUE } from "../../stores.js";
 </script>
 
 <nav class="{$active ? '' : 'hide'}">
@@ -21,7 +20,11 @@
     hide="{!$active ? true : false}"
     styles="{'margin-right:12px'}"
   />
-  <div class="gestures" style="margin-right:12px">
+  <div 
+  class="gestures" 
+  style="margin-right:12px" 
+  on:mouseenter={()=>{FTUE.set(false)}}
+  on:click={()=>{FTUE.set(false)}}>
     <Toggle
       name="{$camera ? 'disable-camera-gestures' : 'enable-camera-gestures'}"
       icon="{videoIcon}"
@@ -29,12 +32,14 @@
       classes="{'gestureTag'}"
       hide="{!$active ? true : false}"
     />
-    <p class="label">
+    <p class="label {$active===true && $FTUE===true ? 'ftue' : ''}">
       {!$camera ? 'Enable Hand-Tracking' : 'Disable Camera'}
     </p>
   </div>
   {#if $hasMediaRecording}
-  <div class="recording">
+  <div class="recording"
+  on:mouseenter={()=>{FTUE.set(false)}}
+  on:click={()=>{FTUE.set(false)}}>
     <ButtonCircle
       name="record-audio"
       classes="{'recordTag'}"
@@ -133,6 +138,9 @@
     border-style: solid;
     border-width: 0px 4px 6px 4px;
     border-color: transparent transparent rgb(var(--offwhite)) transparent;
+  }
+  .label.ftue{
+    opacity:1;
   }
 
   @media only screen and (max-width: 600px) {
