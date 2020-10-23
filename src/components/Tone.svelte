@@ -21,6 +21,9 @@
   import { jsUcfirst, findNext } from "../helpers.js";
   import { tonicOrder, scales } from "../config.js";
   import Recorder from './Recorder.svelte';
+//   import unmuteAudio from 'unmute-ios-audio';
+
+//   let unmute = false;
 
   const generateScale = (tonic, key, octaves) => {
     let scale = teoria.scale(tonic, key);
@@ -211,14 +214,21 @@
 
   $: {
     if ($active) {
+      
+      // if(!unmute){
+      //   unmute = true
+      //   unmuteAudio()
+      //   Tone.start();
+      // }
+      if (Tone.context.state !== "running") {
+        Tone.start();
+      }
+      
       let maxFreq = Tone.Frequency($scaleNotes[$scaleNotes.length - 1]);
       let minFreq = Tone.Frequency($scaleNotes[0]);
 
-      if (mainOsc.state === "stopped") {
+      if (Tone.context.state === "running" && mainOsc.state === "stopped") {
         mainOsc.start();
-      }
-      if (Tone.context.state !== "running") {
-        Tone.start();
       }
 
       let gain1Max =
@@ -261,6 +271,8 @@
           : $oscillatorType === "Pulse"
           ? 0.1
           : 0.1;
+      // let gain1Max = .1
+      
       gain1.gain.value = $enableMIDI ? 0 : $audioControls.y * gain1Max;
       gain2.gain.value = gain1Max;
       vibrato.frequency.value = $audioControls.y * 10;

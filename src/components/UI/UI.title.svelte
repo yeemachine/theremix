@@ -12,9 +12,17 @@
   import webcamIcon from "../icons/webcam.svelte";
   import touchIcon from "../icons/touch.svelte";
   import cursorIcon from "../icons/cursor.svelte";
+  // import unmuteAudio from 'unmute-ios-audio';
 
+  let unmute = false;
+  
   // let fontLoaded = false;
   const playStart = () => {
+    // if(!unmute){
+    //   unmute = true
+    //   unmuteAudio()
+    //   setTimeout(()=>{Tone.start()},100)
+    // }
     active.set(true);
   };
 
@@ -36,29 +44,29 @@
   }
 </script>
 
-<section class="{$active ? 'hide' : ''}">
-  <h1 class="{!$coverLoaded || $active ? 'hide' : ''}">
-    Celebrating
-    <span>100 years</span>
-    of the theremin
-  </h1>
-  <div class="title {!$coverLoaded || $active ? 'hide' : ''}">
-    <Logo hide="{!$coverLoaded || $active ? true : false}" />
-  </div>
+  <section class="{$active ? 'hide' : ''}">
+    <h1 class="{!$coverLoaded || $active ? 'hide' : ''}">
+      Celebrating
+      <span>100 years</span>
+      of the theremin
+    </h1>
+    <div class="title {!$coverLoaded || $active ? 'hide' : ''}">
+      <Logo hide="{!$coverLoaded || $active ? true : false}" />
+    </div>
 
-  <label>
-        <button 
-        class="play"
-        aria-label="Start Theremin"
-        name="start-theremin"
-        on:click={playStart}
-        on:touchend={playStart}
-        tabindex={!$active?0:-1}
-        >
-            <Play loaded={$coverLoaded} hide={$active}/>
-        </button>
-    </label>
-</section>
+    <label>
+          <button 
+          class="play"
+          aria-label="Start Theremin"
+          name="start-theremin"
+          on:click={playStart}
+          on:touchend={playStart}
+          tabindex={!$active?0:-1}
+          >
+              <Play loaded={$coverLoaded} hide={$active}/>
+          </button>
+      </label>
+  </section>
 
 <div class="info">
   
