@@ -51,6 +51,7 @@
   }
 </script>
 
+
 <section
   bind:this="{containerDom}"
   bind:clientWidth="{containerWidth}"
@@ -95,8 +96,8 @@
 <style>
   section {
     position: absolute;
-    width: max-content;
-    height: max-content;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
@@ -110,6 +111,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content:center;
   }
   section.hide {
     opacity: 0;
