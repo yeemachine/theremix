@@ -238,7 +238,7 @@
           <hr />
           <ul>
             <li>
-              <h3>2 Hands Detected</h3>
+              <h3>Two handed controls</h3>
               <p>
                 If 2 hands are detected, the
                 <span>right hand controls pitch</span>
@@ -251,7 +251,7 @@
               </p>
             </li>
             <li>
-              <h3>1 Hand Detected</h3>
+              <h3>Single hand control</h3>
               <p>
                 If only 1 hand is detected,
                 <span>both volume and pitch are controlled by the dominate hand</span>.
@@ -437,7 +437,7 @@
             This project is typeset in
             <a href="http://whirlybirdie.com/" target="blank">Whirly Birdie</a>
             and
-            <span>Nicholson Gothic</span>.
+            <span>Nay Aug</span>.
           </p>
         </div>
       </container>

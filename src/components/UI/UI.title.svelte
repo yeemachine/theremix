@@ -13,8 +13,7 @@
   import touchIcon from "../icons/touch.svelte";
   import cursorIcon from "../icons/cursor.svelte";
   // import unmuteAudio from 'unmute-ios-audio';
-
-  let unmute = false;
+  // let unmute = false;
   
   // let fontLoaded = false;
   const playStart = () => {
