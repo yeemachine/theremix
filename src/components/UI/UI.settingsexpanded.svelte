@@ -1,6 +1,5 @@
-<script>
-  
-  import {
+<script context="module">
+   import {
     active,
     enableMIDI,
     expandSettings,
@@ -14,21 +13,66 @@
     currentMIDI,
     midiList
   } from "../../stores.js";
+  import {get} from "svelte/store";
+  
+  let selectedMIDI;
+  let uploadedAlbumArt = false
+
+  export const handleFiles = (files) => {
+    if(files.length === 0){
+      return
+    }
+    const objectURL = URL.createObjectURL(files[0])
+    get(midiList).custom.url = objectURL
+    get(midiList).custom.name = files[0].name
+    get(midiList).custom.now = Date.now()
+    midiList.set(get(midiList))
+    currentMIDI.set('custom'+get(midiList).custom.now)
+    // selectedMIDI = 'custom'
+    enableMIDI.set(true);
+    dataLayer.push({'event':'MIDI-uploaded'});
+  }
+  
+  export const handleImgFiles = (files) => {
+    if(files.length === 0){
+      return
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      let objectURL = e.target.result
+      get(midiList).custom.img = objectURL
+      get(midiList).custom.imgNow = Date.now();
+      midiList.set(get(midiList))
+    };  
+    reader.readAsDataURL(files[0]);
+    dataLayer.push({'event':'MIDI-bguploaded'});
+    uploadedAlbumArt = true;
+  }
+  
+</script>
+<script>
+  import { fade,fly } from 'svelte/transition';
+  import { cubicInOut } from 'svelte/easing';
+ 
   import { scales, oscillators, maxOctaves, tonicOrder } from "../../config.js";
   import Toggle from "./UIElements/UI.toggleSmall.svelte";
   import Slider from "./UIElements/SteppedSlider.svelte";
+  import uploadIcon from "../icons/upload.svelte";
+  import {isImageVideo} from '../../helpers.js'
 
-  let selectedScale;
-  let selectedOsc;
-  let selectedTonic;
-  let selectedMIDI;
+  // let selectedScale;
+  // let selectedOsc;
+  // let selectedTonic;
   let selectedStartOctave = 4;
   let selectedEndOctave = maxOctaves;
+  
+  // $:selectedOsc = $oscillatorType;
+  // $:selectedMIDI = $currentMIDI
 
   const handleSlider = (e) => {
     selectedStartOctave = e.lower;
     selectedEndOctave = e.upper;
-    tonic.set(selectedTonic);
+    tonic.set($tonic);
     startOctave.set(selectedStartOctave);
     endOctave.set(selectedEndOctave);
   };
@@ -36,9 +80,36 @@
   const updateVolume = (e) => {
     volumeVal.set(e.target.valueAsNumber);
   };
+  
+  const handleClickUpload = (e) => {
+    let files = e.target.files
+    if(files.length === 0) {return}
+    if(files[0].type.includes('midi')){
+      return handleFiles(files)   
+    }
+    if(isImageVideo(files[0]) === 'img'){
+      console.log('isImage')
+      return handleImgFiles(files)
+    }
+  }
+  
+
+  
+  const truncate = (string='custom',length=30) => {
+      return string.length > length ? 
+                    string.substring(0, length - 3).trim() + "..." : 
+                    string;
+  }
+
+
+
 </script>
 
-<section class="{$active && $expandSettings ? '' : 'hide'}">
+{#if $active && $expandSettings}
+<section
+  in:fade="{{duration: 300}}" 
+  out:fade="{{duration:300}}"
+>
   <h3>Controls</h3>
   <div class="setting">
     <h4>Volume</h4>
@@ -63,9 +134,8 @@
       <select
         aria-label="Change Oscillator Type"
         name="oscillators"
-        bind:value="{selectedOsc}"
+        bind:value="{$oscillatorType}"
         class="oscillators"
-        on:change="{() => oscillatorType.set(selectedOsc)}"
       >
         {#each oscillators as oscName}
           <option
@@ -90,12 +160,8 @@
           aria-label="Change Key"
           name="keytype"
           class="keyTag"
-          bind:value="{selectedTonic}"
-          on:change="{() => {
-            if (selectedTonic) {
-              tonic.set(selectedTonic);
-            }
-          }}"
+          bind:value="{$tonic}"
+     
         >
           {#each tonicOrder as tonicNote}
             <option
@@ -113,8 +179,7 @@
           aria-label="Change Scale Type"
           name="scaletype"
           class="scaleTag"
-          bind:value="{selectedScale}"
-          on:change="{() => scaleType.set(selectedScale)}"
+          bind:value="{$scaleType}"
         >
           {#each scales as scaleName}
             <option
@@ -159,12 +224,14 @@
   <hr />
 
   <div class="setting">
-    <div class="toggle" style="margin-bottom: 16px;">
+    <div class="toggle" style="margin-bottom: 10px;">
       <h4 style="margin:0;display: flex;align-items: center;">
         MIDI
-        <span
-          style="font-size:8px;margin-left: 8px;color:rgb(var(--crimson))"
-        >Beta</span>
+           <span
+          style="font-size:8px;color:rgb(var(--crimson));margin-left: 6px;line-height: 1;margin-top: -3px;"
+        >New</span>
+        <span class="keycap">M</span><span class="keycap">←</span><span class="keycap">→</span>
+     
       </h4>
       <Toggle
         name="{$enableMIDI ? 'disable-midi' : 'enable-midi'}"
@@ -173,30 +240,57 @@
         hide="{!$expandSettings ? true : false}"
       />
     </div>
-    <div class="select {$enableMIDI ? '' : 'hide'}" style="margin-top: 12px;">
+  
+
+    <div class="select" style="margin-top: 4px;margin-bottom: 12px;">
       <select
         aria-label="Change MIDI track"
-        bind:value="{selectedMIDI}"
+        bind:value="{$currentMIDI}"
         class="midi"
-        on:change="{() => {
-          if (selectedMIDI) {
-            currentMIDI.set(selectedMIDI);
-          }
+        on:change="{(e) => {
+            enableMIDI.set(true);
         }}"
       >
         {#each Object.keys($midiList) as midiTitle}
-          <option
-            value="{midiTitle}"
-            selected="{midiTitle === $currentMIDI ? true : false}"
-          >
-            {midiTitle}
-          </option>
+          
+          {#if !midiTitle.includes('custom')}
+            <option
+              value="{midiTitle}"
+              selected="{midiTitle === $currentMIDI ? true : false}"
+            >
+               {midiTitle+' / '+ $midiList[midiTitle].artist}
+            </option>
+          {:else if $midiList[midiTitle].url}
+             <option
+              value="{midiTitle}"
+              selected="{midiTitle === $currentMIDI ? true : false}"
+            >
+              {$midiList[midiTitle].name+' *'}
+            </option>
+          {/if}
+        
+        
         {/each}
       </select>
+      <div class="select_grad"></div>
       <div class="select_arrow"></div>
     </div>
+    
+    <label class="upload {$midiList.custom.url ? 'selected':''}" for="uploadImage">
+      <div data-text="{!$midiList.custom.url ? 'Drag and drop any .mid files to the tracklist' 
+                      : !uploadedAlbumArt ? 'Upload your own background art'
+                      : 'Upload any .mid or .jpg,.png files'
+                      }">
+        Upload MIDI/Album Art
+        <div style="width:24px;height:24px;">
+          <svelte:component this={uploadIcon}/>
+        </div>
+      </div>
+      <input type="file" id="uploadImage" name="fileList" accept=".midi,.jpg,jpeg,png" on:change={handleClickUpload}>
+    </label>
   </div>
 </section>
+{/if}
 
 <style>
   :global(:root) {
@@ -210,7 +304,7 @@
     max-height: calc(100% - 120px);
     max-width: 320px;
     max-height: calc(100% - 24px);
-    padding: 0 24px 0 24px;
+    padding: 0 16px 0 16px;
     top: 12px;
     right: 12px;
     display: block;
@@ -260,7 +354,7 @@
     font-size: 10px;
     border-radius: 2px;
     margin-left: 8px;
-    opacity: 0;
+    display:none;
   }
   .toggle {
     width: 100%;
@@ -352,6 +446,17 @@
     border-width: 8px 5px 0px 5px;
     border-color: rgb(var(--offwhite)) transparent transparent transparent;
   }
+  .select_grad{
+    height:100%;
+    width:60px;
+    position:absolute;
+    right:0;
+    top:0;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(35,35,35,0) 0%, rgba(35,35,35,1) 60%);
+    border-radius: 5px;
+    pointer-events:none;
+  }
 
   input[type="range"] {
     box-sizing: border-box;
@@ -422,6 +527,83 @@
     background: rgb(var(--offwhite));
     cursor: url(https://theremin.app/assets/global/grab.svg) 14 0, grab;
   }
+  
+/*   Upload input CSS */   
+  input[type="file"] {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  .upload{
+    --borderWidth : 2px;
+    position: relative;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: calc(100% - var(--borderWidth) * 2);
+    /* height: 64px; */
+    border-radius: 4px;
+    border: var(--borderWidth) dashed #ffffff10;
+    font-family: 'Nicholson Beta';
+  }
+  .upload:hover, .upload:hover div, .upload:hover input{
+    cursor: url(https://theremin.app/assets/global/cursor4.svg) 21 20, pointer;
+  }
+  .upload > div {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 16px);
+    padding: 24px 0px 24px 10px;
+  }
+  .upload > div:before{
+    --inset : 4px;
+    content:'';
+    position:absolute;
+    top:var(--inset);
+    left:var(--inset);
+    width:calc(100% - var(--inset) * 2);
+    height:calc(100% - var(--inset) * 2);
+    z-index:-1;
+    background:#ffffff00;
+    border-radius:4px;
+    transition:background-color .2s 
+  }
+  .upload > div:after{
+    content:attr(data-text);
+    position: absolute;
+    font-family:'Nicholson Beta';
+      width: max-content;
+      top: 52px;
+      font-size: 14px;
+      background: rgb(var(--offwhite));
+      padding: 6px 12px 6px 12px;
+      border-radius: 16px;
+      margin-top: 4px;
+      height: max-content;
+      line-height: 1.5;
+      color: rgb(var(--charcoal));
+      font-weight: normal;
+      pointer-events: none;
+      opacity: 0;
+      transition: .2s;
+      z-index:2;
+  }
+  .upload:hover > div:before,.upload:active > div:before{
+    background:#ffffff05;
+  }
+  .upload.selected{
+    border: var(--borderWidth) dashed #ffffff30;
+  }
+  .upload.selected > div:before{
+    background:#ffffff07;
+  }
+  .upload.selected:hover > div:before,.upload.selected:active > div:before{
+    background:#ffffff10;
+  }
 
   @media screen and (max-width: 600px) {
     section {
@@ -445,10 +627,18 @@
       margin: 0 0 0 -16px;
     }
   }
-
-  @media (hover: hover) {
+  
+   @media only screen and (hover: hover) and (pointer: fine) {
     .keycap {
-      opacity: 0.7;
+          opacity: 0.7;
+          display:inline-block;
+        }
+      .upload:hover > div:after{
+    opacity:1;
     }
+  }
+  
+  @media all and (display-mode: fullscreen) {
+    h3{margin-top: calc(env(safe-area-inset-top, 0) + 16px);}
   }
 </style>

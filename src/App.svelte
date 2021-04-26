@@ -2,8 +2,10 @@
 	import {mousePos, loaded, toneLoaded,darkMode, pwa, update, version,camera,posenetLoaded,hasHover } from './stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import Nav from './components/UI/UI.nav.svelte'
+  import Notif from './components/UI/UI.notif.svelte'
 	import Shortcuts from './components/UI/UI.shortcuts.svelte'
 	import Tone from './components/Tone.svelte'
+  import DropZone from './components/UI/UI.dropzone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
 
@@ -39,7 +41,7 @@
 	}
 
 	const getDeviceInfo = () => {
-		if (window.matchMedia('(display-mode: standalone)').matches) {  
+		if (window.matchMedia('(display-mode: fullscreen)').matches) {  
 			pwa.set(true);
 			dataLayer.push({'event':'standalone'});
 		}
@@ -79,7 +81,8 @@
   {/if}
 
 	{#if $loaded}
-	<script defer src="https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script>
+<!-- 	<script defer src="https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script> -->
+  	<script defer src="https://cdn.jsdelivr.net/npm/tone@14.8.17/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script>
 	{/if}
 
 	{#if toneJSLoaded}
@@ -87,7 +90,9 @@
 	{/if}
 
 	{#if teoriaLoaded}
-		<script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.25/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script>
+<!-- 		<script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.25/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script> -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.27/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script>
+  
 	{/if}
     
     {#if cameraTriggered}
@@ -104,6 +109,8 @@
 	<Canvas/>
 	<Shortcuts/>
 	<Nav/>
+  <Notif/>
+  <DropZone/>
 	
 	{#if toneLoaded && toneMIDILoaded}
 		<Tone/>
@@ -114,7 +121,6 @@
 </main>
 
 <style>
-  
   @font-face {
     font-family: "Whirly Birdie";
     src: url("https://theremin.app/assets/fonts/WhirlyBirdieGX.woff2")

@@ -16,7 +16,8 @@
     showGuides,
     videoReady,
     recording,
-    recordingTime
+    recordingTime,
+    theatreMode
   } from "../../stores.js";
 
   let containerDom;
@@ -56,7 +57,7 @@
   bind:this="{containerDom}"
   bind:clientWidth="{containerWidth}"
   bind:clientHeight="{containerHeight}"
-  class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || $keydown_K || $recording ? '' : 'hide'}"
+  class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || $keydown_K || ($recording && !$theatreMode) ? '' : 'hide'}"
 >
   {#if $recordingTime}
     <h3>{$recordingTime}</h3>
