@@ -60,8 +60,10 @@
     const createPair = (diffuseTex, normalTex) => {
     var container = new PIXI.Container();
     var diffuseSprite = new PIXI.Sprite(diffuseTex);
+    diffuseSprite.spriteType = 'diffuse'
     diffuseSprite.parentGroup = PIXI.lights.diffuseGroup;
     var normalSprite = new PIXI.Sprite(normalTex);
+    normalSprite.spriteType = 'normal'
     normalSprite.parentGroup = PIXI.lights.normalGroup;
     container.addChild(diffuseSprite);
     container.addChild(normalSprite);

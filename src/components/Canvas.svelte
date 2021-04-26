@@ -3,8 +3,8 @@ import { onMount } from 'svelte';
 import { tweened } from 'svelte/motion';
 import { backOut } from 'svelte/easing';
 import {constrain,findNext} from '../helpers.js'
-import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,enableMIDI,currentMIDI,pwa} from '../stores.js'
-import {oscillators,scales,tonicOrder,midiList} from '../config.js'
+import {active,WIDTH,HEIGHT,CANVASWIDTH,CANVASHEIGHT,SCALE,canvasMousePos,mousePos,globalPointerUp,dragged,mouseOverride,hovered,manual,glide,oscillatorType,scaleType,tonic,keydown_O,keydown_G,keydown_S,keydown_K,keydown_M,keydown_left,keydown_right,enableMIDI,currentMIDI,pwa,midiList,theatreMode} from '../stores.js'
+import {oscillators,scales,tonicOrder} from '../config.js'
 import Title from './UI/UI.title.svelte'
 import Manual from './UI/UI.manual.svelte'
 import PixiApp from './PIXI.svelte'
@@ -84,6 +84,9 @@ const handleKeydown = e => {
     const key = event.key;
     const keyCode = event.keyCode;
     if($active){
+        if(keyCode===72){
+          theatreMode.set(!$theatreMode)
+        }
         if(keyCode===71 && !$keydown_G){
             glide.set(false)
             keydown_G.set(true)
@@ -129,7 +132,11 @@ const handleKeydown = e => {
                 dataLayer.push({'event':'scales-key'});
             }else{
                  if($enableMIDI){
-                     let nextItem = findNext($currentMIDI,Object.keys(midiList),'reverse')
+                     let midiArr = Object.keys($midiList)
+                     if(!$midiList.custom.url){
+                       midiArr.shift()
+                     }
+                     let nextItem = findNext(($currentMIDI.includes('custom') ? 'custom' : $currentMIDI), midiArr,'reverse');
                      currentMIDI.set(nextItem)
                      dataLayer.push({'event':'MIDI-key'});
                 }
@@ -151,7 +158,11 @@ const handleKeydown = e => {
                 dataLayer.push({'event':'scales-key'});
             }else{
                  if($enableMIDI){
-                     let nextItem = findNext($currentMIDI,Object.keys(midiList))
+                     let midiArr = Object.keys($midiList)
+                     if(!$midiList.custom.url){
+                       midiArr.shift()
+                     }
+                     let nextItem = findNext(($currentMIDI.includes('custom') ? 'custom' : $currentMIDI), midiArr);
                      currentMIDI.set(nextItem)
                      dataLayer.push({'event':'MIDI-key'});
                 }

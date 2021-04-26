@@ -96,14 +96,17 @@
 
   let midiSynths = [];
   let lastMIDI;
+  let savedMIDI = null
 
   const initMidi = (url) => {
     Midi.fromUrl(url).then((midi) => {
+      savedMIDI = midi;
       const now = 1;
       const nowDelay = 2;
 
       midi.tracks.forEach((track, i) => {
         const synth = new Tone.PolySynth({
+          maxPolyphony : 60,
           options: {
             oscillator: {
               type:
@@ -137,24 +140,30 @@
             },
           },
         }).connect(gain2);
-
+        
         midiSynths.push(synth);
         //scheduleOnce all of the events
         track.notes.forEach((note) => {
           let duration = note.duration <= 0 ? 0.1 : note.duration;
           Tone.Transport.scheduleOnce((time) => {
-            synth.triggerAttackRelease(
-              note.name,
-              duration,
-              time,
-              note.velocity
-            );
+            synth.triggerAttack(note.name, time, note.velocity);
+            synth.triggerRelease(note.name, time+note.duration);
+            // synth.triggerAttackRelease(
+            //   note.name,
+            //   duration,
+            //   time,
+            //   note.velocity
+            // );
           }, note.time + now);
         });
       });
 
       Tone.Transport.scheduleOnce(() => {
-        let nextItem = findNext($currentMIDI, Object.keys($midiList));
+        let midiArr = Object.keys($midiList)
+        if(!$midiList.custom.url){
+           midiArr.shift()
+        }
+        let nextItem = findNext(($currentMIDI.includes('custom') ? 'custom' : $currentMIDI), midiArr);
         currentMIDI.set(nextItem);
       }, nowDelay + midi.duration);
 
@@ -180,29 +189,31 @@
 
       console.log("Current Playing: " + lastMIDI);
       Tone.Transport.start();
-      currentMIDITitle.set(lastMIDI);
+      currentMIDITitle.set((lastMIDI.includes('custom')?'custom':lastMIDI));
     });
   };
 
   const cleanupSynths = () => {
-    Tone.Transport.stop();
     // midiSynths[0].dispose()
     // midiSynths = []
     while (midiSynths.length) {
       const synth = midiSynths.shift();
-      synth.disconnect();
+      synth.dispose()
+      // synth.disconnect();
     }
+    Tone.Transport.stop();
     Tone.Transport.cancel(0);
   };
 
   $: {
-    if ($enableMIDI) {
+    if ($enableMIDI && $currentMIDI) {
       if (lastMIDI !== $currentMIDI) {
         lastMIDI = $currentMIDI;
         if (midiSynths.length > 0) {
           cleanupSynths();
         }
-        initMidi($midiList[lastMIDI].url);
+        let url = lastMIDI.includes('custom') ? $midiList.custom.url : $midiList[lastMIDI].url
+        initMidi(url);
       }
     } else {
       lastMIDI = null;
@@ -211,7 +222,62 @@
       }
     }
   }
-
+  
+  oscillatorType.subscribe(val=>{
+    if($active && midiSynths.length>0 && $enableMIDI){
+      
+    let baseType =  val.includes("Sine")
+            ? "sine"
+            : val.includes("Triangle")
+            ? "triangle"
+            : val.includes("Sawtooth")
+            ? "sawtooth"
+            : val.includes("Square")
+            ? "square"
+            : val === "PWM"
+            ? "square"
+            : val === "Pulse"
+            ? "sawtooth"
+            : val === "Oscillator Off"
+            ? "triangle"
+            : "triangle"
+      let prefix = val.includes("FM") ? '' 
+      : val.includes("AM") ? 'am'
+      : ''
+      let partial = ''
+          
+      midiSynths.forEach((synth,j) => {
+          
+          synth.set({
+            oscillator:{
+              type:baseType,
+              // type:
+              //   val === "Fat Sine"
+              //     ? "sine"
+              //     : val === "Fat Triangle"
+              //     ? "triangle"
+              //     : val === "Fat Sawtooth"
+              //     ? "sawtooth"
+              //     : val === "Fat Square"
+              //     ? "square"
+              //     : val === "PWM"
+              //     ? "pwm"
+              //     : val === "Pulse"
+              //     ? "pulse"
+              //     : val === "Oscillator Off"
+              //     ? "triangle"
+              //     : val.toLowerCase().replace(/\s/g, ""),
+              spread: val.includes("Fat") ? 20 : 0,
+              count: val.includes("Fat") ? 3 : 0,
+              modulationFrequency: val === "PWM" ? 0.4 : 0,
+              width: val === "Pulse" ? 0.2 : 0
+            }
+          })
+          
+        })
+    }
+  })
+  
   $: {
     if ($active) {
       
@@ -302,30 +368,8 @@
         y: $enableMIDI ? steps.y / $scaleNotes.length : $audioControls.y,
       };
       if (midiSynths.length > 0 && $enableMIDI) {
-        midiSynths.forEach((synth) => {
+        midiSynths.forEach((synth,j) => {
           synth.set({
-            oscillator: {
-              type:
-                $oscillatorType === "Fat Sine"
-                  ? "sine"
-                  : $oscillatorType === "Fat Triangle"
-                  ? "triangle"
-                  : $oscillatorType === "Fat Sawtooth"
-                  ? "sawtooth"
-                  : $oscillatorType === "Fat Square"
-                  ? "square"
-                  : $oscillatorType === "PWM"
-                  ? "pwm"
-                  : $oscillatorType === "Pulse"
-                  ? "pulse"
-                  : $oscillatorType === "Oscillator Off"
-                  ? "triangle"
-                  : $oscillatorType.toLowerCase().replace(/\s/g, ""),
-              spread: $oscillatorType.includes("Fat") ? 20 : 0,
-              count: $oscillatorType.includes("Fat") ? 3 : 0,
-              modulationFrequency: $oscillatorType === "PWM" ? 0.4 : 0,
-              width: $oscillatorType === "Pulse" ? 0.2 : 0,
-            },
             envelope: {
               attack: 0.005 + 0.2 * (1 - envelopeControl.x),
               sustain: 0.3 - 0.3 * envelopeControl.y,

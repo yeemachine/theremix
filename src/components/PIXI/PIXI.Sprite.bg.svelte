@@ -49,21 +49,55 @@
     PIXI.Texture.from(Object.keys($midiList)[0].img),
     sheet.textures["BG-Normal-BGM"]
   );
-  BGM_bg.children[0].tint = 0x80797f;
+  BGM_bg.children[0].tint = 0xa1a1a1;
   BGM_bg.children[1].tint = 0x8056f8;
   // $: {
   //   BGM_bg.alpha = 1 - $sineInOut0_1_2;
   // }
+  
+  const replaceBGMTexture = (value) => {
+      if(value.includes('custom')){
+        value = 'custom' + $midiList.custom.imgNow
+        // let label = 'custom'+Date.now()
+        // let url = $midiList.custom.img
+        // try{
+        // PIXI.loader.add(label, url).load((loader, resources) => {
+        //     BGM_bg.children[0].texture = resources[label].texture;
+        //   });
+        // }catch(err){
+        //   console.log(err)
+        // }
+        // return  
+      }
+      if (Object.keys(PIXI.loader.resources).includes(value)) {
+        BGM_bg.children[0].texture = PIXI.loader.resources[value].texture;
+      } else {
+        let url = value.includes('custom') ? $midiList.custom.img : $midiList[value].img
+        PIXI.loader.add(value, url).load((loader, resources) => {
+          BGM_bg.children[0].texture = resources[value].texture;
+        });
+      }
+  }
 
   currentMIDI.subscribe((value) => {
-    if (Object.keys(PIXI.loader.resources).includes(value)) {
-      BGM_bg.children[0].texture = PIXI.loader.resources[value].texture;
-    } else {
-      PIXI.loader.add(value, $midiList[value].img).load((loader, resources) => {
-        BGM_bg.children[0].texture = resources[value].texture;
-      });
+    if(value){
+      try{
+        replaceBGMTexture(value)
+      }catch(err){
+        console.log(err)
+      }
     }
   });
+  
+  midiList.subscribe(val=>{
+    if($currentMIDI.includes('custom')){
+      try{
+        replaceBGMTexture('custom')
+      }catch(err){
+        console.log(err)
+      }
+    }
+  })
 
   $: {
     if ($CANVASWIDTH / $CANVASHEIGHT > bgRatio) {
@@ -88,11 +122,13 @@
         ? $CANVASHEIGHT * 0.5
         : $CANVASHEIGHT * 0.5 - $thereminPos.height * 0.25;
   }
+  
 
   $: {
     if ($WIDTH < 600) {
-      BGM_bg.children[0].anchor.set($midiList[$currentMIDI].offset, 0.5);
-      BGM_bg.children[1].anchor.set($midiList[$currentMIDI].offset, 0.5);
+      let offset = $currentMIDI.includes('custom') ? $midiList.custom.offset : $midiList[$currentMIDI].offset
+      BGM_bg.children[0].anchor.set(offset, 0.5);
+      BGM_bg.children[1].anchor.set(offset, 0.5);
       bg.position.set($CANVASWIDTH * 0.5 - bg.width * 0.5, 0);
     } else {
       BGM_bg.children[0].anchor.set(0.5, 0.5);

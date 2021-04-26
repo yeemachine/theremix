@@ -2,51 +2,75 @@
   "name": "Theremix - Virtual Theremin",
   "short_name": "Theremix",
   "background_color": "#000000",
-  "theme_color": "#e54646",
-  "display": "standalone",
-  "Scope": "./",
-  "start_url": "/index.html?utm_source=homescreen",
+  "theme_color": "#000000",
+  "display": "fullscreen",
+  "start_url": "./?source=pwa",
   "icons": [
     {
       "src": "https://theremin.app/assets/icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "https://theremin.app/assets/icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "https://theremin.app/assets/icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "https://theremin.app/assets/icons/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "https://theremin.app/assets/icons/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "https://theremin.app/assets/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "https://theremin.app/assets/icons/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "https://theremin.app/assets/icons/icon-512x512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "splash_pages": null,
+  "url": "https://theremin.app",
+  "lang": "English",
+  "screenshots": [
+    {
+      "src": "[Embedded]",
+      "sizes": "1280x800",
+      "type": "image/png"
+    },
+    {
+      "src": "[Embedded]",
+      "sizes": "750x1334",
       "type": "image/png"
     }
   ],
-  "splash_pages": null
+  "orientation": "portrait",
+  "description": "Celebrating 100 years of the theremin, use your webcam, touch or your cursor to play this virtual theremin.",
+  "scope": "/"
 }

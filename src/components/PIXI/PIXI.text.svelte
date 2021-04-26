@@ -1,7 +1,7 @@
 <script>
   import { tweened } from "svelte/motion";
   import { sineInOut } from "svelte/easing";
-  import { oscillators, midiList } from "../../config.js";
+  import { oscillators } from "../../config.js";
   import {
     active,
     WIDTH,
@@ -12,6 +12,7 @@
     oscillatorType,
     toneOutput,
     enableMIDI,
+    midiList,
     MIDITextSprite,
     currentMIDITitle,
   } from "../../stores.js";
@@ -167,9 +168,33 @@
 
   $: {
     if (midiText) {
+      
+      let artist = $currentMIDITitle ? $midiList[$currentMIDITitle].artist : null
       let text = $currentMIDITitle
-        ? "♫ " + $currentMIDITitle + " / " + midiList[$currentMIDITitle].artist
+        ? "♫ " + ($currentMIDITitle === 'custom' ? $midiList[$currentMIDITitle].name : $currentMIDITitle) + (artist ? " / " + artist : '')
         : null;
+      let textalt = text
+      if($currentMIDITitle && $midiList[$currentMIDITitle].alt){
+        let titleAlt = $midiList[$currentMIDITitle].alt.title ?　$midiList[$currentMIDITitle].alt.title : $currentMIDITitle
+        let artistAlt = $midiList[$currentMIDITitle].alt.artist ? $midiList[$currentMIDITitle].alt.artist : artist
+        textalt = "♫ " + titleAlt +  " / " + artistAlt
+      }
+      // midiText.text =
+      //   $enableMIDI && !text
+      //     ? "Loading..."
+      //     : $enableMIDI
+      //     ? "   " +
+      //       text +
+      //       "      " +
+      //       textalt +
+      //       "      " +
+      //       text +
+      //       "      " +
+      //       textalt +
+      //       "      " +
+      //       text+
+      //       "   "
+      //     : "";
       midiText.text =
         $enableMIDI && !text
           ? "Loading..."
@@ -177,11 +202,15 @@
           ? "   " +
             text +
             "      " +
-            text +
+            textalt +
             "      " +
             text +
             "      " +
-            text +
+            textalt +
+            "      " +
+            text+
+            "      " +
+            textalt+
             "   "
           : "";
       midiText.style.fontSize =
@@ -196,16 +225,17 @@
         $WIDTH > 600
           ? $thereminPos.y + $thereminPos.height * 0.888
           : $thereminMobilePos.y + $thereminMobilePos.height * 0.82;
+      let textLength = 6
       midiText.x =
         $WIDTH > 600
           ? $thereminPos.x +
             $thereminPos.width * 0.5 -
-            (midiText.width * 2) / 4 -
-            (marqueeTime * midiText.width * 1) / 4
+            (midiText.width*1/textLength) -
+            (marqueeTime * midiText.width * 2) / textLength
           : $thereminMobilePos.x +
             $thereminMobilePos.width * 0.48 -
-            (midiText.width * 2) / 4 -
-            (marqueeTime * midiText.width) / 4;
+            (midiText.width*1/textLength) -
+            (marqueeTime * midiText.width * 2) / textLength;
       midiText.alpha = 0.15 + 0.55 * $sineInOut0_1;
     }
   }

@@ -1,3 +1,46 @@
+export const isImageVideo = (file) => {
+   let type = null
+   // alert(file.type)
+    switch (file.type) {
+        case 'video/mp4':
+            type = "video";
+            break;
+        case 'video/quicktime':
+            type = "video";
+            break;
+        case 'video/webm':
+            type = "video";
+            break;
+        case 'image/jpeg':
+            type = "img";
+            break;
+        case 'image/png':
+            type = "img";
+            break;
+        case 'image/tif':
+            type = "img";
+            break;
+        case 'image/apng':
+            type = "img";
+            break;
+        case 'image/gif':
+            type = "img";
+            break;
+        case 'image/svg+xml':
+            type = "img";
+            break;
+        case 'image/webp':
+            type = "img";
+            break;
+        case 'image/avif':
+            type = "img";
+            break;
+        default:
+            break;
+    }
+  return type
+}
+
 export function getTimeString() {
     var today = new Date();
     var y = today.getFullYear();

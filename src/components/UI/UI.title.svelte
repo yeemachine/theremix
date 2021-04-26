@@ -12,26 +12,16 @@
   import webcamIcon from "../icons/webcam.svelte";
   import touchIcon from "../icons/touch.svelte";
   import cursorIcon from "../icons/cursor.svelte";
-  // import unmuteAudio from 'unmute-ios-audio';
-  // let unmute = false;
-  
-  // let fontLoaded = false;
+  import { fade,fly } from 'svelte/transition';
+  import { cubicInOut } from 'svelte/easing';
+
   const playStart = () => {
-    // if(!unmute){
-    //   unmute = true
-    //   unmuteAudio()
-    //   setTimeout(()=>{Tone.start()},100)
-    // }
     active.set(true);
   };
 
   const manualOpen = () => {
     manual.set(true);
   };
-
-  // document.fonts.ready.then(function () {
-  //   fontLoaded = true;
-  // });
 
   $: {
     if ($loaded) {
@@ -41,35 +31,62 @@
       }, 2000);
     }
   }
+  
+  function fadeScale (
+  node, { delay = 0, duration = 200, easing = x => x, baseScale = 0, endScale=1 }
+) {
+  const o = +getComputedStyle(node).opacity;
+  const m = getComputedStyle(node).transform.match(/scale\(([0-9.]+)\)/);
+  const s = m ? m[1] : 1;
+  const is = endScale - baseScale;
+
+  return {
+    delay,
+    duration,
+    css: t => {
+      const eased = easing(t);
+      return `opacity: ${eased * o}; transform: scale(${((1-eased) * s* is) + baseScale})`;
+    }
+  };
+}
 </script>
 
-  <section class="{$active ? 'hide' : ''}">
-    <h1 class="{!$coverLoaded || $active ? 'hide' : ''}">
+{#if $coverLoaded && !$active}
+  <section>
+    <h1
+      in:fade="{{duration: 600, delay:200 }}" 
+      out:fade="{{duration:300}}"
+    >
       Celebrating
       <span>100 years</span>
       of the theremin
     </h1>
-    <div class="title {!$coverLoaded || $active ? 'hide' : ''}">
+    <div class="title">
       <Logo hide="{!$coverLoaded || $active ? true : false}" />
     </div>
 
     <label>
           <button 
+          in:fadeScale="{{duration: 600, delay:200,easing:cubicInOut,baseScale:1,endScale:1.4}}" 
+          out:fadeScale="{{duration:300,easing:cubicInOut,baseScale:1,endScale:1.4}}"
           class="play"
           aria-label="Start Theremin"
           name="start-theremin"
           on:click={playStart}
           on:touchend={playStart}
-          tabindex={!$active?0:-1}
-          >
+          tabindex="{!$active?0:-1}">
               <Play loaded={$coverLoaded} hide={$active}/>
           </button>
       </label>
   </section>
+{/if}
 
+
+  {#if !$coverLoaded || $active || $manual}
+  {:else}
 <div class="info">
-  
-  <p class="{(!$coverLoaded || $active || $manual) ? 'hide' : ''}">
+  <p in:fade="{{duration: 600, delay:200 }}" 
+    out:fade="{{duration:300}}">
     {#if $hasHover}
       Use your mouse   
       <span 
@@ -95,17 +112,18 @@
       <svelte:component this={webcamIcon}/>
     </span> to play this virtual theremin with hand-tracked gestures!
   </p>
-
   <button
+    in:fly="{{ y: 30, easing: cubicInOut,duration: 600, delay:200 }}" 
+    out:fade="{{duration:300}}"
     name="open-manual"
     aria-label="Open Manual"
     on:click="{manualOpen}"
-    class="manual {!$coverLoaded || $active || $manual ? 'hide' : ''}"
+    class="manual"
   >
     Operation Manual
   </button>
-  
 </div>
+  {/if}
 
 
 
@@ -379,5 +397,7 @@
       border-top-right-radius: 16px;
     }
   }
-  
+   @media all and (display-mode: fullscreen) {
+    .update{margin-top: calc(env(safe-area-inset-top, 0));}
+  }
 </style>

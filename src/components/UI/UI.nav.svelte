@@ -7,10 +7,43 @@
   import recordIcon from "../icons/record.svelte";
   import closeIcon from "../icons/close.svelte";
   import Settings from "./UI.settingsexpanded.svelte";
-  import { expandSettings, active, camera,recording,hasMediaRecording,FTUE } from "../../stores.js";
+  import { expandSettings, active, camera,recording,hasMediaRecording,FTUE,theatreMode } from "../../stores.js";
+  import {dropzone} from './UI.dropzone.svelte'
+  
+  let time;
+
+    const resetTimer = () => {
+    clearTimeout(time);
+    time = setTimeout(()=>{
+      if($active && !$expandSettings){
+        theatreMode.set(true)
+      }
+    }, 6000)
+  }
+  
+  const handleInactivity = () => {
+    if(!$theatreMode && $active){
+      resetTimer()
+    }
+  }
+  
+  const unhide = (e) => {
+    e.preventDefault()
+    theatreMode.set(false)
+    resetTimer()
+  }
+  
+  $:{
+    if($active && !$expandSettings){
+      handleInactivity()
+    }else{
+      clearTimeout(time);
+    }
+  }
+  
 </script>
 
-<nav class="{$active ? '' : 'hide'}">
+<nav class="{!$active || $dropzone ? 'hide' : ''} {$theatreMode ? 'theatre' : ''}">
   <ButtonCircle
     name="pause-theremin"
     classes="{'pauseTag'}"
@@ -65,13 +98,36 @@
       hide="{$active ? false : true}"
     />
   </div>
-  <Settings />
 </nav>
+  <Settings />
+
+<div 
+     class="scrim {$dropzone || !$theatreMode || !$active ? 'hide' : ''}"
+     on:mousemove={unhide}
+     on:mouseout={resetTimer}
+     on:click={unhide}
+     on:touchstart={unhide}
+></div>
 
 <style>
+    .scrim{
+    width: 100%;
+    height: 64px;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:2;
+  }
+  .scrim.hide{
+    pointer-events:none
+  }
+  
   nav.hide {
     opacity: 0;
     pointer-events: none;
+  }
+  nav.theatre{
+    opacity:0;
   }
   nav {
     display: flex;
@@ -80,6 +136,7 @@
     padding: 24px;
     width: calc(100% - 48px);
     top: 0;
+    top: calc(env(safe-area-inset-top, 0));
     left: 0;
     pointer-events: none;
     opacity: 1;
@@ -159,5 +216,9 @@
     .gestures:hover .label,.recording:hover .label  {
       opacity: 1;
     }
+  }
+  
+  @media all and (display-mode: fullscreen) {
+    .scrim{padding-top: calc(env(safe-area-inset-top, 0));}
   }
 </style>

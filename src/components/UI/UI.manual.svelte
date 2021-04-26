@@ -9,6 +9,7 @@
     manual,
     pwa,
     version,
+    midiList
   } from "../../stores.js";
   import { onMount } from "svelte";
   import About from "../icons/about.svelte";
@@ -16,7 +17,10 @@
   import ButtonCircle from "./UIElements/UI.buttoncircle.svelte";
   import BasicControls from "../icons/basicControls.svelte";
   import Arrow from "../icons/arrow.svelte";
-  import { midiList } from "../../config.js";
+  import { fade,fly } from 'svelte/transition';
+  import { cubicInOut } from 'svelte/easing';
+
+  // import { midiList } from "../../config.js";
 
   let startSlide = 0;
   let currentSlide = startSlide;
@@ -26,6 +30,11 @@
     slideCount = e.slideCount;
     handlebuttons($manual);
   };
+  manual.subscribe(val=>{
+    if(!val){
+      currentSlide = startSlide
+    }
+  })
 
   const handlebuttons = () => {
     document.querySelectorAll(".carousel button").forEach((e, i) => {
@@ -39,6 +48,7 @@
       }
     });
   };
+  
 
   onMount(async () => {
     handlebuttons();
@@ -48,20 +58,25 @@
   }
 </script>
 
-<section class="{$manual ? '' : 'hide'}">
+{#if $manual}
+<section  in:fly="{{ y: 70, easing: cubicInOut,duration: 600 }}" 
+     out:fade="{{duration:300}}">
+  <div class="close">
   <ButtonCircle
     name="Close Manual"
     icon="{closeIcon}"
     setting="{manual}"
     selected="{true}"
-    styles="{'--selectedBGColor:var(--crimson);--selectedSVGColor:var(--offwhite);--bgColor:var(--buttonColor);--svgColor:var(--iconColor);--svgColorHover:var(--iconColor);position:absolute;top:0px;right:0px;border-radius:0;border-top-right-radius: 16px;border-bottom-left-radius: 16px;z-index:2'}"
+    styles="{'--selectedBGColor:var(--crimson);--selectedSVGColor:var(--offwhite);--bgColor:var(--buttonColor);--svgColor:var(--iconColor);--svgColorHover:var(--iconColor);width:40px;height:40px;z-index:2'}"
     tabindex="{$manual ? 0 : -1}"
   />
+  </div>
   <Carousel
     loop="{false}"
     perPage="{1}"
     startIndex="{startSlide}"
     duration="{400}"
+    easing="cubic-bezier(0.215, 0.61, 0.355, 1)"
     threshold="{$WIDTH > 600 ? 200 : 100}"
     on:change="{(e) => {
       handleChange(e.detail);
@@ -194,12 +209,18 @@
               </p>
             </li>
           </ol>
-          {#if !$pwa}
             <hr />
+              <p class="small sub">
+              Press
+              <span class="keycap">H</span>
+              to hide/show controls.
+            </p>
+          {#if !$pwa}
             <p class="small sub">
               THEREMIX works offline and fullscreen when
               <span>added to your homescreen</span>.
             </p>
+        
           {/if}
         </div>
       </container>
@@ -270,7 +291,7 @@
           <h2>
             Midi<br />Controls<span
               style="font-size:9px;margin-left: 8px"
-            >Beta<span></span></span>
+            >Updated<span></span></span>
           </h2>
           <div class="svg">
             <video alt="MIDI controls" autoplay loop muted playsinline>
@@ -309,7 +330,8 @@
           </p>
           <hr />
           <ol>
-            {#each Object.keys(midiList) as midiTitle}
+            {#each Object.keys($midiList) as midiTitle}
+            {#if midiTitle !== 'custom'}
               <li>
                 <h3
                   style="font-family:'Nicholson Beta';font-size:16px;margin-bottom:0;padding-top: 14px;"
@@ -319,19 +341,20 @@
                 <p
                   style="font-family:'Nicholson Beta';font-size:14px;margin:0 0 8px 0;"
                 >
-                  {midiList[midiTitle].artist}
+                  {$midiList[midiTitle].artist}
                 </p>
                 <p style="margin:0;">
                   <a
-                    href="{midiList[midiTitle].original}"
+                    href="{$midiList[midiTitle].original}"
                     target="blank"
                     style="margin-right:6px"
                   >Original Video</a><a
-                    href="{midiList[midiTitle].midi}"
+                    href="{$midiList[midiTitle].midi}"
                     target="blank"
                   >MIDI</a>
                 </p>
               </li>
+            {/if}
             {/each}
           </ol>
         </div>
@@ -449,6 +472,7 @@
     </span>
   </Carousel>
 </section>
+{/if}
 
 <style>
   /* Colors */
@@ -585,6 +609,12 @@
     display: flex;
     flex-direction: row;
   }
+  .close{
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+  }
 
   .graphic {
     height: calc(100% - 80px);
@@ -645,7 +675,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 60px;
+    height: 80px;
     background: rgb(var(--descriptionColor));
     background: var(--cardGradient);
     pointer-events: none;
@@ -755,12 +785,15 @@
     font-size: 12px;
     border-radius: 2px;
   }
-
+  
   :global(.carousel > ul > li.active) {
     background-color: rgb(var(--textColor1)) !important;
   }
   :global(.carousel > ul > li) {
     background-color: rgba(var(--textColor1), 0.2) !important;
+    border-radius: 0 !important;
+    height: 4px !important;
+    width: 40px !important;
   }
 
   :global(.right) {
@@ -811,16 +844,33 @@
   }
   @media screen and (max-width: 800px) {
     section {
-      width: 95vw;
-      height: calc(80vh);
+      width: 100vw;
+      height: calc(100%);
+      max-height:100%;
     }
     h2 {
       font-size: 28px;
       margin-bottom: 24px;
     }
+    :global(.carousel){
+      position:absolute;
+      height:100%;
+    }
+    :global(.slides){
+      border-radius:0;
+      height: 100%;
+    }
+    :global(.slides>div){
+      height: 100%;
+    }
+     :global(.slides>div>div){
+      height: 100%;
+    }
     .slide-content {
-      width: 95vw;
-      height: calc(80vh);
+      width: 100vw;
+      height: calc(100%);
+      max-height:100%;
+      border-radius:0;
     }
     container {
       flex-direction: column;
@@ -833,7 +883,7 @@
       height: max-content;
       min-height: max-content;
       width: calc(100% - 48px);
-      margin: 24px 24px 0px 24px;
+      margin: 48px 24px 0px 24px;
     }
     .svg {
       height: auto;
@@ -865,6 +915,9 @@
     ol li::before {
       left: -64px;
     }
+    :global(.carousel>ul){
+      margin-top:-40px!important;
+    }
 
     :global(.right) {
       display: none;
@@ -879,6 +932,7 @@
       -webkit-transform: translate3d(-100vw, 0, 0) scale3D(1, 1, 1);
       transform: translate3d(-100vw, 0, 0) scale3D(1, 1, 1);
     } */
+    
     ol {
       width: calc(100% - 56px);
       padding-inline-start: 56px;
@@ -891,6 +945,21 @@
   @media (hover: hover) {
     .keyboard {
       display: block;
+    }
+  }
+  
+  @media all and (display-mode: fullscreen) {
+    .graphic{
+      margin-top: calc(env(safe-area-inset-top, 0) + 48px);
+    }
+    .close{
+      margin-top: calc(env(safe-area-inset-top, 0));
+    }
+    .gradient{
+      height:calc(env(safe-area-inset-bottom, 0) + 80px);
+    }
+    :global(.carousel>ul){
+      margin-top:calc(env(safe-area-inset-bottom, 0)*-.3 - 40px)!important;
     }
   }
 </style>

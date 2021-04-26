@@ -27,6 +27,7 @@
   let pos = { x: 0.5, y: 0.5 };
   let locked = true;
   let dragging = false;
+  $:{if(!$videoReady) {dragging = false}}
   let firstDrag = false;
   let ratio = 1;
   let feedRatio = 1;
@@ -55,7 +56,7 @@
     videoContainer.w = getTween(videoContainer.maxW, 250, $slide0_1);
     videoContainer.h = getTween(videoContainer.maxH, 250 * 0.9, $slide0_1);
 
-    let marginTop = $WIDTH > 600 ? 96 * $SCALE : 80 * $SCALE;
+    let marginTop = $WIDTH > 600 ? 24 * $SCALE : 16 * $SCALE;
     let marginBottom = $WIDTH > 600 ? 24 * $SCALE : 16 * $SCALE;
     let marginLeft = $WIDTH > 600 ? 24 * $SCALE : 16 * $SCALE;
     videoContainer.minX = (marginLeft + videoContainer.w / 2) / $CANVASWIDTH;
