@@ -1,6 +1,6 @@
 <script>
   import { tweened } from "svelte/motion";
-  import { constrain } from "../../helpers.js";
+  import { constrain,haptic } from "../../helpers.js";
   import { backOut, sineInOut } from "svelte/easing";
   import { oscillators } from "../../config.js";
   import {
@@ -90,9 +90,7 @@
       id: "vol",
     });
     globalPointerUp.set(false);
-    if ("vibrate" in navigator) {
-      navigator.vibrate(50);
-    }
+    haptic()
     dataLayer.push({ event: "volume-pixi" });
   });
 
@@ -139,9 +137,7 @@
 
   switchRight.on("pointerup", () => {
     glide.set(!$glide);
-    if ("vibrate" in navigator) {
-      navigator.vibrate(50);
-    }
+    haptic()
     dataLayer.push({ event: "glide-pixi" });
   });
   switchRight.on("mouseover", () => {
@@ -355,9 +351,7 @@
         });
         if (distance > 40) {
           if (oscillators[steppedPercent] !== $oscillatorType) {
-            if ("vibrate" in navigator) {
-              navigator.vibrate(50);
-            }
+            haptic()
             oscillatorType.set(oscillators[steppedPercent]);
           }
         }

@@ -1,5 +1,5 @@
 <script>
-import {constrain} from '../../../helpers.js'
+import {constrain,haptic} from '../../../helpers.js'
 import {createEventDispatcher} from 'svelte'
 export let initVal = [0,1]
 export let min = 0
@@ -56,6 +56,7 @@ const dispatchChange = ()=>{
       lower:lower,
       difference:difference
     });
+  haptic()
 }
 
 </script>

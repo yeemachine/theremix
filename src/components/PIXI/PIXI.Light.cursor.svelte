@@ -7,6 +7,7 @@
     canvasMousePos,
     mousePos,
     poseNetRes,
+    handPoseRes,
     CANVASWIDTH,
     WIDTH,
     CANVASHEIGHT,
@@ -19,10 +20,14 @@
     manual,
     showGuides,
   } from "../../stores.js";
-  import { constrain } from "../../helpers.js";
+  import { constrain,getTween } from "../../helpers.js";
+  import { fade,fly } from 'svelte/transition';
+  import { cubicInOut } from 'svelte/easing';
   import { tweened, spring } from "svelte/motion";
   import { backOut } from "svelte/easing";
   import { posenetOptions } from "../../config.js";
+  import { get } from "svelte/store";
+
 
   export let stage = null;
   export let app = null;
@@ -40,7 +45,6 @@
         : $thereminPos.y + $thereminPos.height * 0.7,
   });
 
-  let htmlCursor;
   const cursorLight = new PIXI.lights.PointLight(0xff7f00, 2);
   cursorLight.falloff = [0.75, 3, 10];
 
@@ -222,8 +226,8 @@
           : $CANVASHEIGHT * 0.1,
     },
     {
-      stiffness: 0.3,
-      damping: 0.8,
+      stiffness: 0.05,
+      damping: 0.9
     }
   );
 
@@ -233,112 +237,127 @@
       y: $thereminPos.y + $thereminPos.height * 0.7,
     },
     {
-      stiffness: 0.3,
-      damping: 0.8,
+      stiffness: 0.05,
+      damping: 0.9
     }
   );
 
   let gesturesCounter = 0;
-  $: {
-    //Handles toggling of gesture controls vs mouse controls
+  let leftCounter = 0;
+  let rightCounter = 0;
 
+  stage.addChild(cursorLight, particleContainer);
+  
+  
+  
+  
+    $: {
+      
+    //POSENET CURSOR//
     if ($poseNetRes && $videoReady && $mouseOverride > 0.1) {
-      let leftWrist = {
-        pose: $poseNetRes[9],
-        x: 0,
-        y: 0,
-      };
-      let rightWrist = {
-        pose: $poseNetRes[10],
-        x: 0,
-        y: 0,
-      };
+      
+      let wrist ={
+        left:{
+          pose: $poseNetRes[9],
+          x: 0,
+          y: 0,
+        },
+        right:{
+          pose: $poseNetRes[10],
+          x: 0,
+          y: 0,
+        }
+      }
+     
       emitter.emit = false;
       gestures.set(true);
 
-      if (rightWrist.pose.score > posenetOptions.minPartConfidence) {
+      if (wrist.right.pose.score > posenetOptions.minPartConfidence) {
         if ($WIDTH > 600) {
           //Don't Interpolate on mobile
-          springRightPos.set(rightWrist.pose.position);
+          springRightPos.set(wrist.right.pose.position);
         }
-        rightWrist.x =
+        wrist.right.x =
           $WIDTH > 600
             ? ($springRightPos.x / $videoReady.videoWidth) * $CANVASWIDTH
-            : (rightWrist.pose.position.x / $videoReady.videoWidth) *
+            : (wrist.right.pose.position.x / $videoReady.videoWidth) *
               $CANVASWIDTH;
-        rightWrist.y =
+        wrist.right.y =
           $WIDTH > 600
             ? ($springRightPos.y / $videoReady.videoHeight) * $CANVASHEIGHT
-            : (rightWrist.pose.position.y / $videoReady.videoHeight) *
+            : (wrist.right.pose.position.y / $videoReady.videoHeight) *
               $thereminMobilePos.y;
-        rightWrist.audioX = constrain(
-          (rightWrist.x - $thereminPos.x) / $thereminPos.width,
+        wrist.right.audioX = constrain(
+          (wrist.right.x - $thereminPos.x) / $thereminPos.width,
           { min: 0, max: 1 }
         );
-        rightWrist.audioY = constrain(
-          rightWrist.y / ($thereminPos.y + $thereminPos.height),
+        wrist.right.audioY = constrain(
+          wrist.right.y / ($thereminPos.y + $thereminPos.height),
           { min: 0, max: 1 }
         );
-        emitterRight.updateOwnerPos(rightWrist.x, rightWrist.y);
+        emitterRight.updateOwnerPos(wrist.right.x, wrist.right.y);
       }
 
-      if (leftWrist.pose.score > posenetOptions.minPartConfidence) {
+      if (wrist.left.pose.score > posenetOptions.minPartConfidence) {
         if ($WIDTH > 600) {
           //Don't Interpolate on mobile
-          springLeftPos.set(leftWrist.pose.position);
+          springLeftPos.set(wrist.left.pose.position);
         }
-        leftWrist.x =
+        wrist.left.x =
           $WIDTH > 600
             ? ($springLeftPos.x / $videoReady.videoWidth) * $CANVASWIDTH
-            : (leftWrist.pose.position.x / $videoReady.videoWidth) *
+            : (wrist.left.pose.position.x / $videoReady.videoWidth) *
               $CANVASWIDTH;
-        leftWrist.y =
+        wrist.left.y =
           $WIDTH > 600
             ? ($springLeftPos.y / $videoReady.videoHeight) * $CANVASHEIGHT
-            : (leftWrist.pose.position.y / $videoReady.videoHeight) *
+            : (wrist.left.pose.position.y / $videoReady.videoHeight) *
               $thereminMobilePos.y;
-        leftWrist.audioX = constrain(
-          (leftWrist.x - $thereminPos.x) / $thereminPos.width,
+        wrist.left.audioX = constrain(
+          (wrist.left.x - $thereminPos.x) / $thereminPos.width,
           { min: 0, max: 1 }
         );
-        leftWrist.audioY = constrain(
-          leftWrist.y / ($thereminPos.y + $thereminPos.height),
+        wrist.left.audioY = constrain(
+          wrist.left.y / ($thereminPos.y + $thereminPos.height),
           { min: 0, max: 1 }
         );
-        emitterLeft.updateOwnerPos(leftWrist.x, leftWrist.y);
+        emitterLeft.updateOwnerPos(wrist.left.x, wrist.left.y);
       }
 
       if (
-        leftWrist.pose.score > posenetOptions.minPartConfidence &&
-        rightWrist.pose.score > posenetOptions.minPartConfidence
+        wrist.left.pose.score > posenetOptions.minPartConfidence &&
+        wrist.right.pose.score > posenetOptions.minPartConfidence
       ) {
         //both hands
         emitterRight.emit = true;
         emitterLeft.emit = true;
         audioControls.set({
-          x: rightWrist.audioX,
-          y: leftWrist.audioY,
+          x: wrist.right.audioX,
+          y: wrist.left.audioY,
         });
+        cursorLight.position.set(wrist.right.x,wrist.left.y);
         gesturesCounter += gesturesCounter < 1 ? 0.01 : 0;
-      } else if (leftWrist.pose.score > rightWrist.pose.score) {
+      } else if (wrist.left.pose.score > wrist.right.pose.score) {
         //left hand
         emitterRight.emit = false;
-        if (leftWrist.pose.score > posenetOptions.minPartConfidence) {
+        if (wrist.left.pose.score > posenetOptions.minPartConfidence) {
           emitterLeft.emit = true;
           audioControls.set({
-            x: leftWrist.audioX,
-            y: leftWrist.audioY,
+            x: wrist.left.audioX,
+            y: wrist.left.audioY,
           });
+          cursorLight.position.set(wrist.left.x,wrist.left.y);
           gesturesCounter += gesturesCounter < 1 ? 0.01 : 0;
         }
-      } else if (leftWrist.pose.score < rightWrist.pose.score) {
+      } else if (wrist.left.pose.score < wrist.right.pose.score) {
         //right hand
-        if (rightWrist.pose.score > posenetOptions.minPartConfidence) {
+        if (wrist.right.pose.score > posenetOptions.minPartConfidence) {
           emitterRight.emit = true;
           audioControls.set({
-            x: rightWrist.audioX,
-            y: rightWrist.audioY,
+            x: wrist.right.audioX,
+            y: wrist.right.audioY,
           });
+          cursorLight.position.set(wrist.right.x,wrist.right.y);
           gesturesCounter += gesturesCounter < 1 ? 0.01 : 0;
         }
         emitterLeft.emit = false;
@@ -348,18 +367,180 @@
         emitterLeft.emit = false;
         gesturesCounter -= gesturesCounter >= 0 ? 0.01 : 0;
       }
-    } else {
+    }
+      
+    //MEDIAPIPE HANDS CURSOR//  
+    else if ($handPoseRes && $videoReady && $mouseOverride > 0.1){
+      const pose = $handPoseRes
+      const poselm = pose.poseLandmarks || null;
+      const handlm = {
+        left: pose.leftHandLandmarks || null,
+        right: pose.rightHandLandmarks || null
+      };
+      
+        let wrist ={
+        left:{
+          x: 0,
+          y: 0,
+        },
+        right:{
+          x: 0,
+          y: 0,
+        }
+      }
+        
+      emitter.emit = false;
+      gestures.set(true);
+      
+      //start inactivity timer to detect 1 hand usage
+      leftCounter += leftCounter < 1 ? 0.01 : 0;
+      rightCounter += rightCounter < 1 ? 0.01 : 0;
+
+      if(handlm.right){
+        let maxX = 0
+        let maxWeight = 0
+        let minX = 1
+        let maxY = 1;
+        rightCounter = 0 //Reset Timer for when detected
+      
+        //find point closest to the right of the video frame
+        let points = [8,12,16,20]
+        points.forEach(e=>{
+          let point = handlm.right[e]
+          maxX = Math.max(1-point.x,maxX)
+          minX = Math.min(1-point.x,minX)
+          if(point.x>handlm.right[0].x){
+            maxWeight+=1
+          }
+          maxY = Math.min(point.y,maxY)
+        })
+   
+        let tweenX = getTween(minX,maxX,maxWeight/4)
+        springRightPos.set({
+          x:tweenX,
+          y:maxY});
+        
+      }else if(poselm && rightCounter>.1){
+         springRightPos.set({
+        x:(1-poselm[16].x),
+        y:poselm[16].y}); 
+      }
+      
+      if(handlm.left){
+        let maxX = 0;
+        let minX = 1;
+        let maxWeight = 0
+        let maxY = 1;
+        leftCounter = 0 //Reset Timer for when detected
+        
+        let points = [8,12,16,20]
+        points.forEach(e=>{
+          let point = handlm.left[e]
+          maxX = Math.max(1-point.x,maxX)
+          minX = Math.min(1-point.x,minX)
+          if(point.x>handlm.left[0].x){
+            maxWeight+=1
+          }
+          maxY = Math.min(point.y,maxY)
+        })
+   
+        let tweenX = getTween(minX,maxX,maxWeight/4)    
+        springLeftPos.set({
+          x:tweenX,
+          y:maxY});
+        
+      }else if(poselm && leftCounter>.1){
+        springLeftPos.set({
+          x:(1-poselm[15].x),
+          y:poselm[15].y});
+      }
+      
+      
+      if(poselm){
+        wrist.right.x = $springRightPos.x * $CANVASWIDTH
+        wrist.right.y =
+          $WIDTH > 600
+            ? $springRightPos.y  * $CANVASHEIGHT
+            : $springRightPos.y * $thereminMobilePos.y;
+        wrist.right.audioX = constrain(
+          (wrist.right.x - $thereminPos.x) / $thereminPos.width,
+          { min: 0, max: 1 }
+        );
+        wrist.right.audioY = constrain(
+          wrist.right.y / ($thereminPos.y + $thereminPos.height),
+          { min: 0, max: 1 }
+        );
+        wrist.left.x = $springLeftPos.x * $CANVASWIDTH
+        wrist.left.y =
+          $WIDTH > 600
+            ? $springLeftPos.y* $CANVASHEIGHT
+            : $springLeftPos.y * $thereminMobilePos.y;
+        wrist.left.audioX = constrain(
+          (wrist.left.x - $thereminPos.x) / $thereminPos.width,
+          { min: 0, max: 1 }
+        );
+        wrist.left.audioY = constrain(
+          wrist.left.y / ($thereminPos.y + $thereminPos.height),
+          { min: 0, max: 1 }
+        );   
+
+        //update audio
+        if(leftCounter>=.5 && rightCounter>=.5){
+          emitterRight.emit = false;
+          emitterLeft.emit = false;
+        }
+        if(leftCounter >= .5){
+          //set right hand if left hand is inactive
+          audioControls.set({
+            x: wrist.right.audioX,
+            y: wrist.right.audioY,
+          });
+          cursorLight.position.set(wrist.right.x,wrist.right.y);
+          emitterRight.updateOwnerPos(wrist.right.x, wrist.right.y);
+          emitterRight.emit = true;
+          emitterLeft.emit = false;
+        }else if (rightCounter >= .5){
+          //set left hand if right hand is inactive
+          audioControls.set({
+            x: wrist.left.audioX,
+            y: wrist.left.audioY,
+          });
+          cursorLight.position.set(wrist.left.x,wrist.left.y);
+          emitterLeft.updateOwnerPos(wrist.left.x, wrist.left.y);
+          emitterRight.emit = false;
+          emitterLeft.emit = true;
+        }else{
+          //both hands
+          audioControls.set({
+            x: wrist.right.audioX,
+            y: wrist.left.audioY,
+          });
+          cursorLight.position.set(wrist.right.x,wrist.left.y);
+    
+          emitterRight.updateOwnerPos(wrist.right.x, wrist.right.y);
+          emitterLeft.updateOwnerPos(wrist.left.x, wrist.left.y);
+          emitterRight.emit = true;
+          emitterLeft.emit = true;
+        }
+      }
+      
+      if(handlm.right || handlm.left){
+        gesturesCounter += gesturesCounter < 1 ? 0.01 : 0;
+      }
+    }
+      
+    //MOUSE CURSOR//
+    else {
+      //cursor 
       emitter.emit = true;
       emitterRight.emit = false;
       emitterLeft.emit = false;
       gestures.set(false);
 
       cursorLight.brightness = 2 * constrain(2 - $SCALE, { max: 1, min: 0.5 });
-      if (
-        ($canvasMousePos.y > $thereminMobilePos.y && $WIDTH < 600) ||
-        $dragged
-      ) {
-      } else {
+      if (($canvasMousePos.y > $thereminMobilePos.y && $WIDTH < 600) || $dragged) {
+        
+      }else{
         emitter.updateOwnerPos($canvasMousePos.x, $canvasMousePos.y);
         cursorLight.position.set($canvasMousePos.x, $canvasMousePos.y);
         audioControls.set({
@@ -372,8 +553,9 @@
             { min: 0, max: 1 }
           ),
         });
+
       }
-    }
+    } 
 
     if ($manual) {
       emitter.emit = false;
@@ -382,7 +564,6 @@
     }
   }
 
-  stage.addChild(cursorLight, particleContainer);
 
   $: {
     if ($showGuides && gesturesCounter > 1) {
@@ -391,9 +572,8 @@
   }
 </script>
 
+{#if $hovered && $hovered !=="video"}
 <container
-  bind:this="{htmlCursor}"
-  class="{($hovered==='knob right' || $hovered==='knob left' || $hovered==='switch') ? 'hovered' : ''}"
   style="opacity:{mousePos ? 1 : 0};
   transform:translate({$mousePos.x - 26}px, {$mousePos.y - 26}px)"
 >
@@ -402,6 +582,7 @@
     >{$hovered === 'switch' && !$glide ? 'Enable Glide (G)' : $hovered === 'switch' && $glide ? 'Disable Glide (G)' : $hovered === 'knob left' ? 'Adjust Volume' : $hovered === 'knob right' ? 'Change Oscillator (O)' : ''}</span>
   </div>
 </container>
+{/if}
 
 <style>
   container {
@@ -435,7 +616,7 @@
     padding: 6px 12px 6px 12px;
     border-radius: 16px;
     color: black;
-    opacity: 0;
+/*     opacity: 0; */
     text-align: center;
     text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     transition: 0s;
@@ -452,12 +633,12 @@
     border-width: 6px 4px 0px 4px;
     border-color: rgb(var(--offwhite)) transparent transparent transparent;
   }
-  .hovered span {
+/*   .hovered span {
     opacity: 1;
-  }
-  @media (hover: none) {
+  } */
+/*   @media (hover: none) {
     div {
       opacity: 0;
     }
-  }
+  } */
 </style>

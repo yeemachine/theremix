@@ -88,7 +88,7 @@
     </p>
   </div>
   {/if}
-  <div class="settings">
+  <div class="settings {$expandSettings && $active ? 'expand' : ''}">
     <ButtonCircle
       name="{$expandSettings ? 'Close Controls' : 'Open Controls'}"
       classes="{'controlsTag'}"
@@ -133,7 +133,7 @@
     display: flex;
     position: absolute;
     height: calc(100% - 48px);
-    padding: 24px;
+    padding: 16px;
     width: calc(100% - 48px);
     top: 0;
     top: calc(env(safe-area-inset-top, 0));
@@ -160,9 +160,13 @@
   }
   .settings {
     position: absolute;
-    top: 24px;
-    right: 24px;
+    top: 16px;
+    right: 0;
     z-index: 2;
+    transition:transform 400ms cubic-bezier(0.61, 1, 0.88, 1);
+  }
+  .settings.expand{
+    transform:translateX(-420px)
   }
 
   .label {
@@ -210,9 +214,12 @@
       top: 16px;
       right: 16px;
     }
+    .settings.expand{
+      transform:translateX(0);
+    }
   }
 
-  @media (hover: hover) {
+  @media only screen and (hover: hover) and (pointer: fine) {
     .gestures:hover .label,.recording:hover .label  {
       opacity: 1;
     }

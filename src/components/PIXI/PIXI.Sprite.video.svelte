@@ -1,8 +1,11 @@
 <script>
   import { fade,fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
-  import { sineInOut } from "svelte/easing";
-  import { constrain, getDistance, getTween } from "../../helpers.js";
+  import { cubicOut,sineInOut } from "svelte/easing";
+  import { constrain, getDistance, getTween,flyRotate } from "../../helpers.js";
+  import posenetGlyph from '../icons/posenet.svelte';
+  import handsGlyph from '../icons/hands.svelte';
+  
   import {
     CANVASWIDTH,
     CANVASHEIGHT,
@@ -13,10 +16,15 @@
     showGuides,
     modelLoaded,
     poseNetRes,
+    handPoseRes,
     mouseOverride,
     hovered,
     dragged,
-    globalPointerUp
+    globalPointerUp,
+    showVideo,
+    PoseFTUE,
+    isSafari,
+    allowHolistic
   } from "../../stores.js";
   export let app = null;
   export let sheet = null;
@@ -31,6 +39,8 @@
   let firstDrag = false;
   let ratio = 1;
   let feedRatio = 1;
+  let feedOffsetX = 0
+  let feedOffsetY = 0
   let graphicsColor = 0xffffff
   $: graphicsColor = $showGuides ? 0xe54646 : 0xe54646; 
   //global video sprite setting
@@ -53,8 +63,8 @@
         ? Math.min($CANVASWIDTH, $CANVASHEIGHT) * 0.5
         : Math.min($CANVASWIDTH, $CANVASHEIGHT) * 0.8;
     videoContainer.maxH = videoContainer.maxW * 0.9;
-    videoContainer.w = getTween(videoContainer.maxW, 250, $slide0_1);
-    videoContainer.h = getTween(videoContainer.maxH, 250 * 0.9, $slide0_1);
+    videoContainer.w = getTween(videoContainer.maxW, $WIDTH > 600 ? 350 : 250, $slide0_1);
+    videoContainer.h = getTween(videoContainer.maxH, ($WIDTH > 600 ? 350 : 250) * 0.9, $slide0_1);
 
     let marginTop = $WIDTH > 600 ? 24 * $SCALE : 16 * $SCALE;
     let marginBottom = $WIDTH > 600 ? 24 * $SCALE : 16 * $SCALE;
@@ -202,7 +212,7 @@
     guides.scale.x = guides.scale.y;
     guides.x = videoContainer.x * $CANVASWIDTH;
     guides.y = videoContainer.y * $CANVASHEIGHT;
-    guides.alpha = $guides1_0;
+    guides.alpha = $guides1_0 * ($PoseFTUE && !isSafari ? 0 : 1);
   }
 
   var feedTexture = PIXI.Texture.from(document.querySelector("video"));
@@ -247,7 +257,7 @@
     );
 
   $: {
-    if ($videoReady && $modelLoaded) {
+    if ($videoReady && $showVideo) {
       if ($sineInOut0_1 === 0) {
         sineInOut0_1.set(1);
       }
@@ -275,7 +285,6 @@
     }
     if ($guides1_0 === 0 && $slide0_1 === 0) {
       slide0_1.set(1);
-      console.log($slide0_1);
     }
     if ($slide0_1 === 1) {
       locked = false;
@@ -287,7 +296,7 @@
       //Add to ticker since Svelte doesn't detect video orientation change well
       updateFeed();
     }
-    drawPose();
+    drawMotionCapture();
   });
 
   const updateFeed = () => {
@@ -303,15 +312,28 @@
     }
   };
 
-  const drawPose = () => {
+  const drawMotionCapture = () => {
     if (!$videoReady) {
       return;
     }
+    //recalc feedoffset
+    feedOffsetX = feedSprite.position.x - feedSprite.width/2 
+    feedOffsetY = feedSprite.position.y - feedSprite.height/2
+    //draw guides
     if ($poseNetRes) {
       mouseOverride.set($mouseOverride + 0.01);
+      if(!$showVideo){return}
       graphicsPose.clear();
       graphicsHead.clear();
       createPose($poseNetRes, graphicsPose);
+      graphicsPose.x = feedSprite.x - feedSprite.width / 2;
+      graphicsPose.y = feedSprite.y - feedSprite.height / 2;
+    }else if($handPoseRes){
+      mouseOverride.set($mouseOverride + 0.01);
+      if(!$showVideo){return}
+      graphicsPose.clear();
+      graphicsHead.clear();
+      createHands($handPoseRes,graphicsPose)
       graphicsPose.x = feedSprite.x - feedSprite.width / 2;
       graphicsPose.y = feedSprite.y - feedSprite.height / 2;
     } else {
@@ -325,6 +347,77 @@
     x: 0,
     y: 0
   };
+  
+  const drawHandPoints = (lm, graphics,color) => {
+    graphics.lineStyle(0,color);
+    graphics.beginFill(color, 1);
+    let size = .01 * feedSprite.width;
+    let pointers = [4,8,12,16,20]
+    pointers.forEach(index=>{
+      graphics.drawCircle(
+         (1-lm[index].x) * feedSprite.width,
+         lm[index].y * feedSprite.height,
+        size
+      ); 
+    })
+    graphics.endFill();
+  }
+  
+  const drawHandLines = (lm, graphics,color) => {
+    graphics.lineStyle(2, color);
+    drawPath(lm,[0,1,2,3,4],graphics) //thumb
+    drawPath(lm,[5,6,7,8],graphics) //index
+    drawPath(lm,[9,10,11,12],graphics) //middle
+    drawPath(lm,[13,14,15,16],graphics) //ring
+    drawPath(lm,[17,18,19,20],graphics) //little
+    drawPath(lm,[0,17,13,9,5,0],graphics) //palm
+  }
+  
+  const drawPath = (lm,indexes=[],graphics) => {
+    if(indexes.length>0){
+      graphics.moveTo((1-lm[indexes[0]].x) * feedSprite.width, 
+                    lm[indexes[0]].y * feedSprite.height);
+      indexes.forEach((index,i)=>{
+        if(i===0){return}
+        graphics.lineTo((1-lm[index].x) * feedSprite.width, 
+                    lm[index].y * feedSprite.height);
+      })
+    }
+  }
+  
+  const createHands = (pose, graphics) => {
+    const poselm = pose.poseLandmarks || null;
+    const handlm = {
+      right: pose.leftHandLandmarks || null,
+      left: pose.rightHandLandmarks || null
+    };
+    
+    // if (poselm){
+    //   let size = .02 * feedSprite.width;
+    //   graphics.beginFill(0xe54646, 1);
+    //    graphics.drawCircle(
+    //     feedOffsetX + (1-poselm[15].x) * feedSprite.width,
+    //     feedOffsetY + poselm[15].y * feedSprite.height,
+    //     size
+    //   ); 
+    //   graphics.drawCircle(
+    //     feedOffsetX + (1-poselm[16].x) * feedSprite.width,
+    //     feedOffsetY + poselm[16].y * feedSprite.height,
+    //     size
+    //   ); 
+    //   graphics.endFill();
+    // }
+    if(handlm.right){
+      drawHandPoints(handlm.right,graphics,0xe54646)
+      drawHandLines(handlm.right,graphics,0xe54646)
+    }
+    
+    if(handlm.left){
+      drawHandPoints(handlm.left,graphics,0xe54646)
+      drawHandLines(handlm.left,graphics,0xe54646)
+    }
+    
+  }
 
   const createPose = (pose, graphics) => {
     graphicsPose.lineStyle(2, graphicsColor);
@@ -345,30 +438,6 @@
     createLine(pose[13], pose[15], graphicsPose);
     createLine(pose[12], pose[14], graphicsPose);
     createLine(pose[14], pose[16], graphicsPose);
-
-    //Keypoints
-    // pose.forEach((e, i) => {
-    //   if (i > -1) {
-    //     let color = i === 9 || i === 10 ? graphicsColor : graphicsColor;
-    //     let opacity = i === 9 || i === 10 ? 0.85 : 0;
-    //     let size =
-    //       i === 9 || i === 10
-    //         ? constrain(
-    //             getDistance(pose[5].position, pose[6].position) * ratio * 0.15,
-    //             { max: 40, min: 16 }
-    //           )
-    //         : 8;
-    //     graphicsPose.beginFill(color, opacity);
-    //     graphicsPose.lineStyle(0);
-    //     if (e.score > 0.3) {
-    //       graphicsPose.drawCircle(
-    //         e.position.x * ratio,
-    //         e.position.y * ratio,
-    //         size
-    //       );
-    //     }
-    //   }
-    // });
 
     //Hands
     let size = constrain(
@@ -415,44 +484,202 @@
     graphics.moveTo(point1.position.x * ratio, point1.position.y * ratio);
     graphics.lineTo(point2.position.x * ratio, point2.position.y * ratio);
   };
+  
+  let selectedPoseFTUE = null
+  const handlePoseFTUE = (e) => {
+    if(!selectedPoseFTUE){
+      selectedPoseFTUE = e
+      allowHolistic.set(e==="holistic" ? true: false)
+      setTimeout(()=>{
+        PoseFTUE.set(false)
+      }, 300)
+    }
+  }
 </script>
 
-{#if $videoReady && $showGuides}
-<div
-style="top:{+videoContainer.y*$HEIGHT + videoContainer.h/2/$SCALE}px"
-in:fly="{{ duration: 400, y: 20, easing: sineInOut }}"
-out:fade="{{ duration: 300, easing: sineInOut}}"
->
-<h2>
-  Bring your hands into frame.
-</h2>
-<p>
-  Left hand adjusts <span>volume</span>. Right hand controls <span>pitch</span>.
-</p>
-</div>
+{#if $videoReady && $showGuides && $showVideo}
+  {#if $PoseFTUE && !isSafari}
+    <div class="card holistic {selectedPoseFTUE==="holistic" ? 'selected' : ''}"
+        in:flyRotate="{{ duration: 500,delay:800, y: 100,r:5, x:30,easing: cubicOut }}"
+        out:fly="{{ delay:selectedPoseFTUE === "holistic" ? 300 : 0,duration: 400,y: 20, easing: sineInOut}}"
+         on:click={()=>{handlePoseFTUE('holistic')}}
+         style="--posY:{videoContainer.y*$HEIGHT - videoContainer.h/2/$SCALE}px;
+                --posX:{videoContainer.x*$WIDTH - videoContainer.w/2/$SCALE}px;
+                --width:{videoContainer.w/$SCALE}px;
+                --height:{videoContainer.h/$SCALE}px"
+    >
+     
+       <svelte:component 
+                         this={handsGlyph} 
+                         selected={selectedPoseFTUE==="holistic"} 
+                         color={(selectedPoseFTUE==="holistic")?'var(--selectedSVGColor)':'var(--svgColor)'} 
+                         hoverColor={selectedPoseFTUE==="holistic" ? 'var(--selectedSVGColor)' : 'var(--svgColorHover)'}/>
+       <h5>Use Finger Tracking</h5>
+        <p>More accuracy and power.</p>
+
+    </div>
+  <div class="card posenet {selectedPoseFTUE==="posenet" ? 'selected' : ''}"
+       on:click={()=>{handlePoseFTUE('posenet')}}
+       in:flyRotate="{{ duration: 500,delay:800, y: 100,r:-5, x:-30,easing: cubicOut }}"
+        out:fly="{{ delay:selectedPoseFTUE === "posenet" ? 300 : 0,duration: 400,y: 20, easing: sineInOut}}"
+           style="--posY:{videoContainer.y*$HEIGHT - videoContainer.h/2/$SCALE}px;
+                  --posX:{videoContainer.x*$WIDTH - videoContainer.w/2/$SCALE}px;
+                  --width:{videoContainer.w/$SCALE}px;
+                  --height:{videoContainer.h/$SCALE}px"
+      >
+        
+         <svelte:component 
+                           this={posenetGlyph} 
+                           selected={selectedPoseFTUE==="posenet"} 
+                           color={(selectedPoseFTUE==="posenet")?'var(--selectedSVGColor)':'var(--svgColor)'} 
+                           hoverColor={selectedPoseFTUE==="posenet" ? 'var(--selectedSVGColor)' : 'var(--svgColorHover)'}/>
+        <h5>Use Wrist Tracking</h5>
+        <p>Light, perfect for mobile.</p>
+
+      </div>
+  {:else if !$PoseFTUE || isSafari}
+    <div
+    style="top:{+videoContainer.y*$HEIGHT + videoContainer.h/2/$SCALE}px"
+    in:fly="{{ delay:500,duration: 400, y: 20, easing: sineInOut }}"
+    out:fade="{{ duration: 300, easing: sineInOut}}"
+    >
+    <h2>
+      Take a step back, and bring <span>your hands</span> into the frame.
+    </h2>
+     <div class="info">
+      <p>
+        Left hand = <span>volume </span>
+      </p>
+        <p>
+        Right hand = <span>pitch</span>
+      </p>
+      </div>
+   
+    </div>
+  {/if}
+
 {/if}
 
+
+
 <style>
+  .card{
+    --posY:0;
+    --posX:0;
+    --width:0;
+    --height:0;
+    --svgColor:rgb(var(--crimson));
+    --svgColorHover:rgb(var(--crimson));
+    --selectedSVGColor:rgb(var(--offwhite));
+    background: rgb(var(--offwhite));
+    border-radius: calc(var(--width)*0.0625);
+/*     top: calc(var(--posY) + var(--height) * .65); */
+    bottom:24px;
+    width: calc(var(--width)*0.7);
+    height: var(--height);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .card.selected{
+    background:rgb(var(--crimson));
+  }
+  .card:before{
+    content:"";
+    width: calc(var(--height)*1.4);
+    height: calc(var(--height)*1.4);
+    border-radius:50%;
+    background:rgba(var(--crimson),.1);
+      position:absolute;
+    transform:scale(0);
+    transition:.4s;
+/*     z-index:-1; */
+  }
+  .card:hover:before{
+    transform:scale(.9);
+  }
+   .card:hover{
+    cursor: url(https://theremin.app/assets/global/cursor4.svg) 21 20, pointer;
+  }
+  h5{
+    font-weight:normal;
+    color:rgb(var(--crimson));
+    font-size:clamp(16px,3vw,21px);
+    max-width: calc(100% - 8px);
+    margin:0 0 4px 0;
+    text-align:center;
+    font-variation-settings: "wght" 72, "wdth" 110, "ital" 1;
+  }
+  .selected h5,.card.selected p{
+    color:rgb(var(--offwhite));
+  }
+  .card p{
+    font-family:'Nicholson Beta';
+    font-size:16px;
+    max-width: calc(100% - 8px);
+    text-align:center;
+    margin:0px 0 16px 0;
+    color:rgb(var(--darkgrey));
+    padding-bottom:8px;
+  }
+  hr{
+    color:rgb(var(--lightgrey));
+    width:24px;
+    margin:4px;
+  }
+  .card.holistic{
+    left: calc(var(--posX) - var(--width)*0.26);
+/*     transform: rotate(-5deg); */
+/*     -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.125); 
+box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.125); */
+/*     z-index:1; */
+  }
+  .card.posenet{
+    left: calc(var(--posX) + var(--width)*0.6);
+/*     transform: rotate(5deg); */
+/*     -webkit-box-shadow: -3px 4px 15px 5px rgba(0,0,0,0.125); 
+box-shadow: -3px 4px 15px 5px rgba(0,0,0,0.125); */
+  }
   div{
     position:absolute;
     width:100%;
-    max-width:800px;
+    max-width:450px;
     display:flex;
     flex-direction:column;
     align-items: center;
   }
+  .info{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    flex-direction: revert;
+  }
+  
+  .info p{
+    margin:16px 8px 8px 8px;
+    position:relative;
+  }
   h2{
     color:rgb(var(--offwhite));
-    font-variation-settings:"wght" 80, "wdth"90, "ital"0;
+    font-variation-settings:"wght" 68, "wdth"90, "ital"0;
     font-size:28px;
     font-weight:normal;
     text-align:center;
     width:max-content;
+    max-width:500px;
     max-width:100%;
     margin-top:40px;
     margin-bottom:0;
     word-break: break-word;
     white-space: normal;
+  }
+  h2 span{
+    color:rgb(var(--crimson));
+/*     font-variation-settings:"wght" 90, "wdth"90, "ital"0; */
   }
   p{
     font-size:16px;
@@ -474,5 +701,16 @@ out:fade="{{ duration: 300, easing: sineInOut}}"
      div{
        width:calc(100% - 32px);
      }
+    .card{
+         width: calc(var(--width)*0.55);
+    height: calc(var(--height)*.8);
+    }
+    .card p{margin:0px 0 8px 0;}
+    .card.holistic{
+        left: calc(var(--posX) - var(--width)*0.072)
+  }
+  .card.posenet{
+        left: calc(var(--posX) + var(--width)*0.525);
+  }
   }
 </style>

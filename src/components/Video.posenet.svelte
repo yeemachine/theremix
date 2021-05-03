@@ -1,5 +1,5 @@
 <script>
-  import { videoReady, poseNetRes, modelLoaded } from "../stores.js";
+  import { videoReady, poseNetRes, modelLoaded, isSafari,allowHolistic,PoseFTUE } from "../stores.js";
   import { smooth, getDistance } from "../helpers.js";
   import { posenetOptions } from "../config.js";
 
@@ -10,7 +10,7 @@
   });
 
   async function estimatePoseOnImage() {
-    if ($videoReady) {
+    if ($videoReady && !$allowHolistic) {
       
       if($videoReady.width!==$videoReady.videoWidth || $videoReady.height!==$videoReady.videoHeight){
         $videoReady.width = $videoReady.videoWidth
@@ -40,7 +40,7 @@
   }
 
   $: {
-    if ($videoReady && net) {
+    if ($videoReady && net && !$allowHolistic && (!$PoseFTUE || isSafari)) {
       estimatePoseOnImage();
     }
   }

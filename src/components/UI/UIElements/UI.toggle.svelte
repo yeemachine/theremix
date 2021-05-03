@@ -1,4 +1,5 @@
 <script>
+  import {haptic} from '../../../helpers.js'
   export let icon; //SVG icon
   export let setting; //Pass in a store from prop
   export let hide = false;
@@ -8,6 +9,7 @@
 
   const handleClick = () => {
     setting.set(!$setting);
+    haptic()
   };
 </script>
 
@@ -71,6 +73,7 @@
     transition: background-color 0.25s, opacity 0.25s;
     pointer-events: all;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .toggled container {

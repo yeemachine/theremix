@@ -235,9 +235,9 @@
             : val.includes("Square")
             ? "square"
             : val === "PWM"
-            ? "square"
-            : val === "Pulse"
             ? "sawtooth"
+            : val === "Pulse"
+            ? "square"
             : val === "Oscillator Off"
             ? "triangle"
             : "triangle"
@@ -367,18 +367,21 @@
         x: $enableMIDI ? steps.x / $scaleNotes.length : $audioControls.x,
         y: $enableMIDI ? steps.y / $scaleNotes.length : $audioControls.y,
       };
+      let envelope = {
+        attack: 0.005 + 0.2 * (1 - envelopeControl.x),
+        sustain: 0.2 - 0.2 * envelopeControl.y,
+        attackCurve: "exponential",
+        decayCurve: "exponential",
+        decay: 0.1 + 1.2 * (1 - envelopeControl.y),
+        release: 0.1 + 1.2 * (1 - envelopeControl.x),
+      }
+      
       if (midiSynths.length > 0 && $enableMIDI) {
+        const remap = (val,offset=.5) => {
+          return Math.abs(val-offset)/offset
+        }
         midiSynths.forEach((synth,j) => {
-          synth.set({
-            envelope: {
-              attack: 0.005 + 0.2 * (1 - envelopeControl.x),
-              sustain: 0.3 - 0.3 * envelopeControl.y,
-              attackCurve: "exponential",
-              decayCurve: "exponential",
-              decay: 0.1 + 1.2 * (1 - envelopeControl.y),
-              release: 0.1 + 1.2 * (1 - envelopeControl.x),
-            },
-          });
+          synth.set({envelope: envelope});
         });
       }
 
@@ -388,6 +391,8 @@
         index: steps,
         note: $scaleNotes[steps.x],
         freq: glideFreq,
+        attack: envelope.attack,
+        decay: envelope.decay
       });
     } else {
       if (mainOsc.state === "started") {

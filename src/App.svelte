@@ -1,5 +1,5 @@
 <script>
-	import {mousePos, loaded, toneLoaded,darkMode, pwa, update, version,camera,posenetLoaded,hasHover } from './stores.js';
+	import {isSafari,mousePos, loaded, toneLoaded,darkMode, pwa, update, version,camera,posenetLoaded,mediapipeHandsLoaded,hasHover } from './stores.js';
 	import Canvas from './components/Canvas.svelte'
 	import Nav from './components/UI/UI.nav.svelte'
   import Notif from './components/UI/UI.notif.svelte'
@@ -8,6 +8,7 @@
   import DropZone from './components/UI/UI.dropzone.svelte'
 	import Webcam from './components/Video.webcam.svelte'
 	import PoseNet from './components/Video.posenet.svelte'
+  import Hands from './components/Video.hands.svelte'
 
 	if(typeof dataLayer === 'undefined'){
 		window.dataLayer = []
@@ -81,7 +82,6 @@
   {/if}
 
 	{#if $loaded}
-<!-- 	<script defer src="https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script> -->
   	<script defer src="https://cdn.jsdelivr.net/npm/tone@14.8.17/build/Tone.min.js" on:load={()=>{toneJSLoaded=true}}></script>
 	{/if}
 
@@ -90,18 +90,19 @@
 	{/if}
 
 	{#if teoriaLoaded}
-<!-- 		<script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.25/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script> -->
   <script defer src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.27/build/Midi.min.js" on:load={()=>{toneMIDILoaded=true}}></script>
   
 	{/if}
-    
-    {#if cameraTriggered}
-		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.1/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
+
+    {#if (!isSafari)}
+      <script src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic/holistic.js" crossorigin="anonymous" on:load={()=>{mediapipeHandsLoaded.set(true)}}></script>
     {/if}
   
-	{#if tfLoaded}
-		<script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.1/dist/posenet.min.js" on:load={()=>{posenetLoaded.set(true)}}></script>
-	{/if}
+  <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.1/dist/tf.min.js" on:load={()=>{tfLoaded=true}}></script>
+  
+  {#if tfLoaded}
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.1/dist/posenet.min.js" on:load={()=>{posenetLoaded.set(true)}}></script>
+  {/if}
 </svelte:head>
 
 <main>
@@ -118,6 +119,9 @@
 	{#if $posenetLoaded}
 		<PoseNet/>
 	{/if}
+  {#if $mediapipeHandsLoaded}
+    <Hands/>
+  {/if}
 </main>
 
 <style>

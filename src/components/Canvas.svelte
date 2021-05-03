@@ -175,29 +175,34 @@ const handleKeydown = e => {
 const handleKeyup = e => {
     const key = event.key;
     const keyCode = event.keyCode;
-        if(keyCode===71){
-            glide.set(true)
-            keydown_G.set(false)
-        }
-        if(keyCode===77){
-            keydown_M.set(false)
-        }
-        if(keyCode===79){
-            keydown_O.set(false)
-        }
-        if(keyCode===83){
-            keydown_S.set(false)
-        }
-        if(keyCode===75){
-            keydown_K.set(false)
-        }
-        if(keyCode===37){
-            keydown_left.set(false)
-        }
-        if(keyCode===39){
-            keydown_right.set(false)
-        }
-    
+    switch(keyCode) {
+      case 71:
+        glide.set(true)
+        keydown_G.set(false)
+        break;
+      case 77:
+        keydown_M.set(false)
+        break;
+      case 79:
+        keydown_O.set(false)
+        break;
+      case 83:
+        keydown_S.set(false)
+        break;
+      case 75:
+        keydown_K.set(false)
+        break;
+      case 37:
+        keydown_left.set(false)
+        break;
+      case 39:
+        keydown_right.set(false)
+        break;
+      case 32:
+        active.set(!$active)
+        break;
+      default:
+    }
 }
 
 onMount(async () => {

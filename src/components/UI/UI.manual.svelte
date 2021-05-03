@@ -232,12 +232,12 @@
           <h2>
             Gesture<br />Controls<span
               style="font-size:9px;margin-left: 8px"
-            ><span></span></span>
+            >Updated</span>
           </h2>
           <div class="svg">
             <video alt="Gesture controls" autoplay loop muted playsinline>
               <source
-                src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbasic_controls_S.mp4?v=1593936184314"
+                src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fdemohandposetheremin.mp4?v=1619984336070"
                 type="video/mp4"
               />
             </video>
@@ -249,12 +249,15 @@
             simulate the gestural movements of playing a physical theremin.
           </p>
           <p>
-            Powered by
+            Powered by 2 of Google's machine learning models that allow for real-time human pose estimation in the browser. The 
+            <a
+              href="https://google.github.io/mediapipe/solutions/holistic.html"
+              target="blank"
+            >Mediapipe Holistic</a> solution allows for full hand and finger tracking that's perfect for desktop browsers while
             <a
               href="https://github.com/tensorflow/tfjs-models/tree/master/posenet"
               target="blank"
-            >PoseNet</a>, a machine learning model which allows for real-time
-            human pose estimation in the browser.
+            >PoseNet</a> is great for fast wrist tracking on mobile devices.
           </p>
           <hr />
           <ul>
@@ -291,12 +294,12 @@
           <h2>
             Midi<br />Controls<span
               style="font-size:9px;margin-left: 8px"
-            >Updated<span></span></span>
+            >Updated</span>
           </h2>
           <div class="svg">
             <video alt="MIDI controls" autoplay loop muted playsinline>
               <source
-                src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fmidi_controls_S.mp4?v=1593936184001"
+                src="https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSuisei%20Ghost%20Splice%20smol.mp4?v=1620020676993"
                 type="video/mp4"
               />
             </video>
@@ -309,8 +312,7 @@
               href="https://www.youtube.com/watch?v=Hae0g-lDOqw"
               target="blank"
             >alternative controller</a>
-            for MIDI and other musical applications. This mode is currently in a
-            beta and works best in Chrome.
+            for MIDI and other musical applications.
           </p>
           <p>
             Movement towards X and Y axis modifies the timbre of the
@@ -319,6 +321,10 @@
             <span>sustain</span>,
             <span>decay</span>, and
             <span>release</span>. User uploaded MIDI to come in a future update.
+          </p>
+          <p>
+            In addition to the preselected list, you can drag and drop your own MIDI files and control its playback using Theremix. 
+            You can also upload a custom image/video background to go with your uploaded MIDI file for extra ambiance.
           </p>
           <p class="sub small keyboard">
             <span class="keycap">M</span>
@@ -873,7 +879,7 @@
       border-radius:0;
     }
     container {
-      flex-direction: column;
+      display:block;
       overflow-y: scroll;
     }
     .gradient {
@@ -942,7 +948,7 @@
     }
   }
 
-  @media (hover: hover) {
+  @media only screen and (hover: hover) and (pointer: fine) {
     .keyboard {
       display: block;
     }

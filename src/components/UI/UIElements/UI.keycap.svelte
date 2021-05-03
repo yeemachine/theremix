@@ -1,4 +1,6 @@
 <script>
+  import { fade,fly } from 'svelte/transition';
+  import { cubicInOut } from 'svelte/easing';
 export let letter = 'O'
 export let position = 'relative'
 export let top = 0
@@ -32,6 +34,7 @@ $: {
 
 
 <div
+out:fly="{{ y: 10, easing: cubicInOut,delay:400,duration: 600 }}" 
 bind:this={containerDom} 
 bind:clientWidth={containerWidth} 
 bind:clientHeight={containerHeight} 

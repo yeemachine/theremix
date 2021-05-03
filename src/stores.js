@@ -1,5 +1,9 @@
 import { writable } from "svelte/store";
 export const pwa = writable(false);
+export const isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+               navigator.userAgent &&
+               navigator.userAgent.indexOf('CriOS') == -1 &&
+               navigator.userAgent.indexOf('FxiOS') == -1;
 export const update = writable(false);
 export const updateNow = writable(false);
 export const hasHover = writable(false);
@@ -19,6 +23,7 @@ export const manual = writable(false);
 export const camera = writable(false);
 export const videoReady = writable(null);
 export const posenetLoaded = writable(null);
+export const mediapipeHandsLoaded = writable(null);
 export const modelLoaded = writable(null);
 
 export const WIDTH = writable(2400 / 2);
@@ -56,6 +61,8 @@ export const toneOutput = writable({
   glide: true,
   freq: 0,
   note: "G4",
+  attack:0,
+  decay:0
 });
 
 let storedVol = -15
@@ -66,14 +73,21 @@ let storedScale = "Major"
 let storedStartOctave = 2
 let storedEndOctave = 5
 let storedFTUE = true
+let storedPoseFTUE = true
+let storedAllowHolistic = !isSafari && window.innerWidth>600//if safari,block holistic model
+let storedShowVideo = true
 
+const returnBoolean = string => {
+return (string === 'true' ? true : string==="false" ? false : string);
+  
+}
 export const getLocalStorage = ()=>{
   if (typeof Storage !== "undefined") {
     storedVol = localStorage.getItem("volumeVal") || -15;
     storedGlide =
       localStorage.getItem("glide") === null
         ? true
-        : localStorage.getItem("glide");
+        : returnBoolean(localStorage.getItem("glide"));
     storedOsc = localStorage.getItem("oscillator") || "Sine";
     storedTonic = localStorage.getItem("tonic") || "G";
     storedScale = localStorage.getItem("scaleType") || "Major";
@@ -82,7 +96,21 @@ export const getLocalStorage = ()=>{
     storedFTUE = 
       localStorage.getItem("FTUE") === null
       ? true
-      : localStorage.getItem("FTUE");
+      : returnBoolean(localStorage.getItem("FTUE"));
+    storedPoseFTUE = 
+      localStorage.getItem("PoseFTUE") === null
+      ? true
+      : returnBoolean(localStorage.getItem("PoseFTUE"));
+    storedAllowHolistic = 
+      isSafari ? false
+      : localStorage.getItem("allowHolistic") === null
+      ? storedAllowHolistic
+      : returnBoolean(localStorage.getItem("allowHolistic"));
+    storedShowVideo = 
+      localStorage.getItem("showVideo") === null
+      ? true
+      : returnBoolean(localStorage.getItem("showVideo"));
+    
   }
 }
 
@@ -97,12 +125,19 @@ export const scaleType = writable(storedScale);
 export const startOctave = writable(storedStartOctave);
 export const endOctave = writable(storedEndOctave);
 export const FTUE = writable(storedFTUE);
+export const PoseFTUE = writable(storedPoseFTUE)
+
+export const allowHolistic = writable(storedAllowHolistic);
+export const showVideo = writable(storedShowVideo)
 
 export const subLocalStorage = ()=>{
   if (typeof Storage !== "undefined") {
     FTUE.subscribe(value=>{
       localStorage.setItem("FTUE",value)
     })
+    // PoseFTUE.subscribe(value=>{
+    //   localStorage.setItem("PoseFTUE",value)
+    // })
     
     volumeVal.subscribe((value) => {
       localStorage.setItem("volumeVal", value ? value : -15);
@@ -131,6 +166,13 @@ export const subLocalStorage = ()=>{
     endOctave.subscribe((value) => {
       localStorage.setItem("endOctave", value ? value : 5);
     });
+    
+    allowHolistic.subscribe((value) => {
+      localStorage.setItem("allowHolistic", value);
+    });
+    showVideo.subscribe((value) => {
+      localStorage.setItem("showVideo", value);
+    });
   }
 }
 
@@ -146,6 +188,7 @@ export const currentMIDI = writable("怪物");
 export const MIDI_tint = writable(null);
 export const MIDITextSprite = writable(null);
 export const poseNetRes = writable(null);
+export const handPoseRes = writable(null);
 
 export const dragged = writable(null);
 export const hovered = writable(null);
@@ -162,6 +205,7 @@ export const midiList = writable({
     imgNow:0,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FGettyImages-1200719536.jpg?v=1619297710790",
+    type:"img"
   },
   "怪物": {
     url: "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FMonsterYOASOBI.mid?v=1619394550242",
@@ -174,7 +218,8 @@ export const midiList = writable({
     offset: 0.35,
     tint: 0xffd4d4,
     img:
-      "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM15.jpg?v=1619304624478",
+      "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM15.jpg?v=1619760752726",
+    type:"img"
   },
   お勉強しといてよ: {
     url: "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FSTUDY_ME.mid?v=1619407961738",
@@ -189,6 +234,7 @@ export const midiList = writable({
     tint: 0xc39e89,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fstudyme.jpg?v=1619416139077",
+    type:"img"
   },
    思想犯: {
     url: "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FThoughtcrime.mid?v=1619161572955",
@@ -203,6 +249,7 @@ export const midiList = writable({
     tint: 0xafa69b,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM18.jpg?v=1619305532298",
+     type:"img"
   },
    GHOST: {
     url: "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FGHOST__Hoshimachi_Suisei.mid?v=1619407621024",
@@ -216,6 +263,7 @@ export const midiList = writable({
     tint: 0xafa69b,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM21.jpg?v=1619407596110",
+     type:"img"
   },
   "群青": {
     url: "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FGunjouYOASOBI.mid?v=1619159506804",
@@ -229,6 +277,7 @@ export const midiList = writable({
     tint: 0xffd4d4,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM20.jpg?v=1619407008143",
+    type:"img"
   },
   春を告げる: {
     url: "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FHaru_Wo_Tsugeru.mid?v=1619159509296",
@@ -241,7 +290,8 @@ export const midiList = writable({
     offset: 0.55,
     tint: 0xffd4d4,
     img:
-      "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM17.jpg?v=1619305350939",
+      "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM17.jpg?v=1619760752800",
+    type:"img"
   },
   命に嫌われている: {
     url: "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fhated_by_life.mid?v=1619411523366",
@@ -256,6 +306,7 @@ export const midiList = writable({
     tint: 0xffd4d4,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2Fbgm22.jpg?v=1619410239302",
+    type:"img"
   },
   だから僕は音楽を辞めた: {
     url: "https://theremin.app/assets/midi/Thats_Why_I_Gave_Up_on_Music.mid",
@@ -270,6 +321,7 @@ export const midiList = writable({
     tint: 0xafa69b,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM8.jpg?v=1593790573806",
+    type:"img"
   },
   夜に駆ける: {
     url: "https://theremin.app/assets/midi/Racing_Into_The_Night.mid",
@@ -283,6 +335,7 @@ export const midiList = writable({
     tint: 0xffd4d4,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM5.jpg?v=1593790575857",
+    type:"img"
   },
   秒針を噛む: {
     url: "https://theremin.app/assets/midi/Byoushinwo_Kamu.mid",
@@ -297,6 +350,7 @@ export const midiList = writable({
     tint: 0xc39e89,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM12.jpg?v=1593790573705",
+    type:"img"
   },
   シャルル: {
     url: "https://theremin.app/assets/midi/Charles.mid",
@@ -311,6 +365,7 @@ export const midiList = writable({
     tint: 0xc39e89,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM1.jpg?v=1593790573277",
+    type:"img"
   },
   金木犀: {
     url: "https://theremin.app/assets/midi/Kinmokusei.mid",
@@ -324,6 +379,7 @@ export const midiList = writable({
     tint: 0xdbbf9f,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM11.jpg?v=1593790575215",
+    type:"img"
   },
   快晴: {
     url: "https://theremin.app/assets/midi/Kaisei.mid",
@@ -337,6 +393,7 @@ export const midiList = writable({
     tint: 0xafa69b,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM6.jpg?v=1593790576148",
+    type:"img"
   },
 
   "Alice in 冷凍庫": {
@@ -352,6 +409,7 @@ export const midiList = writable({
     tint: 0x89aec3,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM2.jpg?v=1593790576044",
+    type:"img"
   },
   "DAYBREAK FRONTLINE": {
     url:
@@ -363,6 +421,7 @@ export const midiList = writable({
     tint: 0xafa69b,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM3.jpg?v=1593790571119",
+    type:"img"
   },
   青春なんていらないわ: {
     url: "https://theremin.app/assets/midi/I_Dont_Need_Youth.mid",
@@ -377,6 +436,7 @@ export const midiList = writable({
     tint: 0x89c3c3,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM16.jpg?v=1593790570801",
+    type:"img"
   },
   眩しいDNAだけ: {
     url: "https://theremin.app/assets/midi/DNA.mid",
@@ -391,6 +451,7 @@ export const midiList = writable({
     tint: 0xc39e89,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM19.jpg?v=1619369649540",
+    type:"img"
   },
   脳裏上のクラッカー: {
     url: "https://theremin.app/assets/midi/Nouriueno_Cracker.mid",
@@ -405,5 +466,6 @@ export const midiList = writable({
     tint: 0xc39e89,
     img:
       "https://cdn.glitch.com/bbfb2dd7-a8b0-4835-bdc2-c2fdffc99849%2FBGM14.jpg?v=1593790573512",
+    type:"img"
   }
 });

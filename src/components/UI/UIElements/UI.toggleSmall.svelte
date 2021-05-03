@@ -1,4 +1,5 @@
 <script>
+import {haptic} from '../../../helpers.js'
 export let setting //Pass in a store from prop
 export let hide = false
 export let styles = ''
@@ -10,6 +11,7 @@ let circlePathValues
 
 const handleClick = () => {
     setting.set(!$setting)
+  haptic()
 }
 
 </script>
