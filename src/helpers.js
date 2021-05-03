@@ -1,3 +1,30 @@
+export const flyRotate = (node, {
+	delay = 0,
+	duration = 400,
+	easing = null,
+	x = 0,
+	y = 0,
+  r = 5
+})=> {
+	const style = getComputedStyle(node);
+	const opacity = +style.opacity;
+	const transform = style.transform === 'none' ? '' : style.transform;
+
+	return {
+		delay,
+		duration,
+		easing,
+		css: t => `
+			transform: ${transform} translate(${(1 - t) * x}px, ${(1 - t) * y}px) rotate(${(1-t) * r}deg);
+			opacity: ${t * opacity}`
+	};
+}
+
+export const haptic = () => {
+  if ("vibrate" in navigator) {
+      navigator.vibrate(15);
+    }
+}
 export const isImageVideo = (file) => {
    let type = null
    // alert(file.type)
@@ -181,7 +208,7 @@ const smoothing = poseConfig.smoothing.smoothing;
 let smoothPrevPose;
 
 export function smooth(pose, armspan) {
-  if (poseConfig.smoothing.jumpDetection) pose = unjump(pose, armspan);
+  // if (poseConfig.smoothing.jumpDetection) pose = unjump(pose, armspan);
   if (!smoothPrevPose) {
     smoothPrevPose = pose;
     return pose;

@@ -7,7 +7,7 @@
   import uploadIcon from "../icons/upload.svelte";
   import { fade } from 'svelte/transition';
   import { sineInOut } from 'svelte/easing';
-  import {handleFiles,handleImgFiles} from './UI.settingsexpanded.svelte'
+  import {handleFiles,handleImgFiles} from './UI.settings.theremin.svelte'
   import {active} from '../../stores.js'
   import {isImageVideo} from '../../helpers.js'
 
@@ -48,9 +48,8 @@ const handleDragDrop = (e) => {
   if(files[0].type.includes('midi')){
     return handleFiles(files)   
   }
-  if(isImageVideo(files[0]) === 'img'){
-    console.log('isImage')
-    return handleImgFiles(files)
+  if(isImageVideo(files[0])){
+    return handleImgFiles(files,isImageVideo(files[0]))
   }
 }
 </script>

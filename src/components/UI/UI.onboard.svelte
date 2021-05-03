@@ -82,7 +82,7 @@
     }
   }
 
-  @media (hover: hover) {
+  @media only screen and (hover: hover) and (pointer: fine) {
     .gestures:hover .label {
       opacity: 1;
     }

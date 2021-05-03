@@ -48,6 +48,7 @@ const handleClick = () => {
         pointer-events: all;
         background:rgba(var(--bgColor),.05);
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
     button.selected,button.selected:hover{
         background: rgb(var(--selectedBGColor));

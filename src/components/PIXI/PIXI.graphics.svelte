@@ -234,31 +234,26 @@
     } else {
       graphics3.clear();
       if (!$toneOutput.glide) {
-        for (let i = 0; i < $toneOutput.total + 1; i++) {
-          graphics3.lineStyle(2, 0xffffff);
-          graphics3.moveTo(
-            $thereminPos.x + ($thereminPos.width * i) / $toneOutput.total,
-            0
-          );
-          graphics3.lineTo(
-            $thereminPos.x + ($thereminPos.width * i) / $toneOutput.total,
-            $thereminPos.y + $thereminPos.height
-          );
+        
+        if(!$enableMIDI){
+          for (let i = 0; i < $toneOutput.total + 1; i++) {
+            graphics3.lineStyle(2, 0xffffff);
+            graphics3.moveTo(
+              $thereminPos.x + ($thereminPos.width * i) / $toneOutput.total,
+              0
+            );
+            graphics3.lineTo(
+              $thereminPos.x + ($thereminPos.width * i) / $toneOutput.total,
+              $thereminPos.y + $thereminPos.height
+            );
+          }
         }
+        
         let currentColor = $gestures ? 0xffff33 : 0xffff33;
         graphics3.lineStyle(2, currentColor);
         graphics3.beginFill(currentColor, 1);
 
-        if ($enableMIDI) {
-          graphics3.drawRect(
-            $thereminPos.x +
-              ($thereminPos.width * $toneOutput.index.x) / $toneOutput.total,
-            (($thereminPos.y + $thereminPos.height) * $toneOutput.index.y) /
-              $toneOutput.total,
-            $thereminPos.width / $toneOutput.total,
-            ($thereminPos.y + $thereminPos.height) / $toneOutput.total
-          );
-        } else {
+        if(!$enableMIDI) {
           graphics3.drawRect(
             $thereminPos.x +
               ($thereminPos.width * $toneOutput.index.x) / $toneOutput.total,
@@ -267,6 +262,100 @@
             $thereminPos.y + $thereminPos.height
           );
         }
+        
+        if ($enableMIDI) {
+          //trailing squares + shape
+          graphics3.lineStyle(0, currentColor);
+          let clampedXmin = Math.max($toneOutput.index.x-1,0)
+          let clampedXmax = Math.min($toneOutput.index.x+1,$toneOutput.total-1)
+          let clampedYmin = Math.max($toneOutput.index.y-1,0)
+          let clampedYmax = Math.min($toneOutput.index.y+1,$toneOutput.total-1)
+          let trails = {
+            left:{
+              x:clampedXmin,
+              y:$toneOutput.index.y,
+              a:.5
+            },
+            right:{
+              x:clampedXmax,
+              y:$toneOutput.index.y,
+              a:.5
+            },
+            top:{
+              x:$toneOutput.index.x,
+              y:clampedYmin,
+              a:.5
+            },
+            bottom:{
+              x:$toneOutput.index.x,
+              y:clampedYmax,
+              a:.5
+            },
+            left2:{
+              x:Math.max($toneOutput.index.x-2,0),
+              y:$toneOutput.index.y,
+              a:$WIDTH<600 ? .125 : 0
+            },
+            right2:{
+              x:Math.min($toneOutput.index.x+2,$toneOutput.total-1),
+              y:$toneOutput.index.y,
+              a:$WIDTH<600 ? .125 : 0
+            },
+            top2:{
+              x:$toneOutput.index.x,
+              y:Math.max($toneOutput.index.y-2,0),
+              a:$WIDTH>600 ? .125 : 0
+            },
+            bottom2:{
+              x:$toneOutput.index.x,
+              y:Math.min($toneOutput.index.y+2,$toneOutput.total-1),
+              a:$WIDTH>600 ? .125 : 0
+            },
+            topleft:{
+              x:clampedXmin,
+              y:clampedYmin,
+              a:.25
+            },
+            topright:{
+              x:clampedXmax,
+              y:clampedYmin,
+              a:.25
+            },
+            bottomleft:{
+              x:clampedXmin,
+              y:clampedYmax,
+              a:.25
+            },
+            bottomright:{
+              x:clampedXmax,
+              y:clampedYmax,
+              a:.25
+            },
+            
+          }
+          
+          Object.keys(trails).forEach(e=>{
+            graphics3.beginFill(currentColor, trails[e].a);
+            graphics3.drawRect(
+              $thereminPos.x +
+                ($thereminPos.width * trails[e].x) / $toneOutput.total,
+              (($thereminPos.y + $thereminPos.height) * trails[e].y) /
+                $toneOutput.total,
+              $thereminPos.width / $toneOutput.total,
+              ($thereminPos.y + $thereminPos.height) / $toneOutput.total
+            );
+          })          
+          graphics3.lineStyle(2, currentColor);
+          graphics3.beginFill(currentColor, 1);
+          graphics3.drawRect(
+            $thereminPos.x +
+              ($thereminPos.width * $toneOutput.index.x) / $toneOutput.total,
+            (($thereminPos.y + $thereminPos.height) * $toneOutput.index.y) /
+              $toneOutput.total,
+            $thereminPos.width / $toneOutput.total,
+            ($thereminPos.y + $thereminPos.height) / $toneOutput.total
+          );
+        } 
       }
     }
   };
@@ -296,7 +385,7 @@
 
     graphics3.x = 0;
     graphics3.y = 0;
-    graphics3.alpha = 0.3 * $sineInOut0_1;
+    graphics3.alpha = 0.5 * $sineInOut0_1;
 
     // if ($videoReady) {
     //   let offset = {

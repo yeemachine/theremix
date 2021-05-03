@@ -136,7 +136,7 @@
     }}"
     class="update {!$update || !$coverLoaded || $active || $manual ? 'hide' : ''}"
   >
-    New Version Available
+    New Features Added!
   </button>
 {/if}
 
@@ -221,7 +221,7 @@
     bottom: 0;
     left: 0;
     margin: 0 0px 0px 24px;
-    
+/*     opacity:0; */
   }
   .manual {
     position: relative;

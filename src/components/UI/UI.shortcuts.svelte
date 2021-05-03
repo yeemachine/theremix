@@ -1,5 +1,6 @@
 <script>
   import { fade,fly } from "svelte/transition";
+  import { cubicInOut } from 'svelte/easing';
   import Keycap from "./UIElements/UI.keycap.svelte";
   import {
     keydown_S,
@@ -53,11 +54,12 @@
 </script>
 
 
+{#if scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || $keydown_K || ($recording && !$theatreMode)}
 <section
+  out:fade="{{easing: cubicInOut,delay:400,duration: 600 }}" 
   bind:this="{containerDom}"
   bind:clientWidth="{containerWidth}"
   bind:clientHeight="{containerHeight}"
-  class="{scaleTypeState !== $scaleType || tonicState !== $tonic || $keydown_S || $keydown_K || ($recording && !$theatreMode) ? '' : 'hide'}"
 >
   {#if $recordingTime}
     <h3>{$recordingTime}</h3>
@@ -67,11 +69,18 @@
     <h4>{$scaleType}</h4>
   {/if}
   <div>
+    
+    {#if $keydown_S}
     <Keycap hide="{!$keydown_S}" letter="{'S'}" styles="{'margin-right:8px'}" />
+    {/if}
+    {#if $keydown_K}
     <Keycap hide="{!$keydown_K}" letter="{'K'}" />
+    {/if}
   </div>
 </section>
+{/if}
 
+{#if $keydown_O}
 <Keycap
   hide="{!$keydown_O}"
   letter="{'O'}"
@@ -79,6 +88,8 @@
   top="{$WIDTH > 600 ? 0.7676 : 0}"
   left="{$WIDTH > 600 ? 0.679 : 0.5095}"
 />
+{/if}
+{#if $keydown_G}
 <Keycap
   hide="{!$keydown_G}"
   letter="{'G'}"
@@ -86,6 +97,8 @@
   top="{$WIDTH > 600 ? 0.7676 : 0}"
   left="{$WIDTH > 600 ? 0.7415 : 0.7685}"
 />
+{/if}
+{#if $keydown_M}
 <Keycap
   hide="{!$keydown_M}"
   letter="{'M'}"
@@ -93,6 +106,7 @@
   top="{$WIDTH > 600 ? 0.7676 : 0}"
   left="{$WIDTH > 600 ? 0.5005 : 0.5095}"
 />
+{/if}
 
 <style>
   section {

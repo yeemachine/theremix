@@ -20,7 +20,6 @@
 <script>
   import { scale,fade } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
-  import {handleFiles,handleImgFiles} from './UI.settingsexpanded.svelte'
   import {active,coverLoaded} from '../../stores.js'
   import {isImageVideo} from '../../helpers.js'
   import closeIcon from "../icons/close.svelte";
@@ -49,8 +48,8 @@
     <h4>We need your vote!</h4>
     <p>Theremix has been nominated for best music website in the <span>2021 Webby Awards</span>! 
       {#if diffDays > 1}
-      There's still
-      <span>{diffDays-1} day{diffDays > 2 ? 's' : ''} left</span>
+      Voting ends
+      <span>this Thursday</span>
       {:else}
       Today's the <span>last day</span>
       {/if}

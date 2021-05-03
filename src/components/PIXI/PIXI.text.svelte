@@ -117,7 +117,7 @@
     if (freqText) {
       freqText.text = !$enableMIDI
         ? Math.floor($toneOutput.freq) + " HZ"
-        : Math.floor($toneOutput.freq) + " HZ";
+        : $toneOutput.attack.toFixed(2)+' Atk';
       freqText.style.fontSize =
         $WIDTH > 600
           ? $thereminPos.width * 0.01
@@ -126,22 +126,24 @@
         $WIDTH > 600
           ? $thereminPos.width * 0.01
           : $thereminMobilePos.width * 0.035;
+      let offset = $enableMIDI ? ($WIDTH > 600 ? .96 : .9) : 1
       freqText.x =
         $WIDTH > 600
-          ? $thereminPos.x + $thereminPos.width * 0.582 - freqText.width
+          ? $thereminPos.x + $thereminPos.width * 0.582 * offset - freqText.width
           : $thereminMobilePos.x +
-            $thereminMobilePos.width * 0.78 -
+            $thereminMobilePos.width * 0.78 * offset -
             freqText.width;
       freqText.y =
         $WIDTH > 600
           ? $thereminPos.y + $thereminPos.height * 0.79
           : $thereminMobilePos.y + $thereminMobilePos.height * 0.52;
-      freqText.alpha = $toneOutput.glide
-        ? 0.15 + 0.55 * $sineInOut0_1
+      freqText.alpha = 
+        $enableMIDI ? 0.15 + 0.55 * $sineInOut0_1
+        : $toneOutput.glide ? 0.15 + 0.55 * $sineInOut0_1
         : 0.15 + 0.15 * $sineInOut0_1;
     }
     if (noteText) {
-      noteText.text = !$enableMIDI ? $toneOutput.note : $toneOutput.note;
+      noteText.text = !$enableMIDI ? $toneOutput.note : $toneOutput.decay.toFixed(2)+' Dec';
       noteText.style.fontSize =
         $WIDTH > 600
           ? $thereminPos.width * 0.01
@@ -155,13 +157,14 @@
           ? $thereminPos.x + $thereminPos.width * 0.622 - noteText.width
           : $thereminMobilePos.x +
             $thereminMobilePos.width * 0.91 -
-            noteText.width;
+            noteText.width
       noteText.y =
         $WIDTH > 600
           ? $thereminPos.y + $thereminPos.height * 0.79
           : $thereminMobilePos.y + $thereminMobilePos.height * 0.52;
-      noteText.alpha = $toneOutput.glide
-        ? 0.15 + 0.15 * $sineInOut0_1
+      noteText.alpha = 
+        $enableMIDI ? 0.15 + 0.55 * $sineInOut0_1
+        : $toneOutput.glide ? 0.15 + 0.15 * $sineInOut0_1
         : 0.15 + 0.55 * $sineInOut0_1;
     }
   }
@@ -179,22 +182,7 @@
         let artistAlt = $midiList[$currentMIDITitle].alt.artist ? $midiList[$currentMIDITitle].alt.artist : artist
         textalt = "♫ " + titleAlt +  " / " + artistAlt
       }
-      // midiText.text =
-      //   $enableMIDI && !text
-      //     ? "Loading..."
-      //     : $enableMIDI
-      //     ? "   " +
-      //       text +
-      //       "      " +
-      //       textalt +
-      //       "      " +
-      //       text +
-      //       "      " +
-      //       textalt +
-      //       "      " +
-      //       text+
-      //       "   "
-      //     : "";
+
       midiText.text =
         $enableMIDI && !text
           ? "Loading..."

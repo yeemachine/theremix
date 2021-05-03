@@ -17,6 +17,7 @@
     hovered,
     dragged,
   } from "../../stores.js";
+  import {haptic} from '../../helpers.js'
   export let stage = null;
   export let textures = null;
   export let sheet = null;
@@ -70,9 +71,7 @@
       id: "vol",
     });
     globalPointerUp.set(false);
-    if ("vibrate" in navigator) {
-      navigator.vibrate(50);
-    }
+    haptic()
     dataLayer.push({ event: "volume-pixi" });
   });
 
@@ -124,9 +123,7 @@
 
   switchRight.on("pointerdown", () => {
     glide.set(!$glide);
-    if ("vibrate" in navigator) {
-      navigator.vibrate(50);
-    }
+    haptic()
     dataLayer.push({ event: "glide-pixi" });
   });
 
